@@ -1,16 +1,15 @@
 <?php
-
-echo "<h1>Elin testar GitKraken</h1>";
-
-echo "<p>Branches is awesome!</p>";
-
-
-echo "<p>Test from Matilda!!</p>";
-echo "<p>Test from Matilda's branch</p>";
-echo "<p>Test from Matilda's branch 2</p>";
-
-echo "<p>Halloj säger Henningsonen</p>";
-
-echo "<p>Test to push</p>";
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <?php require_once "./assets/categories-menu.php";?>
+</body>
+</html>

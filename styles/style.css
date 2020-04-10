@@ -1,1 +1,28 @@
-/* No CSS *//*# sourceMappingURL=style.css.map */
+.categories-menu {
+  max-inline-size: 20vw;
+  background-color: #cacaca;
+}
+
+.categories-menu ul, .categories-menu li {
+  list-style: none;
+  padding: 0;
+}
+
+.categories-menu ul a, .categories-menu li a {
+  text-decoration: none;
+  width: 100%;
+  display: block;
+}
+
+.categories-menu ul a:hover, .categories-menu li a:hover {
+  background-color: #d4d4d4;
+}
+
+.categories-menu ul a:visited, .categories-menu li a:visited {
+  color: black;
+}
+
+.categories-menu ul li, .categories-menu li li {
+  margin: 0.5em 0;
+}
+/*# sourceMappingURL=style.css.map */
