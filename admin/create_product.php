@@ -6,7 +6,7 @@ $sql = "SELECT * FROM ws_categories";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
-$options = "<option value='category' disabled selected>Category</option>";
+$options = "<option value='category' disabled selected hidden>Category</option>";
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $options .= "<option value='$row[name]'>$row[name]</option>";
