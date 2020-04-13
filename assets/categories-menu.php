@@ -9,9 +9,10 @@
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = htmlspecialchars($row['name']);
+    $id = htmlspecialchars($row['id']);
 
     $categories .= "<li class='nav-list__item'>
-                      <a href='?category=$name'><img src=''>$name</a>
+                      <a href='?id=$id'><img src=''>$name</a>
                     </li>";
   endwhile
 ?>
@@ -23,4 +24,4 @@
     <?php echo $categories; ?>
     </ul>
   </nav>
-</section>
+  </section>
