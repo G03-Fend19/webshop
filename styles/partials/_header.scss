@@ -11,21 +11,29 @@
 }
 
 .header {
-  display: flex;
+  display: grid;
   justify-content: space-around;
   align-items: center;
-  height: 175px;
+  height: 100vh;
+  grid-template: auto 1fr / 1fr;
   font-size: 1.7em;
   position: fixed;
   top: 0;
-  width: 100%;
-  background-color: rgb(226, 226, 226);
+  width: 100vw;
+
+  nav {
+    display: flex;
+    width: 100vw;
+    align-items: center;
+    background-color: rgb(226, 226, 226);
+  }
 
   &__logo {
     margin-right: auto;
     align-items: center;
     margin-left: 20px;
   }
+
   &__nav {
     list-style-type: none;
     margin-right: 20px;
@@ -33,9 +41,11 @@
 
     &__item {
       margin-left: 20px;
+
       a {
         text-decoration: none;
         color: black;
+
         @media (min-width: 800px) {
           display: inline;
           position: relative;
@@ -45,21 +55,25 @@
       &__home {
         display: none;
       }
+
       &__contact {
         position: fixed;
         margin-top: 400px;
         right: 11%;
         @extend .search-and-contact;
       }
+
       &__search {
         position: fixed;
         margin-top: 500px;
         right: 12%;
         @extend .search-and-contact;
+
         &:hover {
           cursor: pointer;
         }
       }
+
       &__searchbar {
         height: 20px;
         border-radius: 6px;
@@ -73,6 +87,16 @@
       }
     }
   }
+
+  &__hero {
+    text-align: center;
+    background: rgb(245, 245, 245);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 }
 
 .hidden {
