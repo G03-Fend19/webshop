@@ -21,7 +21,7 @@
   <h2>Categories</h2>
   <nav>
     <ul class="nav-list">
-    <?php echo $categories; ?>
+      <?php echo $categories; ?>
     </ul>
   </nav>
-  </section>
+</section>
