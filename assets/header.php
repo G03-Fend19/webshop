@@ -10,7 +10,6 @@
 <body>
 
 
-
 <header class="header">
   <nav>
     <div class="header__logo">Logo</div>
@@ -31,8 +30,6 @@
   </section>
 </header>
 
-
-
 <script>
 (() => {
   const searchBar = document.querySelector('.header__nav__item__searchbar');
@@ -47,3 +44,4 @@
 
 })();
 </script>
+<main>

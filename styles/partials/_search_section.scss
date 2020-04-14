@@ -1,0 +1,23 @@
+.search-section {
+  max-width: 80vw;
+  margin-left: auto;
+  &__header, &__try-again {
+    text-align: center;
+  }
+  .products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .product-card {
+    .product-thumb {
+      max-width: 250px;
+    }
+    &__content {
+      h3, p {
+        
+      }
+    }
+  }
+
+
+}
