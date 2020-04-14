@@ -10,6 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $qty = htmlspecialchars($_POST['qty']);
     $img = 'placeholder.jpg';
 
+    $duplicateCheck = "SELECT name FROM ws_products
+            WHERE name = :title";
+
+    $stmt = $db->prepare($duplicateCheck);
+    $stmt->bindParam(':title', $title);
+
+    $stmt->execute();
+    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        header("Location: ./create_product.php?duplicate=true&title=$title&descrip=$description&price=$price&qty=$qty");
+        exit();
+    }
+
     //Inserting the new product into db
     $sql1 = "INSERT INTO ws_products (name, description, price, stock_qty)
             VALUES (:name, :description, :price, :qty)";
