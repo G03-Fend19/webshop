@@ -2,6 +2,7 @@
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+<<<<<<< HEAD
 }
 
 body {
@@ -16,6 +17,11 @@ main {
       grid-template-columns: repeat(2, auto);
 }
 
+=======
+  min-height: 2000px;
+}
+
+>>>>>>> develop
 .search-and-contact, .header__nav__item__contact, .header__nav__item__search {
   height: 60px;
   width: 60px;
@@ -33,9 +39,25 @@ main {
 }
 
 .header {
+  display: -ms-grid;
+  display: grid;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-rows: auto 1fr;
+  -ms-grid-columns: 1fr;
+      grid-template: auto 1fr / 1fr;
+  font-size: 1.7em;
+  width: 100vw;
+}
+
+.header nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+<<<<<<< HEAD
   -ms-flex-pack: distribute;
       justify-content: space-around;
   -webkit-box-align: center;
@@ -46,6 +68,12 @@ main {
   position: fixed;
   top: 0;
   width: 100%;
+=======
+  width: 100vw;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+>>>>>>> develop
   background-color: #e2e2e2;
 }
 
@@ -91,6 +119,12 @@ main {
   right: 11%;
 }
 
+@media (min-width: 800px) {
+  .header__nav__item__contact i {
+    display: none;
+  }
+}
+
 .header__nav__item__search {
   position: fixed;
   margin-top: 500px;
@@ -101,22 +135,61 @@ main {
   cursor: pointer;
 }
 
-.header__nav__item__searchbar {
-  height: 20px;
-  border-radius: 6px;
-  border: 1px solid #505050;
-}
-
 @media (max-width: 800px) {
-  .header__nav__item__searchbar {
+  .header__nav__item__searchform {
     position: fixed;
     margin-top: 520px;
     right: 28%;
   }
 }
 
+.header__nav__item__searchbar {
+  height: 20px;
+  border-radius: 6px;
+  border: 1px solid #505050;
+}
+
+.header__nav__item__searchBtn {
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid #505050;
+}
+
+@media (min-width: 800px) {
+  .header__nav__item__searchBtn {
+    display: none;
+  }
+}
+
+.header__hero {
+  text-align: center;
+  background-color: whitesmoke;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: calc(100vh - 25px);
+}
+
 .hidden {
   display: none;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+}
+
+@media (max-width: 800px) {
+  #contact-desktop {
+    display: none;
+  }
 }
 
 .categories-menu {
@@ -151,6 +224,7 @@ main {
 .categories-menu li li {
   margin: 0.5em 0;
 }
+<<<<<<< HEAD
 
 .search-section {
   max-width: 80vw;
@@ -171,4 +245,6 @@ main {
 .search-section .product-card .product-thumb {
   max-width: 250px;
 }
+=======
+>>>>>>> develop
 /*# sourceMappingURL=style.css.map */
