@@ -4,7 +4,7 @@
   <script src="https://kit.fontawesome.com/10d18f6c7b.js"crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="../styles/style.css">
   <title>Document</title>
 </head>
 <body>
@@ -12,14 +12,21 @@
 
 
 <header class="header">
-  <nav>
+  <nav class="fixed">
     <div class="header__logo">Logo</div>
     <ul class="header__nav">
       <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home" href="">Home</a></li>
       <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__contact" href=""><i
             class="fas fa-phone"></i></a></li>
-      <li class="header__nav__item"><input class="header__nav__item__searchbar hidden" placeholder="search..."
-          type="text"></input> </li>
+      <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
+          href="">Contact</a></li>
+      <li class="header__nav__item">
+        <form class="header__nav__item__searchform" action="#" method="GET">
+          <input class="header__nav__item__searchbar hidden" placeholder="search..." type="text" name="searchterm">
+        </input>
+        <button class="header__nav__item__searchBtn search hidden">Go</button>
+        </form>
+      </li>
       <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
             class="fas fa-search"></i></a></li>
       <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart" href=""><i
@@ -38,10 +45,14 @@
   const searchBar = document.querySelector('.header__nav__item__searchbar');
   const searchButton = document.querySelector('.header__nav__item__search');
   const searchIcon = document.querySelector('.fa-search')
-
+  const home = document.querySelector('.header__nav__item__home')
+  const contact = document.querySelector('.header__nav__item__contact')
+  const searchBtn = document.querySelector('.search')
 
   searchButton.addEventListener('click', () => {
     searchIcon.classList.toggle("fa-times")
+     home.classList.toggle("hidden")
+    searchBtn.classList.toggle("hidden");
     searchBar.classList.toggle("hidden");
   })
 

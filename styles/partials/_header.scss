@@ -14,11 +14,8 @@
   display: grid;
   justify-content: space-around;
   align-items: center;
-  height: 100vh;
   grid-template: auto 1fr / 1fr;
   font-size: 1.7em;
-  position: fixed;
-  top: 0;
   width: 100vw;
 
   nav {
@@ -57,32 +54,44 @@
       }
 
       &__contact {
+        @extend .search-and-contact;
         position: fixed;
         margin-top: 400px;
         right: 11%;
-        @extend .search-and-contact;
+        i {
+          @media (min-width: 800px) {
+            display: none;
+          }
+        }
       }
 
       &__search {
+        @extend .search-and-contact;
         position: fixed;
         margin-top: 500px;
         right: 12%;
-        @extend .search-and-contact;
-
         &:hover {
           cursor: pointer;
         }
       }
-
-      &__searchbar {
-        height: 20px;
-        border-radius: 6px;
-        border: 1px solid rgb(80, 80, 80);
-
+      &__searchform {
         @media (max-width: 800px) {
           position: fixed;
           margin-top: 520px;
           right: 28%;
+        }
+      }
+      &__searchbar {
+        height: 20px;
+        border-radius: 6px;
+        border: 1px solid rgb(80, 80, 80);
+      }
+      &__searchBtn {
+        height: 24px;
+        border-radius: 6px;
+        border: 1px solid rgb(80, 80, 80);
+        @media (min-width: 800px) {
+          display: none;
         }
       }
     }
@@ -90,15 +99,24 @@
 
   &__hero {
     text-align: center;
-    background: rgb(245, 245, 245);
+    background-color: rgb(245, 245, 245);
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: calc(100vh - 25px);
   }
-
 }
 
 .hidden {
   display: none;
+}
+.fixed {
+  position: fixed;
+  top: 0;
+}
+#contact-desktop {
+  @media (max-width: 800px) {
+    display: none;
+  }
 }
