@@ -1,8 +1,9 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,IAAI,CAAC;EACH,MAAM,EAAE,CAAC;CACV",
+    "mappings": "ACAA,AAAA,MAAM,CAAC;EACL,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,SAAS,EAAE,IAAI;EACf,UAAU,EAAE,OAAkB;CAY/B;;AAhBD,AAME,MANI,CAMJ,CAAC,CAAC;EACA,KAAK,EAAE,KAAK;EACZ,eAAe,EAAE,IAAI;CACtB;;AAGE,AAAD,eAAK,CAAC;EACJ,UAAU,EAAE,IAAI;CACjB",
     "sources": [
-        "style.scss"
+        "style.scss",
+        "partials/_asidemenu-admin.scss"
     ],
     "names": [],
     "file": "style.css"
