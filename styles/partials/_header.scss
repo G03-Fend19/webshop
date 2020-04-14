@@ -20,12 +20,14 @@
   top: 0;
   width: 100%;
   background-color: rgb(226, 226, 226);
+  background-color: blue;
 
   &__logo {
     margin-right: auto;
     align-items: center;
     margin-left: 20px;
   }
+
   &__nav {
     list-style-type: none;
     margin-right: 20px;
@@ -33,9 +35,11 @@
 
     &__item {
       margin-left: 20px;
+
       a {
         text-decoration: none;
         color: black;
+
         @media (min-width: 800px) {
           display: inline;
           position: relative;
@@ -45,21 +49,25 @@
       &__home {
         display: none;
       }
+
       &__contact {
         position: fixed;
         margin-top: 400px;
         right: 11%;
         @extend .search-and-contact;
       }
+
       &__search {
         position: fixed;
         margin-top: 500px;
         right: 12%;
         @extend .search-and-contact;
+
         &:hover {
           cursor: pointer;
         }
       }
+
       &__searchbar {
         height: 20px;
         border-radius: 6px;
