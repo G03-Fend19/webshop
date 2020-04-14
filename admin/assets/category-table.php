@@ -19,24 +19,33 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     $toggle = $name;
 
-    $categories .= "<form action='edit-category.php' method='POST'>
-    <tr>
-                  <td>
-                    <input class='hidden' type='text' name='name' id='input-$id' value='$name'>
-                    <p id='category-$id'>$name<p>
-                  </td>
-                  <td>
-                    <button type='button' id='editBtn-$id' onclick='editCategory($id);'>Edit</button>
+    $categories .= "
+                      <tr>
+                        <td>
+                          <form action='edit-category.php' method='POST'>
+                            <input class='hidden' type='text' name='name' id='input-$id' value='$name'>
+                            <button class='hidden' type='submit' id='saveBtn-$id'>Save</button>
+                            <input type='hidden' name='id' value='$id'>
+                          </form>
+                          <p id='category-$id'>$name<p>
+                        </td>
+                        <td>
+                          <button type='button' id='editBtn-$id' onclick='editCategory($id);'>Edit</button>
+                        </td>
+                        <td>
+                          <form action='delete-category.php' method='POST'>
+                            <button type='submit'>Delete</button>
+                            <input type='hidden' name='id' value='$id'>
+                          </form>
+                        </td>
+                      </tr>
+                    ";
+}
 
-                      <button class='hidden' type='submit' id='saveBtn-$id'>Save</button>
-                      <input type='hidden' name='id' value='$id'>
+if (isset($_GET['error'])) {
 
-                  </td>
-                  <td>
-                    <button>Delete</button>
-                  </td>
-                </tr>
-                </form>";
+    $categories .= "<p class='error'>Was not able to delete category. Please make sure it does not have any relations to products.</p>";
+
 }
 
 ?>
@@ -66,5 +75,9 @@ function editCategory(id) {
 <style>
   .hidden {
     display: none;
+  }
+
+  .error {
+    color: red;
   }
 </style>

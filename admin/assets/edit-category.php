@@ -4,8 +4,6 @@ require_once '../../db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    print_r($_POST);
-
     $id = htmlspecialchars($_POST['id']);
     $newName = htmlspecialchars($_POST['name']);
 
