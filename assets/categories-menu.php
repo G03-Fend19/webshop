@@ -12,16 +12,18 @@
     $id = htmlspecialchars($row['id']);
 
     $categories .= "<li class='nav-list__item'>
-                      <a href='?id=$id'><img src=''>$name</a>
+                      <a href='index.php?id=$id#main'><img src=''>$name</a>
                     </li>";
   endwhile
 ?>
 
 <section class="categories-menu">
-  <h2>Categories</h2>
-  <nav>
-    <ul class="nav-list">
+  <div class="categories-menu__container">
+    <h2>Categories</h2>
+    <nav>
+      <ul class="nav-list">
       <?php echo $categories; ?>
-    </ul>
-  </nav>
+      </ul>
+    </nav>
+  </div>
 </section>

@@ -18,4 +18,8 @@
 .aside__nav__ul {
   list-style: none;
 }
+
+.hidden {
+  display: none;
+}
 /*# sourceMappingURL=style.css.map */

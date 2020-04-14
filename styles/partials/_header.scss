@@ -14,8 +14,8 @@
   display: grid;
   justify-content: space-around;
   align-items: center;
-  height: 100vh;
   grid-template: auto 1fr / 1fr;
+  font-size: 1.7em;
   width: 100vw;
 
   nav {
@@ -25,6 +25,7 @@
     z-index: 10;
     display: flex;
     width: 100vw;
+    height: 70px;
     align-items: center;
     background-color: rgb(226, 226, 226);
   }
@@ -38,6 +39,7 @@
   &__nav {
     list-style-type: none;
     margin-right: 20px;
+
     display: flex;
 
     &__item {
@@ -58,48 +60,74 @@
       }
 
       &__contact {
-        position: fixed;
-        margin-top: 400px;
-        right: 11%;
         @extend .search-and-contact;
+        position: fixed;
+        margin-top: 75vh;
+        right: 11%;
+        i {
+          @media (min-width: 800px) {
+            display: none;
+          }
+        }
       }
 
       &__search {
-        position: fixed;
-        margin-top: 500px;
-        right: 12%;
         @extend .search-and-contact;
+
+        position: fixed;
+        margin-top: 85vh;
+        right: 12%;
 
         &:hover {
           cursor: pointer;
         }
       }
-
+      &__searchform {
+        @media (max-width: 800px) {
+          position: fixed;
+          margin-top: 86vh;
+          right: 28%;
+        }
+      }
       &__searchbar {
         height: 20px;
         border-radius: 6px;
         border: 1px solid rgb(80, 80, 80);
-
-        @media (max-width: 800px) {
-          position: fixed;
-          margin-top: 520px;
-          right: 28%;
+      }
+      &__searchBtn {
+        height: 24px;
+        border-radius: 6px;
+        border: 1px solid rgb(80, 80, 80);
+        @media (min-width: 800px) {
+          display: none;
         }
       }
     }
   }
 
   &__hero {
+    margin-top: 70px;
     text-align: center;
+    background-color: rgb(245, 245, 245);
+    height: 100%;
     background: rgb(245, 245, 245);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: calc(100vh - 70px);
   }
-
 }
 
 .hidden {
   display: none;
+}
+.fixed {
+  position: fixed;
+  top: 0;
+}
+#contact-desktop {
+  @media (max-width: 800px) {
+    display: none;
+  }
 }

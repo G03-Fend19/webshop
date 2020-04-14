@@ -11,10 +11,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = htmlspecialchars($row['name']);
 
     $categories .= "<li class='aside__nav__ul__li'>
-								                      <h2 class='aside__nav__ul__li__title'>
-								                        <a class='aside__nav__ul__li__title__link' href=''>$name</a>
-								                      </h2>
-								                    </li>";
+                      <h2 class='aside__nav__ul__li__title'>
+                        <a class='aside__nav__ul__li__title__link' href=''>$name</a>
+                      </h2>
+                    </li>";
 
 endwhile;
 
