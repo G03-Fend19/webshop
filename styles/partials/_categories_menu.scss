@@ -1,6 +1,9 @@
 .categories-menu {
   max-inline-size: 20vw;
   background-color: rgb(202, 202, 202);
+  &__container {
+    margin: 2em 0;
+  }
   ul,
   li {
     list-style: none;

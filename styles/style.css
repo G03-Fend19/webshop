@@ -4,15 +4,11 @@
           box-sizing: border-box;
 }
 
-body {
-  min-height: 2000px;
-}
-
 main {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (auto)[2];
-      grid-template-columns: repeat(2, auto);
+  -ms-grid-columns: minmax(100px, 250px) auto;
+      grid-template-columns: minmax(100px, 250px) auto;
 }
 
 .search-and-contact, .header__nav__item__contact, .header__nav__item__search {
@@ -43,7 +39,6 @@ main {
   -ms-grid-columns: 1fr;
       grid-template: auto 1fr / 1fr;
   font-size: 1.7em;
-  width: 100vw;
 }
 
 .header nav {
@@ -96,7 +91,7 @@ main {
 
 .header__nav__item__contact {
   position: fixed;
-  margin-top: 400px;
+  margin-top: 75vh;
   right: 11%;
 }
 
@@ -108,7 +103,7 @@ main {
 
 .header__nav__item__search {
   position: fixed;
-  margin-top: 500px;
+  margin-top: 85vh;
   right: 12%;
 }
 
@@ -119,7 +114,7 @@ main {
 @media (max-width: 800px) {
   .header__nav__item__searchform {
     position: fixed;
-    margin-top: 520px;
+    margin-top: 86vh;
     right: 28%;
   }
 }
@@ -179,6 +174,10 @@ main {
   background-color: #cacaca;
 }
 
+.categories-menu__container {
+  margin: 2em 0;
+}
+
 .categories-menu ul,
 .categories-menu li {
   list-style: none;
@@ -208,8 +207,7 @@ main {
 }
 
 .search-section {
-  max-width: 80vw;
-  margin-left: auto;
+  margin: 2em 0;
 }
 
 .search-section__header, .search-section__try-again {
@@ -219,11 +217,17 @@ main {
 .search-section .products {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
+  -ms-grid-columns: (minmax(250px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+.search-section .product-card {
+  max-width: 200px;
 }
 
 .search-section .product-card .product-thumb {
-  max-width: 250px;
+  max-width: 200px;
 }
 /*# sourceMappingURL=style.css.map */
