@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -9,6 +10,8 @@ main {
   display: grid;
   -ms-grid-columns: minmax(100px, 250px) auto;
       grid-template-columns: minmax(100px, 250px) auto;
+  min-height: 100vh;
+  padding-top: 70px;
 }
 
 .search-and-contact, .header__nav__item__contact, .header__nav__item__search {
@@ -177,6 +180,7 @@ main {
 
 .categories-menu__container {
   margin: 2em 0;
+  padding-left: 1em;
 }
 
 .categories-menu ul,

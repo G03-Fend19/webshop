@@ -20,7 +20,7 @@
       <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
           href="">Contact</a></li>
       <li class="header__nav__item">
-        <form class="header__nav__item__searchform" action="search.php" method="GET">
+        <form class="header__nav__item__searchform" action="search.php#main" method="GET">
           <input class="header__nav__item__searchbar hidden" placeholder="search..." type="text" name="search">
         </input>
         <button class="header__nav__item__searchBtn search hidden">Go</button>
@@ -55,4 +55,4 @@
 
 })();
 </script>
-<main>
+<main id="main">

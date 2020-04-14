@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 body {
@@ -7,4 +8,6 @@ body {
 main {
   display: grid;
   grid-template-columns: minmax(100px, 250px) auto;
+  min-height: 100vh;
+  padding-top: 70px;
 }
