@@ -1,5 +1,5 @@
-let errorDiv = document.createElement("div");
-
+//let errorDiv = document.createElement("div");
+let errorDiv = document.querySelector("#errorDiv");
 function validateProductForm() {
   let errormsg = [];
   const title = document.forms["addProductForm"]["title"].value;
@@ -38,7 +38,7 @@ function validateProductForm() {
 function showErrormsg(messages) {
   console.log(messages);
 
-  const form = document.querySelector("#addProductForm");
+  //const form = document.querySelector("#addProductForm");
 
   errorDiv.innerHTML = "";
   errorDiv.innerHTML = messages
@@ -47,5 +47,5 @@ function showErrormsg(messages) {
     })
     .join("");
 
-  form.append(errorDiv);
+  //form.append(errorDiv);
 }

@@ -38,6 +38,7 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
 <body>
   <script src="validation.js"></script>
 
+
   <form id="addProductForm" name="addProductForm" action="process_product.php" onsubmit="return validateProductForm()"
     method="POST">
     <label for="title">
@@ -65,21 +66,20 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
     <div id="errorDiv">
       <?php
 
-/*
-$fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-if (strpos($fullUrl, "duplicate=true") == true) {
-echo "<p class='errormsg'>You already have a product with that title</p>";
-}
- */
-
-if (!isset($_GET['duplicate'])) {
+if (!isset($_GET['formerror'])) {
     exit();
 
 } else {
-    $duplicateCheck = $_GET['duplicate'];
-    if ($duplicateCheck == 'true') {
+    $errorCheck = $_GET['formerror'];
+    if ($errorCheck == 'duplicate') {
 
         echo "<p class='errormsg'>You already have a product called <strong>$title</strong>.</p>";
+        exit();
+    } elseif ($errorCheck == 'empty') {
+        echo "<p class='errormsg'>Please fill in all fields.</p>";
+        exit();
+    } elseif ($errorCheck == 'nocategory') {
+        echo "<p class='errormsg'>Please select a category for the product.</p>";
         exit();
     }
 }
