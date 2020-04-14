@@ -16,7 +16,6 @@
   align-items: center;
   grid-template: auto 1fr / 1fr;
   font-size: 1.7em;
-  width: 100vw;
 
   nav {
     display: flex;
@@ -58,7 +57,7 @@
       &__contact {
         @extend .search-and-contact;
         position: fixed;
-        margin-top: 400px;
+        margin-top: 75vh;
         right: 11%;
         i {
           @media (min-width: 800px) {
@@ -69,9 +68,11 @@
 
       &__search {
         @extend .search-and-contact;
+
         position: fixed;
-        margin-top: 500px;
+        margin-top: 85vh;
         right: 12%;
+
         &:hover {
           cursor: pointer;
         }
@@ -79,7 +80,7 @@
       &__searchform {
         @media (max-width: 800px) {
           position: fixed;
-          margin-top: 520px;
+          margin-top: 86vh;
           right: 28%;
         }
       }
