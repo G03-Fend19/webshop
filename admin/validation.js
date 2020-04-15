@@ -22,8 +22,14 @@ function validateProductForm() {
   if (!price) {
     errormsg.push("The product must have a price.");
   }
+  if (price < 0) {
+    errormsg.push("The product price can't be less than 0.");
+  }
   if (!qty) {
     errormsg.push("Please set a stock quanitiy for the product.");
+  }
+  if (qty < 0) {
+    errormsg.push("The product quantity can't be less than 0.");
   }
 
   if (errormsg.length != 0) {

@@ -55,11 +55,11 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
     </select>
     <label for="price">
       Price
-      <input type="number" name="price" id="price" value="<?=$price?>" required>
+      <input type="number" name="price" id="price" value="<?=$price?>" min="0" required>
     </label>
     <label for="qty">
       Qty
-      <input type="number" name="qty" id="qty" value="<?=$qty?>" required>
+      <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required>
     </label>
     <label for="img">Images</label>
     <input type="file" name="img" id="img">
