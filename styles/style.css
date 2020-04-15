@@ -42,9 +42,14 @@ main {
   -ms-grid-columns: 1fr;
       grid-template: auto 1fr / 1fr;
   font-size: 1.7em;
+  width: 100vw;
 }
 
 .header nav {
+  font-size: 1.7em;
+  position: fixed;
+  top: 0;
+  z-index: 10;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -145,6 +150,8 @@ main {
   text-align: center;
   background-color: whitesmoke;
   height: 100%;
+  background: whitesmoke;
+  height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

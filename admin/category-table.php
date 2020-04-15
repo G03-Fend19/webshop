@@ -1,7 +1,8 @@
 <?php
 
-require_once "../../db.php";
-require_once "aside-navigation.php";
+require_once "../db.php";
+require_once "./assets/head.php";
+require_once "./assets/aside-navigation.php";
 
 $sql = "SELECT * FROM ws_categories";
 //Add statement for selecting only categories with products
@@ -71,13 +72,16 @@ function editCategory(id) {
   saveBtn.classList.toggle('hidden');
 }
 </script>
+</body>
 
-<style>
-  .hidden {
-    display: none;
-  }
+</html>
 
-  .error {
-    color: red;
-  }
-</style>
+<!-- <style>
+/* .hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+} */
+</style> -->
