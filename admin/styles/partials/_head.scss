@@ -1,5 +1,39 @@
 .admin__header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  width: 100vw;
+  color: white;
+
+  nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background: #999;
+  }
+
+  a {
+    margin-right: auto;
+    margin-left: 2em;
+    text-decoration: none;
+    color: white;
+  }
+
+  &__login {
+    display: grid;
+    grid-template: 1fr / 1fr 0.5fr;
+    align-items: center;
+
+    &__text {
+
+      h5,
+      p {
+        margin: 0;
+      }
+    }
+
+    img {
+      margin-right: 2em;
+    }
+  }
+
+
+
 }
