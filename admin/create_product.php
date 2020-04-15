@@ -31,7 +31,7 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
-
+  <link rel="stylesheet" href="./styles/style.css">
 
 </head>
 
@@ -40,29 +40,32 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
   <!-- <script src="validation.js"></script> -->
 
 
-  <form id="addProductForm" name="addProductForm" action="process_product.php" onsubmit="return validateProductForm()"
-    method="POST">
-    <label for="title">
-      Product name
-      <input type="text" name="title" id="title" value="<?=$title?>" required>
-    </label>
-    <label for="description">
-      Description
-      <textarea name="description" id="description" required><?=$descrip?></textarea>
-    </label>
-    <select name="category" id="category">
-      <?=$options?>
-    </select>
-    <label for="price">
-      Price
-      <input type="number" name="price" id="price" value="<?=$price?>" min="0" required>
-    </label>
-    <label for="qty">
-      Qty
-      <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required>
-    </label>
-    <label for="img">Images</label>
-    <input type="file" name="img" id="img">
+  <form class="form" id="addProductForm" name="addProductForm" action="process_product.php"
+    onsubmit="return validateProductForm()" method="POST">
+    <div class="form__group">
+      <label for="title" class="form__label">
+        Product name
+        <input type="text" name="title" id="title" value="<?=$title?>" required class="form__input">
+      </label>
+      <label for="description" class="form__label descrip">
+        Description
+        <textarea name="description" id="description" required class="form__input"><?=$descrip?></textarea>
+      </label>
+      <select name="category" id="category">
+        <?=$options?>
+      </select>
+      <label for="price" class="form__label">
+        Price
+        <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
+      </label>
+      <label for="qty" class="form__label">
+        Qty
+        <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required class="form__input">
+      </label>
+
+    </div>
+    <label for="img" class="form__label">Images</label>
+    <input type="file" name="img" id="img" class="form__input">
     <button type="submit">Add</button>
     <div id="errorDiv">
       <?php

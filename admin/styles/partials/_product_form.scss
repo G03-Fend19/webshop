@@ -1,0 +1,15 @@
+.form {
+  &__group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-auto-flow: column;
+  }
+
+  .descrip {
+    grid-row: span 2;
+  }
+  &__input {
+    display: block;
+  }
+}

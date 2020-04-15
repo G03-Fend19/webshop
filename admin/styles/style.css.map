@@ -1,8 +1,9 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,IAAI,CAAC;EACH,MAAM,EAAE,CAAC;CACV",
+    "mappings": "AAAA,AAAA,IAAI,CAAC;EACH,MAAM,EAAE,CAAC;CACV;;ACDE,AAAD,YAAQ,CAAC;EACP,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,OAAO;EAC9B,kBAAkB,EAAE,cAAc;EAClC,cAAc,EAAE,MAAM;CACvB;;AANH,AAQE,KARG,CAQH,QAAQ,CAAC;EACP,QAAQ,EAAE,MAAM;CACjB;;AACA,AAAD,YAAQ,CAAC;EACP,OAAO,EAAE,KAAK;CACf",
     "sources": [
-        "style.scss"
+        "style.scss",
+        "partials/_product_form.scss"
     ],
     "names": [],
     "file": "style.css"
