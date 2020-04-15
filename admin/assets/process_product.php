@@ -1,5 +1,5 @@
 <?php
-require_once '../db.php';
+require_once '../../db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -18,16 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt->execute();
     if (empty($title) || empty($description) || empty($price) || empty($qty)) {
-        header("Location: ./create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
         exit();
     } elseif ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        header("Location: ./create_product.php?formerror=duplicate&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=duplicate&title=$title&descrip=$description&price=$price&qty=$qty");
         exit();
     } elseif ($category == "category" || empty($category)) {
-        header("Location: ./create_product.php?formerror=nocategory&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=nocategory&title=$title&descrip=$description&price=$price&qty=$qty");
         exit();
     } elseif ($price < 0 || $qty < 0) {
-        header("Location: ./create_product.php?formerror=negative&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=negative&title=$title&descrip=$description&price=$price&qty=$qty");
         exit();
     }
     ;

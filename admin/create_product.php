@@ -37,10 +37,10 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
 
 <body>
 
-  <!-- <script src="validation.js"></script> -->
 
 
-  <form class="form" id="addProductForm" name="addProductForm" action="process_product.php"
+
+  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product.php"
     onsubmit="return validateProductForm()" method="POST">
     <div class="form__group">
       <label for="title" class="form__label">
