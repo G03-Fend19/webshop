@@ -81,6 +81,9 @@ if (!isset($_GET['formerror'])) {
     } elseif ($errorCheck == 'nocategory') {
         echo "<p class='errormsg'>Please select a category for the product.</p>";
 
+    } elseif ($errorCheck == 'negative') {
+        echo "<p class='errormsg'>The product price and quantity can't be less than 0.</p>";
+
     }
 }
 

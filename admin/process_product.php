@@ -26,6 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif ($category == "category" || empty($category)) {
         header("Location: ./create_product.php?formerror=nocategory&title=$title&descrip=$description&price=$price&qty=$qty");
         exit();
+    } elseif ($price < 0 || $qty < 0) {
+        header("Location: ./create_product.php?formerror=negative&title=$title&descrip=$description&price=$price&qty=$qty");
+        exit();
     }
     ;
 
