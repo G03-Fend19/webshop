@@ -1,5 +1,6 @@
 <?php
 require_once '../db.php';
+  require_once 'upload_image.php';
 
 $sql = "SELECT * FROM ws_categories";
 
@@ -65,7 +66,26 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
 
     </div>
     <label for="img" class="form__label">Images</label>
-    <input type="file" name="img" id="img" class="form__input">
+
+    <div class="form__image-section">
+
+      <?php
+
+    $counter = 1;
+    foreach($imageArray as $image){
+      echo  "
+      <label class='form__image-section__selection'>
+      $image
+      <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+      <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+      </label>
+      ";
+      $counter++;
+      }
+
+        ?>
+    </div>
+
     <button type="submit">Add</button>
     <div id="errorDiv">
       <?php
@@ -93,6 +113,11 @@ if (!isset($_GET['formerror'])) {
 ?>
     </div>
   </form>
+
+  <?php 
+
+  
+  ?>
   <script src="validation.js"></script>
 
 
