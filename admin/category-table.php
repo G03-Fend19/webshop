@@ -77,11 +77,11 @@ function editCategory(id) {
 </html>
 
 <!-- <style>
-/* .hidden {
+.hidden {
   display: none;
 }
 
 .error {
   color: red;
-} */
+}
 </style> -->
