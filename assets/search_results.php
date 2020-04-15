@@ -38,13 +38,15 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 
     $productCards .= "<article class='product-card'>
                         <a href='' class='product-card__image-link'>
-                          <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+                          <div class='image-wrapper'>
+                            <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+                          </div>
                         </a>
                         <div class='product-card__content'>
                           <a href='' class='product-card__product-link'>
                             <h3>$productName</h3>
                           </a>
-                          <p>$productPrice:-</p>
+                          <p>$productPrice SEK</p>
                           <button class='add-to-cart-btn'>Add to cart</button>
                         </div>
                       </article>";
@@ -65,9 +67,10 @@ function getHeader($search) {
 }
 ?>
 
-<section id="search-section" class="search-section">
-  <h2 class="search-section__header"><?php getHeader($search)?></h2>
-  <p class="search-section__try-again">Not what you searched for? Try again:</p>
+<section id="search-section" class="display-products">
+  <header class="display-products__header">
+    <h2 class="display-products__heading"><?php getHeader($search)?></h2>
+  </header>
   <!-- insert search bar and function -->
 
   <?php

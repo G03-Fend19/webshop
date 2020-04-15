@@ -5,13 +5,24 @@
           box-sizing: border-box;
 }
 
-main {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: minmax(100px, 250px) auto;
-      grid-template-columns: minmax(100px, 250px) auto;
-  min-height: 100vh;
-  padding-top: 70px;
+ul, li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+@media (min-width: 1013px) {
+  main {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: minmax(100px, 250px) auto;
+        grid-template-columns: minmax(100px, 250px) auto;
+    min-height: 100vh;
+    padding-top: 70px;
+  }
 }
 
 .search-and-contact, .header__nav__item__contact, .header__nav__item__search {
@@ -180,65 +191,136 @@ main {
 }
 
 .categories-menu {
-  max-inline-size: 20vw;
+  max-inline-size: 100%;
   background-color: #cacaca;
 }
 
 .categories-menu__container {
-  margin: 2em 0;
-  padding-left: 1em;
-}
-
-.categories-menu ul,
-.categories-menu li {
-  list-style: none;
-  padding: 0;
-}
-
-.categories-menu ul a,
-.categories-menu li a {
-  text-decoration: none;
-  width: 100%;
-  display: block;
-}
-
-.categories-menu ul a:hover,
-.categories-menu li a:hover {
-  background-color: #d4d4d4;
-}
-
-.categories-menu ul a:visited,
-.categories-menu li a:visited {
-  color: black;
-}
-
-.categories-menu ul li,
-.categories-menu li li {
-  margin: 0.5em 0;
-}
-
-.search-section {
-  margin: 2em 0;
-}
-
-.search-section__header, .search-section__try-again {
+  max-width: 79vw;
+  margin: auto;
   text-align: center;
 }
 
-.search-section .products {
+@media (min-width: 1013px) {
+  .categories-menu__container {
+    margin: 2em 0;
+    padding-left: 1em;
+    max-width: unset;
+    text-align: unset;
+  }
+}
+
+.categories-menu ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 1em 0;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+@media (min-width: 1013px) {
+  .categories-menu ul {
+    display: block;
+    padding: 0;
+  }
+}
+
+.categories-menu ul li {
+  margin: 0.5em 0;
+}
+
+.categories-menu ul li a {
+  text-decoration: none;
+  width: 20vw;
+  display: block;
+  font-size: 20px;
+  min-width: 6em;
+  padding: 0.5em 0;
+}
+
+.categories-menu ul li a:hover {
+  background-color: #d4d4d4;
+}
+
+.categories-menu ul li a:visited {
+  color: black;
+}
+
+@media (min-width: 1013px) {
+  .categories-menu ul li a {
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    min-width: unset;
+    padding: unset;
+  }
+}
+
+.display-products {
+  margin: 2em 0;
+  padding: 0 1em;
+}
+
+@media (min-width: 800px) {
+  .display-products {
+    padding: 0 2em;
+  }
+}
+
+.display-products__header {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.display-products .products {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(250px, 1fr))[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 20px;
+  -ms-grid-columns: (minmax(230px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-gap: 50px;
   justify-items: center;
 }
 
-.search-section .product-card {
-  max-width: 200px;
+@media (min-width: 800px) {
+  .display-products .products {
+    -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }
 
-.search-section .product-card .product-thumb {
-  max-width: 200px;
+.display-products .product-card .product-thumb {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.display-products .product-card__content {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr auto;
+      grid-template-columns: 2fr auto;
+  -ms-grid-rows: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+  grid-row-gap: 0.5em;
+}
+
+.display-products .product-card__content .add-to-cart-btn {
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 3;
+  -ms-grid-column: 2;
+  grid-column: 2;
+}
+
+.display-products .product-card__content h3 {
+  display: inline;
+}
+
+.display-products .image-wrapper {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
 }
 /*# sourceMappingURL=style.css.map */
