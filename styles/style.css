@@ -278,16 +278,16 @@ a {
 .display-products .products {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(230px, 1fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  -ms-grid-columns: (minmax(230px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   grid-gap: 50px;
   justify-items: center;
 }
 
 @media (min-width: 800px) {
   .display-products .products {
-    -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    -ms-grid-columns: (minmax(200px, 1fr))[auto-fill];
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
 
