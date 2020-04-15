@@ -76,7 +76,7 @@ function editCategory(id) {
 
 </html>
 
-<!-- <style>
+<style>
 .hidden {
   display: none;
 }
@@ -84,4 +84,4 @@ function editCategory(id) {
 .error {
   color: red;
 }
-</style> -->
+</style>

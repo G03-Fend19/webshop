@@ -1,7 +1,9 @@
 @import "./partials/head";
 @import "./partials/asidemenu-admin";
 @import "./partials/category-table";
+@import "./partials/foot";
 
-body {
-  background: green;
+* {
+  margin: 0;
+  box-sizing: border-box;
 }

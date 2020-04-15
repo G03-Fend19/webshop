@@ -1,13 +1,44 @@
 .admin__header {
+  width: 100vw;
+  color: white;
+}
+
+.admin__header nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  width: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background: #999;
+}
+
+.admin__header a {
+  margin-right: auto;
+  margin-left: 2em;
+  text-decoration: none;
+  color: white;
+}
+
+.admin__header__login {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 1fr 0.5fr;
+      grid-template: 1fr / 1fr 0.5fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.admin__header__login__text h5,
+.admin__header__login__text p {
+  margin: 0;
+}
+
+.admin__header__login img {
+  margin-right: 2em;
 }
 
 .aside {
@@ -36,7 +67,22 @@
   background: blue;
 }
 
-body {
-  background: green;
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background: #999;
+  padding: 0.5em;
+}
+
+footer h4 {
+  text-align: center;
+  color: white;
+}
+
+* {
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 /*# sourceMappingURL=style.css.map */
