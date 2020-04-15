@@ -1,5 +1,8 @@
 //let errorDiv = document.createElement("div");
-let errorDiv = document.querySelector("#errorDiv");
+let errorDiv = document.getElementById("errorDiv");
+//let label = document.querySelector("label");
+console.log(errorDiv);
+
 function validateProductForm() {
   let errormsg = [];
   const title = document.forms["addProductForm"]["title"].value;
