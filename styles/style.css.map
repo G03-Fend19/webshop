@@ -7,8 +7,10 @@
 >>>>>>> Stashed changes
     "sources": [
         "style.scss",
+        "partials/_reset.scss",
         "partials/_main.scss",
         "partials/_header.scss",
+        "partials/_foot.scss",
         "partials/_categories_menu.scss",
         "partials/_display_products.scss"
     ],
