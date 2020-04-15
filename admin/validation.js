@@ -1,8 +1,3 @@
-//let errorDiv = document.createElement("div");
-let errorDiv = document.getElementById("errorDiv");
-//let label = document.querySelector("label");
-console.log(errorDiv);
-
 function validateProductForm() {
   let errormsg = [];
   const title = document.forms["addProductForm"]["title"].value;
@@ -41,14 +36,11 @@ function validateProductForm() {
 function showErrormsg(messages) {
   console.log(messages);
 
-  //const form = document.querySelector("#addProductForm");
-
+  let errorDiv = document.getElementById("errorDiv");
   errorDiv.innerHTML = "";
   errorDiv.innerHTML = messages
     .map((msg) => {
       return `<p class="errormsg">${msg}</p>`;
     })
     .join("");
-
-  //form.append(errorDiv);
 }
