@@ -10,6 +10,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
             ws_products.description AS ProductDescription,
             ws_products.price       AS ProductPrice,
             ws_products.id          AS ProductId,
+            ws_products.stock_qty    AS ProductQty,
             ws_images.img           AS ImageName,
             ws_images.id            AS ImageId
           FROM
@@ -36,11 +37,21 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
     $productPrice = htmlspecialchars($row['ProductPrice']);
     $productId = htmlspecialchars($row['ProductId']);
     $productImg = htmlspecialchars($row['ImageName']);
+    $productQty = htmlspecialchars($row['ProductQty']);
+
+    // if($productQty < 1) {
+    //   $productCards .= "<div class='out-of-stock'>"
+    // }
 
     $productCards .= "<article class='product-card'>
                         <a href='product.php?id=$productId' class='product-card__image-link'>
-                          <div class='image-wrapper'>
-                            <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+                          <div class='image-wrapper'>";
+                        $productQty < 1 ? $productCards.= "<div class='out-of-stock'>
+                                                            <span class='out-of-stock__msg'>
+                                                            Product currently out of stock
+                                                            </span>
+                                                          </div>" : null;
+                        $productCards.="<img class='product-thumb' src=./media/product_images/$productImg alt=''>
                           </div>
                         </a>
                         <div class='product-card__content'>
@@ -48,8 +59,10 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
                             <h3>$productName</h3>
                           </a>
                           <p>$productPrice SEK</p>
-                          <button class='add-to-cart-btn'>Add to cart</button>
-                        </div>
+                          <button class='add-to-cart-btn'>";
+                          $productQty < 1 ? $productCards.= "Out of stock" : $productCards.= "Add to cart";
+                          $productCards.="</button>
+                          </div>
                       </article>";
   endwhile;
   $productsContainer .= $productCards;
