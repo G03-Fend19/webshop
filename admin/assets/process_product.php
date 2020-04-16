@@ -64,16 +64,18 @@ SET @pid = LAST_INSERT_ID()";
 
 //Inserting the images and product img relationship
 
-    foreach ($images as $index => $img) {
-        $sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
-        $stmt = $db->prepare($sql_img);
-        $stmt->bindParam(":img", $img);
-        $stmt->execute();
+    if (count($images) != 0) {
+        foreach ($images as $index => $img) {
+            $sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
+            $stmt = $db->prepare($sql_img);
+            $stmt->bindParam(":img", $img);
+            $stmt->execute();
 
-        $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
+            $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
                     VALUES ( @pid, LAST_INSERT_ID())";
-        $stmt_rel = $db->prepare($sql_p_img);
-        $stmt_rel->execute();
+            $stmt_rel = $db->prepare($sql_p_img);
+            $stmt_rel->execute();
+        }
     }
 
 }
