@@ -3,10 +3,16 @@ require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
 ?>
+<main class="admin__products">
+  <div class="admin__products__text">
+    <h1>Products</h1>
+    <div class="main__admin__addCategory">
+      <p>Add new</p>
+      <i class="fas fa-plus"></i>
+    </div>
+  </div>
 
-<h2>Products</h2>
-
-<?php
+  <?php
   $sql = "SELECT
             ws_products.name        AS ProductName,
             ws_products.description AS ProductDescription,
@@ -66,24 +72,27 @@ while($row= $stmt->fetch(PDO::FETCH_ASSOC)) :
             <td>$category</td>
             <td>$stock_qty st</td>
             <td>$price SEK</td>
-            <td><button>Edit</button></td>
+            <td><button><i class='fas fa-pen'></i></button></td>
             <td>
                 <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-                  <button type='submit'>Delete</button>
+                  <button type='submit'><i class='far fa-trash-alt'></i></button>
                   <input type='hidden' name='id' value='$id'>
                </form>
             </td>
          </tr>";
 endwhile;
 echo'</table>';
+echo '</main>';
 ?>
 
-<script>
-function deleteProductConfirm() {
-  if (confirm("Are you sure you want to delete this product?")) {
-    return true;
-  } else {
-    return false;
+  <script>
+  function deleteProductConfirm() {
+    if (confirm("Are you sure you want to delete this product?")) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
-</script>
+  </script>
+
+  <?php require_once 'assets/foot.php';

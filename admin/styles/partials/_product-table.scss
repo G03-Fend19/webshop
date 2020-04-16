@@ -1,14 +1,48 @@
-table {
-  border-collapse: collapse;
-  width: 70%;
+.admin__products {
+  margin: 80px 2em 2em 2em;
+  padding: 2em;
 
-  th,
-  td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  h1 {
+    font-weight: 500;
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+    margin-top: 0.3em;
   }
-  img {
-    max-height: 50px;
+
+  h1::after {
+    content: "|";
+    font-weight: lighter;
+    padding-left: 0.5em;
   }
+
+  &__text {
+    display: flex;
+    align-items: center;
+  }
+
+
+  table {
+    // border-collapse: collapse;
+    width: 100%;
+    font-size: 0.7em;
+
+    th,
+    td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    img {
+      max-height: 50px;
+    }
+  }
+
 }

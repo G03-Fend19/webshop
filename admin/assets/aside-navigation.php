@@ -49,7 +49,7 @@ endwhile;
     <ul class="aside__nav__ul">
       <li class="aside__path">
         <i class="fas fa-shopping-basket"></i>
-        <a class="aside__nav__ul__li__title__link" href="./assets/product-table.php">Show all</a>
+        <a class="aside__nav__ul__li__title__link" href="./products_page.php">Show all</a>
       </li>
       <?php echo $categories; ?>
       <li class="aside__path">

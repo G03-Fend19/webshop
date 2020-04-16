@@ -228,19 +228,53 @@ select {
   list-style: none;
 }
 
-table {
-  border-collapse: collapse;
-  width: 70%;
+.admin__products {
+  margin: 80px 2em 2em 2em;
+  padding: 2em;
 }
 
-table th,
-table td {
+.admin__products h1 {
+  font-weight: 500;
+  font-size: 1.5em;
+  padding-bottom: 0.5em;
+  color: gray;
+  margin-top: 0.3em;
+}
+
+.admin__products h1::after {
+  content: "|";
+  font-weight: lighter;
+  padding-left: 0.5em;
+}
+
+.admin__products__text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.admin__products table {
+  width: 100%;
+  font-size: 0.7em;
+}
+
+.admin__products table th,
+.admin__products table td {
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-table img {
+.admin__products table button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.admin__products table img {
   max-height: 50px;
 }
 
