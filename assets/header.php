@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
-  <title>Document</title>
+  <title>G03 - Webshop</title>
 </head>
 
 <body>
@@ -22,7 +22,8 @@
       <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
           href="">Contact</a></li>
       <li class="header__nav__item">
-        <form class="header__nav__item__searchform" action="search.php#main" method="GET">
+        <form class="header__nav__item__searchform" name="search_form" action="search.php#main"
+              onsubmit="return validateSearchForm()" method="GET">
           <input class="header__nav__item__searchbar hidden" placeholder="search..." type="text" name="search">
         </input>
         <button class="header__nav__item__searchBtn search hidden">Go</button>
@@ -39,22 +40,22 @@
   </section>
 </header>
 
-<script>
-(() => {
-  const searchBar = document.querySelector('.header__nav__item__searchbar');
-  const searchButton = document.querySelector('.header__nav__item__search');
-  const searchIcon = document.querySelector('.fa-search')
-  const home = document.querySelector('.header__nav__item__home')
-  const contact = document.querySelector('.header__nav__item__contact')
-  const searchBtn = document.querySelector('.search')
+  <script>
+  (() => {
+    const searchBar = document.querySelector('.header__nav__item__searchbar');
+    const searchButton = document.querySelector('.header__nav__item__search');
+    const searchIcon = document.querySelector('.fa-search')
+    const home = document.querySelector('.header__nav__item__home')
+    const contact = document.querySelector('.header__nav__item__contact')
+    const searchBtn = document.querySelector('.search')
 
-  searchButton.addEventListener('click', () => {
-    searchIcon.classList.toggle("fa-times")
-     home.classList.toggle("hidden")
-    searchBtn.classList.toggle("hidden");
-    searchBar.classList.toggle("hidden");
-  })
+    searchButton.addEventListener('click', () => {
+      searchIcon.classList.toggle("fa-times")
+      home.classList.toggle("hidden")
+      searchBtn.classList.toggle("hidden");
+      searchBar.classList.toggle("hidden");
+    })
 
-})();
-</script>
-<main id="main">
+  })();
+  </script>
+  <main id="main">
