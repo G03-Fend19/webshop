@@ -10,7 +10,7 @@
  *    med hjälp av ett id
  *************************************/
 
-require_once '../db.php';
+require_once '../../db.php';
 
 if(isset($_GET['id'])){
 
@@ -22,8 +22,10 @@ if(isset($_GET['id'])){
   $stmt->execute();
 }
 
-header('Location:.php');
+header('Location:product-table.php');
 
-//<a href='delete-product.php?id=$id'>
-//Delete <i class='fa fa-trash'></i>
-//</a>  
+
+
+//formulär type submit
+
+//if server lika med post

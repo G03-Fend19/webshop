@@ -18,4 +18,20 @@
 .aside__nav__ul {
   list-style: none;
 }
+
+table {
+  border-collapse: collapse;
+  width: 70%;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+img {
+  max-height: 50px;
+}
 /*# sourceMappingURL=style.css.map */
