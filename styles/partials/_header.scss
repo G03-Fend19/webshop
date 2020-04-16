@@ -16,8 +16,13 @@
   align-items: center;
   grid-template: auto 1fr / 1fr;
   font-size: 1.7em;
+  width: 100vw;
 
   nav {
+    font-size: 1.7em;
+    position: fixed;
+    top: 0;
+    z-index: 10;
     display: flex;
     width: 100vw;
     height: 70px;
@@ -105,6 +110,8 @@
     text-align: center;
     background-color: rgb(245, 245, 245);
     height: 100%;
+    background: rgb(245, 245, 245);
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;

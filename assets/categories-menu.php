@@ -12,7 +12,10 @@
     $id = htmlspecialchars($row['id']);
 
     $categories .= "<li class='nav-list__item'>
-                      <a href='index.php?id=$id'><img src=''>$name</a>
+                      <a href='index.php?id=$id#main'>
+                        <img src=''>
+                        <span>$name<span>
+                      </a>
                     </li>";
   endwhile
 ?>
