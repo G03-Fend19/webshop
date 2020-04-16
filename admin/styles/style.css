@@ -158,6 +158,7 @@ select {
 
 .admin__header__login__text p {
   font-size: 0.6em;
+  color: green;
 }
 
 .admin__header__login__text h5 {

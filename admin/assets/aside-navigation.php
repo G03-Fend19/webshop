@@ -23,7 +23,7 @@ endwhile;
 <aside class="aside">
   <div class="aside__path aside__dashboard">
     <i class="fas fa-home"></i>
-    <a class="aside__h2__link" href="">Dashboard</a>
+    <a class="aside__h2__link" href="index.php">Dashboard</a>
     <i class="fas fa-chevron-right"></i>
   </div>
   <h3 class="aside__title">CREATE</h3>
