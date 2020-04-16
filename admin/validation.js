@@ -18,10 +18,9 @@ function validateProductForm() {
     errormsg.push(
       `The product must have a description of at least ${minDescrip} characters.`
     );
-    if (description.length > 800) {
-      errormsg.push(
-        `The product description can't be more than 800 characters.`
-      );
+  }
+  if (description.length > 800) {
+    errormsg.push(`The product description can't be more than 800 characters.`);
   }
   if (category == "category" || !category) {
     errormsg.push("The product must belong to a category.");
