@@ -196,6 +196,9 @@ select {
       -ms-flex-direction: column;
           flex-direction: column;
   max-width: 17vw;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   position: relative;
   top: 70px;
   padding-left: 2em;
