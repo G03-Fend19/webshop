@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
-  <title>Document</title>
+  <title>G03 - Webshop</title>
 </head>
 
 <body>
@@ -40,22 +40,22 @@
   </section>
 </header>
 
-<script>
-(() => {
-  const searchBar = document.querySelector('.header__nav__item__searchbar');
-  const searchButton = document.querySelector('.header__nav__item__search');
-  const searchIcon = document.querySelector('.fa-search')
-  const home = document.querySelector('.header__nav__item__home')
-  const contact = document.querySelector('.header__nav__item__contact')
-  const searchBtn = document.querySelector('.search')
+  <script>
+  (() => {
+    const searchBar = document.querySelector('.header__nav__item__searchbar');
+    const searchButton = document.querySelector('.header__nav__item__search');
+    const searchIcon = document.querySelector('.fa-search')
+    const home = document.querySelector('.header__nav__item__home')
+    const contact = document.querySelector('.header__nav__item__contact')
+    const searchBtn = document.querySelector('.search')
 
-  searchButton.addEventListener('click', () => {
-    searchIcon.classList.toggle("fa-times")
-     home.classList.toggle("hidden")
-    searchBtn.classList.toggle("hidden");
-    searchBar.classList.toggle("hidden");
-  })
+    searchButton.addEventListener('click', () => {
+      searchIcon.classList.toggle("fa-times")
+      home.classList.toggle("hidden")
+      searchBtn.classList.toggle("hidden");
+      searchBar.classList.toggle("hidden");
+    })
 
-})();
-</script>
-<main id="main">
+  })();
+  </script>
+  <main id="main">
