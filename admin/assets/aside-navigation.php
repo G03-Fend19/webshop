@@ -8,13 +8,14 @@ $stmt->execute();
 $categories = "";
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
+    $id = htmlspecialchars($row['id']);
     $name = htmlspecialchars($row['name']);
 
     $categories .= "<li class='aside__nav__ul__li'>
-                      <h2 class='aside__nav__ul__li__title'>
-                        <a class='aside__nav__ul__li__title__link' href=''>$name</a>
-                      </h2>
-                    </li>";
+												                      <h2 class='aside__nav__ul__li__title'>
+												                        <a class='aside__nav__ul__li__title__link' href=''>$name</a>
+												                      </h2>
+												                    </li>";
 
 endwhile;
 
@@ -34,7 +35,12 @@ endwhile;
       </li>
       <li class="aside__nav__ul__li">
         <h2 class="aside__nav__ul__li__title">
-          <a class="aside__nav__ul__li__title__link" href="">Add category</a>
+          <a class="aside__nav__ul__li__title__addCategory" href="#">Add category</a>
+          <form class="hidden aside__nav__ul__li__title__form" action='./assets/add-category.php' method='POST'>
+            <input type='text' name='name' id=''>
+            <button type='submit' id='saveBtn'>Save</button>
+          </form>
+
         </h2>
       </li>
     </ul>
@@ -44,7 +50,7 @@ endwhile;
     <ul class="aside__nav__ul">
       <li class="aside__nav__ul__li">
         <h2 class="aside__nav__ul__li__title">
-          <a class="aside__nav__ul__li__title__link" href="">Show all</a>
+          <a class="aside__nav__ul__li__title__link" href="./assets/product-table.php">Show all</a>
         </h2>
       </li>
       <?php echo $categories; ?>
@@ -81,3 +87,24 @@ endwhile;
     </ul>
   </nav>
 </aside>
+
+<script>
+  const addCategory = document.querySelector('.aside__nav__ul__li__title__addCategory');
+  const addCategoryForm = document.querySelector('.aside__nav__ul__li__title__form');
+  const saveNewCategoryBtn = document.querySelector('#saveBtn');
+
+  addCategory.addEventListener('click', () => {
+    addCategoryForm.classList.toggle("hidden")
+  })
+
+  saveNewCategoryBtn.addEventListener('click', () => {
+    addCategoryForm.classList.toggle("hidden")
+  })
+
+</script>
+
+<style>
+  .hidden{
+    display: none;
+  }
+</style>

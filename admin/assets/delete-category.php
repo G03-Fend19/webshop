@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':id', $id);
 
         $stmt->execute();
-        header('Location: category-table.php');
+        header('Location: ../category-table.php');
     } catch (\PDOException $e) {
-        header('Location: category-table.php?error=true');
+        header('Location: ../category-table.php?deleteerror=true');
     }
 }

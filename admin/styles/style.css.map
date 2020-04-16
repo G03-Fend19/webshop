@@ -8,6 +8,8 @@
         "partials/_asidemenu-admin.scss",
         "partials/_category-table.scss",
         "partials/_foot.scss"
+        "partials/_asidemenu-admin.scss",
+        "partials/_product-table.scss"
     ],
     "names": [],
     "file": "style.css"

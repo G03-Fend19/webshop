@@ -16,26 +16,23 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $name = htmlspecialchars($row['name']);
     $id = htmlspecialchars($row['id']);
 
-    $edit = "<input type='text' value='$name'>";
-
-    $toggle = $name;
-
     $categories .= "
-                      <tr>
-                        <td>
-                          <form action='edit-category.php' method='POST'>
-                            <input class='hidden' type='text' name='name' id='input-$id' value='$name'>
-                            <button class='hidden' type='submit' id='saveBtn-$id'>Save</button>
+                      <tr class='main__category-table__tr'>
+                        <td class='main__category-table__tr__td'>
+                          <form action='./assets/edit-category.php' method='POST' class='main__category-table__tr__td__save-form'>
+                            <input class='hidden main__category-table__tr__td__save-form__input' type='text' name='name' id='input-$id' value='$name'>
+                            <button class='hidden main__category-table__tr__td__save-form__btn' type='submit' id='saveBtn-$id'>Save</button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
-                          <p id='category-$id'>$name<p>
+                          <p  class='main__category-table__tr__td__p' id='category-$id'>$name</p>
                         </td>
-                        <td>
-                          <button type='button' id='editBtn-$id' onclick='editCategory($id);'>Edit</button>
+                        <td class='main__category-table__tr__td'>
+                          <button type='button' id='editBtn-$id' class='main__category-table__tr__td__edit-btn' onclick=\"toggleEditCategory('$id', '$name')\">Edit</button>
+                          <button type='button' id='abortBtn-$id' class='hidden main__category-table__tr__td__cancle-btn' onclick='toggleEditCategory($id)'>Cancel</button>
                         </td>
-                        <td>
-                          <form action='delete-category.php' method='POST'>
-                            <button type='submit'>Delete</button>
+                        <td class='main__category-table__tr__td'>
+                          <form action='./assets/delete-category.php' method='POST' class='main__category-table__tr__td__delete-form'>
+                            <button type='submit' class='main__category-table__tr__td__delete-form__delete-Btn'>Delete</button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
                         </td>
@@ -43,45 +40,56 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     ";
 }
 
-if (isset($_GET['error'])) {
+if (isset($_GET['deleteerror'])) {
 
     $categories .= "<p class='error'>Was not able to delete category. Please make sure it does not have any relations to products.</p>";
 
 }
 
+if (isset($_GET['editerror'])) {
+
+  $categories .= "<p class='error'>Was not able to edit category. Can not have the same name as other.</p>";
+
+}
+
+$categories .= "</table>";
+
 ?>
 
+<main class="main__">
 <h1>Categories</h1>
 
-<table>
+<table class="main__category-table">
   <?php echo $categories; ?>
 </table>
 
 <script>
-function editCategory(id) {
+
+function toggleEditCategory(id, name) {
+
   const categoryP = document.querySelector('#category-' + id);
   categoryP.classList.toggle('hidden');
 
+  console.log(id);
+  console.log(name);
+
   const input = document.querySelector('#input-' + id);
   input.classList.toggle('hidden');
+
+  if (name) {
+    input.value = name;
+  }
 
   const editBtn = document.querySelector('#editBtn-' + id);
   editBtn.classList.toggle('hidden');
 
   const saveBtn = document.querySelector('#saveBtn-' + id);
   saveBtn.classList.toggle('hidden');
+
+  const abortBtn = document.querySelector('#abortBtn-' + id);
+  abortBtn.classList.toggle('hidden');
 }
 </script>
+</main>
 </body>
-
 </html>
-
-<!-- <style>
-.hidden {
-  display: none;
-}
-
-.error {
-  color: red;
-}
-</style> -->
