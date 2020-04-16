@@ -21,11 +21,45 @@
     align-items: center;
   }
 
+  &__filter {
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 100px;
+    gap: 0.5em;
+    padding-bottom: 2em;
+
+    h2 {
+      font-size: 1em;
+      color: gray;
+      margin-top: 1em;
+      font-weight: 500;
+    }
+
+    &__select {
+      // height: 40px;
+      // font-size: 1em;
+      // color: gray;
+      background: blue;
+      display: flex;
+      align-items: center;
+    }
+
+    input {
+      grid-column: span 2;
+      @extend %boxShadowSection;
+      padding: 0 0 0 1em;
+      border-radius: 10px;
+      border: none;
+    }
+  }
+
 
   table {
     // border-collapse: collapse;
     width: 100%;
     font-size: 0.7em;
+    @extend %boxShadowSection;
+    border-radius: 15px;
+    padding: 2em 1em;
 
     th,
     td {
