@@ -1,32 +1,28 @@
 <?php
 
-/**************************************
- * 
- * Filnamn: delete-product.php
- * Författare: Lova Duvnäs
- * Date: 2020-04-14
- * 
- * 1. Filen tar bort en rad från databasen
- *    med hjälp av ett id
- *************************************/
-
 require_once '../../db.php';
 
+function deleteConfirm() {
+  if (confirm("Are you sure you want to delete this product?")) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
-if(isset($_GET['id'])){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  
+  $id = htmlspecialchars($_POST['id']);
 
-  $id = htmlspecialchars($_GET['id']); 
+  $sql = 'DELETE FROM ws_products WHERE id = :id';
 
-  $sql = "DELETE FROM ws_products WHERE id = :id";
   $stmt = $db->prepare($sql);
   $stmt->bindParam(':id', $id);
   $stmt->execute();
+
 }
 
-header('Location:../product-table.php');
+header('Location:../products_page.php');
 
 
 
-//formulär type submit
-
-//if server lika med post
