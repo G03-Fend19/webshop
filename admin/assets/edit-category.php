@@ -7,14 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = htmlspecialchars($_POST['id']);
     $newName = htmlspecialchars($_POST['name']);
 
-    $sql = "UPDATE ws_categories SET name = :name
+    try {
+        $sql = "UPDATE ws_categories SET name = :name
     WHERE id = :id";
 
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(':name', $newName);
-    $stmt->bindParam(':id', $id);
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':name', $newName);
+        $stmt->bindParam(':id', $id);
 
-    $stmt->execute();
+        $stmt->execute();
+        header('Location: ../category-table.php');
+    } catch (\PDOException $e) {
+        header('Location: ../category-table.php?editerror=true');
+    }
 }
-
-header('Location: category-table.php');
