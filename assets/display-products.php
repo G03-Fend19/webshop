@@ -7,14 +7,15 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
   $id = htmlspecialchars($_GET['id']);
 
   $sql = "SELECT 
-            ws_products.name AS ProductName, 
+            ws_products.name        AS ProductName, 
             ws_products.description AS ProductDescription,
-            ws_products.price AS ProductPrice,
-            ws_products.id AS ProductId,
-            ws_images.img AS ImageName,
-            ws_images.id AS ImageId,
-            ws_categories.id AS CategoryId,
-            ws_categories.name AS CategoryName
+            ws_products.price       AS ProductPrice,
+            ws_products.id          AS ProductId,
+            ws_products.stock_qty   AS ProductQty,
+            ws_images.img           AS ImageName,
+            ws_images.id            AS ImageId,
+            ws_categories.id        AS CategoryId,
+            ws_categories.name      AS CategoryName
           FROM 
             ws_products,
             ws_images,
@@ -39,11 +40,12 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
   $stmt->execute();
 } else {
   $sql = "SELECT 
-            ws_products.name AS ProductName, 
-            ws_products.price AS ProductPrice,
-            ws_products.id AS ProductId,
-            ws_images.img AS ImageName,
-            ws_images.id AS ImageId
+            ws_products.name      AS ProductName, 
+            ws_products.price     AS ProductPrice,
+            ws_products.id        AS ProductId,
+            ws_products.stock_qty AS ProductQty,
+            ws_images.img         AS ImageName,
+            ws_images.id          AS ImageId
           FROM 
             ws_products,
             ws_images,
@@ -64,6 +66,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
     $productName = htmlspecialchars($row['ProductName']);
     $productPrice = htmlspecialchars($row['ProductPrice']);
     $productId = htmlspecialchars($row['ProductId']);
+    $productQty = htmlspecialchars($row['ProductQty']);
     $productImg = htmlspecialchars($row['ImageName']);
     if (isset($_GET['id'])) {
       $categoryName = htmlspecialchars($row['CategoryName']);
@@ -71,8 +74,13 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
 
     $productCards .= "<article class='product-card'>
                         <a href='product.php?id=$productId' class='product-card__image-link'>
-                          <div class='image-wrapper'>
-                            <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+                          <div class='image-wrapper'>";
+                        $productQty < 1 ? $productCards.= "<div class='out-of-stock'>
+                                                            <span class='out-of-stock__msg'>
+                                                            Product currently out of stock
+                                                            </span>
+                                                          </div>" : null;
+                        $productCards.="<img class='product-thumb' src=./media/product_images/$productImg alt=''>
                           </div>
                         </a>
                         <div class='product-card__content'>
@@ -80,8 +88,10 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
                             <h3>$productName</h3>
                           </a>
                           <p>$productPrice SEK</p>
-                          <button class='add-to-cart-btn'>Add to cart</button>
-                        </div>
+                          <button class='add-to-cart-btn'>";
+                          $productQty < 1 ? $productCards.= "Out of stock" : $productCards.= "Add to cart";
+                          $productCards.="</button>
+                          </div>
                       </article>";
   endwhile;
   $productsContainer .= $productCards;
