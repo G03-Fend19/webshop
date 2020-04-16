@@ -37,7 +37,7 @@ endwhile;
         <i class="fas fa-plus"></i>
         <a class="aside__nav__ul__li__title__addCategory" href="#">Add category</a>
         <form class="hidden aside__nav__ul__li__title__form" action='./assets/add-category.php' method='POST'>
-          <input type='text' name='name' id=''>
+          <input type='text' name='name' id='' maxlenght="20">
           <button type='submit' id='saveBtn'>Save</button>
         </form>
 

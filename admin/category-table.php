@@ -46,7 +46,13 @@ if (isset($_GET['deleteerror'])) {
 
 if (isset($_GET['editerror'])) {
 
-  $categories .= "<p class='error'>Was not able to edit category. Can not have the same name as other.</p>";
+    $categories .= "<p class='error'>Was not able to edit category. Can not have the same name as other.</p>";
+
+}
+
+if (isset($_GET['addingerror'])) {
+
+    $categories .= "<p class='error'>Was not able to add category. Can not have the same name as other.</p>";
 
 }
 
