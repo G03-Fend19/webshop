@@ -44,7 +44,7 @@ endwhile;
     <ul class="aside__nav__ul">
       <li class="aside__nav__ul__li">
         <h2 class="aside__nav__ul__li__title">
-          <a class="aside__nav__ul__li__title__link" href="./assets/product-table.php">Show all</a>
+          <a class="aside__nav__ul__li__title__link" href="./product-table.php">Show all</a>
         </h2>
       </li>
       <?php echo $categories; ?>

@@ -8,15 +8,14 @@
  * 1. Filen visar en tabell över
  *    alla produkter i databasen
  *************************************/
-
+require_once "../db.php";
+require_once "assets/head.php";
+require_once "assets/aside-navigation.php";
 ?>
 
 <h2>Produkter</h2>
 
 <?php
-
-require_once "../../db.php";
-require_once "aside-navigation.php";
 
 $sql = "SELECT
 ws_products.name        AS ProductName,
@@ -75,7 +74,7 @@ while($row= $stmt->fetch(PDO::FETCH_ASSOC)) :
 
 
     echo "<tr>
-    <td><img src='../../media/product_images/$image' alt='placeholder'></td>
+    <td><img src='../media/product_images/$image' alt='placeholder'></td>
     <td>#$id</td>
     <td>$name</td>
     <td>$descriptionShort...</td>
@@ -83,7 +82,7 @@ while($row= $stmt->fetch(PDO::FETCH_ASSOC)) :
     <td>$stock_qty st</td>
     <td>$price SEK</td>
     <td><a href='''>Edit</i></a></td>
-    <td><a href='delete-product.php?id=$id''> Delete</a>  </td>
+    <td><a href='assets/delete-product.php?id=$id''> Delete</a>  </td>
           </tr>";
   
 endwhile;
@@ -91,3 +90,4 @@ endwhile;
 echo'</table>';
 
 ?>
+

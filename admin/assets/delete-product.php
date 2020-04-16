@@ -12,6 +12,7 @@
 
 require_once '../../db.php';
 
+
 if(isset($_GET['id'])){
 
   $id = htmlspecialchars($_GET['id']); 
@@ -22,7 +23,7 @@ if(isset($_GET['id'])){
   $stmt->execute();
 }
 
-header('Location:product-table.php');
+header('Location:../product-table.php');
 
 
 
