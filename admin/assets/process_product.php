@@ -56,7 +56,7 @@ VALUES (:name, :description, :price, :qty)";
 //Inserting the category relationship
     $sql2 = "INSERT INTO ws_products_categories (product_id, category_id)
 VALUES (LAST_INSERT_ID(), :category);
-SET @pid = LAST_INSERT_ID()";
+SET @p_id = LAST_INSERT_ID()";
 
     $stmt2 = $db->prepare($sql2);
     $stmt2->bindParam(':category', $category);
@@ -72,7 +72,7 @@ SET @pid = LAST_INSERT_ID()";
             $stmt->execute();
 
             $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
-                    VALUES ( @pid, LAST_INSERT_ID())";
+                    VALUES ( @p_id, LAST_INSERT_ID())";
             $stmt_rel = $db->prepare($sql_p_img);
             $stmt_rel->execute();
         }
