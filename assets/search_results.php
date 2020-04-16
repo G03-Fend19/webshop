@@ -34,16 +34,17 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $productName = htmlspecialchars($row['ProductName']);
     $productPrice = htmlspecialchars($row['ProductPrice']);
+    $productId = htmlspecialchars($row['ProductId']);
     $productImg = htmlspecialchars($row['ImageName']);
 
     $productCards .= "<article class='product-card'>
-                        <a href='' class='product-card__image-link'>
+                        <a href='product.php?id=$productId' class='product-card__image-link'>
                           <div class='image-wrapper'>
                             <img class='product-thumb' src=./media/product_images/$productImg alt=''>
                           </div>
                         </a>
                         <div class='product-card__content'>
-                          <a href='' class='product-card__product-link'>
+                          <a href='product.php?id=$productId' class='product-card__product-link'>
                             <h3>$productName</h3>
                           </a>
                           <p>$productPrice SEK</p>
@@ -55,7 +56,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
   $productsContainer .= "</div>";
 
 } else {
-  // header('Location: index.php');
+  header('Location: index.php');
 }
 
 function getHeader($search) {
@@ -71,7 +72,6 @@ function getHeader($search) {
   <header class="display-products__header">
     <h2 class="display-products__heading"><?php getHeader($search)?></h2>
   </header>
-  <!-- insert search bar and function -->
 
   <?php
   if ($search !== ""){echo $productsContainer;}
