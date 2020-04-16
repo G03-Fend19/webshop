@@ -14,25 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     for ($i = 1; $i <= 5; $i++) {
         if (isset($_POST["image$i"])) {
-            $images[] = $_POST["image$i"];
+            $images += ["image$i" => $_POST["image$i"]];
         }
     }
-
-    /*  print_r($images);
-
-    INSERT INTO sales.promotions (
-    promotion_name,
-    discount,
-    start_date,
-    expired_date
-    )
-    VALUES
-    (
-    '2019 Summer Promotion',
-    0.15,
-    '20190601',
-    '20190901'
-    ), */
 
     $duplicateCheck = "SELECT name FROM ws_products
 WHERE name = :title";
@@ -71,10 +55,25 @@ VALUES (:name, :description, :price, :qty)";
 
 //Inserting the category relationship
     $sql2 = "INSERT INTO ws_products_categories (product_id, category_id)
-VALUES (LAST_INSERT_ID(), :category)";
+VALUES (LAST_INSERT_ID(), :category);
+SET @pid = LAST_INSERT_ID()";
 
     $stmt2 = $db->prepare($sql2);
     $stmt2->bindParam(':category', $category);
     $stmt2->execute();
+
+//Inserting the images and product img relationship
+
+    foreach ($images as $index => $img) {
+        $sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
+        $stmt = $db->prepare($sql_img);
+        $stmt->bindParam(":img", $img);
+        $stmt->execute();
+
+        $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
+                    VALUES ( @pid, LAST_INSERT_ID())";
+        $stmt_rel = $db->prepare($sql_p_img);
+        $stmt_rel->execute();
+    }
 
 }
