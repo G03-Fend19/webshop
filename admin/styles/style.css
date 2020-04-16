@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,700;0,900;1,100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap");
 /* Box sizing rules */
 *,
 *::before,
@@ -11,6 +11,10 @@
 ul[class],
 ol[class] {
   padding: 0;
+}
+
+body {
+  background: #f3f3f3;
 }
 
 /* Remove default margin and add font*/
@@ -29,7 +33,7 @@ blockquote,
 dl,
 dd {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Set core body defaults */
@@ -83,9 +87,28 @@ select {
   }
 }
 
+.admin__header nav, .aside, .main__admin__addCategory, .main__admin .main__category-table {
+  background: white;
+  padding: 1em;
+  -webkit-box-shadow: 2px 2px 3px #dbdbdb;
+          box-shadow: 2px 2px 3px #dbdbdb;
+}
+
+.aside__path {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto;
+  -ms-grid-columns: 30px 1fr 30px;
+      grid-template: auto / 30px 1fr 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.5em 0;
+}
+
 .admin__header {
   width: 100vw;
-  color: white;
+  color: #616161;
 }
 
 .admin__header nav {
@@ -96,15 +119,19 @@ select {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: #999;
-  padding: 0.5em;
+  position: fixed;
+  top: 0;
+  border-radius: 0 0 5px 5px;
+  height: 70px;
+  z-index: 10;
 }
 
 .admin__header a {
   margin-right: auto;
-  margin-left: 2em;
+  margin-left: 1em;
   text-decoration: none;
-  color: white;
+  color: #616060;
+  font-weight: 500;
 }
 
 .admin__header__login {
@@ -121,7 +148,7 @@ select {
 
 .admin__header__login__text {
   text-align: center;
-  margin-right: 0.5em;
+  margin-right: 1em;
 }
 
 .admin__header__login__text h5,
@@ -130,11 +157,15 @@ select {
 }
 
 .admin__header__login__text p {
-  font-size: 0.5em;
+  font-size: 0.6em;
+}
+
+.admin__header__login__text h5 {
+  font-weight: 500;
 }
 
 .admin__header__login__img {
-  max-width: 30px;
+  max-width: 35px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -147,6 +178,14 @@ select {
   width: 100%;
 }
 
+.siteWrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr auto;
+  -ms-grid-columns: auto 1fr;
+      grid-template: 1fr auto / auto 1fr;
+}
+
 .aside {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -155,13 +194,33 @@ select {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-width: 20vw;
-  background: #e9e9e9;
+  max-width: 17vw;
+  position: relative;
+  top: 70px;
+  padding-left: 2em;
+  margin-bottom: 5em;
+}
+
+.aside__path i {
+  font-size: 0.8em;
+  color: #3f3f3f;
+}
+
+.aside__dashboard {
+  padding-bottom: 1em;
+}
+
+.aside__title {
+  font-size: 0.8em;
+  padding: 1.5em 0 0.5em 0.5em;
+  font-weight: 500;
+  color: gray;
 }
 
 .aside a {
   color: black;
   text-decoration: none;
+  font-size: 0.8em;
 }
 
 .aside__nav__ul {
@@ -173,14 +232,14 @@ table {
   width: 70%;
 }
 
-th,
-td {
+table th,
+table td {
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-img {
+table img {
   max-height: 50px;
 }
 
@@ -188,16 +247,127 @@ img {
   display: none;
 }
 
+.main__admin {
+  margin: 80px 2em 2em 2em;
+  padding: 2em;
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  -ms-grid-rows: auto 1fr;
+  -ms-grid-columns: 1fr;
+      grid-template: auto 1fr / 1fr;
+}
+
+.main__admin h1 {
+  font-weight: 500;
+  font-size: 1.5em;
+  padding-bottom: 0.5em;
+  color: gray;
+  margin-top: 0.3em;
+}
+
+.main__admin h1::after {
+  content: "|";
+  font-weight: lighter;
+  padding-left: 0.5em;
+}
+
+.main__admin__text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__admin__addCategory {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 120px;
+  height: 30px;
+  border-radius: 15px;
+  color: #919191;
+  cursor: pointer;
+  font-size: 0.8em;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin-left: 1em;
+}
+
+.main__admin .main__category-table {
+  padding: 2em;
+  border-radius: 5px;
+  width: 100%;
+  grid-column: span 2;
+  font-size: 0.8em;
+  border-collapse: unset;
+}
+
+.main__admin .main__category-table i {
+  margin-right: 1em;
+}
+
+.main__admin .main__category-table .fa-check {
+  color: green;
+}
+
+.main__admin .main__category-table .fa-times {
+  color: red;
+}
+
+.main__admin .main__category-table td {
+  padding: unset;
+  border-bottom: unset;
+  width: 200px;
+}
+
+.main__admin .main__category-table td input {
+  padding-left: 0.5em;
+  border-radius: 5px;
+  border: 1px dashed #c2c2c2;
+}
+
+.main__admin .main__category-table .smallerBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main__admin .main__category-table button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100vw;
-  background: #999;
+  background: white;
   padding: 0.5em;
+  -webkit-box-shadow: 1px 1px 3px #f3f3f3;
+          box-shadow: 1px 1px 3px #f3f3f3;
+  border: 0.5px solid #e6e6e6;
 }
 
 footer h4 {
   text-align: center;
-  color: white;
+  color: #adadad;
+  font-weight: 300;
+}
+
+footer p {
+  font-size: 0.5em;
+  text-align: center;
+  color: #adadad;
 }
 /*# sourceMappingURL=style.css.map */

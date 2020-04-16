@@ -18,21 +18,19 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     $categories .= "
                       <tr class='main__category-table__tr'>
-                        <td class='main__category-table__tr__td'>
+                        <td class='main__category-table__tr__td-category'>
                           <form action='./assets/edit-category.php' method='POST' class='main__category-table__tr__td__save-form'>
                             <input class='hidden main__category-table__tr__td__save-form__input' type='text' name='name' id='input-$id' value='$name'>
-                            <button class='hidden main__category-table__tr__td__save-form__btn' type='submit' id='saveBtn-$id'>Save</button>
+                            <button class='hidden main__category-table__tr__td__save-form__btn' type='submit' id='saveBtn-$id'><i class='fas fa-check'></i></button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
-                          <p  class='main__category-table__tr__td__p' id='category-$id'>$name</p>
+                          <p  class='main__category-table__tr__td__p' id='category-$id'><i class='far fa-star'></i>$name</p>
                         </td>
-                        <td class='main__category-table__tr__td'>
-                          <button type='button' id='editBtn-$id' class='main__category-table__tr__td__edit-btn' onclick=\"toggleEditCategory('$id', '$name')\">Edit</button>
-                          <button type='button' id='abortBtn-$id' class='hidden main__category-table__tr__td__cancle-btn' onclick='toggleEditCategory($id)'>Cancel</button>
-                        </td>
-                        <td class='main__category-table__tr__td'>
+                        <td class='main__category-table__tr__td smallerBtn'>
+                          <button type='button' id='editBtn-$id' class='main__category-table__tr__td__edit-btn' onclick=\"toggleEditCategory('$id', '$name')\"><i class='fas fa-pen'></i></button>
+                          <button type='button' id='abortBtn-$id' class='hidden main__category-table__tr__td__cancle-btn' onclick='toggleEditCategory($id)'><i class='fas fa-times'></i></button>
                           <form action='./assets/delete-category.php' method='POST' class='main__category-table__tr__td__delete-form'>
-                            <button type='submit' class='main__category-table__tr__td__delete-form__delete-Btn'>Delete</button>
+                            <button type='submit' class='main__category-table__tr__td__delete-form__delete-Btn'><i class='far fa-trash-alt'></i></button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
                         </td>
@@ -56,40 +54,47 @@ $categories .= "</table>";
 
 ?>
 
-<main class="main__">
-<h1>Categories</h1>
+<main class="main__admin">
 
-<table class="main__category-table">
-  <?php echo $categories; ?>
-</table>
+  <div class="main__admin__text">
+    <h1>Categories</h1>
+    <div class="main__admin__addCategory">
+      <p>Add new</p>
+      <i class="fas fa-plus"></i>
+    </div>
+  </div>
 
-<script>
+  <table cellspacing="10" class="main__category-table">
+    <?php echo $categories; ?>
+  </table>
 
-function toggleEditCategory(id, name) {
+  <script>
+  function toggleEditCategory(id, name) {
 
-  const categoryP = document.querySelector('#category-' + id);
-  categoryP.classList.toggle('hidden');
+    const categoryP = document.querySelector('#category-' + id);
+    categoryP.classList.toggle('hidden');
 
-  console.log(id);
-  console.log(name);
+    console.log(id);
+    console.log(name);
 
-  const input = document.querySelector('#input-' + id);
-  input.classList.toggle('hidden');
+    const input = document.querySelector('#input-' + id);
+    input.classList.toggle('hidden');
 
-  if (name) {
-    input.value = name;
+    if (name) {
+      input.value = name;
+    }
+
+    const editBtn = document.querySelector('#editBtn-' + id);
+    editBtn.classList.toggle('hidden');
+
+    const saveBtn = document.querySelector('#saveBtn-' + id);
+    saveBtn.classList.toggle('hidden');
+
+    const abortBtn = document.querySelector('#abortBtn-' + id);
+    abortBtn.classList.toggle('hidden');
   }
-
-  const editBtn = document.querySelector('#editBtn-' + id);
-  editBtn.classList.toggle('hidden');
-
-  const saveBtn = document.querySelector('#saveBtn-' + id);
-  saveBtn.classList.toggle('hidden');
-
-  const abortBtn = document.querySelector('#abortBtn-' + id);
-  abortBtn.classList.toggle('hidden');
-}
-</script>
+  </script>
 </main>
-</body>
-</html>
+
+<?php
+require_once './assets/foot.php';
