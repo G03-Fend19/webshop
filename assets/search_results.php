@@ -59,7 +59,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
   header('Location: index.php');
 }
 
-function getHeader($search) {
+function getSearchHeader($search) {
   if ($search !== "") {
     echo "You searced for '$search' and the result is...";
   } else {
@@ -70,7 +70,7 @@ function getHeader($search) {
 
 <section id="search-section" class="display-products">
   <header class="display-products__header">
-    <h2 class="display-products__heading"><?php getHeader($search)?></h2>
+    <h2 class="display-products__heading"><?php getSearchHeader($search)?></h2>
   </header>
 
   <?php
