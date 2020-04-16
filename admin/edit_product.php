@@ -94,7 +94,7 @@ while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
 
 <body>
 
-  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product.php"
+  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
     onsubmit="return validateProductForm()" method="POST">
     <div class="form__group">
       <label for="title" class="form__label">
