@@ -65,7 +65,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
   $productCards = "";
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
-    $productName = ucfirst(htmlspecialchars($row['ProductName']));
+    $productName = htmlspecialchars($row['ProductName']);
     $productPrice = htmlspecialchars($row['ProductPrice']);
     $productId = htmlspecialchars($row['ProductId']);
     $productQty = htmlspecialchars($row['ProductQty']);
@@ -91,7 +91,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
                           </a>
                           <p>$productPrice SEK</p>
                           <button class='add-to-cart-btn'>";
-                          $productQty < 1 ? $productCards.= "Out of stock" : $productCards.= "Add to cart";
+                          $productQty < 1 ? $productCards.= "<i class='far fa-times-circle'></i>" : $productCards.= "<i class='fas fa-cart-plus'></i>";
                           $productCards.="</button>
                           </div>
                       </article>";
