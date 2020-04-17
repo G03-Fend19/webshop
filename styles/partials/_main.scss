@@ -3,20 +3,22 @@
   padding: 0;
   box-sizing: border-box;
 }
-ul, li {
-    list-style: none;
+
+ul,
+li {
+  list-style: none;
 }
+
 a {
   text-decoration: none;
   color: black;
 }
-body {
-}
+
 main {
   @media (min-width: 1013px) {
     display: grid;
     grid-template-columns: minmax(100px, 250px) auto;
     min-height: 100vh;
-    padding-top: 70px;
+    // padding-top: 70px;
   }
 }
