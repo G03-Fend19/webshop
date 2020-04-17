@@ -1,6 +1,6 @@
 <?php
-  require_once '../db.php';
-  require_once 'upload_image.php';
+require_once '../db.php';
+require_once 'upload_image.php';
 
   $sql = "SELECT * FROM ws_categories";
 
@@ -48,11 +48,13 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
     <div class="form__group">
       <label for="title" class="form__label">
         Product name
-        <input type="text" name="title" id="title" value="<?=$title?>" required class="form__input">
+        <input type="text" name="title" id="title" value="<?=$title?>" minlength="2" maxlength="50" required
+          class="form__input">
       </label>
       <label for="description" class="form__label descrip">
         Description
-        <textarea name="description" id="description" required class="form__input"><?=$descrip?></textarea>
+        <textarea name="description" id="description" maxlength="800" required
+          class="form__input"><?=$descrip?></textarea>
       </label>
       <select name="category" id="category">
         <?=$options?>
@@ -79,22 +81,19 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
       <div class="form__image-section__images">
       <?php
 
-      $counter = 1;
-      foreach($imageArray as $image){
-        echo  "
-        <label class='form__image-section__selection'>
-        
-        <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-        
-        <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-        
-        </label>
-        ";
-        $counter++;
-      }
-      
-      ?>
-      </div>
+$counter = 1;
+foreach ($imageArray as $image) {
+    echo "
+      <label class='form__image-section__selection'>
+      $image
+      <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+      <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+      </label>
+      ";
+    $counter++;
+}
+
+?>
     </div>
     <div id="errorDiv">
       <?php
@@ -124,6 +123,9 @@ if (!isset($_GET['formerror'])) {
          <button class="button add-product-btn" type="submit">Add Product</button>
   </form>
 
+  <?php
+
+?>
   <script src="validation.js"></script>
   <script>
     (() => {

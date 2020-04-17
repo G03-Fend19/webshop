@@ -11,10 +11,16 @@ function validateProductForm() {
   if (title == "" || title.length < 2) {
     errormsg.push("The product must have a name of at least 2 characters.");
   }
+  if (title.length > 50) {
+    errormsg.push("The product name can't be more than 50 characters.");
+  }
   if (description == "" || description.length < minDescrip) {
     errormsg.push(
       `The product must have a description of at least ${minDescrip} characters.`
     );
+  }
+  if (description.length > 800) {
+    errormsg.push(`The product description can't be more than 800 characters.`);
   }
   if (category == "category" || !category) {
     errormsg.push("The product must belong to a category.");
