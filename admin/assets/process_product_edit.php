@@ -11,7 +11,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $price = htmlspecialchars($_POST['price']);
     $qty = htmlspecialchars($_POST['qty']);
 
-//Updating the product
+    // Backend validation
+    $duplicateCheck = "SELECT name FROM ws_products
+                      WHERE name = :title
+                        AND id <> :p_id";
+
+    $stmt_duplicate = $db->prepare($duplicateCheck);
+    $stmt_duplicate->bindParam(':title', $title);
+    $stmt_duplicate->bindParam(':p_id', $p_id);
+
+    $stmt_duplicate->execute();
+
+    if (empty($title) || empty($description) || empty($category_id) || empty($price) || empty($qty)) {
+        header("Location: ../edit_product.php?formerror=empty&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
+        exit();
+    } elseif ($stmt_duplicate->fetch(PDO::FETCH_ASSOC)) {
+        header("Location: ../edit_product.php?formerror=duplicate&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
+        exit();
+    } elseif ($price < 0 || $qty < 0) {
+        header("Location: ../edit_product.php?formerror=negative&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
+        exit();
+    }
+    ;
+
+//Updating the product and category-relationship
     $sql = "UPDATE ws_products
               SET
                 name = :title,

@@ -73,6 +73,14 @@ while ($categoryRows = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
 
 }
 
+if (isset($_GET['formerror'])) {
+    $pName = htmlspecialchars($_GET['title']);
+    $descrip = htmlspecialchars($_GET['descrip']);
+    $categoryId = htmlspecialchars($_GET['category']);
+    $price = htmlspecialchars($_GET['price']);
+    $qty = htmlspecialchars($_GET['qty']);
+}
+
 while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
     echo $imagesRows['imgName'];
 }
@@ -93,9 +101,9 @@ while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
 </head>
 
 <body>
-
-  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
-    onsubmit="return validateProductForm()" method="POST">
+  <!-- onsubmit="return validateProductForm()" -->
+  <form noValidate class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
+    method="POST">
     <div class="form__group">
       <label for="title" class="form__label">
         Product name
@@ -134,7 +142,7 @@ if (!isset($_GET['formerror'])) {
     $errorCheck = $_GET['formerror'];
     if ($errorCheck == 'duplicate') {
 
-        echo "<p class='errormsg'>You already have a product called <strong>$title</strong>.</p>";
+        echo "<p class='errormsg'>You already have a product called <strong>$pName</strong>.</p>";
 
     } elseif ($errorCheck == 'empty') {
         echo "<p class='errormsg'>Please fill in all fields.</p>";
