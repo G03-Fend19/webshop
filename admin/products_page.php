@@ -13,7 +13,7 @@ require_once "assets/aside-navigation.php";
   </div>
 
   <?php
-  $sql = "SELECT    
+  $sql = "SELECT
             ws_products.name        AS ProductName,
             ws_products.description AS ProductDescription,
             ws_products.price       AS ProductPrice,

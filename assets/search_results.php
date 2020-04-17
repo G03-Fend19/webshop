@@ -34,7 +34,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
   $productCards = "";
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
-    $productName = htmlspecialchars($row['ProductName']);
+    $productName = ucfirst(htmlspecialchars($row['ProductName']));
     $productPrice = htmlspecialchars($row['ProductPrice']);
     $productId = htmlspecialchars($row['ProductId']);
     $productImg = htmlspecialchars($row['ImageName']);

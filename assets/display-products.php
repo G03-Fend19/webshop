@@ -65,7 +65,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
   $productCards = "";
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
-    $productName = htmlspecialchars($row['ProductName']);
+    $productName = ucfirst(htmlspecialchars($row['ProductName']));
     $productPrice = htmlspecialchars($row['ProductPrice']);
     $productId = htmlspecialchars($row['ProductId']);
     $productQty = htmlspecialchars($row['ProductQty']);

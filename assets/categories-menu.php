@@ -15,7 +15,7 @@
   $categories = "";
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
-    $name = htmlspecialchars($row['CategoryName']);
+    $name = ucfirst(htmlspecialchars($row['CategoryName']));
     $id = htmlspecialchars($row['CategoryId']);
 
     $categories .= "<li class='nav-list__item'>
