@@ -1,7 +1,7 @@
 <?php
 require_once '../db.php';
 
-$productId = "5";
+$productId = "1";
 
 $sql = "SELECT
             ws_products.id AS ProductId,
@@ -53,7 +53,7 @@ print_r($stmt_categories->fetch(PDO::FETCH_ASSOC));
 echo "</pre>"; */
 
 while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
+    $id = htmlspecialchars($productRow['ProductId']);
     $pName = htmlspecialchars($productRow['ProductName']);
     $descrip = htmlspecialchars($productRow['ProductDescription']);
     $categoryId = htmlspecialchars($productRow['CategoryId']);
@@ -120,6 +120,8 @@ while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
       </label>
 
     </div>
+
+    <input type="hidden" name="product_id" value="<?=$id?>">
     <label for="img" class="form__label">Images</label>
 
     <button type="submit">Add</button>
