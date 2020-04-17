@@ -12,45 +12,75 @@ require_once "assets/aside-navigation.php";
     </div>
   </div>
 
-  <div class="admin__products__filter">
-    <h2>Filter products</h2>
-    <select name="Category" id="filterProd">
-      <option value="Fix">Category</option>
-      <option value="Fix">Fix</option>
-      <option value="Fix">Fix</option>
-    </select>
-    <input placeholder="search" type="text">
-  </div>
-
   <?php
-  $sql = "SELECT
-            ws_products.name        AS ProductName,
-            ws_products.description AS ProductDescription,
-            ws_products.price       AS ProductPrice,
-            ws_products.id          AS ProductId,
-            ws_products.stock_qty   AS ProductQty,
-            ws_images.img           AS ImageName,
-            ws_images.id            AS ImageId,
-            ws_categories.name      AS CategoryName,
-            ws_categories.id        AS CategoryId
-          FROM
-            ws_products,
-            ws_images,
-            ws_products_images,
-            ws_categories,
-            ws_products_categories
-          WHERE
-            ws_products.id = ws_products_images.product_id 
-          AND
-            ws_images.id = ws_products_images.img_id 
-          AND
-            ws_products.id = ws_products_categories.product_id 
-          AND
-            ws_categories.id = ws_products_categories.category_id 
-          ORDER BY ws_products.id ASC";
 
-$stmt = $db->prepare($sql);
-$stmt->execute();
+  if (isset($_GET['category_id'])) {
+    $categoryId = $_GET['category_id'];
+    $sql = "SELECT
+              ws_products.name        AS ProductName,
+              ws_products.description AS ProductDescription,
+              ws_products.price       AS ProductPrice,
+              ws_products.id          AS ProductId,
+              ws_products.stock_qty   AS ProductQty,
+              ws_images.img           AS ImageName,
+              ws_images.id            AS ImageId,
+              ws_categories.name      AS CategoryName,
+              ws_categories.id        AS CategoryId
+            FROM
+              ws_products,
+              ws_images,
+              ws_products_images,
+              ws_categories,
+              ws_products_categories
+            WHERE
+              ws_products.id = ws_products_images.product_id 
+            AND
+              ws_images.id = ws_products_images.img_id 
+            AND
+              ws_products.id = ws_products_categories.product_id 
+            AND
+              ws_categories.id = ws_products_categories.category_id 
+            AND
+              ws_categories.id = :category_id
+            AND
+              ws_products_categories.category_id = :category_id
+              
+              GROUP BY ws_products.id
+              ";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(":category_id", $categoryId);
+    $stmt->execute();
+  } else {
+    $sql = "SELECT
+              ws_products.name        AS ProductName,
+              ws_products.description AS ProductDescription,
+              ws_products.price       AS ProductPrice,
+              ws_products.id          AS ProductId,
+              ws_products.stock_qty   AS ProductQty,
+              ws_images.img           AS ImageName,
+              ws_images.id            AS ImageId,
+              ws_categories.name      AS CategoryName,
+              ws_categories.id        AS CategoryId
+            FROM
+              ws_products,
+              ws_images,
+              ws_products_images,
+              ws_categories,
+              ws_products_categories
+            WHERE
+              ws_products.id = ws_products_images.product_id 
+            AND
+              ws_images.id = ws_products_images.img_id 
+            AND
+              ws_products.id = ws_products_categories.product_id 
+            AND
+              ws_categories.id = ws_products_categories.category_id 
+              
+              GROUP BY ws_products.id
+              ";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+  }
 
 echo"<table>
 <tr>

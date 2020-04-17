@@ -24,7 +24,8 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
           AND
             (ws_products.name LIKE '%$search%' 
           OR
-            ws_products.description LIKE '%$search%')";
+            ws_products.description LIKE '%$search%')
+          GROUP BY ws_products.id";
   
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -60,8 +61,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
                           </a>
                           <p>$productPrice SEK</p>
                           <button class='add-to-cart-btn'>";
-                          $productQty < 1 ? $productCards.= "Out of stock" : $productCards.= "Add to cart";
-                          $productCards.="</button>
+                          $productQty < 1 ? $productCards.= "<i class='far fa-times-circle'></i>" : $productCards.= "<i class='fas fa-cart-plus'></i>";                          $productCards.="</button>
                           </div>
                       </article>";
   endwhile;
@@ -82,7 +82,7 @@ function getSearchHeader($search) {
 ?>
 
 <section id="search-section" class="display-products">
-  <header class="display-products__header">
+  <header class="display-products__header" id="searchResult">
     <h2 class="display-products__heading"><?php getSearchHeader($search)?></h2>
   </header>
 

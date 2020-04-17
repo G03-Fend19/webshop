@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  // box-shadow: 1px 1px 3px rgb(168, 168, 168);
 }
 
 .header {
@@ -15,11 +16,9 @@
   justify-content: space-around;
   align-items: center;
   grid-template: auto 1fr / 1fr;
-  font-size: 1.7em;
   width: 100vw;
 
   nav {
-    font-size: 1.7em;
     position: fixed;
     top: 0;
     z-index: 10;
@@ -28,6 +27,8 @@
     height: 70px;
     align-items: center;
     background-color: rgb(226, 226, 226);
+    font-size: 20px;
+    box-shadow: 1px 1px 3px rgb(194, 194, 194);
   }
 
   &__logo {
@@ -39,15 +40,13 @@
   &__nav {
     list-style-type: none;
     margin-right: 20px;
-
     display: flex;
 
     &__item {
       margin-left: 20px;
 
       a {
-        text-decoration: none;
-        color: black;
+        @extend %linkStyle;
 
         @media (min-width: 800px) {
           display: inline;
@@ -63,7 +62,8 @@
         @extend .search-and-contact;
         position: fixed;
         margin-top: 75vh;
-        right: 11%;
+        right: 1em;
+
         i {
           @media (min-width: 800px) {
             display: none;
@@ -76,31 +76,53 @@
 
         position: fixed;
         margin-top: 85vh;
-        right: 12%;
+        right: 1em;
 
         &:hover {
           cursor: pointer;
         }
       }
+
       &__searchform {
         @media (max-width: 800px) {
           position: fixed;
           margin-top: 86vh;
-          right: 28%;
+          right: 5em;
+          display: flex;
+          align-items: center;
         }
       }
+
       &__searchbar {
-        height: 20px;
+        height: 30px;
         border-radius: 6px;
-        border: 1px solid rgb(80, 80, 80);
+        border: 1px solid rgb(133, 133, 133);
+        padding-left: 0.5em;
+        font-size: 16px;
+        margin-right: 0.5em;
+        margin: auto 0.5em auto 0;
       }
+
       &__searchBtn {
-        height: 24px;
-        border-radius: 6px;
-        border: 1px solid rgb(80, 80, 80);
+        border: none;
+        color: green;
+        text-shadow: 0.3px 0.3px 1px rgb(71, 71, 71);
+        font-size: 30px;
+        background: unset;
+        margin: auto;
+
+        i {
+          background: white;
+          border-radius: 50%;
+        }
+
         @media (min-width: 800px) {
           display: none;
         }
+      }
+
+      &__cart {
+        margin-right: 1.5em;
       }
     }
   }
@@ -114,18 +136,32 @@
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: calc(100vh - 70px);
+    flex-direction: column;
+
+    h1 {
+      font-size: 10vh;
+      color: rgb(133, 133, 133);
+      text-shadow: 1px 1px 2px black;
+      margin-top: 25vh;
+
+      @media (max-width: 500px) {
+        font-size: 5vh;
+      }
+    }
   }
 }
 
 .hidden {
   display: none;
 }
+
 .fixed {
   position: fixed;
   top: 0;
 }
+
 #contact-desktop {
   @media (max-width: 800px) {
     display: none;
