@@ -95,6 +95,7 @@ foreach ($imageArray as $image) {
 
 ?>
     </div>
+</div>
     <div id="errorDiv">
       <?php
 
@@ -120,7 +121,7 @@ if (!isset($_GET['formerror'])) {
 
 ?>
     </div>
-         <button class="button add-product-btn" type="submit">Add Product</button>
+    <button class="button add-product-btn" type="submit">Add Product</button>
   </form>
 
   <?php
