@@ -13,7 +13,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
 
     $categories .= "<li class='aside__path aside__nav__ul__li'>
                       <i class='far fa-star'></i>
-                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?id=$id'>$name</a>
+                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?category_id=$id'>$name</a>
   									</li>";
 
 endwhile;
