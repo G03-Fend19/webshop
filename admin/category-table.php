@@ -10,6 +10,7 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 $categories = "";
+$addCategory = "";
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
@@ -20,7 +21,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                       <tr class='main__category-table__tr'>
                         <td class='main__category-table__tr__td-category'>
                           <form action='./assets/edit-category.php' method='POST' class='main__category-table__tr__td__save-form'>
-                            <input class='hidden main__category-table__tr__td__save-form__input' type='text' name='name' id='input-$id' value='$name'>
+                            <input class='hidden main__category-table__tr__td__save-form__input' type='text' name='name' id='input-$id' value='$name' maxlength='20'>
                             <button class='hidden main__category-table__tr__td__save-form__btn' type='submit' id='saveBtn-$id'><i class='fas fa-check'></i></button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
@@ -36,6 +37,24 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         </td>
                       </tr>
                     ";
+}
+
+if (isset($_GET['addCategory'])) {
+    $addCategory = "<form class='aside__nav__ul__li__title__form' action='./assets/add-category.php' method='POST'>
+                      <input type='text' name='name' maxlength='20'>
+                      <button type='submit' id='saveBtn'><i class='fas fa-check'></i></button>
+                      <a href='./category-table.php'><i class='fas fa-times'></i></a>
+                    </form>";
+}
+
+if (isset($_GET['invalidchars'])) {
+
+    $categories .= "<p class='error'>Not a valid name.</p>";
+}
+
+if (isset($_GET['invalidlength'])) {
+
+    $categories .= "<p class='error'>Not a valid name. Length has to be between 2-20.</p>";
 }
 
 if (isset($_GET['deleteerror'])) {
@@ -56,18 +75,17 @@ if (isset($_GET['addingerror'])) {
 
 }
 
-$categories .= "</table>";
-
 ?>
 
 <main class="main__admin">
 
   <div class="main__admin__text">
     <h1>Categories</h1>
-    <div class="main__admin__addCategory">
-      <p>Add new</p>
+    <a href="?addCategory=true" class="main__admin__addCategory">
+      Add new
       <i class="fas fa-plus"></i>
-    </div>
+    </a>
+    <?php echo $addCategory; ?>
   </div>
 
   <table cellspacing="10" class="main__category-table">
@@ -75,6 +93,20 @@ $categories .= "</table>";
   </table>
 
   <script>
+
+  //const addCategory = document.querySelector('.aside__nav__ul__li__title__addCategory');
+  // const addCategoryForm = document.querySelector('.aside__nav__ul__li__title__form');
+  // const saveNewCategoryBtn = document.querySelector('#saveBtn');
+
+  // addCategory.addEventListener('click', () => {
+  //   addCategoryForm.classList.toggle("hidden")
+  // })
+
+  // saveNewCategoryBtn.addEventListener('click', () => {
+  //   addCategoryForm.classList.toggle("hidden")
+  // })
+
+
   function toggleEditCategory(id, name) {
 
     const categoryP = document.querySelector('#category-' + id);
@@ -98,6 +130,9 @@ $categories .= "</table>";
 
     const abortBtn = document.querySelector('#abortBtn-' + id);
     abortBtn.classList.toggle('hidden');
+
+    const addCategoryAbortBtn = document.querySelector('#addCategoryAbortBtn');
+
   }
   </script>
 </main>
