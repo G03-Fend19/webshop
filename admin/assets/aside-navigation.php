@@ -1,7 +1,6 @@
 <?php
 
 $sql = "SELECT * FROM ws_categories";
-//Add statement for selecting only categories with products
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
@@ -12,11 +11,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = htmlspecialchars($row['name']);
 
     $categories .= "<li class='aside__path aside__nav__ul__li'>
-                      <i class='far fa-star'></i>
-                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?category_id=$id'>$name</a>
-  									</li>";
+				                      <i class='far fa-star'></i>
+				                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?category_id=$id'>$name</a>
+				  									</li>";
 
 endwhile;
+
 
 ?>
 
@@ -35,11 +35,8 @@ endwhile;
       </li>
       <li class="aside__path">
         <i class="fas fa-plus"></i>
-        <a class="aside__nav__ul__li__title__addCategory" href="#">Add category</a>
-        <form class="hidden aside__nav__ul__li__title__form" action='./assets/add-category.php' method='POST'>
-          <input type='text' name='name' id='' maxlenght="20">
-          <button type='submit' id='saveBtn'>Save</button>
-        </form>
+        <a class="aside__nav__ul__li__title__addCategory" href="./category-table.php?addCategory=true">Add category</a>
+
 
       </li>
     </ul>
@@ -81,7 +78,7 @@ endwhile;
   </nav>
 </aside>
 
-<script>
+<!-- <script>
 const addCategory = document.querySelector('.aside__nav__ul__li__title__addCategory');
 const addCategoryForm = document.querySelector('.aside__nav__ul__li__title__form');
 const saveNewCategoryBtn = document.querySelector('#saveBtn');
@@ -93,7 +90,7 @@ addCategory.addEventListener('click', () => {
 saveNewCategoryBtn.addEventListener('click', () => {
   addCategoryForm.classList.toggle("hidden")
 })
-</script>
+</script> -->
 
 <style>
 .hidden {
