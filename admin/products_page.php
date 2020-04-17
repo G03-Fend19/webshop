@@ -85,6 +85,7 @@ if (isset($_GET['category_id'])) {
 }
 
 echo "<table>
+<thead>
 <tr>
 <th></th>
 <th>Product number</th>
@@ -95,7 +96,9 @@ echo "<table>
 <th>Price</th>
 <th> </th>
 <th> </th>
-</tr>";
+</tr>
+</thead>
+<tbody>";
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $id = htmlspecialchars($row['ProductId']);
@@ -107,23 +110,28 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $category = htmlspecialchars($row['CategoryName']);
     $descriptionShort = substr($description, 0, 20);
     echo "<tr>
-			            <td><img src='../media/product_images/$image' alt='placeholder'></td>
-			            <td>#$id</td>
-			            <td>$name</td>
-			            <td>$descriptionShort...</td>
-			            <td>$category</td>
-			            <td>$stock_qty st</td>
-			            <td>$price SEK</td>
-			            <td><button><i class='fas fa-pen'></i></button></td>
-			            <td>
-			                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-			                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-			                  <input type='hidden' name='id' value='$id'>
-			               </form>
-			            </td>
-			         </tr>";
+							            <td><img src='../media/product_images/$image' alt='placeholder'></td>
+							            <td>#$id</td>
+							            <td>$name</td>
+							            <td>$descriptionShort...</td>
+							            <td>$category</td>
+							            <td>$stock_qty st</td>
+							            <td>$price SEK</td>
+				                  <td>
+				                    <form action='./edit_product.php' method='POST'>
+				                      <button type='submit'><i class='fas fa-pen'></i></button>
+				                      <input type='hidden' name='p_id' value='$id'>
+				                    </form>
+				                  </td>
+							            <td>
+							                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
+							                  <button type='submit'><i class='far fa-trash-alt'></i></button>
+							                  <input type='hidden' name='id' value='$id'>
+							               </form>
+							            </td>
+							         </tr>";
 endwhile;
-echo '</table>';
+echo '</tbody></table>';
 echo '</main>';
 ?>
 

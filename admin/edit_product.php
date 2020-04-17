@@ -2,9 +2,11 @@
 require_once '../db.php';
 require_once 'upload_image.php';
 
-$productId = "3";
+if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
 
-$sql = "SELECT
+    $productId = htmlspecialchars($_POST['p_id']);
+
+    $sql = "SELECT
             ws_products.id AS ProductId,
             ws_products.name AS ProductName,
             ws_products.description AS ProductDescription,
@@ -25,11 +27,11 @@ $sql = "SELECT
           AND
             ws_categories.id = ws_products_categories.category_id";
 
-$stmt = $db->prepare($sql);
-$stmt->bindParam(':id', $productId);
-$stmt->execute();
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $productId);
+    $stmt->execute();
 
-$sql_images = "SELECT
+    $sql_images = "SELECT
                     ws_images.id AS imgId,
                     ws_images.img AS imgName
                   FROM
@@ -40,63 +42,66 @@ $sql_images = "SELECT
                   AND
                     ws_images.id = ws_products_images.img_id";
 
-$stmt_img = $db->prepare($sql_images);
-$stmt_img->bindParam(':id', $productId);
-$stmt_img->execute();
+    $stmt_img = $db->prepare($sql_images);
+    $stmt_img->bindParam(':id', $productId);
+    $stmt_img->execute();
 
 // Selecting all categories
-$sql_categories = "SELECT * FROM ws_categories";
-$stmt_categories = $db->prepare($sql_categories);
-$stmt_categories->execute();
+    $sql_categories = "SELECT * FROM ws_categories";
+    $stmt_categories = $db->prepare($sql_categories);
+    $stmt_categories->execute();
 
 /* echo "<pre>";
 print_r($stmt_categories->fetch(PDO::FETCH_ASSOC));
 echo "</pre>"; */
 
-while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $id = htmlspecialchars($productRow['ProductId']);
-    $pName = htmlspecialchars($productRow['ProductName']);
-    $descrip = htmlspecialchars($productRow['ProductDescription']);
-    $categoryId = htmlspecialchars($productRow['CategoryId']);
-    $categoryName = htmlspecialchars($productRow['CategoryName']);
-    $price = htmlspecialchars($productRow['ProductPrice']);
-    $qty = htmlspecialchars($productRow['ProductQty']);
+    while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $id = htmlspecialchars($productRow['ProductId']);
+        $pName = htmlspecialchars($productRow['ProductName']);
+        $descrip = htmlspecialchars($productRow['ProductDescription']);
+        $categoryId = htmlspecialchars($productRow['CategoryId']);
+        $categoryName = htmlspecialchars($productRow['CategoryName']);
+        $price = htmlspecialchars($productRow['ProductPrice']);
+        $qty = htmlspecialchars($productRow['ProductQty']);
 
-}
-
-$options = "";
-while ($categoryRows = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
-    if ($categoryRows['id'] == $categoryId) {
-        $options .= "<option value='$categoryRows[id]' selected>$categoryRows[name]</option>";
-    } else {
-        $options .= "<option value='$categoryRows[id]'>$categoryRows[name]</option>";
     }
 
-}
-
-if (isset($_GET['formerror'])) {
-    $pName = htmlspecialchars($_GET['title']);
-    $descrip = htmlspecialchars($_GET['descrip']);
-    $categoryId = htmlspecialchars($_GET['category']);
-    $price = htmlspecialchars($_GET['price']);
-    $qty = htmlspecialchars($_GET['qty']);
-}
-
-$imagesDb = [];
-while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
-    $imagesDb[] = $imagesRows['imgName'];
-}
-if (isset($_FILES['file']['name'])) {
-    if (count($_FILES) != 0) {
-        foreach ($imageArray as $image) {
-            $imagesDb[] = $image;
+    $options = "";
+    while ($categoryRows = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
+        if ($categoryRows['id'] == $categoryId) {
+            $options .= "<option value='$categoryRows[id]' selected>$categoryRows[name]</option>";
+        } else {
+            $options .= "<option value='$categoryRows[id]'>$categoryRows[name]</option>";
         }
 
     }
-}
+
+    if (isset($_GET['formerror'])) {
+        $pName = htmlspecialchars($_GET['title']);
+        $descrip = htmlspecialchars($_GET['descrip']);
+        $categoryId = htmlspecialchars($_GET['category']);
+        $price = htmlspecialchars($_GET['price']);
+        $qty = htmlspecialchars($_GET['qty']);
+    }
+
+    $imagesDb = [];
+    while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
+        $imagesDb[] = $imagesRows['imgName'];
+    }
+    if (isset($_FILES['file']['name'])) {
+        if (count($_FILES) != 0) {
+            foreach ($imageArray as $image) {
+                $imagesDb[] = $image;
+            }
+
+        }
+    }
 
 //print_r($stmt_img->fetch(PDO::FETCH_ASSOC));
-
+} elseif (!isset($_GET['formerror'])) {
+    header("Location:products_page.php");
+    exit();
+}
 ?>
 
 <!doctype html>
