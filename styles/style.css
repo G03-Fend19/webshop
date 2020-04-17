@@ -551,8 +551,8 @@ iframe {
     text-align: unset;
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 2fr auto;
-        grid-template-columns: 2fr auto;
+    -ms-grid-columns: 2fr 1fr;
+        grid-template-columns: 2fr 1fr;
     -ms-grid-rows: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
     grid-row-gap: 0.5em;
@@ -561,6 +561,9 @@ iframe {
 
 .display-products .product-card__content .add-to-cart-btn {
   margin-top: 1em;
+  border: 0;
+  background: 0;
+  padding: 0;
 }
 
 @media (min-width: 540px) {
@@ -572,6 +575,10 @@ iframe {
     -ms-grid-column: 2;
     grid-column: 2;
   }
+}
+
+.display-products .product-card__content .add-to-cart-btn .fa-cart-plus, .display-products .product-card__content .add-to-cart-btn .fa-times-circle {
+  font-size: 45px;
 }
 
 .display-products .product-card__content h3 {
