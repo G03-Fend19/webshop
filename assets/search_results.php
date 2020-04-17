@@ -82,7 +82,7 @@ function getSearchHeader($search) {
 ?>
 
 <section id="search-section" class="display-products">
-  <header class="display-products__header">
+  <header class="display-products__header" id="searchResult">
     <h2 class="display-products__heading"><?php getSearchHeader($search)?></h2>
   </header>
 
