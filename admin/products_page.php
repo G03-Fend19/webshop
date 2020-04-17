@@ -84,23 +84,32 @@ if (isset($_GET['category_id'])) {
     $stmt->execute();
 }
 
-echo "<table>
-<thead>
-<tr>
-<th></th>
-<th>Product number</th>
-<th>Name</th>
-<th>Description</th>
-<th>Category</th>
-<th>Stock qty</th>
-<th>Price</th>
-<th> </th>
-<th> </th>
-</tr>
-</thead>
-<tbody>";
+$stmtCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(empty($stmtCheck)) {
+  echo "<h4>No products in this category</h4>";
+} else {
+  echo "<table>
+  <thead>
+  <tr>
+  <th></th>
+  <th>Product number</th>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Category</th>
+  <th>Stock qty</th>
+  <th>Price</th>
+  <th> </th>
+  <th> </th>
+  </tr>
+  </thead>
+  <tbody>";
+}
+
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
+
+    $stmtCheck = $row;
     $id = htmlspecialchars($row['ProductId']);
     $name = htmlspecialchars_decode($row['ProductName']);
     $description = htmlspecialchars($row['ProductDescription']);
