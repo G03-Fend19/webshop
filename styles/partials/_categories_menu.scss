@@ -5,19 +5,23 @@
   padding: 2em;
 
   @media (min-width: 1000px) {
-    padding: 70px 0 0 0;
+    padding: 0;
   }
 
   &__container {
     max-width: 79vw;
     margin: auto;
     text-align: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 
     @media (min-width: 1013px) {
       margin: 2em 0;
       // padding-left: 1em;
       max-width: unset;
       text-align: unset;
+      padding-top: 76px;
     }
   }
 
