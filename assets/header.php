@@ -25,9 +25,10 @@
         <li class="header__nav__item">
           <form class="header__nav__item__searchform" name="search_form" action="search.php#main"
             onsubmit="return validateSearchForm()" method="GET">
-            <input class="header__nav__item__searchbar hidden" placeholder="search..." type="text" name="search">
+            <input class="header__nav__item__searchbar hidden" placeholder="Search..." type="text" name="search">
             </input>
-            <button class="header__nav__item__searchBtn search hidden">Go</button>
+            <button class="header__nav__item__searchBtn search hidden"><i
+                class="fas fa-arrow-alt-circle-right"></i></button>
           </form>
         </li>
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
@@ -38,6 +39,7 @@
     </nav>
     <section class="header__hero">
       <h1>Welcoming text</h1>
+      <p>Describing text about shop...</p>
     </section>
   </header>
 
