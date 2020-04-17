@@ -50,6 +50,7 @@ if (isset($_POST['submit'])) {
         if ($uploadOk == 1) {
             $imageArray[] = $filename;
             move_uploaded_file($_FILES['file']['tmp_name'][$i], '../media/product_images/' . $filename);
+         
         } else {
             count($failedUploads) !== 0 ? print_r($failedUploads) : null;
         }
@@ -61,6 +62,32 @@ if (isset($_POST['submit'])) {
 <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
   <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
   <input type="file" name="file[]" id="file" multiple>
-  <input type='submit' name='submit' value='Upload'>
+  <input class="upload-btn"type='submit' name='submit' value='Upload'>
 
 </form>
+
+
+<script>
+    
+    const uploadBtn = document.querySelector('.upload-btn');
+     images = JSON.parse(localStorage.getItem("images"));
+     
+        if(!images) {
+            images = []
+        } else {
+        let imagesJSON =  <?php echo json_encode($imageArray); ?>;
+
+        imagesLS = JSON.parse(localStorage.getItem("images"));
+  
+        localStorage.setItem("images", JSON.stringify(imagesJSON))
+
+        }
+
+
+      images = JSON.parse(localStorage.getItem("images"));
+        uploadBtn.addEventListener('click', () => {
+     
+
+    })
+
+</script>
