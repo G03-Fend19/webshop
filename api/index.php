@@ -61,6 +61,7 @@
 
     $products[] = $product;
   endwhile;
+
   while($row= $categoriesStmt->fetch(PDO::FETCH_ASSOC)) :
     $categoryId= htmlspecialchars($row['id']);
     $categoryName= htmlspecialchars_decode($row['name']);
@@ -75,6 +76,8 @@
   $allData = array("categories" => $categories,
                    "products" => $products);
 
+  $noData = array("error" => "Endpoint not found");
+
   $productJson = json_encode($products, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
   $categoriesJson = json_encode($categories, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
@@ -88,6 +91,11 @@
     } elseif ($_GET['data'] == "all") {
       $allDataJson = json_encode($allData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
       echo $allDataJson;
+    } else {
+      $error = json_encode($noData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+      echo $error;
     }
+  } else {
+    header("Location: ../index.php");
   }
 ?>
