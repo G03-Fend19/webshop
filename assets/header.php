@@ -12,7 +12,6 @@
 <body>
 
 
-<<<<<<< HEAD
 <header class="header">
   <nav class="fixed">
     <div class="header__logo">Logo</div>
@@ -40,34 +39,6 @@
     <h1>Welcoming text, hello</h1>
   </section>
 </header>
-=======
-  <header class="header">
-    <nav class="fixed">
-      <div class="header__logo">Logo</div>
-      <ul class="header__nav">
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home" href="">Home</a></li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__contact" href=""><i
-              class="fas fa-phone"></i></a></li>
-        <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
-            href="">Contact</a></li>
-        <li class="header__nav__item">
-          <form class="header__nav__item__searchform" action="search.php#main" method="GET">
-            <input class="header__nav__item__searchbar hidden" placeholder="search..." type="text" name="search">
-            </input>
-            <button class="header__nav__item__searchBtn search hidden">Go</button>
-          </form>
-        </li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
-              class="fas fa-search"></i></a></li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart" href=""><i
-              class="fas fa-shopping-cart"></i></a></li>
-      </ul>
-    </nav>
-    <section class="header__hero">
-      <h1>Welcoming text</h1>
-    </section>
-  </header>
->>>>>>> stock-function-update
 
   <script>
   (() => {
