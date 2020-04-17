@@ -2,7 +2,7 @@
 require_once '../db.php';
 require_once 'upload_image.php';
 
-$productId = "59";
+$productId = "3";
 
 $sql = "SELECT
             ws_products.id AS ProductId,
