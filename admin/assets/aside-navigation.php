@@ -11,12 +11,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = htmlspecialchars($row['name']);
 
     $categories .= "<li class='aside__path aside__nav__ul__li'>
-				                      <i class='far fa-star'></i>
-				                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?category_id=$id'>$name</a>
-				  									</li>";
+					                      <i class='far fa-star'></i>
+					                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?category_id=$id'>$name</a>
+					  									</li>";
 
 endwhile;
-
 
 ?>
 
@@ -31,7 +30,7 @@ endwhile;
     <ul class="aside__nav__ul">
       <li class="aside__path">
         <i class="fas fa-plus"></i>
-        <a class="aside__nav__ul__li__title__link" href="">Add product</a>
+        <a class="aside__nav__ul__li__title__link" href="./create_product.php">Add product</a>
       </li>
       <li class="aside__path">
         <i class="fas fa-plus"></i>
