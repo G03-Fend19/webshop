@@ -173,7 +173,7 @@ if (count($imagesDb) != 0) {
 }
 ?>
       </div>
-      <button type="submit">Add</button>
+      <button type="submit">Save</button>
       <div id="errorDiv">
         <?php
 
