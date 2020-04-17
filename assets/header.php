@@ -36,7 +36,7 @@
     </ul>
   </nav>
   <section class="header__hero">
-    <h1>Welcoming text</h1>
+    <h1>Welcoming text, hello</h1>
   </section>
 </header>
 
