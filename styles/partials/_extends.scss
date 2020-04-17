@@ -1,0 +1,26 @@
+%boxShadowSection {
+  padding: 1em;
+  background: white;
+  box-shadow: 1px 1px 3px rgb(212, 212, 212);
+}
+
+%linkStyle {
+  font-weight: 500;
+  color: white;
+  text-shadow: 1px 1px 2px rgb(92, 92, 92);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+//search-and-contact creates circles around
+// search and contact icons.
+%search-and-contact {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: rgb(226, 226, 226);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 3px rgb(168, 168, 168);
+}
