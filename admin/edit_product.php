@@ -163,7 +163,7 @@ if (!isset($_GET['formerror'])) {
   <?php
 
 ?>
-  <script src="validation.js"></script>
+  <script src="functions.js"></script>
 
 </body>
 
