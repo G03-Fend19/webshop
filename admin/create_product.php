@@ -127,20 +127,6 @@ if (!isset($_GET['formerror'])) {
 
 ?>
   <script src="functions.js"></script>
-  <script>
-  (() => {
-    const addImgBtn = document.querySelector('.add-img')
-    const uploadForm = document.querySelector('.upload-form')
-    const cancelImgUpload = document.querySelector('.cancel-upload')
-
-    cancelImgUpload.addEventListener('click', () => {
-      uploadForm.classList.toggle("hidden");
-    })
-    addImgBtn.addEventListener('click', () => {
-      uploadForm.classList.toggle("hidden");
-    })
-  })()
-  </script>
 
 
 </body>
