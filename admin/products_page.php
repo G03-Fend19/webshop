@@ -6,15 +6,17 @@ require_once "assets/aside-navigation.php";
 <main class="admin__products">
   <div class="admin__products__text">
     <h1>Products</h1>
-    <div class="main__admin__addCategory">
-      <p>Add new</p>
-      <i class="fas fa-plus"></i>
-    </div>
+    <a href="./create_product.php">
+      <div class="main__admin__addCategory">
+        <p>Add new</p>
+        <i class="fas fa-plus"></i>
+      </div>
+    </a>
   </div>
 
   <?php
 
-  if (isset($_GET['category_id'])) {
+if (isset($_GET['category_id'])) {
     $categoryId = $_GET['category_id'];
     $sql = "SELECT
               ws_products.name        AS ProductName,
@@ -33,24 +35,24 @@ require_once "assets/aside-navigation.php";
               ws_categories,
               ws_products_categories
             WHERE
-              ws_products.id = ws_products_images.product_id 
+              ws_products.id = ws_products_images.product_id
             AND
-              ws_images.id = ws_products_images.img_id 
+              ws_images.id = ws_products_images.img_id
             AND
-              ws_products.id = ws_products_categories.product_id 
+              ws_products.id = ws_products_categories.product_id
             AND
-              ws_categories.id = ws_products_categories.category_id 
+              ws_categories.id = ws_products_categories.category_id
             AND
               ws_categories.id = :category_id
             AND
               ws_products_categories.category_id = :category_id
-              
+
               GROUP BY ws_products.id
               ";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":category_id", $categoryId);
     $stmt->execute();
-  } else {
+} else {
     $sql = "SELECT
               ws_products.name        AS ProductName,
               ws_products.description AS ProductDescription,
@@ -68,60 +70,60 @@ require_once "assets/aside-navigation.php";
               ws_categories,
               ws_products_categories
             WHERE
-              ws_products.id = ws_products_images.product_id 
+              ws_products.id = ws_products_images.product_id
             AND
-              ws_images.id = ws_products_images.img_id 
+              ws_images.id = ws_products_images.img_id
             AND
-              ws_products.id = ws_products_categories.product_id 
+              ws_products.id = ws_products_categories.product_id
             AND
-              ws_categories.id = ws_products_categories.category_id 
-              
+              ws_categories.id = ws_products_categories.category_id
+
               GROUP BY ws_products.id
               ";
     $stmt = $db->prepare($sql);
     $stmt->execute();
-  }
+}
 
-echo"<table>
+echo "<table>
 <tr>
 <th></th>
 <th>Product number</th>
 <th>Name</th>
 <th>Description</th>
 <th>Category</th>
-<th>Stock qty</th> 
+<th>Stock qty</th>
 <th>Price</th>
-<th> </th> 
+<th> </th>
 <th> </th>
 </tr>";
 
-while($row= $stmt->fetch(PDO::FETCH_ASSOC)) :
-    $id= htmlspecialchars($row['ProductId']);
-    $name= htmlspecialchars_decode($row['ProductName']);
-    $description= htmlspecialchars($row['ProductDescription']);
-    $stock_qty= htmlspecialchars($row['ProductQty']);
-    $price= htmlspecialchars($row['ProductPrice']);
-    $image= htmlspecialchars($row['ImageName']);
-    $category= htmlspecialchars($row['CategoryName']);
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
+    $id = htmlspecialchars($row['ProductId']);
+    $name = htmlspecialchars_decode($row['ProductName']);
+    $description = htmlspecialchars($row['ProductDescription']);
+    $stock_qty = htmlspecialchars($row['ProductQty']);
+    $price = htmlspecialchars($row['ProductPrice']);
+    $image = htmlspecialchars($row['ImageName']);
+    $category = htmlspecialchars($row['CategoryName']);
     $descriptionShort = substr($description, 0, 20);
     echo "<tr>
-            <td><img src='../media/product_images/$image' alt='placeholder'></td>
-            <td>#$id</td>
-            <td>$name</td>
-            <td>$descriptionShort...</td>
-            <td>$category</td>
-            <td>$stock_qty st</td>
-            <td>$price SEK</td>
-            <td><button><i class='fas fa-pen'></i></button></td>
-            <td>
-                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-                  <input type='hidden' name='id' value='$id'>
-               </form>
-            </td>
-         </tr>";
+			            <td><img src='../media/product_images/$image' alt='placeholder'></td>
+			            <td>#$id</td>
+			            <td>$name</td>
+			            <td>$descriptionShort...</td>
+			            <td>$category</td>
+			            <td>$stock_qty st</td>
+			            <td>$price SEK</td>
+			            <td><button><i class='fas fa-pen'></i></button></td>
+			            <td>
+			                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
+			                  <button type='submit'><i class='far fa-trash-alt'></i></button>
+			                  <input type='hidden' name='id' value='$id'>
+			               </form>
+			            </td>
+			         </tr>";
 endwhile;
-echo'</table>';
+echo '</table>';
 echo '</main>';
 ?>
 
