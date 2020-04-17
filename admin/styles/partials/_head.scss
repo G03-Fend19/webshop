@@ -1,20 +1,25 @@
 .admin__header {
   width: 100vw;
-  color: white;
+  color: rgb(97, 97, 97);
 
   nav {
     display: flex;
     width: 100%;
     align-items: center;
-    background: #999;
-    padding: 0.5em;
+    @extend %boxShadowSection;
+    position: fixed;
+    top: 0;
+    border-radius: 0 0 5px 5px;
+    height: 70px;
+    z-index: 10;
   }
 
   a {
     margin-right: auto;
-    margin-left: 2em;
+    margin-left: 1em;
     text-decoration: none;
-    color: white;
+    color: rgb(97, 96, 96);
+    font-weight: 500;
   }
 
   &__login {
@@ -25,7 +30,7 @@
 
     &__text {
       text-align: center;
-      margin-right: 0.5em;
+      margin-right: 1em;
 
       h5,
       p {
@@ -33,12 +38,17 @@
       }
 
       p {
-        font-size: 0.5em;
+        font-size: 0.6em;
+        color: green;
+      }
+
+      h5 {
+        font-weight: 500;
       }
     }
 
     &__img {
-      max-width: 30px;
+      max-width: 35px;
       display: flex;
       align-items: center;
 
@@ -51,4 +61,10 @@
 
 
 
+}
+
+.siteWrapper {
+  // position: relative;
+  display: grid;
+  grid-template: 1fr auto / auto 1fr;
 }

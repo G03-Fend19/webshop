@@ -1,12 +1,21 @@
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100vw;
-  background: #999;
+  background: white;
   padding: 0.5em;
+  box-shadow: 1px 1px 3px rgb(243, 243, 243);
+  border: 0.5px solid rgb(230, 230, 230);
 
   h4 {
     text-align: center;
-    color: white;
+    color: rgb(173, 173, 173);
+    font-weight: 300;
+  }
+
+  p {
+    font-size: 0.5em;
+    text-align: center;
+    color: rgb(173, 173, 173);
   }
 }

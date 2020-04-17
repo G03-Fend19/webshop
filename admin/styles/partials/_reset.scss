@@ -11,6 +11,10 @@ ol[class] {
   padding: 0;
 }
 
+body {
+  background: rgb(243, 243, 243);
+}
+
 /* Remove default margin and add font*/
 body,
 h1,
@@ -27,7 +31,7 @@ blockquote,
 dl,
 dd {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Set core body defaults */

@@ -11,7 +11,7 @@
 <body>
 
   <header class="admin__header">
-    <nav><a href="#">Company Logo</a>
+    <nav><a href="index.php">Company Logo</a>
       <div class="admin__header__login">
         <div class="admin__header__login__text">
           <h5>Admin</h5>
@@ -21,3 +21,4 @@
       </div>
     </nav>
   </header>
+  <div class="siteWrapper">

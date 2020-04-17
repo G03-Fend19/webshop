@@ -1,0 +1,12 @@
+%boxShadowSection {
+  background: white;
+  padding: 1em;
+  box-shadow: 2px 2px 3px rgb(219, 219, 219);
+}
+
+%asideGridContainer {
+  display: grid;
+  grid-template: auto / 30px 1fr 30px;
+  align-items: center;
+  padding: 0.5em 0;
+}

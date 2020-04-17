@@ -1,12 +1,39 @@
 .aside {
   display: flex;
   flex-direction: column;
-  max-width: 20vw;
-  background: rgb(233, 233, 233);
+  max-width: 17vw;
+  height: fit-content;
+  position: relative;
+  top: 70px;
+  padding-left: 2em;
+  margin-bottom: 5em;
+  @extend %boxShadowSection;
+
+  &__path {
+    @extend %asideGridContainer;
+
+    i {
+      font-size: 0.8em;
+      color: rgb(63, 63, 63);
+    }
+
+  }
+
+  &__dashboard {
+    padding-bottom: 1em;
+  }
+
+  &__title {
+    font-size: 0.8em;
+    padding: 1.5em 0 0.5em 0.5em;
+    font-weight: 500;
+    color: gray;
+  }
 
   a {
     color: black;
     text-decoration: none;
+    font-size: 0.8em;
   }
 
   &__nav {
