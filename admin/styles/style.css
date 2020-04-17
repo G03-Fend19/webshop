@@ -300,13 +300,19 @@ select {
   padding: 2em 1em;
 }
 
+<<<<<<< Updated upstream
 .admin__products table th,
 .admin__products table td {
+=======
+table th,
+table td {
+>>>>>>> Stashed changes
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
+<<<<<<< Updated upstream
 .admin__products table button {
   border: none;
   background: none;
@@ -314,6 +320,9 @@ select {
 }
 
 .admin__products table img {
+=======
+table img {
+>>>>>>> Stashed changes
   max-height: 50px;
 }
 
