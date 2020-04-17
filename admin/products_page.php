@@ -13,7 +13,7 @@ require_once "assets/aside-navigation.php";
   </div>
 
   <?php
-  $sql = "SELECT
+  $sql = "SELECT    
             ws_products.name        AS ProductName,
             ws_products.description AS ProductDescription,
             ws_products.price       AS ProductPrice,
@@ -37,7 +37,11 @@ require_once "assets/aside-navigation.php";
             ws_products.id = ws_products_categories.product_id 
           AND
             ws_categories.id = ws_products_categories.category_id 
-          ORDER BY ws_products.id ASC";
+            
+            GROUP BY ws_products.id
+            ";
+
+//ORDER BY ws_products.id ASC
 
 $stmt = $db->prepare($sql);
 $stmt->execute();
