@@ -79,3 +79,5 @@ SET @p_id = LAST_INSERT_ID()";
     }
 
 }
+
+header("Location: ../products_page.php");
