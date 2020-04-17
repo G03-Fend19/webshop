@@ -1,7 +1,8 @@
 <?php
 require_once '../db.php';
+require_once 'upload_image.php';
 
-$productId = "1";
+$productId = "59";
 
 $sql = "SELECT
             ws_products.id AS ProductId,
@@ -81,8 +82,17 @@ if (isset($_GET['formerror'])) {
     $qty = htmlspecialchars($_GET['qty']);
 }
 
+$imagesDb = [];
 while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
-    echo $imagesRows['imgName'];
+    $imagesDb[] = $imagesRows['imgName'];
+}
+if (isset($_FILES['file']['name'])) {
+    if (count($_FILES) != 0) {
+        foreach ($imageArray as $image) {
+            $imagesDb[] = $image;
+        }
+
+    }
 }
 
 //print_r($stmt_img->fetch(PDO::FETCH_ASSOC));
@@ -101,9 +111,8 @@ while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
 </head>
 
 <body>
-  <!-- onsubmit="return validateProductForm()" -->
-  <form noValidate class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
-    method="POST">
+  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
+    onsubmit="return validateProductForm()" method="POST">
     <div class="form__group">
       <label for="title" class="form__label">
         Product name
@@ -130,11 +139,38 @@ while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
     </div>
 
     <input type="hidden" name="product_id" value="<?=$id?>">
-    <label for="img" class="form__label">Images</label>
 
-    <button type="submit">Add</button>
-    <div id="errorDiv">
-      <?php
+
+    <div class="form__image-section">
+      <label for="img" class="form__label">Images</label>
+      <div class="form__image-section__create">
+        <p>Images</p>
+        <button class="add-img button" type="button">Add Images</button>
+
+      </div>
+
+      <div class="form__image-section__images">
+        <?php
+
+if (count($imagesDb) != 0) {
+
+    $counter = 1;
+    foreach ($imagesDb as $image) {
+        echo "
+                  <label class='form__image-section__selection'>
+                  $image
+                  <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+                  <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+                  </label>
+                  ";
+        $counter++;
+    }
+}
+?>
+      </div>
+      <button type="submit">Add</button>
+      <div id="errorDiv">
+        <?php
 
 if (!isset($_GET['formerror'])) {
 
@@ -157,7 +193,7 @@ if (!isset($_GET['formerror'])) {
 }
 
 ?>
-    </div>
+      </div>
   </form>
 
   <?php

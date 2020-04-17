@@ -93,6 +93,8 @@ document.body.addEventListener("drop", drop, false);
     uploadForm.classList.toggle("hidden");
   });
   addImgBtn.addEventListener("click", () => {
+    console.log("test");
+
     uploadForm.classList.toggle("hidden");
   });
 })();

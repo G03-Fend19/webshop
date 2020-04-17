@@ -34,18 +34,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     ;
 
+    $images = [];
+
+    for ($i = 1; $i <= 5; $i++) {
+        if (isset($_POST["image$i"])) {
+            $images += ["image$i" => $_POST["image$i"]];
+        }
+    }
+
 //Updating the product and category-relationship
     $sql = "UPDATE ws_products
-              SET
-                name = :title,
-                description = :description,
-                price = :price,
-                stock_qty = :qty
-              WHERE id = :id;
+            SET
+            name = :title,
+            description = :description,
+            price = :price,
+            stock_qty = :qty
+            WHERE id = :id;
             UPDATE ws_products_categories
-              SET
-                category_id = :category_id
-              WHERE product_id = :id";
+            SET
+            category_id = :category_id
+            WHERE product_id = :id";
 
     $stmt = $db->prepare($sql);
 
@@ -57,4 +65,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bindParam(':category_id', $category_id);
 
     $stmt->execute();
+
+//Updating images
+
+    $sql_delete = "DELETE
+              FROM ws_products_images
+              WHERE product_id = :id;";
+
+    $stmt_delete = $db->prepare($sql_delete);
+    $stmt_delete->bindParam(':id', $p_id);
+    $stmt_delete->execute();
+
+    /* if (count($images) != 0) {
+foreach ($images as $index => $img) {
+$sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
+$stmt_img = $db->prepare($sql_img);
+$stmt_img->bindParam(":img", $img);
+$stmt_img->execute();
+
+$sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
+VALUES ( $p_id, LAST_INSERT_ID())";
+$stmt_rel = $db->prepare($sql_p_img);
+$stmt_rel->execute();
+}
+} */
+
 }
