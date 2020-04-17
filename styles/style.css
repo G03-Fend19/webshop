@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap");
+.header__nav__item a {
+  font-weight: 500;
+  color: white;
+  text-shadow: 1px 1px 2px #5c5c5c;
+  font-size: 20px;
+  text-decoration: none;
+}
+
 /* Box sizing rules */
 *,
 *::before,
@@ -47,10 +55,6 @@ ol[class] {
 }
 
 /* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
 /* Make images easier to work with */
 img {
   max-width: 100%;
@@ -124,6 +128,8 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-shadow: 1px 1px 3px #a8a8a8;
+          box-shadow: 1px 1px 3px #a8a8a8;
 }
 
 .header {
@@ -137,12 +143,10 @@ a {
   -ms-grid-rows: auto 1fr;
   -ms-grid-columns: 1fr;
       grid-template: auto 1fr / 1fr;
-  font-size: 1.7em;
   width: 100vw;
 }
 
 .header nav {
-  font-size: 1.7em;
   position: fixed;
   top: 0;
   z-index: 10;
@@ -155,6 +159,9 @@ a {
       -ms-flex-align: center;
           align-items: center;
   background-color: #e2e2e2;
+  font-size: 20px;
+  -webkit-box-shadow: 1px 1px 3px #c2c2c2;
+          box-shadow: 1px 1px 3px #c2c2c2;
 }
 
 .header__logo {
@@ -177,11 +184,6 @@ a {
   margin-left: 20px;
 }
 
-.header__nav__item a {
-  text-decoration: none;
-  color: black;
-}
-
 @media (min-width: 800px) {
   .header__nav__item a {
     display: inline;
@@ -196,7 +198,7 @@ a {
 .header__nav__item__contact {
   position: fixed;
   margin-top: 75vh;
-  right: 11%;
+  right: 1em;
 }
 
 @media (min-width: 800px) {
@@ -208,7 +210,7 @@ a {
 .header__nav__item__search {
   position: fixed;
   margin-top: 85vh;
-  right: 12%;
+  right: 1em;
 }
 
 .header__nav__item__search:hover {
@@ -218,8 +220,8 @@ a {
 @media (max-width: 800px) {
   .header__nav__item__searchform {
     position: fixed;
-    margin-top: 86vh;
-    right: 28%;
+    margin-top: 87vh;
+    right: 5em;
   }
 }
 
@@ -239,6 +241,10 @@ a {
   .header__nav__item__searchBtn {
     display: none;
   }
+}
+
+.header__nav__item__cart {
+  margin-right: 1.5em;
 }
 
 .header__hero {
