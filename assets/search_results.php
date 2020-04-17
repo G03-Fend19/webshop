@@ -24,7 +24,8 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
           AND
             (ws_products.name LIKE '%$search%' 
           OR
-            ws_products.description LIKE '%$search%')";
+            ws_products.description LIKE '%$search%')
+          GROUP BY ws_products.id";
   
   $stmt = $db->prepare($sql);
   $stmt->execute();

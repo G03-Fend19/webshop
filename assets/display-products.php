@@ -33,7 +33,8 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
           AND
             ws_categories.id = :id
           AND
-            ws_products_categories.category_id = :id ";
+            ws_products_categories.category_id = :id
+          GROUP BY ws_products.id";
   
   $stmt = $db->prepare($sql);
   $stmt->bindParam(":id", $id);
@@ -53,7 +54,8 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
           WHERE 
             ws_products.id = ws_products_images.product_id 
           AND
-            ws_images.id = ws_products_images.img_id";
+            ws_images.id = ws_products_images.img_id
+          GROUP BY ws_products.id";
 
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -70,7 +72,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
     $productImg = htmlspecialchars($row['ImageName']);
     if (isset($_GET['id'])) {
       $categoryName = htmlspecialchars($row['CategoryName']);
-    }
+    } 
 
     $productCards .= "<article class='product-card'>
                         <a href='product.php?id=$productId' class='product-card__image-link'>
