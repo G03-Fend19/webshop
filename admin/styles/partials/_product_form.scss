@@ -1,9 +1,20 @@
 .form {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
   &__group {
+    display: flex;
+    width: 80vw;
+    border: 1px solid rgb(186, 186, 186);
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
+    padding: 20px;
+    margin: auto;
+    margin-top: 100px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-auto-flow: column;
+    margin-bottom: 20px;
   }
 
   .descrip {
@@ -12,4 +23,66 @@
   &__input {
     display: block;
   }
+  &__image-section {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    margin: auto;
+    border: 1px solid rgb(186, 186, 186);
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
+    padding: 20px;
+    &__create {
+      display: flex;
+      justify-content: space-between;
+    }
+    &__images  {
+      display: flex;
+    }
+  }
+}
+
+.upload-form {
+  position: absolute;
+  left: 20vw;
+  top: auto; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+  width: 350px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.66);
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 8px;
+  &__border {
+    background-color: blue;
+    display: flex;
+  }
+}
+
+.hidden {
+  display: none;
+}
+input[type="checkbox"] {
+  opacity: 0;
+}
+input[type="checkbox"] + img {
+  cursor: pointer;
+  height: 150px;
+  width: 150px;
+}
+
+/* CHECKED STYLES */
+input[type="checkbox"]:checked + img {
+  outline: 5px solid rgba(11, 108, 235, 0.728);
+}
+
+.button {
+  max-width: 80px;
+  height: 40px;
+}
+
+.add-product-btn {
+  grid-row: 3;
+  place-self: end;
+  align-self: start;
+  margin-right: 15em;
 }

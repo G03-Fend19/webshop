@@ -2,12 +2,14 @@
 require_once '../db.php';
 require_once 'upload_image.php';
 
-$sql = "SELECT * FROM ws_categories";
+  $sql = "SELECT * FROM ws_categories";
 
-$stmt = $db->prepare($sql);
-$stmt->execute();
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
 
-$options = "<option value='category' disabled selected hidden>Category</option>";
+  
+  $options = "<option value='category' disabled selected 
+  >Category</option>";
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $options .= "<option value='$row[id]'>$row[name]</option>";
@@ -36,7 +38,7 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
 
 </head>
 
-<body>
+<body >
 
 
 
@@ -67,10 +69,16 @@ $qty = isset($_GET['qty']) ? $_GET['qty'] : null;
       </label>
 
     </div>
-    <label for="img" class="form__label">Images</label>
-
+  
+    
     <div class="form__image-section">
+      <div class="form__image-section__create">
+        <p>Images</p>
+        <button class="add-img button" type="button">Add Images</button>
 
+      </div>
+      
+      <div class="form__image-section__images">
       <?php
 
 $counter = 1;
@@ -87,8 +95,6 @@ foreach ($imageArray as $image) {
 
 ?>
     </div>
-
-    <button type="submit">Add</button>
     <div id="errorDiv">
       <?php
 
@@ -114,13 +120,27 @@ if (!isset($_GET['formerror'])) {
 
 ?>
     </div>
+         <button class="button add-product-btn" type="submit">Add Product</button>
   </form>
 
   <?php
 
 ?>
   <script src="validation.js"></script>
+  <script>
+    (() => {
+    const addImgBtn = document.querySelector('.add-img')
+    const uploadForm = document.querySelector('.upload-form')
+    const cancelImgUpload = document.querySelector('.cancel-upload')
 
+    cancelImgUpload.addEventListener('click', () => {
+        uploadForm.classList.toggle("hidden");
+    })
+    addImgBtn.addEventListener('click', () => {
+      uploadForm.classList.toggle("hidden");
+    })
+    })()
+   </script>
 
 
 </body>

@@ -1,8 +1,27 @@
+@charset "UTF-8";
 body {
   margin: 0;
 }
 
+.form {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[3];
+      grid-template-rows: repeat(3, 1fr);
+}
+
 .form__group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 80vw;
+  border: 1px solid #bababa;
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
+          box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
+  padding: 20px;
+  margin: auto;
+  margin-top: 100px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -10,6 +29,7 @@ body {
   -ms-grid-rows: auto auto auto;
       grid-template-rows: auto auto auto;
   grid-auto-flow: column;
+  margin-bottom: 20px;
 }
 
 .form .descrip {
@@ -18,5 +38,91 @@ body {
 
 .form__input {
   display: block;
+}
+
+.form__image-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80vw;
+  margin: auto;
+  border: 1px solid #bababa;
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
+          box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
+  padding: 20px;
+}
+
+.form__image-section__create {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.form__image-section__images  {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.upload-form {
+  position: absolute;
+  left: 20vw;
+  top: auto;
+  /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+  width: 350px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.66);
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.upload-form__border {
+  background-color: blue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+input[type="checkbox"] {
+  opacity: 0;
+}
+
+input[type="checkbox"] + img {
+  cursor: pointer;
+  height: 150px;
+  width: 150px;
+}
+
+/* CHECKED STYLES */
+input[type="checkbox"]:checked + img {
+  outline: 5px solid rgba(11, 108, 235, 0.728);
+}
+
+.button {
+  max-width: 80px;
+  height: 40px;
+}
+
+.add-product-btn {
+  -ms-grid-row: 3;
+  grid-row: 3;
+  place-self: end;
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+  margin-right: 15em;
 }
 /*# sourceMappingURL=style.css.map */
