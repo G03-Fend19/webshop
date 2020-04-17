@@ -87,7 +87,7 @@ select {
   }
 }
 
-.admin__header nav, .aside, .admin__products__filter input, .admin__products table, .main__admin__addCategory, .main__admin .main__category-table {
+.admin__header nav, .aside, .admin__products table, .main__admin__addCategory, .main__admin .main__category-table {
   background: white;
   padding: 1em;
   -webkit-box-shadow: 2px 2px 3px #dbdbdb;
@@ -257,40 +257,7 @@ select {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.admin__products__filter {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: 1fr 1fr;
-  -ms-grid-columns: 1fr 100px;
-      grid-template: 1fr 1fr / 1fr 100px;
-  gap: 0.5em;
-  padding-bottom: 2em;
-}
-
-.admin__products__filter h2 {
-  font-size: 1em;
-  color: gray;
-  margin-top: 1em;
-  font-weight: 500;
-}
-
-.admin__products__filter__select {
-  background: blue;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.admin__products__filter input {
-  grid-column: span 2;
-  padding: 0 0 0 1em;
-  border-radius: 10px;
-  border: none;
+  padding-bottom: 1em;
 }
 
 .admin__products table {
@@ -300,13 +267,19 @@ select {
   padding: 2em 1em;
 }
 
+<<<<<<< Updated upstream
 .admin__products table th,
 .admin__products table td {
+=======
+table th,
+table td {
+>>>>>>> Stashed changes
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
+<<<<<<< Updated upstream
 .admin__products table button {
   border: none;
   background: none;
@@ -314,6 +287,9 @@ select {
 }
 
 .admin__products table img {
+=======
+table img {
+>>>>>>> Stashed changes
   max-height: 50px;
 }
 

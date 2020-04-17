@@ -12,16 +12,6 @@ require_once "assets/aside-navigation.php";
     </div>
   </div>
 
-  <div class="admin__products__filter">
-    <h2>Filter products</h2>
-    <select name="Category" id="filterProd">
-      <option value="Fix">Category</option>
-      <option value="Fix">Fix</option>
-      <option value="Fix">Fix</option>
-    </select>
-    <input placeholder="search" type="text">
-  </div>
-
   <?php
   $sql = "SELECT    
             ws_products.name        AS ProductName,
