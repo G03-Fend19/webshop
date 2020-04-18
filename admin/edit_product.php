@@ -113,7 +113,6 @@ require_once './assets/aside-navigation.php';
   <input type="file" name="file[]" id="file" multiple>
   <input type="hidden" name="p_id" value="<?=$productId?>">
   <input class="upload-btn" type='submit' name='submit' value='Upload'>
-
 </form>
 <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
   onsubmit="return validateProductForm()" method="POST">
