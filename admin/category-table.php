@@ -80,10 +80,10 @@ if (isset($_GET['addingerror'])) {
 
   <div class="main__admin__text">
     <h1>Categories</h1>
-    <a href="?addCategory=true" class="main__admin__addCategory">
-      Add new
-      <i class="fas fa-plus"></i>
-    </a>
+    <button><a href="?addCategory=true" class="main__admin__addCategory">
+        Add new
+        <i class="fas fa-plus"></i>
+      </a></button>
     <?php echo $addCategory; ?>
   </div>
 
@@ -92,7 +92,6 @@ if (isset($_GET['addingerror'])) {
   </table>
 
   <script>
-
   function toggleEditCategory(id, name) {
 
     const categoryP = document.querySelector('#category-' + id);

@@ -24,51 +24,56 @@ require_once './assets/head.php';
 require_once './assets/aside-navigation.php';
 
 ?>
-<form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
-  <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
-  <input type="file" name="file[]" id="file" multiple>
-  <input type="hidden" name="p_id" value="<?=$productId?>">
-  <input class="upload-btn" type='submit' name='submit' value='Upload'>
-</form>
+<section class="new__product__section">
+  <h1>Add new product</h1>
+
+  <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
+    <div class="upload-form__border">
+      <button class="cancel-upload" type="button"><i class="fas fa-times-circle"></i></button>
+    </div>
+    <input type="file" name="file[]" id="file" multiple>
+    <input type="hidden" name="p_id" value="<?=$productId?>">
+    <input class="upload-btn" type='submit' name='submit' value='Upload'>
+  </form>
 
 
-<form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product.php"
-  onsubmit="return validateProductForm()" method="POST">
-  <div class="form__group">
-    <label for="title" class="form__label">
-      Product name
-      <input type="text" name="title" id="title" value="<?=$title?>" minlength="2" maxlength="50" required
-        class="form__input">
-    </label>
-    <label for="description" class="form__label descrip">
-      Description
-      <textarea name="description" id="description" maxlength="800" required
-        class="form__input"><?=$descrip?></textarea>
-    </label>
-    <select name="category" id="category">
-      <?=$options?>
-    </select>
-    <label for="price" class="form__label">
-      Price
-      <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
-    </label>
-    <label for="qty" class="form__label">
-      Qty
-      <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required class="form__input">
-    </label>
-
-  </div>
-
-
-  <div class="form__image-section">
-    <div class="form__image-section__create">
-      <p>Images</p>
-      <button class="add-img button" type="button">Add Images</button>
+  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product.php"
+    onsubmit="return validateProductForm()" method="POST">
+    <div class="form__group">
+      <label for="title" class="form__label">
+        Product name
+        <input type="text" name="title" id="title" value="<?=$title?>" minlength="2" maxlength="50" required
+          class="form__input">
+      </label>
+      <label for="description" class="form__label descrip">
+        Description
+        <textarea name="description" id="description" maxlength="800" required
+          class="form__input"><?=$descrip?></textarea>
+      </label>
+      <select name="category" id="category">
+        <?=$options?>
+      </select>
+      <label for="price" class="form__label">
+        Price
+        <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
+      </label>
+      <label for="qty" class="form__label">
+        Qty
+        <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required class="form__input">
+      </label>
 
     </div>
 
-    <div class="form__image-section__images">
-      <?php
+
+    <div class="form__image-section">
+      <div class="form__image-section__create">
+        <p>Images</p>
+        <button class="add-img button" type="button">Add images <i class="fas fa-images"></i></button>
+
+      </div>
+
+      <div class="form__image-section__images">
+        <?php
 
 $counter = 1;
 foreach ($imageArray as $image) {
@@ -83,10 +88,10 @@ foreach ($imageArray as $image) {
 }
 
 ?>
+      </div>
     </div>
-  </div>
-  <div id="errorDiv">
-    <?php
+    <div id="errorDiv">
+      <?php
 
 if (!isset($_GET['formerror'])) {
 
@@ -109,9 +114,10 @@ if (!isset($_GET['formerror'])) {
 }
 
 ?>
-  </div>
-  <button class="button add-product-btn" type="submit">Add Product</button>
-</form>
+    </div>
+    <button class="button add-product-btn" type="submit">Add Product</button>
+  </form>
+</section>
 <script src="functions.js"></script>
 <?php
 require_once './assets/foot.php';

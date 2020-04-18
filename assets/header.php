@@ -27,8 +27,7 @@
             onsubmit="return validateSearchForm()" method="GET">
             <input class="header__nav__item__searchbar hidden" placeholder="Search..." type="text" name="search">
             </input>
-            <button class="header__nav__item__searchBtn search hidden"><i
-                class="fas fa-arrow-alt-circle-right"></i></button>
+            <button class="header__nav__item__searchBtn search hidden">Search</button>
           </form>
         </li>
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i

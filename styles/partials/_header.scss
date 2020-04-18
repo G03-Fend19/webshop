@@ -86,7 +86,7 @@
       &__searchform {
         @media (max-width: 800px) {
           position: fixed;
-          margin-top: 86vh;
+          margin-top: 87vh;
           right: 5em;
           display: flex;
           align-items: center;
@@ -95,29 +95,45 @@
 
       &__searchbar {
         height: 30px;
+        width: 150px;
         border-radius: 6px;
         border: 1px solid rgb(133, 133, 133);
         padding-left: 0.5em;
-        font-size: 16px;
+        font-size: 10px;
+        font-style: italic;
+        margin: auto 0;
         margin-right: 0.5em;
-        margin: auto 0.5em auto 0;
+
+        @media (min-width: 800px) {
+          width: 250px;
+          margin-right: 0;
+          font-size: 12px;
+        }
       }
 
       &__searchBtn {
-        border: none;
-        color: green;
-        text-shadow: 0.3px 0.3px 1px rgb(71, 71, 71);
-        font-size: 30px;
-        background: unset;
+        background: rgb(60, 60, 60);
+        color: white;
+        font-weight: 900;
+        border-radius: 6px;
+        font-size: 12px;
         margin: auto;
+        cursor: pointer;
+        height: 30px;
+        margin: auto 0;
+        border: 1px solid gray;
+        padding: 0.5em;
 
-        i {
-          background: white;
-          border-radius: 50%;
+
+        &:hover {
+          color: rgb(182, 206, 182);
         }
 
         @media (min-width: 800px) {
-          display: none;
+          // display: none;
+          margin: unset;
+          font-size: 12px;
+          margin-right: 1em;
         }
       }
 

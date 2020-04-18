@@ -1,83 +1,188 @@
+.new__product__section {
+  margin-top: 80px;
+  padding: 2em;
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+    margin-top: 0.3em;
+    // padding-left: 1em;
+  }
+
+  h1::after {
+    content: "|";
+    font-weight: lighter;
+    padding-left: 0.5em;
+  }
+}
+
 .form {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
+
   &__group {
     display: flex;
-    width: 80vw;
-    border: 1px solid rgb(186, 186, 186);
+    width: 80%;
+    // min-height: 300px;
     border-radius: 10px;
-    box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
-    padding: 20px;
-    margin: auto;
-    margin-top: 100px;
+    // margin: auto;
+    margin-top: 2em;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0.5fr;
     grid-template-rows: auto auto auto;
     grid-auto-flow: column;
     margin-bottom: 20px;
+    @extend %boxShadowSection;
+    gap: 1em;
+
+    label {
+      font-size: 14px;
+    }
   }
 
   .descrip {
     grid-row: span 2;
+
+    textarea {
+      height: 150px;
+      @extend %inputStyles;
+    }
   }
+
+  // .category__select__wrapper {
+  //   width: 100%;
+
+  //   select[option] {
+  //     width: 200px;
+  //     padding: 0.5em 1em;
+  //   }
+
+  // }
+
+
   &__input {
     display: block;
+    @extend %inputStyles;
   }
+
   &__image-section {
     display: flex;
     flex-direction: column;
-    width: 80vw;
-    margin: auto;
-    border: 1px solid rgb(186, 186, 186);
+    width: 80%;
     border-radius: 10px;
-    box-shadow: 1px 1px 1px 1px rgba(174, 174, 174, 0.591);
-    padding: 20px;
+    @extend %boxShadowSection;
+
     &__create {
       display: flex;
       justify-content: space-between;
     }
-    &__images  {
+
+    &__images {
       display: flex;
+    }
+
+    button {
+      width: 140px;
+      // margin: auto;
+      padding: 1em;
+      display: flex;
+      font-size: 14px;
+      font-weight: 900;
+      color: white;
+      // height: 60px;
+      border: none;
+      border-radius: 10px;
+      background: rgb(103, 136, 103);
+      box-shadow: 1px 1px 3px rgb(96, 96, 96);
+      cursor: pointer;
+
+      i {
+        margin-left: 0.5em;
+      }
+
+      &:hover {
+        transition: ease-in 250ms;
+        transform: scale(1.025);
+      }
     }
   }
 }
 
 .upload-form {
   position: absolute;
-  left: 20vw;
-  top: auto; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
-  width: 350px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.66);
-  border: 2px solid rgba(0, 0, 0, 0.5);
+  right: calc(50vw - 205px);
+  top: calc(50vh - 125px);
+  display: grid;
+  grid-template: auto 1fr 1fr / 1fr 1fr 1fr;
+  /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+  width: 335px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.988);
+  // border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 4px;
-  padding: 8px;
+  // padding: 1.5em;
+  @extend %boxShadowSection;
+
+  .cancel-upload {
+    font-weight: 900;
+    border: none;
+    color: red;
+    background: none;
+    cursor: pointer;
+    font-size: 25px;
+  }
+
   &__border {
-    background-color: blue;
+    background-color: white;
     display: flex;
+    grid-column: span 3;
+    width: 300px;
+    height: 50px;
+    border: 1px solid rgba(128, 128, 128, 0.345);
+    border-radius: 10px;
+    box-shadow: 1px 1px 2px rgb(191, 191, 191);
+    margin-bottom: 1em;
+  }
+
+  .upload-btn {
+    margin-top: 1em;
+    padding: 0.5em;
+    grid-row: 3;
+    width: 300px;
+    background: rgb(81, 142, 81);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 900;
+    // margin: auto;
+
+    &:hover {
+      transition: ease-in 250ms;
+      transform: scale(1.02);
+      text-shadow: white;
+    }
   }
 }
 
 .hidden {
   display: none;
 }
+
 input[type="checkbox"] {
   opacity: 0;
 }
-input[type="checkbox"] + img {
+
+input[type="checkbox"]+img {
   cursor: pointer;
   height: 150px;
   width: 150px;
 }
 
 /* CHECKED STYLES */
-input[type="checkbox"]:checked + img {
+input[type="checkbox"]:checked+img {
   outline: 5px solid rgba(11, 108, 235, 0.728);
-}
-
-.button {
-  max-width: 80px;
-  height: 40px;
 }
 
 .add-product-btn {
@@ -85,4 +190,26 @@ input[type="checkbox"]:checked + img {
   place-self: end;
   align-self: start;
   margin-right: 15em;
+  border: none;
+  font-weight: 900;
+  color: white;
+  border-radius: 10px;
+  background: rgb(103, 136, 103);
+  cursor: pointer;
+  padding: 0.5em 1em;
+  margin-top: 1em;
+  box-shadow: 1px 1px 3px rgb(96, 96, 96);
+
+  &:hover {
+    transition: ease-in 250ms;
+    transform: scale(1.025);
+  }
+}
+
+.form__image-section__selection {
+  padding-bottom: 0.5em;
+
+  &__image {
+    margin-bottom: 2em;
+  }
 }

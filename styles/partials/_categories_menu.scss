@@ -26,8 +26,15 @@
   }
 
   span {
-    padding-left: 1.5em;
-    font-weight: 300;
+    font-weight: 900;
+    color: white;
+
+    @media (min-width: 1000px) {
+      padding-left: 1.5em;
+      color: unset;
+      font-weight: unset;
+      font-size: 18px;
+    }
   }
 
   h2 {
@@ -41,19 +48,20 @@
   ul {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
 
     @media (min-width: 1013px) {
       display: block;
     }
 
     li {
-      margin: 0.5em 0;
+      margin: 0.2em;
       padding: 0.4em 0.5em;
       border: 1px solid gray;
       box-shadow: 1px 1px 2px gray;
       border-radius: 25px;
       background: gray;
+      font-size: 12px;
 
       &:hover {
         transition: ease-in 250ms;
@@ -66,6 +74,7 @@
         box-shadow: unset;
         border-radius: unset;
         background: unset;
+        margin: 0.5em 0;
 
         &:hover {
           transition: unset;

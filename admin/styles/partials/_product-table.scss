@@ -20,6 +20,24 @@
     display: flex;
     align-items: center;
     padding-bottom: 1em;
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      width: 120px;
+      height: 100%;
+      @extend %boxShadowSection;
+      border-radius: 15px;
+      color: rgb(145, 145, 145);
+      cursor: pointer;
+      font-size: 0.8em;
+      justify-content: space-evenly;
+      margin-left: 1em;
+    }
   }
 
 
@@ -44,8 +62,15 @@
       cursor: pointer;
     }
 
-    img {
+    td {
       max-height: 50px;
+
+      img {
+        height: 50px;
+        width: 50px;
+        object-fit: cover;
+      }
+
     }
   }
 
