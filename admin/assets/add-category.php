@@ -1,18 +1,19 @@
 <?php
 
 require_once '../../db.php';
+require_once './category-validation.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $name = $_POST['name'];
 
-    if (!preg_match("/^[a-zA-ZäöåÄÖÅ]+$/", $name)) {
-
-        header('Location: ../category-table.php?invalidchars=true');
-
-    } else if (strlen($name) < 2 || strlen($name) > 20) {
+    if (!validLength($name)) {
 
         header('Location: ../category-table.php?invalidlength=true');
+
+    } else if (!onlyValidCharacters($name)) {
+
+        header('Location: ../category-table.php?invalidchars=true');
 
     } else {
 
