@@ -66,6 +66,14 @@ echo "</pre>"; */
 
     }
 
+    if (isset($_GET['formerror'])) {
+        $pName = htmlspecialchars($_GET['title']);
+        $descrip = htmlspecialchars($_GET['descrip']);
+        $categoryId = htmlspecialchars($_GET['category']);
+        $price = htmlspecialchars($_GET['price']);
+        $qty = htmlspecialchars($_GET['qty']);
+    }
+
     $options = "";
     while ($categoryRows = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
         if ($categoryRows['id'] == $categoryId) {
@@ -74,14 +82,6 @@ echo "</pre>"; */
             $options .= "<option value='$categoryRows[id]'>$categoryRows[name]</option>";
         }
 
-    }
-
-    if (isset($_GET['formerror'])) {
-        $pName = htmlspecialchars($_GET['title']);
-        $descrip = htmlspecialchars($_GET['descrip']);
-        $categoryId = htmlspecialchars($_GET['category']);
-        $price = htmlspecialchars($_GET['price']);
-        $qty = htmlspecialchars($_GET['qty']);
     }
 
     $imagesDb = [];
