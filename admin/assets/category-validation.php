@@ -12,7 +12,8 @@ function onlyValidCharacters($name)
 
 function validLength($name)
 {
-    if (strlen($name) >= 2 && strlen($name) <= 30) {
+
+    if (mb_strlen($name, 'utf8') >= 2 && mb_strlen($name, 'utf8') <= 30) {
         return true;
     } else {
         return false;
