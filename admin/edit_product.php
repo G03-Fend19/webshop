@@ -56,7 +56,7 @@ print_r($stmt_categories->fetch(PDO::FETCH_ASSOC));
 echo "</pre>"; */
 
     while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $id = htmlspecialchars($productRow['ProductId']);
+        $p_id = htmlspecialchars($productRow['ProductId']);
         $pName = htmlspecialchars($productRow['ProductName']);
         $descrip = htmlspecialchars($productRow['ProductDescription']);
         $categoryId = htmlspecialchars($productRow['CategoryId']);
@@ -98,91 +98,82 @@ echo "</pre>"; */
     }
 
 //print_r($stmt_img->fetch(PDO::FETCH_ASSOC));
-} elseif (!isset($_GET['formerror'])) {
+} elseif (!isset($_GET['formerror']) && $_SERVER['REQUEST_METHOD'] != 'POST') {
     header("Location:products_page.php");
-    exit();
+
 }
+
+require_once './assets/head.php';
+require_once './assets/aside-navigation.php';
+
 ?>
 
-<!doctype html>
-<html lang="en">
+<form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
+  <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
+  <input type="file" name="file[]" id="file" multiple>
+  <input type="hidden" name="p_id" value="<?=$productId?>">
+  <input class="upload-btn" type='submit' name='submit' value='Upload'>
 
-<head>
-  <meta charset="utf-8">
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
-  <link rel="stylesheet" href="./styles/style.css">
-</head>
+</form>
+<form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
+  onsubmit="return validateProductForm()" method="POST">
+  <div class="form__group">
+    <label for="title" class="form__label">
+      Product name
+      <input type="text" name="title" id="title" value="<?=$pName?>" minlength="2" maxlength="50" required
+        class="form__input">
+    </label>
+    <label for="description" class="form__label descrip">
+      Description
+      <textarea name="description" id="description" maxlength="800" required
+        class="form__input"><?=$descrip?></textarea>
+    </label>
+    <select name="category" id="category">
+      <?=$options?>
+    </select>
+    <label for="price" class="form__label">
+      Price
+      <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
+    </label>
+    <label for="qty" class="form__label">
+      Qty
+      <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required class="form__input">
+    </label>
 
-<body>
-  <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
-    <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
-    <input type="file" name="file[]" id="file" multiple>
-    <input type="hidden" name="p_id" value="<?=$productId?>">
-    <input class="upload-btn" type='submit' name='submit' value='Upload'>
+  </div>
 
-  </form>
-  <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
-    onsubmit="return validateProductForm()" method="POST">
-    <div class="form__group">
-      <label for="title" class="form__label">
-        Product name
-        <input type="text" name="title" id="title" value="<?=$pName?>" minlength="2" maxlength="50" required
-          class="form__input">
-      </label>
-      <label for="description" class="form__label descrip">
-        Description
-        <textarea name="description" id="description" maxlength="800" required
-          class="form__input"><?=$descrip?></textarea>
-      </label>
-      <select name="category" id="category">
-        <?=$options?>
-      </select>
-      <label for="price" class="form__label">
-        Price
-        <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
-      </label>
-      <label for="qty" class="form__label">
-        Qty
-        <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required class="form__input">
-      </label>
+  <input type="hidden" name="product_id" value="<?=$p_id?>">
+
+  <div class="form__image-section">
+    <label for="img" class="form__label">Images</label>
+    <div class="form__image-section__create">
+      <p>Images</p>
+      <button class="add-img button" type="button">Add Images</button>
 
     </div>
 
-    <input type="hidden" name="product_id" value="<?=$id?>">
-
-
-    <div class="form__image-section">
-      <label for="img" class="form__label">Images</label>
-      <div class="form__image-section__create">
-        <p>Images</p>
-        <button class="add-img button" type="button">Add Images</button>
-
-      </div>
-
-      <div class="form__image-section__images">
-        <?php
+    <div class="form__image-section__images">
+      <?php
 
 if (count($imagesDb) != 0) {
 
     $counter = 1;
     foreach ($imagesDb as $image) {
         echo "
-                  <label class='form__image-section__selection'>
-                  $image
-                  <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-                  <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-                  </label>
-                  ";
+          <label class='form__image-section__selection'>
+          $image
+          <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+          </label>
+          ";
         $counter++;
     }
 }
 ?>
-      </div>
-      <button type="submit">Save</button>
-      <div id="errorDiv">
-        <?php
+    </div>
+    <button type="submit">Save</button>
+    <div id="errorDiv">
+      <?php
 
 if (!isset($_GET['formerror'])) {
 
@@ -205,14 +196,9 @@ if (!isset($_GET['formerror'])) {
 }
 
 ?>
-      </div>
-  </form>
+    </div>
+</form>
+<script src="functions.js"></script>
+<?php
 
-  <?php
-
-?>
-  <script src="functions.js"></script>
-
-</body>
-
-</html>
+require_once './assets/foot.php';

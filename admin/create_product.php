@@ -7,7 +7,7 @@ $sql = "SELECT * FROM ws_categories";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
-$options = "<option value='category' disabled selected
+$options = "<option value='category' disabled hidden selected
   >Category</option>";
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -106,7 +106,7 @@ if (!isset($_GET['formerror'])) {
   </div>
   <button class="button add-product-btn" type="submit">Add Product</button>
 </form>
-
+<script src="functions.js"></script>
 <?php
 require_once './assets/foot.php';
 ?>

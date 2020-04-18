@@ -86,10 +86,10 @@ if (isset($_GET['category_id'])) {
 
 $stmtCheck = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if(empty($stmtCheck)) {
-  echo "<h4>No products in this category</h4>";
+if (empty($stmtCheck)) {
+    echo "<h4>No products in this category</h4>";
 } else {
-  echo "<table>
+    echo "<table>
   <thead>
   <tr>
   <th></th>
@@ -106,7 +106,6 @@ if(empty($stmtCheck)) {
   <tbody>";
 }
 
-
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
 
     $stmtCheck = $row;
@@ -119,26 +118,26 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $category = htmlspecialchars($row['CategoryName']);
     $descriptionShort = substr($description, 0, 20);
     echo "<tr>
-							            <td><img src='../media/product_images/$image' alt='placeholder'></td>
-							            <td>#$id</td>
-							            <td>$name</td>
-							            <td>$descriptionShort...</td>
-							            <td>$category</td>
-							            <td>$stock_qty st</td>
-							            <td>$price SEK</td>
-				                  <td>
-				                    <form action='./edit_product.php' method='POST'>
-				                      <button type='submit'><i class='fas fa-pen'></i></button>
-				                      <input type='hidden' name='p_id' value='$id'>
-				                    </form>
-				                  </td>
-							            <td>
-							                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-							                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-							                  <input type='hidden' name='id' value='$id'>
-							               </form>
-							            </td>
-							         </tr>";
+								            <td><img src='../media/product_images/$image' alt='placeholder'></td>
+								            <td>#$id</td>
+								            <td>$name</td>
+								            <td>$descriptionShort...</td>
+								            <td>$category</td>
+								            <td>$stock_qty st</td>
+								            <td>$price SEK</td>
+					                  <td>
+					                    <form action='./edit_product.php' method='POST'>
+					                      <button type='submit'><i class='fas fa-pen'></i></button>
+					                      <input type='hidden' name='p_id' value='$id'>
+					                    </form>
+					                  </td>
+								            <td>
+								                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
+								                  <button type='submit'><i class='far fa-trash-alt'></i></button>
+								                  <input type='hidden' name='id' value='$id'>
+								               </form>
+								            </td>
+								         </tr>";
 endwhile;
 echo '</tbody></table>';
 echo '</main>';
