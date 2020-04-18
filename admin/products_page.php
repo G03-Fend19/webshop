@@ -7,10 +7,10 @@ require_once "assets/aside-navigation.php";
   <div class="admin__products__text">
     <h1>Products</h1>
     <a href="./create_product.php">
-      <div class="main__admin__addCategory">
+      <button class="main__admin__addCategory">
         <p>Add new</p>
         <i class="fas fa-plus"></i>
-      </div>
+      </button>
     </a>
   </div>
 

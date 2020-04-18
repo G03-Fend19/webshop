@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     width: 120px;
-    height: 30px;
+    height: 100%;
     @extend %boxShadowSection;
     border-radius: 15px;
     color: rgb(145, 145, 145);
@@ -40,6 +40,8 @@
     font-size: 0.8em;
     justify-content: space-evenly;
     margin-left: 1em;
+    border: none;
+    background: blue;
   }
 
   .main__category-table {
