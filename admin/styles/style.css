@@ -296,6 +296,7 @@ select {
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
   margin-left: 1em;
+  border: none;
 }
 
 .admin__products table {
