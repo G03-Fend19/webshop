@@ -71,25 +71,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 //Updating images
 
-    $sql_delete = "DELETE
-              FROM ws_products_images
-              WHERE product_id = :id;";
+    // select current imgages
+    $sql_current_img = "SELECT
+                        ws_images.id AS imgId,
+                        ws_images.img AS imgName
+                      FROM
+                        ws_images,
+                        ws_products_images
+                      WHERE
+                        ws_products_images.product_id = :id
+                      AND
+                        ws_images.id = ws_products_images.img_id";
 
-    $stmt_delete = $db->prepare($sql_delete);
-    $stmt_delete->bindParam(':id', $p_id);
-    $stmt_delete->execute();
+    $stmt_current_img = $db->prepare($sql_current_img);
+    $stmt_current_img->bindParam(':id', $p_id);
+    $stmt_current_img->execute();
+
+    $current_images = [];
+    while ($imagesRow = $stmt_current_img->fetch(PDO::FETCH_ASSOC)) {
+        $current_images[$imagesRow['imgId']] = $imagesRow['imgName'];
+    }
+
+    echo '<pre>';
+    print_r($current_images);
+    echo '</pre>';
 
     if (count($images) != 0) {
-        foreach ($images as $index => $img) {
-            $sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
-            $stmt_img = $db->prepare($sql_img);
-            $stmt_img->bindParam(":img", $img);
-            $stmt_img->execute();
 
-            $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
-VALUES ( $p_id, LAST_INSERT_ID())";
-            $stmt_rel = $db->prepare($sql_p_img);
-            $stmt_rel->execute();
+        foreach ($images as $index => $new_img) {
+
+            if (!in_array($new_img, $current_images)) {
+
+                $sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
+                $stmt_img = $db->prepare($sql_img);
+                $stmt_img->bindParam(":img", $new_img);
+                $stmt_img->execute();
+
+                $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
+                              VALUES ( $p_id, LAST_INSERT_ID())";
+                $stmt_rel = $db->prepare($sql_p_img);
+                $stmt_rel->execute();
+            }
+        }
+
+    }
+    if (count($current_images) != 0) {
+        foreach ($current_images as $img_id => $current_img) {
+            echo 'in current images foreach<br>';
+            if (!in_array($current_img, $images)) {
+                echo "$current_img id $img_id finns inte i new images<br>";
+
+                $sql_delete = "DELETE
+                            FROM ws_products_images
+                            WHERE img_id = :img_id;
+                            AND product_id = :product_id";
+
+                $stmt_delete = $db->prepare($sql_delete);
+                $stmt_delete->bindParam(':img_id', $img_id);
+                $stmt_delete->bindParam(':product_id', $p_id);
+                $stmt_delete->execute();
+            }
         }
     }
 
