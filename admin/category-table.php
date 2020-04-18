@@ -5,7 +5,6 @@ require_once "./assets/head.php";
 require_once "./assets/aside-navigation.php";
 
 $sql = "SELECT * FROM ws_categories";
-//Add statement for selecting only categories with products
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
@@ -21,7 +20,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                       <tr class='main__category-table__tr'>
                         <td class='main__category-table__tr__td-category'>
                           <form action='./assets/edit-category.php' method='POST' class='main__category-table__tr__td__save-form'>
-                            <input class='hidden main__category-table__tr__td__save-form__input' type='text' name='name' id='input-$id' value='$name' maxlength='20'>
+                            <input class='hidden main__category-table__tr__td__save-form__input' type='text' name='name' id='input-$id' value='$name' maxlength='30'>
                             <button class='hidden main__category-table__tr__td__save-form__btn' type='submit' id='saveBtn-$id'><i class='fas fa-check'></i></button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
@@ -40,10 +39,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 
 if (isset($_GET['addCategory'])) {
-    $addCategory = "<form class='aside__nav__ul__li__title__form' action='./assets/add-category.php' method='POST'>
-                      <input type='text' name='name' maxlength='20'>
-                      <button type='submit' id='saveBtn'><i class='fas fa-check'></i></button>
-                      <a href='./category-table.php'><i class='fas fa-times'></i></a>
+    $addCategory = "<form class='main__admin__addCategory__form' action='./assets/add-category.php' method='POST'>
+                      <input class='main__admin__addCategory__form__input' type='text' name='name' maxlength='30'>
+                      <button class='main__admin__addCategory__form__saveBtn' type='submit' id='saveBtn'><i class='fas fa-check'></i></button>
+                      <a class='main__admin__addCategory__form__exitBtn' href='./category-table.php'><i class='fas fa-times'></i></a>
                     </form>";
 }
 
@@ -93,19 +92,6 @@ if (isset($_GET['addingerror'])) {
   </table>
 
   <script>
-
-  //const addCategory = document.querySelector('.aside__nav__ul__li__title__addCategory');
-  // const addCategoryForm = document.querySelector('.aside__nav__ul__li__title__form');
-  // const saveNewCategoryBtn = document.querySelector('#saveBtn');
-
-  // addCategory.addEventListener('click', () => {
-  //   addCategoryForm.classList.toggle("hidden")
-  // })
-
-  // saveNewCategoryBtn.addEventListener('click', () => {
-  //   addCategoryForm.classList.toggle("hidden")
-  // })
-
 
   function toggleEditCategory(id, name) {
 

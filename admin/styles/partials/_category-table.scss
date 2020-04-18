@@ -40,6 +40,38 @@
     font-size: 0.8em;
     justify-content: space-evenly;
     margin-left: 1em;
+    text-decoration: none;
+
+    &__form {
+      &__input {
+        height: 25px;
+        border-radius: 6px;
+        border: 1px solid rgb(160, 160, 160);
+        padding-left: 0.5em;
+        font-size: 14px;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+
+      &__saveBtn {
+        padding: 0;
+        border: none;
+        background: none;
+        color: green;
+        margin: 3px;
+
+        :hover {
+          cursor: pointer;
+        }
+      }
+
+      &__exitBtn {
+        color: red;
+        margin: 3px;
+      }
+    }
     border: none;
     background: blue;
   }
@@ -55,7 +87,6 @@
 
     i {
       margin-right: 1em;
-
     }
 
     .fa-check {
@@ -66,10 +97,17 @@
       color: red;
     }
 
+    &__tr {
+      &__td-category {
+        width: 0.1%;
+        white-space: nowrap;
+      }
+    }
+
     td {
       padding: unset;
       border-bottom: unset;
-      width: 200px;
+      // width: 300px;
 
       input {
         padding-left: 0.5em;
