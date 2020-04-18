@@ -79,7 +79,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
                           <div class='image-wrapper'>";
                         $productQty < 1 ? $productCards.= "<div class='out-of-stock'>
                                                             <span class='out-of-stock__msg'>
-                                                            Product currently out of stock
+                                                            Currently out of stock
                                                             </span>
                                                           </div>" : null;
                         $productCards.="<img class='product-thumb' src=./media/product_images/$productImg alt=''>
@@ -87,7 +87,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
                         </a>
                         <div class='product-card__content'>
                           <a href='product.php?id=$productId' class='product-card__product-link'>
-                            <h3>$productName</h3>
+                            $productName
                           </a>
                           <p>$productPrice SEK</p>
                           <button class='add-to-cart-btn'>";

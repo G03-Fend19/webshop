@@ -44,43 +44,75 @@
     }
 
     &__content {
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      // grid-row-gap: 0.5em;
+      margin: 0.5em 0.2em;
 
       @media (min-width: 540px) {
-        text-align: unset;
-        display: grid;
+        // text-align: unset;
+        // display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        grid-row-gap: 0.5em;
+        // grid-template-rows: 1fr 1fr;
+        // grid-row-gap: 0.5em;
       }
 
       .add-to-cart-btn {
-        margin-top: 1em;
+        // margin-top: 1em;
         border: 0;
         background: 0;
         padding: 0;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        grid-column: 2;
+        cursor: pointer;
+        // margin-left: auto;
+        // margin-right: 0.5em;
+        margin: 0.4em 0.5em auto auto;
+        color: rgb(66, 66, 66);
 
-        @media (min-width: 540px) {
-          margin: unset;
-          grid-row-start: 1;
-          grid-row-end: 3;
-          grid-column: 2;
+        @media (min-width: 1000px) {
+          margin: 0.3em 0.5em auto auto;
+          // margin: unset;
+          // grid-row-start: 1;
+          // grid-row-end: 3;
+          // grid-column: 2;
         }
 
         .fa-cart-plus,
         .fa-times-circle {
-          font-size: 45px;
+          font-size: 30px;
+
+          @media (min-width: 1000px) {
+            font-size: 40px;
+          }
         }
       }
 
-      h3 {
+      a {
         display: inline;
+        font-weight: 500;
+        font-size: 16px;
+
+        @media (min-width: 1000px) {
+          font-size: 18px;
+        }
+      }
+
+      p {
+        font-size: 12px;
+
+        @media (min-width: 1000px) {
+          font-size: 14px;
+        }
+
       }
     }
   }
 
   .out-of-stock {
-    background: #4133338c;
+    background: #4133335d;
     z-index: 2;
     position: absolute;
     height: 100%;
@@ -94,21 +126,32 @@
     align-items: center;
 
     &__msg {
-      font-size: 5vw;
+      position: absolute;
+      top: 0.5em;
+      right: 0;
+      font-size: 15px;
       max-width: 8em;
       font-weight: bold;
       background: rgba(255, 255, 255, 0.596);
+      color: rgb(116, 116, 116);
+      font-weight: 500;
+      border: 0.5px white;
+      padding: 0.5em 1em;
+      text-shadow: 1px 1px 1px rgb(190, 189, 189);
+      // border-radius: 10px 0 0 10px;
 
-      @media (min-width: 500px) {
-        font-size: 25px;
-      }
 
-      @media (min-width: 920px) {
-        font-size: 2.5vw;
-      }
+      // @media (min-width: 500px) {
+      //   font-size: 15px;
+      // }
+
+      // @media (min-width: 920px) {
+      //   font-size: 2.5vw;
+      // }
 
       @media (min-width: 1013px) {
-        font-size: 25px;
+        top: 1em;
+        // font-size: 15px;
       }
     }
   }
