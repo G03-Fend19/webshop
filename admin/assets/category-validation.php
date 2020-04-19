@@ -3,7 +3,7 @@
 function onlyValidCharacters($name)
 {
     if (preg_match("/^[a-zA-ZäöåÄÖÅ\s]+$/", $name)) {
-        echo $name;
+        //echo $name;
         return true;
     } else {
         return false;
