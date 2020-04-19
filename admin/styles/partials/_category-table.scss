@@ -1,0 +1,133 @@
+.hidden {
+  display: none;
+}
+
+.main__admin {
+  margin: 80px 2em 2em 2em;
+  padding: 2em;
+  display: grid;
+  gap: 1em;
+  grid-template: auto 1fr / 1fr;
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+    margin-top: 0.3em;
+  }
+
+  h1::after {
+    content: "|";
+    font-weight: lighter;
+    padding-left: 0.5em;
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+
+    button {
+      background: none;
+      border: none;
+    }
+  }
+
+  &__addCategory {
+    display: flex;
+    align-items: center;
+    width: 120px;
+    height: 100%;
+    @extend %boxShadowSection;
+    border-radius: 15px;
+    color: rgb(145, 145, 145);
+    cursor: pointer;
+    font-size: 0.8em;
+    justify-content: space-evenly;
+    margin-left: 1em;
+    text-decoration: none;
+
+    &__form {
+      &__input {
+        height: 25px;
+        border-radius: 6px;
+        border: 1px solid rgb(160, 160, 160);
+        padding-left: 0.5em;
+        font-size: 14px;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+
+      &__saveBtn {
+        padding: 0;
+        border: none;
+        background: none;
+        color: green;
+        margin: 3px;
+
+        :hover {
+          cursor: pointer;
+        }
+      }
+
+      &__exitBtn {
+        color: red;
+        margin: 3px;
+      }
+    }
+  }
+
+  .main__category-table {
+    @extend %boxShadowSection;
+    padding: 2em;
+    border-radius: 5px;
+    width: 100%;
+    grid-column: span 2;
+    font-size: 0.8em;
+    border-collapse: unset;
+
+    i {
+      margin-right: 1em;
+    }
+
+    .fa-check {
+      color: green;
+    }
+
+    .fa-times {
+      color: red;
+    }
+
+    &__tr {
+      &__td-category {
+        width: 0.1%;
+        white-space: nowrap;
+      }
+    }
+
+    td {
+      padding: unset;
+      border-bottom: unset;
+      // width: 300px;
+
+      input {
+        padding-left: 0.5em;
+        border-radius: 5px;
+        border: 1px dashed rgb(194, 194, 194);
+      }
+    }
+
+    .smallerBtn {
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+  }
+}

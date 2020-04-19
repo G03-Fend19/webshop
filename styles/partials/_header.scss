@@ -1,0 +1,185 @@
+//search-and-contact creates circles around
+// search and contact icons.
+.search-and-contact {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: rgb(226, 226, 226);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // box-shadow: 1px 1px 3px rgb(168, 168, 168);
+}
+
+.header {
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+  grid-template: auto 1fr / 1fr;
+  width: 100vw;
+
+  nav {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    width: 100vw;
+    height: 70px;
+    align-items: center;
+    background-color: rgb(226, 226, 226);
+    font-size: 20px;
+    box-shadow: 1px 1px 3px rgb(194, 194, 194);
+  }
+
+  &__logo {
+    margin-right: auto;
+    align-items: center;
+    margin-left: 20px;
+  }
+
+  &__nav {
+    list-style-type: none;
+    margin-right: 20px;
+    display: flex;
+
+    &__item {
+      margin-left: 20px;
+
+      a {
+        @extend %linkStyle;
+
+        @media (min-width: 800px) {
+          display: inline;
+          position: relative;
+        }
+      }
+
+      &__home {
+        display: none;
+      }
+
+      &__contact {
+        @extend .search-and-contact;
+        position: fixed;
+        margin-top: 75vh;
+        right: 1em;
+
+        i {
+          @media (min-width: 800px) {
+            display: none;
+          }
+        }
+      }
+
+      &__search {
+        @extend .search-and-contact;
+
+        position: fixed;
+        margin-top: 85vh;
+        right: 1em;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &__searchform {
+        @media (max-width: 800px) {
+          position: fixed;
+          margin-top: 87vh;
+          right: 5em;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      &__searchbar {
+        height: 30px;
+        width: 150px;
+        border-radius: 6px;
+        border: 1px solid rgb(133, 133, 133);
+        padding-left: 0.5em;
+        font-size: 10px;
+        font-style: italic;
+        margin: auto 0;
+        margin-right: 0.5em;
+
+        @media (min-width: 800px) {
+          width: 250px;
+          margin-right: 0;
+          font-size: 12px;
+        }
+      }
+
+      &__searchBtn {
+        background: rgb(60, 60, 60);
+        color: white;
+        font-weight: 900;
+        border-radius: 6px;
+        font-size: 12px;
+        margin: auto;
+        cursor: pointer;
+        height: 30px;
+        margin: auto 0;
+        border: 1px solid gray;
+        padding: 0.5em;
+
+
+        &:hover {
+          color: rgb(182, 206, 182);
+        }
+
+        @media (min-width: 800px) {
+          // display: none;
+          margin: unset;
+          font-size: 12px;
+          margin-right: 1em;
+        }
+      }
+
+      &__cart {
+        margin-right: 1.5em;
+      }
+    }
+  }
+
+  &__hero {
+    margin-top: 70px;
+    text-align: center;
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+    background: rgb(245, 245, 245);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: calc(100vh - 70px);
+    flex-direction: column;
+
+    h1 {
+      font-size: 10vh;
+      color: rgb(133, 133, 133);
+      text-shadow: 1px 1px 2px black;
+      margin-top: 25vh;
+
+      @media (max-width: 500px) {
+        font-size: 5vh;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+}
+
+#contact-desktop {
+  @media (max-width: 800px) {
+    display: none;
+  }
+}

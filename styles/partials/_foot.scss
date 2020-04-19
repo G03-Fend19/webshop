@@ -1,0 +1,33 @@
+footer {
+  padding: 1em;
+  color: white;
+  background-color: rgb(204, 202, 202);
+  box-shadow: 1px 1px 3px rgb(212, 212, 212);
+
+  @media (min-width: 1000px) {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.foot__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 1000px) {
+    padding-right: 5em;
+  }
+}
+
+iframe {
+  margin: 1em;
+
+  @media (min-width: 1000px) {
+    margin: unset;
+    margin-left: auto;
+  }
+}
