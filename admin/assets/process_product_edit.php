@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt_duplicate->execute();
 
-    if (empty($title) || empty($description) || empty($category_id) || empty($price) || empty($qty)) {
+    if (empty($title) || empty($description) || empty($category_id) || $price == "" || $price == null || $qty == "" || $qty == null) {
         header("Location: ../edit_product.php?formerror=empty&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
         exit();
     } elseif ($stmt_duplicate->fetch(PDO::FETCH_ASSOC)) {
@@ -92,9 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $current_images[$imagesRow['imgId']] = $imagesRow['imgName'];
     }
 
-    echo '<pre>';
+    /* echo '<pre>';
     print_r($current_images);
-    echo '</pre>';
+    echo '</pre>'; */
 
     if (count($images) != 0) {
 
@@ -117,9 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if (count($current_images) != 0) {
         foreach ($current_images as $img_id => $current_img) {
-            echo 'in current images foreach<br>';
+
             if (!in_array($current_img, $images)) {
-                echo "$current_img id $img_id finns inte i new images<br>";
 
                 $sql_delete = "DELETE
                             FROM ws_products_images
