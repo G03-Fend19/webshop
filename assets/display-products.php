@@ -163,7 +163,12 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
                             $productName
                           </a>
                           <p>$productPrice SEK</p>
-                          <button class='add-to-cart-btn'>";
+                          <button 
+                          data-id=$productId
+                          data-name='$productName'
+                          data-price=$productPrice
+                          data-stock=$productQty
+                          class='add-to-cart-btn'>";
                           $productQty < 1 ? $productCards.= "<i class='far fa-times-circle'></i>" : $productCards.= "<i class='fas fa-cart-plus'></i>";
                           $productCards.="</button>
                           </div>
@@ -190,3 +195,8 @@ function getHeader($categoryName) {
     echo $productsContainer;
   ?>
 </section>
+
+<section class="fulCart">
+
+</section>
+

@@ -11,6 +11,7 @@
     width="350" height="250" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
     tabindex="0"></iframe>
 </footer>
+<script src="./cart.js"></script>
 <script src="https://kit.fontawesome.com/06088ec039.js" crossorigin="anonymous"></script>
 <script src="./search_validation.js"></script>
 </body>
