@@ -57,7 +57,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
     $currentProductId = $row["ProductId"];
 
     // If we've already added this product
-    if($grouped[$currentProductId]) {
+    if(in_array($currentProductId, $grouped)) {
 
       // Just add the additional image name to the imgIds array
       $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
