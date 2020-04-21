@@ -12,7 +12,12 @@
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
-  $categories = "";
+  $categories = "<li class='nav-list__item'>
+                  <a href='index.php#main'>
+                    <img src=''>
+                    <span>All products<span>
+                  </a>
+                </li>";
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = ucfirst(htmlspecialchars($row['CategoryName']));
