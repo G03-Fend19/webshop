@@ -16,10 +16,10 @@
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = ucfirst(htmlspecialchars($row['CategoryName']));
-    $id = htmlspecialchars($row['CategoryId']);
+    $categoryId = htmlspecialchars($row['CategoryId']);
 
     $categories .= "<li class='nav-list__item'>
-                      <a href='index.php?id=$id#main'>
+                      <a href='index.php?category_id=$categoryId#main'>
                         <img src=''>
                         <span>$name<span>
                       </a>

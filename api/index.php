@@ -96,6 +96,7 @@
       echo $error;
     }
   } else {
-    header("Location: ../index.php");
+    $allDataJson = json_encode($allData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+      echo $allDataJson;
   }
 ?>
