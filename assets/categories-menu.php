@@ -20,7 +20,7 @@
                 </li>";
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
-    $name = ucfirst(htmlspecialchars($row['CategoryName']));
+    $name = htmlspecialchars($row['CategoryName']);
     $categoryId = htmlspecialchars($row['CategoryId']);
 
     $categories .= "<li class='nav-list__item'>

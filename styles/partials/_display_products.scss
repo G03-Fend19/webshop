@@ -94,6 +94,7 @@
         display: inline;
         font-weight: 500;
         font-size: 16px;
+        word-break: break-all;
 
         @media (min-width: 1000px) {
           font-size: 18px;
