@@ -103,7 +103,7 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     } else {
 
       // If we haven't added the product yet
-      if($row['CategoryName']) {
+      if(isset($_GET['category_id'])) {
         $grouped[$currentProductId] = [
           "imgNames" => [], // Start with empty
           "ProductName" => $row["ProductName"],
