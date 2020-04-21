@@ -2,60 +2,66 @@
 $id = "";
 $categoryName = "";
 
-if (isset($_GET['id']) && $_GET['id'] !== "") {
+if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
   require_once "./db.php";
-  $id = htmlspecialchars($_GET['id']);
+  $categoryId = htmlspecialchars($_GET['category_id']);
 
   $sql = "SELECT 
-            ws_products.name        AS ProductName, 
-            ws_products.description AS ProductDescription,
-            ws_products.price       AS ProductPrice,
-            ws_products.id          AS ProductId,
-            ws_products.stock_qty   AS ProductQty,
-            ws_images.img           AS ImageName,
-            ws_images.id            AS ImageId,
-            ws_categories.id        AS CategoryId,
-            ws_categories.name      AS CategoryName
+            ws_products.name          AS ProductName, 
+            ws_products.price         AS ProductPrice,
+            ws_products.id            AS ProductId,
+            ws_products.stock_qty     AS ProductQty,
+            ws_images.img             AS ImageName,
+            ws_products_images.img_id AS ProductImageImageId,
+            ws_categories.id          AS CategoryId,
+            ws_categories.name        AS CategoryName
           FROM 
-            ws_products,
-            ws_images,
-            ws_categories,
-            ws_products_images,
+            ws_products
+          LEFT JOIN
+            ws_products_images
+          ON
+            ws_products.id = ws_products_images.product_id
+          LEFT JOIN
+            ws_images
+          ON
+            ws_products_images.img_id = ws_images.id
+          LEFT JOIN
             ws_products_categories
-          WHERE 
-            ws_products.id = ws_products_images.product_id 
-          AND
-            ws_images.id = ws_products_images.img_id
-          AND
+          ON
             ws_products.id = ws_products_categories.product_id
+          LEFT JOIN
+            ws_categories
+          ON
+            ws_products_categories.category_id = ws_categories.id
+          WHERE
+            ws_categories.id = :category_id
           AND
-            ws_categories.id = ws_products_categories.category_id
-          AND
-            ws_categories.id = :id
-          AND
-            ws_products_categories.category_id = :id
-          GROUP BY ws_products.id";
+            ws_products_categories.category_id = :category_id
+          AND ws_products.stock_qty > 0";
   
   $stmt = $db->prepare($sql);
-  $stmt->bindParam(":id", $id);
+  $stmt->bindParam(":category_id", $categoryId);
   $stmt->execute();
 } else {
   $sql = "SELECT 
-            ws_products.name      AS ProductName, 
-            ws_products.price     AS ProductPrice,
-            ws_products.id        AS ProductId,
-            ws_products.stock_qty AS ProductQty,
-            ws_images.img         AS ImageName,
-            ws_images.id          AS ImageId
+            ws_products.name          AS ProductName, 
+            ws_products.price         AS ProductPrice,
+            ws_products.id            AS ProductId,
+            ws_products.stock_qty     AS ProductQty,
+            ws_images.img             AS ImageName,
+            ws_products_images.img_id AS ProductImageImageId
           FROM 
-            ws_products,
-            ws_images,
+            ws_products
+          LEFT JOIN
             ws_products_images
-          WHERE 
-            ws_products.id = ws_products_images.product_id 
-          AND
-            ws_images.id = ws_products_images.img_id
-          GROUP BY ws_products.id";
+          ON
+            ws_products.id = ws_products_images.product_id
+          LEFT JOIN
+            ws_images
+          ON
+            ws_products_images.img_id = ws_images.id
+          WHERE
+            ws_products.stock_qty > 0";
 
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -64,14 +70,80 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
   $productsContainer = "<div class='products'>";
   $productCards = "";
 
-  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
-    $productName = htmlspecialchars($row['ProductName']);
-    $productPrice = htmlspecialchars($row['ProductPrice']);
-    $productId = htmlspecialchars($row['ProductId']);
-    $productQty = htmlspecialchars($row['ProductQty']);
-    $productImg = htmlspecialchars($row['ImageName']);
-    if (isset($_GET['id'])) {
-      $categoryName = htmlspecialchars($row['CategoryName']);
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  // echo $sql;
+  // echo "---<br />";
+  // print_r($results);
+
+
+  // [
+  //   [1] => [ <-- key is ProductId
+  //     "imgNames" => [
+  //        [0] => "hund.jpg",
+  //        [1] => "sfndsjkf.jpg"
+  //     ],
+  //     "ProductName" => "Korv",
+  //     ...
+  //   ],
+  //   [24] => [
+
+  //   ]
+  // ]
+  $grouped = [];
+
+  foreach($results as $row) {
+    // The product id for this row
+    $currentProductId = $row["ProductId"];
+
+    // If we've already added this product
+    if(in_array($currentProductId, $grouped)) {
+
+      // Just add the additional image name to the imgIds array
+      $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+    } else {
+
+      // If we haven't added the product yet
+      if($row['CategoryName']) {
+        $grouped[$currentProductId] = [
+          "imgNames" => [], // Start with empty
+          "ProductName" => $row["ProductName"],
+          "ProductPrice" => $row["ProductPrice"],
+          "ProductQty" => $row["ProductQty"],
+          "CategoryName" => $row["CategoryName"],
+        ];
+      } else {
+        $grouped[$currentProductId] = [
+          "imgNames" => [], // Start with empty
+          "ProductName" => $row["ProductName"],
+          "ProductPrice" => $row["ProductPrice"],
+          "ProductQty" => $row["ProductQty"],
+        ];
+      }
+      
+      // If there is an image for this row, add it
+      if($row["ProductImageImageId"]) {
+        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+      }
+      
+    }
+  }
+  // echo "<pre>";
+  // print_r($grouped);
+  // echo "</pre>";
+  
+
+  foreach($grouped as $productId => $product):
+    $productName = htmlspecialchars($product['ProductName']);
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $productQty = htmlspecialchars($product['ProductQty']);
+    // $productImg = htmlspecialchars($product['ImageName']); // TODO
+    if (empty($product['imgNames'])) {
+      $productImg = "placeholder.jpg";
+    } else {
+      $productImg = htmlspecialchars($product['imgNames'][0]);
+    }
+    if (isset($_GET['category_id'])) {
+      $categoryName = htmlspecialchars($product['CategoryName']);
     } 
 
     $productCards .= "<article class='product-card'>
@@ -95,7 +167,7 @@ if (isset($_GET['id']) && $_GET['id'] !== "") {
                           $productCards.="</button>
                           </div>
                       </article>";
-  endwhile;
+  endforeach;
   $productsContainer .= $productCards;
   $productsContainer .= "</div>";
 
