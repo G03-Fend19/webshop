@@ -30,7 +30,6 @@
     color: white;
 
     @media (min-width: 1000px) {
-      padding-left: 1.5em;
       color: unset;
       font-weight: unset;
       font-size: 18px;
@@ -51,6 +50,7 @@
     justify-content: center;
 
     @media (min-width: 1013px) {
+      padding-left: 1.5em;
       display: block;
     }
 
@@ -69,12 +69,14 @@
       }
 
       @media (min-width: 1000px) {
+        max-width: 100%;
         padding: unset;
         border: unset;
         box-shadow: unset;
         border-radius: unset;
         background: unset;
         margin: 0.5em 0;
+        word-break: break-all;
 
         &:hover {
           transition: unset;

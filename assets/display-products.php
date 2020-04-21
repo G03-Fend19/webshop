@@ -37,19 +37,19 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_categories.id = :category_id
           AND
             ws_products_categories.category_id = :category_id
-          AND ws_products.stock_qty > 1";
+          AND ws_products.stock_qty > 0";
   
   $stmt = $db->prepare($sql);
   $stmt->bindParam(":category_id", $categoryId);
   $stmt->execute();
 } else {
   $sql = "SELECT 
-            ws_products.name      AS ProductName, 
-            ws_products.price     AS ProductPrice,
-            ws_products.id        AS ProductId,
-            ws_products.stock_qty AS ProductQty,
-            ws_products_images.img_id AS ProductImageImageId,
-            ws_images.img AS ImageName
+            ws_products.name          AS ProductName, 
+            ws_products.price         AS ProductPrice,
+            ws_products.id            AS ProductId,
+            ws_products.stock_qty     AS ProductQty,
+            ws_images.img             AS ImageName,
+            ws_products_images.img_id AS ProductImageImageId
           FROM 
             ws_products
           LEFT JOIN
@@ -60,7 +60,8 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_images
           ON
             ws_products_images.img_id = ws_images.id
-          WHERE ws_products.stock_qty > 1";
+          WHERE
+            ws_products.stock_qty > 0";
 
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -102,9 +103,7 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     } else {
 
       // If we haven't added the product yet
-
-      //If there's a category selected
-      if($row["CategoryName"]) {
+      if(isset($_GET['category_id'])) {
         $grouped[$currentProductId] = [
           "imgNames" => [], // Start with empty
           "ProductName" => $row["ProductName"],
@@ -143,7 +142,7 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     } else {
       $productImg = htmlspecialchars($product['imgNames'][0]);
     }
-    if (isset($_GET['id'])) {
+    if (isset($_GET['category_id'])) {
       $categoryName = htmlspecialchars($product['CategoryName']);
     } 
 
