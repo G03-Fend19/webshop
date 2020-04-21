@@ -3,11 +3,11 @@ $id = "";
 $categoryName = "";
 
 if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
-  require_once "./db.php";
-  $categoryId = htmlspecialchars($_GET['category_id']);
+    require_once "./db.php";
+    $categoryId = htmlspecialchars($_GET['category_id']);
 
-  $sql = "SELECT 
-            ws_products.name          AS ProductName, 
+    $sql = "SELECT
+            ws_products.name          AS ProductName,
             ws_products.price         AS ProductPrice,
             ws_products.id            AS ProductId,
             ws_products.stock_qty     AS ProductQty,
@@ -15,7 +15,7 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_products_images.img_id AS ProductImageImageId,
             ws_categories.id          AS CategoryId,
             ws_categories.name        AS CategoryName
-          FROM 
+          FROM
             ws_products
           LEFT JOIN
             ws_products_images
@@ -38,19 +38,19 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
           AND
             ws_products_categories.category_id = :category_id
           AND ws_products.stock_qty > 0";
-  
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam(":category_id", $categoryId);
-  $stmt->execute();
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(":category_id", $categoryId);
+    $stmt->execute();
 } else {
-  $sql = "SELECT 
-            ws_products.name          AS ProductName, 
+    $sql = "SELECT
+            ws_products.name          AS ProductName,
             ws_products.price         AS ProductPrice,
             ws_products.id            AS ProductId,
             ws_products.stock_qty     AS ProductQty,
             ws_images.img             AS ImageName,
             ws_products_images.img_id AS ProductImageImageId
-          FROM 
+          FROM
             ws_products
           LEFT JOIN
             ws_products_images
@@ -63,126 +63,125 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
           WHERE
             ws_products.stock_qty > 0";
 
-  $stmt = $db->prepare($sql);
-  $stmt->execute();
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
 }
 
-  $productsContainer = "<div class='products'>";
-  $productCards = "";
+$productsContainer = "<div class='products'>";
+$productCards = "";
 
-  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  // echo $sql;
-  // echo "---<br />";
-  // print_r($results);
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// echo $sql;
+// echo "---<br />";
+// print_r($results);
 
+// [
+//   [1] => [ <-- key is ProductId
+//     "imgNames" => [
+//        [0] => "hund.jpg",
+//        [1] => "sfndsjkf.jpg"
+//     ],
+//     "ProductName" => "Korv",
+//     ...
+//   ],
+//   [24] => [
 
-  // [
-  //   [1] => [ <-- key is ProductId
-  //     "imgNames" => [
-  //        [0] => "hund.jpg",
-  //        [1] => "sfndsjkf.jpg"
-  //     ],
-  //     "ProductName" => "Korv",
-  //     ...
-  //   ],
-  //   [24] => [
+//   ]
+// ]
+$grouped = [];
 
-  //   ]
-  // ]
-  $grouped = [];
-
-  foreach($results as $row) {
+foreach ($results as $row) {
     // The product id for this row
     $currentProductId = $row["ProductId"];
 
     // If we've already added this product
-    if(in_array($currentProductId, $grouped)) {
+    if (in_array($currentProductId, $grouped)) {
 
-      // Just add the additional image name to the imgIds array
-      $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+        // Just add the additional image name to the imgIds array
+        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
     } else {
 
-      // If we haven't added the product yet
-      if(isset($_GET['category_id'])) {
-        $grouped[$currentProductId] = [
-          "imgNames" => [], // Start with empty
-          "ProductName" => $row["ProductName"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductQty" => $row["ProductQty"],
-          "CategoryName" => $row["CategoryName"],
-        ];
-      } else {
-        $grouped[$currentProductId] = [
-          "imgNames" => [], // Start with empty
-          "ProductName" => $row["ProductName"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductQty" => $row["ProductQty"],
-        ];
-      }
-      
-      // If there is an image for this row, add it
-      if($row["ProductImageImageId"]) {
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-      }
-      
-    }
-  }
-  // echo "<pre>";
-  // print_r($grouped);
-  // echo "</pre>";
-  
+        // If we haven't added the product yet
+        if (isset($_GET['category_id'])) {
+            $grouped[$currentProductId] = [
+                "imgNames" => [], // Start with empty
+                "ProductName" => $row["ProductName"],
+                "ProductPrice" => $row["ProductPrice"],
+                "ProductQty" => $row["ProductQty"],
+                "CategoryName" => $row["CategoryName"],
+            ];
+        } else {
+            $grouped[$currentProductId] = [
+                "imgNames" => [], // Start with empty
+                "ProductName" => $row["ProductName"],
+                "ProductPrice" => $row["ProductPrice"],
+                "ProductQty" => $row["ProductQty"],
+            ];
+        }
 
-  foreach($grouped as $productId => $product):
+        // If there is an image for this row, add it
+        if ($row["ProductImageImageId"]) {
+            $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+        }
+
+    }
+}
+// echo "<pre>";
+// print_r($grouped);
+// echo "</pre>";
+
+foreach ($grouped as $productId => $product):
     $productName = htmlspecialchars($product['ProductName']);
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productQty = htmlspecialchars($product['ProductQty']);
     // $productImg = htmlspecialchars($product['ImageName']); // TODO
     if (empty($product['imgNames'])) {
-      $productImg = "placeholder.jpg";
+        $productImg = "placeholder.jpg";
     } else {
-      $productImg = htmlspecialchars($product['imgNames'][0]);
+        $productImg = htmlspecialchars($product['imgNames'][0]);
     }
     if (isset($_GET['category_id'])) {
-      $categoryName = htmlspecialchars($product['CategoryName']);
-    } 
+        $categoryName = htmlspecialchars($product['CategoryName']);
+    }
 
     $productCards .= "<article class='product-card'>
-                        <a href='product.php?id=$productId' class='product-card__image-link'>
-                          <div class='image-wrapper'>";
-                        $productQty < 1 ? $productCards.= "<div class='out-of-stock'>
-                                                            <span class='out-of-stock__msg'>
-                                                            Currently out of stock
-                                                            </span>
-                                                          </div>" : null;
-                        $productCards.="<img class='product-thumb' src=./media/product_images/$productImg alt=''>
-                          </div>
-                        </a>
-                        <div class='product-card__content'>
-                          <a href='product.php?id=$productId' class='product-card__product-link'>
-                            $productName
-                          </a>
-                          <p>$productPrice SEK</p>
-                          <button 
-                          data-id=$productId
-                          data-name='$productName'
-                          data-price=$productPrice
-                          data-img='$productImg'
-                          data-stock=$productQty
-                          class='add-to-cart-btn'>";
-                          $productQty < 1 ? $productCards.= "<i class='far fa-times-circle'></i>" : $productCards.= "<i class='fas fa-cart-plus'></i>";
-                          $productCards.="</button>
-                          </div>
-                      </article>";
-  endforeach;
-  $productsContainer .= $productCards;
-  $productsContainer .= "</div>";
+		                        <a href='product.php?product_id=$productId class='product-card__image-link'>
+		                          <div class='image-wrapper'>";
+    $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
+		                                                            <span class='out-of-stock__msg'>
+		                                                            Currently out of stock
+		                                                            </span>
+		                                                          </div>" : null;
+    $productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
+		                          </div>
+		                        </a>
+		                        <div class='product-card__content'>
+		                          <a href='product.php?id=$productId' class='product-card__product-link'>
+		                            $productName
+		                          </a>
+		                          <p>$productPrice SEK</p>
+		                          <button
+		                          data-id=$productId
+		                          data-name='$productName'
+		                          data-price=$productPrice
+		                          data-img='$productImg'
+		                          data-stock=$productQty
+		                          class='add-to-cart-btn'>";
+    $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
+    $productCards .= "</button>
+		                          </div>
+		                      </article>";
+endforeach;
+$productsContainer .= $productCards;
+$productsContainer .= "</div>";
 
-function getHeader($categoryName) {
-  if ($categoryName == "") {
-    echo "All products" ;
-  } else {
-    echo $categoryName;
-  }
+function getHeader($categoryName)
+{
+    if ($categoryName == "") {
+        echo "All products";
+    } else {
+        echo $categoryName;
+    }
 }
 ?>
 
@@ -192,8 +191,8 @@ function getHeader($categoryName) {
   </header>
 
   <?php
-    echo $productsContainer;
-  ?>
+echo $productsContainer;
+?>
 </section>
 
 
