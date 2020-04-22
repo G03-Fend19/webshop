@@ -46,7 +46,7 @@
   const checkStock = (product) => {
     const q = cart[product].quantity
     const s = cart[product].stock
-    q < s ? cart[product].quantity++ : alert("out of stock")
+    q < s ? cart[product].quantity++ : alert("no more in stock")
   }
 
   const calcTotal = () => {
@@ -79,7 +79,9 @@
       </div>
       `
     })
+
     fulCart.innerHTML += calcTotal()
+    fulCart.innerHTML += `<button class="clear-cart">Clear cart</button>`
   }
   renderCart()
 
@@ -116,6 +118,22 @@
       }
     })
   }
+  const clearCart = () => {
+    document.addEventListener("click", (e) => {
+      if (
+        e.target.className == "clear-cart" &&
+        !Object.entries(cart).length == 0
+      ) {
+        let r = confirm("u want to clear the cart?")
+        if (r) {
+          cart = {}
+          localStorage.setItem("cart", JSON.stringify(cart))
+          renderCart()
+        }
+      }
+    })
+  }
   changeQty()
   deleteProduct()
+  clearCart()
 })()
