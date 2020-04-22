@@ -429,7 +429,6 @@ iframe {
 
 @media (min-width: 1000px) {
   .categories-menu span {
-    padding-left: 1.5em;
     color: unset;
     font-weight: unset;
     font-size: 18px;
@@ -459,6 +458,7 @@ iframe {
 
 @media (min-width: 1013px) {
   .categories-menu ul {
+    padding-left: 1.5em;
     display: block;
   }
 }
@@ -483,6 +483,7 @@ iframe {
 
 @media (min-width: 1000px) {
   .categories-menu ul li {
+    max-width: 100%;
     padding: unset;
     border: unset;
     -webkit-box-shadow: unset;
@@ -490,6 +491,7 @@ iframe {
     border-radius: unset;
     background: unset;
     margin: 0.5em 0;
+    word-break: break-all;
   }
   .categories-menu ul li:hover {
     -webkit-transition: unset;
@@ -647,6 +649,7 @@ iframe {
   display: inline;
   font-weight: 500;
   font-size: 16px;
+  word-break: break-all;
 }
 
 @media (min-width: 1000px) {
@@ -718,5 +721,11 @@ iframe {
      object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.fulCart {
+  height: 600px;
+  width: 300px;
+  background-color: #727272;
 }
 /*# sourceMappingURL=style.css.map */

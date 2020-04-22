@@ -25,7 +25,7 @@ WHERE name = :title";
     $stmt->bindParam(':title', $title);
 
     $stmt->execute();
-    if (empty($title) || empty($description) || empty($price) || empty($qty)) {
+    if (empty($title) || empty($description) || $price == "" || $price == null || $qty == "" || $qty == null) {
         header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
         exit();
     } elseif ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

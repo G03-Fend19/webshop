@@ -3,35 +3,89 @@
   
   require_once "../db.php";
 
-  $productsSql = "SELECT
-                  ws_products.name        AS ProductName,
-                  ws_products.description AS ProductDescription,
-                  ws_products.price       AS ProductPrice,
-                  ws_products.id          AS ProductId,
-                  ws_products.stock_qty   AS ProductQty,
-                  ws_images.img           AS ImageName,
-                  ws_images.id            AS ImageId,
-                  ws_categories.name      AS CategoryName,
-                  ws_categories.id        AS CategoryId
-                FROM
-                  ws_products,
-                  ws_images,
-                  ws_products_images,
-                  ws_categories,
-                  ws_products_categories
-                WHERE
-                  ws_products.id = ws_products_images.product_id 
-                AND
-                  ws_images.id = ws_products_images.img_id 
-                AND
-                  ws_products.id = ws_products_categories.product_id 
-                AND
-                  ws_categories.id = ws_products_categories.category_id 
-                GROUP BY ws_products.id
-                  ";
+  $productsSql = "SELECT 
+                    ws_products.name          AS ProductName,
+                    ws_products.description   AS ProductDescription,
+                    ws_products.price         AS ProductPrice,
+                    ws_products.id            AS ProductId,
+                    ws_products.stock_qty     AS ProductQty,
+                    ws_images.img             AS ImageName,
+                    ws_products_images.img_id AS ProductImageImageId,
+                    ws_categories.id          AS CategoryId,
+                    ws_categories.name        AS CategoryName
+                  FROM 
+                    ws_products
+                  LEFT JOIN
+                    ws_products_images
+                  ON
+                    ws_products.id = ws_products_images.product_id
+                  LEFT JOIN
+                    ws_images
+                  ON
+                    ws_products_images.img_id = ws_images.id
+                  LEFT JOIN
+                    ws_products_categories
+                  ON
+                    ws_products.id = ws_products_categories.product_id
+                  LEFT JOIN
+                    ws_categories
+                  ON
+                    ws_products_categories.category_id = ws_categories.id
+                    ";
 
   $productsStmt = $db->prepare($productsSql);
   $productsStmt->execute();
+
+  $productsResults = $productsStmt->fetchAll(PDO::FETCH_ASSOC);
+  // echo $sql;
+  // echo "---<br />";
+  // print_r($productsResults);
+
+
+  // [
+  //   [1] => [ <-- key is ProductId
+  //     "imgNames" => [
+  //        [0] => "hund.jpg",
+  //        [1] => "sfndsjkf.jpg"
+  //     ],
+  //     "ProductName" => "Korv",
+  //     ...
+  //   ],
+  //   [24] => [
+
+  //   ]
+  // ]
+  $products = [];
+
+  foreach($productsResults as $row) {
+    // The product id for this row
+    $currentProductId = $row["ProductId"];
+
+    // If we've already added this product
+    if(in_array($currentProductId, $products)) {
+
+      // Just add the additional image name to the imgIds array
+      $products[$currentProductId]["imgNames"][] = $row["ImageName"];
+    } else {
+
+      // If we haven't added the product yet
+        $products[$currentProductId] = [
+          "id" => $currentProductId, //TODO - Convert to number
+          "name" => $row["ProductName"], 
+          "description" => $row["ProductDescription"],
+          "price" => $row["ProductPrice"], //TODO - Convert to number
+          "qty" => $row["ProductQty"], //TODO - Convert to number
+          "category" => $row["CategoryName"],
+          "images" => [], // Start with empty
+        ];
+      
+      // If there is an image for this row, add it
+      if($row["ProductImageImageId"]) {
+        $products[$currentProductId]["images"][] = "http://matildasoderblom.se/webshop/media/product_images/" . $row["ImageName"];
+      }
+      
+    }
+  }
 
   $categoriesSql = "SELECT * FROM ws_categories";
 
@@ -40,27 +94,6 @@
 
 
   $categories = [];
-  $products = [];
-
-  while($row= $productsStmt->fetch(PDO::FETCH_ASSOC)) :
-    $productId= htmlspecialchars($row['ProductId']);
-    $productName= htmlspecialchars_decode($row['ProductName']);
-    $description= htmlspecialchars($row['ProductDescription']);
-    $stock_qty= htmlspecialchars($row['ProductQty']);
-    $price= htmlspecialchars($row['ProductPrice']);
-    $category = htmlspecialchars($row['CategoryName']);
-    $image= htmlspecialchars($row['ImageName']);
-
-    $product = array("id" => $productId,
-                     "name" => $productName,
-                     "category" => $category,
-                     "description" => $description,
-                     "stockQty" => $stock_qty,
-                     "price" => $price
-                    );
-
-    $products[] = $product;
-  endwhile;
 
   while($row= $categoriesStmt->fetch(PDO::FETCH_ASSOC)) :
     $categoryId= htmlspecialchars($row['id']);
@@ -96,6 +129,7 @@
       echo $error;
     }
   } else {
-    header("Location: ../index.php");
+    $allDataJson = json_encode($allData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+      echo $allDataJson;
   }
 ?>
