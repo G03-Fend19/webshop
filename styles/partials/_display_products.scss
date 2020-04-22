@@ -25,7 +25,7 @@
       grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     }
 
-    @media (min-width:800px) {
+    @media (min-width: 800px) {
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       grid-gap: 20px;
     }
@@ -107,7 +107,6 @@
         @media (min-width: 1000px) {
           font-size: 14px;
         }
-
       }
     }
   }
@@ -141,7 +140,6 @@
       text-shadow: 1px 1px 1px rgb(190, 189, 189);
       // border-radius: 10px 0 0 10px;
 
-
       // @media (min-width: 500px) {
       //   font-size: 15px;
       // }
@@ -168,5 +166,10 @@
       height: 100%;
     }
   }
+}
 
+.fulCart {
+  height: 600px;
+  width: 300px;
+  background-color: rgb(114, 114, 114);
 }
