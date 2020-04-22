@@ -70,11 +70,11 @@
 
       // If we haven't added the product yet
         $products[$currentProductId] = [
-          "id" => intval($currentProductId),
-          "name" => $row["ProductName"],
+          "id" => $currentProductId, //TODO - Convert to number
+          "name" => $row["ProductName"], 
           "description" => $row["ProductDescription"],
-          "price" => intval($row["ProductPrice"]),
-          "qty" => intval($row["ProductQty"]),
+          "price" => $row["ProductPrice"], //TODO - Convert to number
+          "qty" => $row["ProductQty"], //TODO - Convert to number
           "category" => $row["CategoryName"],
           "images" => [], // Start with empty
         ];
