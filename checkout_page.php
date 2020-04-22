@@ -1,11 +1,24 @@
 <?php
 require_once 'assets/header.php';
 ?>
-<main class="checkout">
-  <section id="pTable-section" class="product-section">
+
+<style>
+.order-summary__img {
+  object-fit: cover;
+  height: 40px;
+  width: 40px;
+}
+
+.order-summary {
+  width: 100vw;
+}
+</style>
 
 
-  </section>
+<section id="pTable-section" class="product-section">
+
+
+</section>
 
 </main>
 
@@ -13,35 +26,8 @@ require_once 'assets/header.php';
 
 
 
-<script>
-let order = JSON.parse(localStorage.cart);
-const productSection = document.querySelector('#pTable-section');
-console.log(productSection);
 
-if (order) {
-  let productTable = `<table>
-                        <thead>
-                          <tr>
-                            <th></th>
-                            <th></th>
-                            <th>Product name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                          </tr>
-                        </thead>
-                        `;
-
-  /*   <tbody>
-
-</tbody>
-</table> */
-} else {
-  /* <h4>No products in this category</h4> */
-}
-console.log(order);
-</script>
-
-
+<script src="./checkout.js"></script>
 
 <?php
 require_once 'assets/foot.php';
