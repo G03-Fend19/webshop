@@ -1,5 +1,6 @@
 ;(() => {
   const addBtn = document.querySelectorAll(".add-to-cart-btn")
+  const cartDisplay = document.querySelector(".cart")
   const getCart = () => {
     cart = JSON.parse(localStorage.getItem("cart"))
     if (!cart) {
@@ -21,13 +22,14 @@
   // quantity.
   // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
   const createProduct = (productData) => {
-    if (cart[productData.id]) {
-      checkStock(productData.id)
+    if (cart[productData.name]) {
+      checkStock(productData.name)
     } else {
       cart = {
         ...cart,
-        [productData.id]: {
+        [productData.name]: {
           id: productData.id,
+          img: productData.img,
           name: productData.name,
           price: productData.price,
           quantity: 1,
@@ -56,7 +58,7 @@
     localStorage.setItem("total", JSON.stringify(total))
     return `<div>${total}</div>`
   }
-
+  // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
     let total = 0
     Object.keys(cart).forEach((el) => {
@@ -65,23 +67,37 @@
   }
 
   const renderCart = () => {
-    const fulCart = document.querySelector(".fulCart")
-    fulCart.innerHTML = ""
+    cartDisplay.innerHTML = ""
 
-    fulCart.innerHTML += Object.keys(cart).map((product) => {
+    cartDisplay.innerHTML += Object.keys(cart).map((product) => {
       return `
-      <div data-id=${cart[product].id}>
+      <div class="cart__product" data-name='${cart[product].name}'>
+      <div class="cart__product__image-wrapper">
+        <img class="cart__product__image-wrapper__img" src="./media/product_images/${
+          cart[product].img
+        }"></img>
+      </div>
+      <div class="cart__product__info"> 
+      <p>
+           ${cart[product].name}
+      </p>
+        
+      <div class="cart__product__info__btns">
+      <p>${cart[product].quantity}</p>
       <button id="qty-" class="changeQty">-</button>
-      ${cart[product].quantity} * ${cart[product].name}
       <button id="qty+" class="changeQty">+</button>
       <button  class="delete-product">delete</button>
-      <div>${cart[product].quantity * cart[product].price}</div>
+      
+      </div>
+      <p>${cart[product].quantity * cart[product].price}</p>
+      
+      </div>
       </div>
       `
     })
 
-    fulCart.innerHTML += calcTotal()
-    fulCart.innerHTML += `<button class="clear-cart">Clear cart</button>`
+    cartDisplay.innerHTML += calcTotal()
+    cartDisplay.innerHTML += `<button class="clear-cart">Clear cart</button>`
   }
   renderCart()
 
@@ -91,8 +107,7 @@
 
   const changeQty = () => {
     document.addEventListener("click", (e) => {
-      const productId = e.target.parentNode.dataset.id
-
+      const productId = e.target.parentNode.parentNode.parentNode.dataset.name
       if (e.target.className == "changeQty") {
         if (e.target.id == "qty+") {
           checkStock(productId)
@@ -107,8 +122,9 @@
 
   const deleteProduct = () => {
     document.addEventListener("click", (e) => {
-      const productId = e.target.parentNode.dataset.id
+      const productId = e.target.parentNode.parentNode.parentNode.dataset.name
       if (e.target.className == "delete-product") {
+        console.log(productId)
         let r = confirm("are you sure?")
         if (r) {
           delete cart[productId]
@@ -133,6 +149,11 @@
       }
     })
   }
+  const cartBtn = document.querySelector(".fa-shopping-cart")
+
+  cartBtn.addEventListener("click", () => {
+    cartDisplay.classList.toggle("hidden")
+  })
   changeQty()
   deleteProduct()
   clearCart()

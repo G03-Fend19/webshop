@@ -723,9 +723,53 @@ iframe {
   height: 100%;
 }
 
-.fulCart {
+.cart {
   height: 600px;
-  width: 300px;
-  background-color: #727272;
+  width: 350px;
+  position: absolute;
+  background-color: #dddddd;
+  top: 100vw;
+  right: 0;
+  z-index: 2;
+}
+
+.cart__product {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px;
+}
+
+.cart__product__info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-left: 20px;
+  width: 100%;
+}
+
+.cart__product__info__btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border: 1px solid black;
+  width: 50%;
+}
+
+.cart__product__image-wrapper {
+  height: 175px;
+  width: 175px;
+}
+
+.cart__product__image-wrapper img {
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 /*# sourceMappingURL=style.css.map */

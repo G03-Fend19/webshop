@@ -32,7 +32,7 @@
         </li>
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
               class="fas fa-search"></i></a></li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart" href=""><i
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart" ><i
               class="fas fa-shopping-cart"></i></a></li>
       </ul>
     </nav>
@@ -40,8 +40,10 @@
       <h1>Welcoming text</h1>
       <p>Describing text about shop...</p>
     </section>
+    <section class="cart hidden">
+    
+    </section>
   </header>
-
   <script>
   (() => {
     const searchBar = document.querySelector('.header__nav__item__searchbar');
@@ -50,6 +52,7 @@
     const home = document.querySelector('.header__nav__item__home')
     const contact = document.querySelector('.header__nav__item__contact')
     const searchBtn = document.querySelector('.search')
+
 
     searchButton.addEventListener('click', () => {
       searchIcon.classList.toggle("fa-times")
