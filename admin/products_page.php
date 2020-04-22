@@ -1,4 +1,7 @@
 <?php
+
+
+
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
@@ -13,9 +16,11 @@ require_once "assets/aside-navigation.php";
       </button>
     </a>
   </div>
-
   <?php
 
+  echo "<script type='text/javascript' src='SortTables.js'></script>";
+  ?>
+  <?php
 if (isset($_GET['category_id'])) {
     $categoryId = htmlspecialchars($_GET['category_id']);
     $sql = "SELECT 
@@ -148,7 +153,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if (empty($results)) {
     echo "<h4>No products in this category</h4>";
 } else {
-    echo "<table>
+    echo "<table id='producttable'>
   <thead>
   <tr>
   <th></th>
@@ -157,7 +162,7 @@ if (empty($results)) {
   <th>Description</th>
   <th>Category</th>
   <th>Stock qty</th>
-  <th>Price</th>
+  <th onclick='sortTable(6)'>Price</th>
   <th> </th>
   <th> </th>
   </tr>
@@ -216,4 +221,3 @@ echo '</main>';
   }
   </script>
 
-  <?php require_once 'assets/foot.php';
