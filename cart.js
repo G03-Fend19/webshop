@@ -94,8 +94,8 @@
       value="${cart[product].quantity}">
    
       </input>
-      <i id="qty-" class="changeQty fas fa-minus-circle "></i>
-      <i id="qty+" class="changeQty fas fa-plus-circle "></i>
+      <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
+      <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
       <i id="delete-product"class="fas fa-trash-alt"></i>
       
       </div>
@@ -121,9 +121,9 @@
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       console.log(e.target.id);
 
-      if (e.target.id == "qty+") {
+      if (e.target.dataset.id == "qty+") {
         checkStock(productId);
-      } else if (e.target.id == "qty-") {
+      } else if (e.target.dataset.id == "qty-") {
         cart[productId].quantity == 1 ? null : cart[productId].quantity--;
       }
       localStorage.setItem("cart", JSON.stringify(cart));

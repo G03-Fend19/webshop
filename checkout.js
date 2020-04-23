@@ -21,7 +21,7 @@ function renderOrderSummary() {
       .map((product) => {
         return `
           <tr data-name="${order[product].name}">
-            <td><i class="fas fa-trash-alt"></i></td>
+            <td><i class="fas fa-trash-alt" id="delete-product"></i></td>
             <td>
               <img class="order-summary__img" src="./media/product_images/${
                 order[product].img
@@ -30,8 +30,8 @@ function renderOrderSummary() {
             <td>${order[product].name}</td>
             <td>
               <input type="number" value="${order[product].quantity}">st
-              <button class="qty-btn"><i class="fas fa-minus-circle" id="qty-"></i></button>
-              <button class="qty-btn"><i class="fas fa-plus-circle" id="qty+"></i></button>
+              <button class="qty-btn"><i class="fas fa-minus-circle" data-id="qty-"></i></button>
+              <button class="qty-btn"><i class="fas fa-plus-circle" data-id="qty+"></i></button>
             </td>
             <td>
             <span>${order[product].quantity * order[product].price} SEK</span>
