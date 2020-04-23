@@ -96,7 +96,7 @@
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
-      <i data-id="delete-product"class="fas fa-trash-alt"></i>
+      <i data-id="delete-product"class="fas fa-trash-alt delete-product"></i>
       
       </div>
       <p> ${cart[product].quantity * cart[product].price} SEK</p>
@@ -119,7 +119,7 @@
   const changeQty = () => {
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-      console.log(e.target.id);
+      console.log(e.target.dataset.id);
 
       if (e.target.dataset.id == "qty+") {
         checkStock(productId);
