@@ -25,9 +25,11 @@ figure,
 figcaption,
 blockquote,
 dl,
-dd {
+dd,
+td,
+th {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 /* Set core body defaults */
@@ -57,7 +59,7 @@ img {
 }
 
 /* Natural flow and rhythm in articles by default */
-article>*+* {
+article > * + * {
   margin-top: 1em;
 }
 

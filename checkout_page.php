@@ -1,61 +1,90 @@
 <?php
-require_once 'assets/header.php';
+
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-.order-summary__img {
-  object-fit: cover;
-  height: 40px;
-  width: 40px;
-}
+<head>
+  <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <title>G03 - Webshop</title>
+</head>
 
-.order-summary {
-  width: 100vw;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-  width: 15px;
-  background-color: transparent;
-  border: 0px solid;
-  border-radius: 25%;
-  box-shadow: none;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-
-}
-
-.qty-btn {
-  border-radius: 50%;
-  background-color: Transparent;
-  background-repeat: no-repeat;
-  border: none;
-  cursor: pointer;
-  overflow: hidden;
-  outline: none;
-}
-</style>
+<body>
 
 
-<section id="pTable-section" class="product-section">
+  <header class="header">
+    <nav class="fixed">
+      <div class="header__logo"><a href="index.php"> <img src=".\media\images\logo.png" width="40" height="40" /> </a>
+      </div>
+      <ul class="header__nav">
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home" href="index.php">Home</a>
+        </li>
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__contact" href=""><i
+              class="fas fa-phone"></i></a></li>
+        <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
+            href="">Contact</a></li>
+        <li class="header__nav__item">
+          <form class="header__nav__item__searchform" name="search_form" action="search.php#main"
+            onsubmit="return validateSearchForm()" method="GET">
+            <input class="header__nav__item__searchbar hidden" placeholder="Search..." type="text" name="search">
+            </input>
+            <button class="header__nav__item__searchBtn search hidden">Search</button>
+          </form>
+        </li>
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
+              class="fas fa-search"></i></a></li>
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
+              class="fas fa-shopping-cart"></i></a></li>
+      </ul>
+    </nav>
+
+    <section class="cart">
+
+    </section>
+  </header>
+  <script>
+  (() => {
+    const searchBar = document.querySelector('.header__nav__item__searchbar');
+    const searchButton = document.querySelector('.header__nav__item__search');
+    const searchIcon = document.querySelector('.fa-search')
+    const home = document.querySelector('.header__nav__item__home')
+    const contact = document.querySelector('.header__nav__item__contact')
+    const searchBtn = document.querySelector('.search')
 
 
-</section>
+    searchButton.addEventListener('click', () => {
+      searchIcon.classList.toggle("fa-times")
+      home.classList.toggle("hidden")
+      searchBtn.classList.toggle("hidden");
+      searchBar.classList.toggle("hidden");
+    })
 
-</main>
+  })();
+  </script>
+  <main class="main-checkout">
+    <h1>Checkout</h1>
+    <h3>You are about to buy these products</h3>
+
+
+
+    <section id="pTable-section" class="order-summary">
+
+
+    </section>
+
+  </main>
 
 
 
 
 
 
-<script src="./checkout.js"></script>
+  <script src="./checkout.js"></script>
 
-<?php
+  <?php
 require_once 'assets/foot.php';
 
 ?>
