@@ -4,7 +4,10 @@ renderOrderSummary();
 
 function renderOrderSummary() {
   let order = JSON.parse(localStorage.cart);
-  if (order) {
+
+  console.log(order);
+
+  if (Object.keys(order).length != 0 && order.constructor === Object) {
     let productTable = `<table class="order-summary">
                         <thead>
                           <tr>
@@ -21,7 +24,7 @@ function renderOrderSummary() {
       .map((product) => {
         return `
           <tr data-name="${order[product].name}">
-            <td><i class="fas fa-trash-alt"></i></td>
+            <td><button class="qty-btn"><i class="fas fa-trash-alt" data-id="delete-product"></i></button></td>
             <td>
               <img class="order-summary__img" src="./media/product_images/${
                 order[product].img
@@ -30,8 +33,8 @@ function renderOrderSummary() {
             <td>${order[product].name}</td>
             <td>
               <input type="number" value="${order[product].quantity}">st
-              <button class="qty-btn"><i class="fas fa-minus-circle" id="qty-"></i></button>
-              <button class="qty-btn"><i class="fas fa-plus-circle" id="qty+"></i></button>
+              <button class="qty-btn"><i class="fas fa-minus-circle" data-id="qty-"></i></button>
+              <button class="qty-btn"><i class="fas fa-plus-circle" data-id="qty+"></i></button>
             </td>
             <td>
             <span>${order[product].quantity * order[product].price} SEK</span>
