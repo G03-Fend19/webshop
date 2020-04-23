@@ -48,6 +48,13 @@
       "OrderStatusId" => $row["OrderStatusId"],
     ];
   }
+
+
+if (empty($activeOrdersResults)) {
+    echo "<h2>No active orders</h2>";
+} else {
+    echo "<h2>Active orders</h2>";
+}
 echo "<h2>Filter orders</h2>
       <label for='activeStatusFilter'>Filter by status</label>
       <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
@@ -56,26 +63,20 @@ echo "<h2>Filter orders</h2>
         <option value='2'>In progress</option>
       </select>
       <label for='activeTextFilter'>Filter by city</label>
-      <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>";
-
-if (empty($activeOrdersResults)) {
-    echo "<h2>No active orders</h2>";
-} else {
-    echo "<h2>Active orders</h2>
-  <table>
-  <thead>
-  <tr>
-  <th>Order number</th>
-  <th>Customer</th>
-  <th>City</th>
-  <th>Order date</th>
-  <th>Total Amount</th>
-  <th>Status</th>
-  <th> </th>
-  </tr>
-  </thead>
-  <tbody id='activeOrdersTable'>";
-}
+      <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>
+      <table>
+        <thead>
+          <tr>
+            <th>Order number</th>
+            <th>Customer</th>
+            <th>City</th>
+            <th>Order date</>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th> </th>
+          </tr>
+        </thead>
+      <tbody id='activeOrdersTable'>";
 $rows = "";
 foreach($activeOrdersGrouped as $key => $order):
   $orderNumber = htmlspecialchars($order['OrderNumber']);
