@@ -21,7 +21,7 @@ function renderOrderSummary() {
       .map((product) => {
         return `
           <tr data-name="${order[product].name}">
-            <td><i class="fas fa-trash-alt" id="delete-product"></i></td>
+            <td><button class="qty-btn"><i class="fas fa-trash-alt" data-id="delete-product"></i></button></td>
             <td>
               <img class="order-summary__img" src="./media/product_images/${
                 order[product].img

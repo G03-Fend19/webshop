@@ -96,7 +96,7 @@
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
-      <i id="delete-product"class="fas fa-trash-alt"></i>
+      <i data-id="delete-product"class="fas fa-trash-alt"></i>
       
       </div>
       <p> ${cart[product].quantity * cart[product].price} SEK</p>
@@ -138,13 +138,16 @@
   const deleteProduct = () => {
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-      if (e.target.id == "delete-product") {
+      if (e.target.dataset.id == "delete-product") {
         console.log(productId);
         let r = confirm("are you sure?");
         if (r) {
           delete cart[productId];
           localStorage.setItem("cart", JSON.stringify(cart));
           renderCart();
+          if (document.querySelector("#pTable-section")) {
+            renderOrderSummary();
+          }
         }
       }
     });
