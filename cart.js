@@ -3,9 +3,7 @@
   const cartDisplay = document.querySelector(".cart")
   const getCart = () => {
     cart = JSON.parse(localStorage.getItem("cart"))
-    if (!cart) {
-      cart = {}
-    }
+    !cart ? (cart = {}) : null
   }
   getCart()
   // eventlistener for add-to-cart-btn
@@ -44,7 +42,7 @@
 
   // check stock takes current Product
   // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
-
+  const updateStock = () => {}
   const checkStock = (product) => {
     const q = cart[product].quantity
     const s = cart[product].stock
@@ -56,7 +54,7 @@
       return acc + cart[cur].price * cart[cur].quantity
     }, 0)
     localStorage.setItem("total", JSON.stringify(total))
-    return `<div>${total}</div>`
+    return `<div class="cart__total"><p>Total price</p> <p>${total} SEK</p></div>`
   }
   // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
@@ -68,9 +66,18 @@
 
   const renderCart = () => {
     cartDisplay.innerHTML = ""
-
-    cartDisplay.innerHTML += Object.keys(cart).map((product) => {
-      return `
+    cartDisplay.innerHTML += `
+    <div class="cart__menu"><button class="clear-cart">
+        Clear Cart 
+        <i id="delete-product"class="fas fa-trash-alt"></i>
+       </button>
+        <button class="close-cart">
+        Close Cart <i class="far fa-times-circle"></i>
+        </button>
+    </div>`
+    cartDisplay.innerHTML += Object.keys(cart)
+      .map((product) => {
+        return `
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
         <img class="cart__product__image-wrapper__img" src="./media/product_images/${
@@ -83,21 +90,25 @@
       </p>
         
       <div class="cart__product__info__btns">
-      <p>${cart[product].quantity}</p>
-      <button id="qty-" class="changeQty">-</button>
-      <button id="qty+" class="changeQty">+</button>
-      <button  class="delete-product">delete</button>
+      <input type=text id="quantity-input"  class="cart__product__info__btns__qty" 
+      value="${cart[product].quantity}">
+   
+      </input>
+      <i id="qty-" class="changeQty fas fa-minus-circle "></i>
+      <i id="qty+" class="changeQty fas fa-plus-circle "></i>
+      <i id="delete-product"class="fas fa-trash-alt"></i>
       
       </div>
-      <p>${cart[product].quantity * cart[product].price}</p>
+      <p> ${cart[product].quantity * cart[product].price} SEK</p>
       
       </div>
       </div>
       `
-    })
+      })
+      .join("")
 
     cartDisplay.innerHTML += calcTotal()
-    cartDisplay.innerHTML += `<button class="clear-cart">Clear cart</button>`
+    cartDisplay.innerHTML += `<div class="cart__checkout"><button>Go to Checkout</button></div>`
   }
   renderCart()
 
@@ -108,22 +119,22 @@
   const changeQty = () => {
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name
-      if (e.target.className == "changeQty") {
-        if (e.target.id == "qty+") {
-          checkStock(productId)
-        } else if (e.target.id == "qty-") {
-          cart[productId].quantity == 1 ? null : cart[productId].quantity--
-        }
-        localStorage.setItem("cart", JSON.stringify(cart))
-        renderCart()
+      console.log(e.target.id)
+
+      if (e.target.id == "qty+") {
+        checkStock(productId)
+      } else if (e.target.id == "qty-") {
+        cart[productId].quantity == 1 ? null : cart[productId].quantity--
       }
+      localStorage.setItem("cart", JSON.stringify(cart))
+      renderCart()
     })
   }
 
   const deleteProduct = () => {
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name
-      if (e.target.className == "delete-product") {
+      if (e.target.id == "delete-product") {
         console.log(productId)
         let r = confirm("are you sure?")
         if (r) {
@@ -154,7 +165,17 @@
   cartBtn.addEventListener("click", () => {
     cartDisplay.classList.toggle("hidden")
   })
+
+  const closeCart = () => {
+    document.addEventListener("click", (e) => {
+      if (e.target.className == "close-cart") {
+        cartDisplay.classList.toggle("hidden")
+      }
+    })
+  }
+
   changeQty()
   deleteProduct()
   clearCart()
+  closeCart()
 })()
