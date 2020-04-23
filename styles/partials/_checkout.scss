@@ -17,8 +17,12 @@
     font-size: 18px;
     width: 100%;
     border-color: black;
+
     th {
       text-align: left;
+    }
+    td {
+      padding: 5px;
     }
     thead {
       border-bottom: solid black 1px;
@@ -35,7 +39,8 @@
       border: 0px solid;
       border-radius: 25%;
       box-shadow: none;
-      /* text-align: center; */
+      text-align: right;
+      margin-right: 3px;
     }
 
     &__btn {
@@ -51,9 +56,10 @@
     &__qty {
       width: 150px;
     }
-    &__price {
+    .order-summary__table__price {
       width: 100px;
       text-align: right;
+      padding-right: 0;
     }
   }
   &__totalcontainer {
