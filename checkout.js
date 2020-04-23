@@ -1,12 +1,10 @@
-let order = JSON.parse(localStorage.cart);
 const productSection = document.querySelector("#pTable-section");
 
 renderOrderSummary();
 
 function renderOrderSummary() {
+  let order = JSON.parse(localStorage.cart);
   if (order) {
-    console.log(order);
-
     let productTable = `<table class="order-summary">
                         <thead>
                           <tr>
@@ -22,17 +20,19 @@ function renderOrderSummary() {
     productTable += Object.keys(order)
       .map((product) => {
         return `
-          <tr>
-            <td><i class="fas fa-trash"></i></td>
+          <tr data-name="${order[product].name}">
+            <td><i class="fas fa-trash-alt"></i></td>
             <td>
               <img class="order-summary__img" src="./media/product_images/${
                 order[product].img
               }" alt="Product image">
             </td>
             <td>${order[product].name}</td>
-            <td><input type="number" value="${
-              order[product].quantity
-            }">st<button>-</button><button>+</button></td>
+            <td>
+              <input type="number" value="${order[product].quantity}">st
+              <button class="qty-btn"><i class="fas fa-minus-circle" id="qty-"></i></button>
+              <button class="qty-btn"><i class="fas fa-plus-circle" id="qty+"></i></button>
+            </td>
             <td>
             <span>${order[product].quantity * order[product].price} SEK</span>
             </td>
@@ -45,7 +45,26 @@ function renderOrderSummary() {
 
     productSection.innerHTML = productTable;
   } else {
-    /* <h4>No products in this category</h4> */
+    productSection.innerHTML = "<h4>Your cart is empty.</h4>";
   }
-  console.log(order);
 }
+
+/* const changeQtyCheckout = () => {
+  document.addEventListener("click", (e) => {
+    const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+    console.log(e.target.id);
+
+    if (e.target.id == "checkoutQty+") {
+      checkStock(productId);
+      console.log("plusknappen");
+    } else if (e.target.id == "checkoutQty-") {
+      order[productId].quantity == 1 ? null : order[productId].quantity--;
+    }
+    localStorage.setItem("cart", JSON.stringify(order));
+    console.log(localStorage.cart);
+
+    renderOrderSummary();
+  });
+}; */
+
+/* changeQtyCheckout(); */
