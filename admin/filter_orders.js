@@ -1,31 +1,49 @@
 function filterOrders(orders) {
-  const statusFilter = document.querySelector('#filter-by-status');
-  const textFilter = document.querySelector('#filter-by-text');
+  //Active orders filter select/input element
+  const activeStatusFilter = document.querySelector('#activeStatusFilter');
+  const activeTextFilter = document.querySelector('#activeTextFilter');
+
+  //Completed orders filter input element
+  const completedTextFilter = document.querySelector('#completedTextFilter');
+
+  //Active/Completed orders tables
   const activeOrdersTable = document.querySelector('#activeOrdersTable')
-  activeOrdersTable.innerHTML = '';
+  const completedOrdersTable = document.querySelector('#completedOrdersTable')
 
   let ordersToDraw = orders;
+  let filterText;
+  let filterStatus;
 
-  const filterText = textFilter.value
-  //If any input in text filter
+  //Checks if list of orders is active orders
+  if (orders[1].OrderType == "active") {
+    activeOrdersTable.innerHTML = '';
+    //Sets filter values of select/input
+    filterText = activeTextFilter.value
+    filterStatus = activeStatusFilter.options[activeStatusFilter.selectedIndex].value;
+  } else {
+    completedOrdersTable.innerHTML = '';
+    //Sets filter value of input
+    filterText = completedTextFilter.value
+  }
+  //If input in any text filter
   if (filterText) {
     //filter ordersToDraw if input matches orders.city
-    ordersToDraw = ordersToDraw.filter(function (order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
       return order['DeliveryCity'].toLowerCase().includes(filterText.toLowerCase())
     })
   }
 
 
-  let filterStatus = statusFilter.options[statusFilter.selectedIndex].value;
   //If filterStatus is not 'all'
   if (filterStatus && filterStatus !== 'all') {
     //filter ordersToDraw if chosen status matches order['OrderStatusId']
-    ordersToDraw = ordersToDraw.filter(function (order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
       return order['OrderStatusId'].includes(filterStatus);
     })
   }
 
-  ordersToDraw.forEach(function (order, i) {
+  Object.values(ordersToDraw).forEach(function (order, i) {
+    console.log(order)
     const tr = document.createElement('tr');
 
     const tdId = document.createElement('td');
@@ -47,32 +65,56 @@ function filterOrders(orders) {
     tdSum.innerHTML = order['OrderCost']
 
     const tdStatus = document.createElement('td')
+    if (order.OrderType == "active") {
+      const statusSelect = document.createElement('select')
 
-    const statusSelect = document.createElement('select')
+      const statusOPending = document.createElement('option')
+      statusOPending.innerHTML = "Pending";
+      statusOPending.setAttribute("value", "1")
+      if (order['OrderStatusId'] == statusOPending.value) {
+        statusOPending.setAttribute("selected", "selected")
+      }
+      const statusOInProgress = document.createElement('option')
+      statusOInProgress.innerHTML = "In progress";
+      statusOInProgress.setAttribute("value", "2")
+      if (order['OrderStatusId'] == statusOInProgress.value) {
+        statusOInProgress.setAttribute("selected", "selected")
+      }
+      const statusOCompleted = document.createElement('option')
+      statusOCompleted.innerHTML = "Completed";
+      statusOCompleted.setAttribute("value", "3")
+      if (order['OrderStatusId'] == statusOCompleted.value) {
+        statusOCompleted.setAttribute("selected", "selected")
+      }
 
-    const statusOPending = document.createElement('option')
-    statusOPending.innerHTML = "Pending";
-    statusOPending.setAttribute("value", "1")
-    if (order['OrderStatusId'] == statusOPending.value) {
-      statusOPending.setAttribute("selected", "selected")
-    }
-    const statusOInProgress = document.createElement('option')
-    statusOInProgress.innerHTML = "In progress";
-    statusOInProgress.setAttribute("value", "2")
-    if (order['OrderStatusId'] == statusOInProgress.value) {
-      statusOInProgress.setAttribute("selected", "selected")
-    }
-    const statusOCompleted = document.createElement('option')
-    statusOCompleted.innerHTML = "Completed";
-    statusOCompleted.setAttribute("value", "3")
-    if (order['OrderStatusId'] == statusOCompleted.value) {
-      statusOCompleted.setAttribute("selected", "selected")
+      statusSelect.appendChild(statusOPending);
+      statusSelect.appendChild(statusOInProgress);
+      statusSelect.appendChild(statusOCompleted);
+      tdStatus.appendChild(statusSelect);
+    } else {
+      tdStatus.innerHTML = order['OrderStatus']
     }
 
-    statusSelect.appendChild(statusOPending);
-    statusSelect.appendChild(statusOInProgress);
-    statusSelect.appendChild(statusOCompleted);
-    tdStatus.appendChild(statusSelect);
+    const tdOpen = document.createElement('td')
+    const formLink = document.createElement('form')
+    formLink.setAttribute("action", "")
+    formLink.setAttribute("method", "POST")
+
+    const openBtn = document.createElement('button')
+    openBtn.setAttribute("type", "submit")
+    openBtn.innerHTML = "<i class='far fa-eye'></i>"
+
+    const hiddenInput = document.createElement('input')
+    hiddenInput.setAttribute("type", "hidden")
+    hiddenInput.setAttribute("name", "o_id")
+    hiddenInput.setAttribute("value", order['OrderNumber'])
+
+    formLink.appendChild(openBtn)
+    formLink.appendChild(hiddenInput)
+    tdOpen.appendChild(formLink)
+
+
+
 
     tr.appendChild(tdId)
     tr.appendChild(tdCustomer)
@@ -80,6 +122,7 @@ function filterOrders(orders) {
     tr.appendChild(tdDate)
     tr.appendChild(tdSum)
     tr.appendChild(tdStatus)
-    activeOrdersTable.appendChild(tr)
+    orders[1].OrderType == "active" ? activeOrdersTable.appendChild(tr) : completedOrdersTable.appendChild(tr)
+    tr.appendChild(tdOpen)
   })
 }

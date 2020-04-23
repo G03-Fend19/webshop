@@ -26,18 +26,19 @@
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
-  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  $grouped = [];
+  $activeOrdersResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $activeOrdersGrouped = [];
   // echo "<pre>";
-  // print_r($results);
+  // print_r($activeOrdersResults);
   // echo "</pre>";
 
-  foreach($results as $row) {
+  foreach($activeOrdersResults as $key => $row) {
     // The order id for this row
-    $currentOrderId = $row['OrderNumber'];
+    $orderType = "active";
 
-    $grouped[$currentOrderId] = [
-      "OrderNumber" => $currentOrderId,
+    $activeOrdersGrouped[$key] = [
+      "OrderType" => $orderType,
+      "OrderNumber" => $row['OrderNumber'],
       "OrderDate" => $row['OrderDate'],
       "OrderCost" => $row["OrderCost"],
       "CustomerFirstName" => $row["CustomerFirstName"],
@@ -47,8 +48,17 @@
       "OrderStatusId" => $row["OrderStatusId"],
     ];
   }
+echo "<h2>Filter orders</h2>
+      <label for='activeStatusFilter'>Filter by status</label>
+      <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
+        <option value='all' selected>All</option>
+        <option value='1'>Pending</option>
+        <option value='2'>In progress</option>
+      </select>
+      <label for='activeTextFilter'>Filter by city</label>
+      <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>";
 
-if (empty($results)) {
+if (empty($activeOrdersResults)) {
     echo "<h2>No active orders</h2>";
 } else {
     echo "<h2>Active orders</h2>
@@ -67,7 +77,7 @@ if (empty($results)) {
   <tbody id='activeOrdersTable'>";
 }
 $rows = "";
-foreach($grouped as $key => $order):
+foreach($activeOrdersGrouped as $key => $order):
   $orderNumber = htmlspecialchars($order['OrderNumber']);
   $customerFirstName = htmlspecialchars($order['CustomerFirstName']);
   $customerLastName = htmlspecialchars($order['CustomerLastName']);
@@ -101,7 +111,7 @@ foreach($grouped as $key => $order):
            </select>
           </td>
           <td>
-					  <form action='./edit_product.php' method='POST'>
+					  <form action='' method='POST'>
 					    <button type='submit'><i class='far fa-eye'></i></button>
 					    <input type='hidden' name='p_id' value='$id'>
 					  </form>
@@ -111,3 +121,7 @@ endforeach;
 echo $rows;
 echo '</tbody></table>';
 ?>
+
+<script>
+  let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped); ?> ;
+</script>
