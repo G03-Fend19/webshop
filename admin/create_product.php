@@ -119,24 +119,48 @@ if (!isset($_GET['formerror'])) {
   </form>
 </section>
 <script src="functions.js"></script>
-
 <script>
-const title = document.forms["addProductForm"]["title"].value;
-const description = document.forms["addProductForm"]["description"].value;
-const category = document.forms["addProductForm"]["category"].value;
-const price = document.forms["addProductForm"]["price"].value;
-const qty = document.forms["addProductForm"]["qty"].value;
-
-let productForm = {
-  title: title,
-  description: description,
-  category: category,
-  price: price,
-  qty: qty
-};
+let uploaded = false;
+uploadBtn = document.querySelector('.upload-btn');
+uploadBtn.addEventListener('click', () => {
+  const title = document.forms["addProductForm"]["title"].value;
+  const description = document.forms["addProductForm"]["description"].value;
+  const category = document.forms["addProductForm"]["category"].value;
+  const price = document.forms["addProductForm"]["price"].value;
+  const qty = document.forms["addProductForm"]["qty"].value;
 
 
-localStorage.setItem("product_form", JSON.stringify(productForm))
+  let product = {
+    title: title,
+    description: description,
+    category: category,
+    price: price,
+    qty: qty
+  };
+  localStorage.setItem('product_form', JSON.stringify(product));
+
+});
+
+let productForm = JSON.parse(localStorage.product_form);
+if (Object.keys(productForm).length != 0 && productForm.constructor === Object) {
+  console.log("hejhej");
+  const title = document.forms["addProductForm"]["title"];
+  const description = document.forms["addProductForm"]["description"];
+  const category = document.forms["addProductForm"]["category"].value;
+  const price = document.forms["addProductForm"]["price"];
+  const qty = document.forms["addProductForm"]["qty"];
+  const theCategory = document.qyerySelector(`option['value="${category}"]`);
+
+  console.log(theCategory);
+
+
+  title.value = productForm.title;
+  description.value = productForm.description;
+  price.value = productForm.price;
+  qty.value = productForm.qty;
+
+  localStorage.setItem('product_form', "");
+}
 </script>
 <?php
 require_once './assets/foot.php';
