@@ -141,13 +141,17 @@ foreach ($imgList as $img) {
         <button class='product-section__rigth__actions__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
       </div>
       <!-- <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button> -->
-      <button
-		                          data-id=<?php echo $id ?>
-		                          data-name='<?php echo $name ?>'
-		                          data-price=<?php echo $price ?>
-		                          data-img='<?php echo $productImg ?>'
-		                          data-stock=<?php echo $stock_qty ?>
-		                          class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>
+      <div
+          data-id=<?php echo $id ?>
+          data-name='<?php echo $name ?>'
+          data-price=<?php echo $price ?>
+          data-img='<?php echo $productImg ?>'
+          data-stock=<?php echo $stock_qty ?>
+          data-quantity= 
+          >
+        <button class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>
+      </div>
+
     </div>
   </div>
   <div class='product-section__description'>
