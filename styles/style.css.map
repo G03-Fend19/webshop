@@ -10,7 +10,8 @@
         "partials/_foot.scss",
         "partials/_categories_menu.scss",
         "partials/_display_products.scss",
-        "partials/_cart.scss"
+        "partials/_cart.scss",
+        "partials/_described_product.scss"
     ],
     "names": [],
     "file": "style.css"
