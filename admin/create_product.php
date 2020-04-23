@@ -146,12 +146,20 @@ if (Object.keys(productForm).length != 0 && productForm.constructor === Object) 
   console.log("hejhej");
   const title = document.forms["addProductForm"]["title"];
   const description = document.forms["addProductForm"]["description"];
-  const category = document.forms["addProductForm"]["category"].value;
+  //const category = document.forms["addProductForm"]["category"].value;
   const price = document.forms["addProductForm"]["price"];
   const qty = document.forms["addProductForm"]["qty"];
-  const theCategory = document.qyerySelector(`option['value="${category}"]`);
+  const theCategory = document.querySelector(`option[value="${productForm.category}"]`);
 
   console.log(theCategory);
+
+  let options = document.querySelector("#category").options;
+
+  for (var i = 0; i < options.length; i++) {
+    options[i].selected = false;
+  }
+
+  theCategory.selected = true;
 
 
   title.value = productForm.title;
