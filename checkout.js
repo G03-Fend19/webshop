@@ -30,7 +30,9 @@ function renderOrderSummary() {
               }" alt="Product image">
             </td>
             <td>${order[product].name}</td>
-            <td><span>${order[product].quantity} st</span></td>
+            <td><input type="number" value="${
+              order[product].quantity
+            }">st<button>-</button><button>+</button></td>
             <td>
             <span>${order[product].quantity * order[product].price} SEK</span>
             </td>
