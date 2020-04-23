@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
@@ -8,13 +7,11 @@
   <link rel="stylesheet" href="./styles/style.css">
   <title>G03 - Webshop</title>
 </head>
-
 <body>
-
-
   <header class="header">
     <nav class="fixed">
-      <div class="header__logo"><a href="index.php"> <img src= ".\media\images\logo.png" width= "40" height="40"/> </a></div>
+      <div class="header__logo"><a href="index.php"> <img src=".\media\images\logo.png" width="40" height="40" /> </a>
+      </div>
       <ul class="header__nav">
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home" href="index.php">Home</a>
         </li>
@@ -32,16 +29,18 @@
         </li>
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
               class="fas fa-search"></i></a></li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart" ><i
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
               class="fas fa-shopping-cart"></i></a></li>
       </ul>
     </nav>
     <section class="header__hero">
+      <section class="cart">
+        <div class="cart__menu"></div>
+        <section class="cart__product-wrapper"></section>
+        <div class="cart__total-checkout"></div>
+      </section>
       <h1>Welcoming text</h1>
       <p>Describing text about shop...</p>
-    </section>
-    <section class="cart">
-    
     </section>
   </header>
   <script>
@@ -52,15 +51,12 @@
     const home = document.querySelector('.header__nav__item__home')
     const contact = document.querySelector('.header__nav__item__contact')
     const searchBtn = document.querySelector('.search')
-
-
     searchButton.addEventListener('click', () => {
       searchIcon.classList.toggle("fa-times")
       home.classList.toggle("hidden")
       searchBtn.classList.toggle("hidden");
       searchBar.classList.toggle("hidden");
     })
-
   })();
   </script>
   <main id="main">
