@@ -26,7 +26,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
             (ws_products.name LIKE '%$search%' 
           OR
             ws_products.description LIKE '%$search')
-          AND ws_products.stock_qty > 1";
+          AND ws_products.stock_qty > 0";
   
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -105,7 +105,13 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
                             <h3>$productName</h3>
                           </a>
                           <p>$productPrice SEK</p>
-                          <button class='add-to-cart-btn'>";
+                          <button 
+                          	 data-id=$productId
+		                          data-name='$productName'
+		                          data-price=$productPrice
+		                          data-img='$productImg'
+		                          data-stock=$productQty
+                          class='add-to-cart-btn'>";
                           $productQty < 1 ? $productCards.= "<i class='far fa-times-circle'></i>" : $productCards.= "<i class='fas fa-cart-plus'></i>";
                           $productCards.="</button>
                           </div>
