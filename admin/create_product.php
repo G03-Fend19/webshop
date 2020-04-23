@@ -119,6 +119,25 @@ if (!isset($_GET['formerror'])) {
   </form>
 </section>
 <script src="functions.js"></script>
+
+<script>
+const title = document.forms["addProductForm"]["title"].value;
+const description = document.forms["addProductForm"]["description"].value;
+const category = document.forms["addProductForm"]["category"].value;
+const price = document.forms["addProductForm"]["price"].value;
+const qty = document.forms["addProductForm"]["qty"].value;
+
+let productForm = {
+  title: title,
+  description: description,
+  category: category,
+  price: price,
+  qty: qty
+};
+
+
+localStorage.setItem("product_form", JSON.stringify(productForm))
+</script>
 <?php
 require_once './assets/foot.php';
 ?>
