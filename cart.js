@@ -14,13 +14,13 @@
   // to the createProduct function
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.dataset;
-      let qty;
+      const productData = e.target.parentNode.dataset
+      let qty
       document.querySelector("#qtyInput")
         ? (qty = document.querySelector("#qtyInput").value)
-        : (qty = 1);
-      createProduct(productData, qty);
-      console.log(qty);
+        : (qty = 1)
+      createProduct(productData, qty)
+      console.log(qty)
     })
   )
   // we check the cart object if the product we want to add already exists, if so pressing  add-product only increases
@@ -68,10 +68,15 @@
     })
   }
   const renderCart = () => {
-    productWrapper.innerHTML = ""
-    cartMenu.innerHTML = ""
-    totalCheckout.innerHTML = ""
-    cartMenu.innerHTML += `
+    if (Object.entries(cart).length === 0) {
+      productWrapper.innerHTML = "No products in cart"
+      totalCheckout.innerHTML = ""
+    } else {
+      productWrapper.innerHTML = ""
+      cartMenu.innerHTML = ""
+      totalCheckout.innerHTML = ""
+      cartMenu.innerHTML += `
+ 
     <button class="clear-cart">
         Clear Cart 
         <i id="delete-product"class="fas fa-trash-alt"></i>
@@ -79,9 +84,9 @@
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
         </button>`
-    productWrapper.innerHTML += Object.keys(cart)
-      .map((product) => {
-        return `
+      productWrapper.innerHTML += Object.keys(cart)
+        .map((product) => {
+          return `
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
         <img class="cart__product__image-wrapper__img" src="./media/product_images/${
@@ -98,17 +103,20 @@
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
-      <i data-id="delete-product"class="fas fa-trash-alt"></i>
+      <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
 
       </div>
       <p> ${cart[product].quantity * cart[product].price} SEK</p>
       </div>
       </div>
       `
-      })
-      .join("")
-    totalCheckout.innerHTML +=
-      calcTotal() + `<button class="cart__checkout">Go to Checkout</button>`
+        })
+        .join("")
+      totalCheckout.innerHTML +=
+        calcTotal() +
+        `<div class="cart__checkout"><a href="checkout_page.php" >Go To Checkout</a></div>`
+    }
+
     // cartDisplay.innerHTML += `<button class="cart__checkout">Go to Checkout</button></div>`;
   }
   renderCart()

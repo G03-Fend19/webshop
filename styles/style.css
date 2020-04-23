@@ -818,17 +818,29 @@ iframe {
 }
 
 .cart__checkout {
+  height: 4em;
   font-weight: bolder;
   border: none;
   background-color: white;
   -webkit-box-shadow: 0px 2px 5px black;
           box-shadow: 0px 2px 5px black;
-  width: 100%;
-  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .cart__checkout:hover {
   background-color: black;
+  color: white;
+}
+
+.cart__checkout a {
+  height: 100%;
+  width: 100%;
+  padding-top: 1em;
+}
+
+.cart__checkout a:hover {
   color: white;
 }
 
@@ -908,8 +920,6 @@ iframe {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
-=======
 .main-checkout {
   margin-top: 100px;
   width: 100vw;
@@ -1000,7 +1010,6 @@ iframe {
   margin: 0;
 }
 
->>>>>>> develop
 .img-wrapper {
   height: 100%;
   width: 100%;
@@ -1032,10 +1041,7 @@ iframe {
 .product-section__images__big {
   width: 100%;
   height: 100%;
-<<<<<<< HEAD
-=======
   max-height: 500px;
->>>>>>> develop
   -ms-grid-row: 1;
   grid-area: 1;
 }
@@ -1057,13 +1063,10 @@ iframe {
   color: #a0a0a0;
 }
 
-<<<<<<< HEAD
-=======
 .product-section__images__small-container i :hover {
   cursor: pointer;
 }
 
->>>>>>> develop
 .product-section__images__small-container__img-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1086,13 +1089,10 @@ iframe {
   margin: 2px;
 }
 
-<<<<<<< HEAD
-=======
 .product-section__images__small-container__img-container .img-wrapper :hover {
   cursor: pointer;
 }
 
->>>>>>> develop
 .product-section__images__small-container__img-container__img {
   height: 10vh;
   width: 5vw;
