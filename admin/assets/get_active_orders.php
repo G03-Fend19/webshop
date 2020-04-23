@@ -102,7 +102,7 @@ foreach($grouped as $key => $order):
           </td>
           <td>
 					  <form action='./edit_product.php' method='POST'>
-					    <button type='submit'><i class='fas fa-pen'></i></button>
+					    <button type='submit'><i class='far fa-eye'></i></button>
 					    <input type='hidden' name='p_id' value='$id'>
 					  </form>
 					</td>
