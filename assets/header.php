@@ -40,7 +40,7 @@
       <h1>Welcoming text</h1>
       <p>Describing text about shop...</p>
     </section>
-    <section class="cart hidden">
+    <section class="cart">
     
     </section>
   </header>
