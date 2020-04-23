@@ -14,14 +14,19 @@
   // to the createProduct function
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.dataset
-      createProduct(productData)
+      const productData = e.target.parentNode.dataset;
+      let qty;
+      document.querySelector("#qtyInput")
+        ? (qty = document.querySelector("#qtyInput").value)
+        : (qty = 1);
+      createProduct(productData, qty);
+      console.log(qty);
     })
   )
   // we check the cart object if the product we want to add already exists, if so pressing  add-product only increases
   // quantity.
   // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
-  const createProduct = (productData) => {
+  const createProduct = (productData, qty) => {
     if (cart[productData.name]) {
       checkStock(productData.name)
     } else {
@@ -32,7 +37,7 @@
           img: productData.img,
           name: productData.name,
           price: productData.price,
-          quantity: 1,
+          quantity: qty,
           stock: productData.stock,
         },
       }

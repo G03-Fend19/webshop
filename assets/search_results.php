@@ -26,7 +26,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
             (ws_products.name LIKE '%$search%' 
           OR
             ws_products.description LIKE '%$search')
-          AND ws_products.stock_qty > 1";
+          AND ws_products.stock_qty > 0";
   
   $stmt = $db->prepare($sql);
   $stmt->execute();
