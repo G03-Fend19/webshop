@@ -14,8 +14,6 @@ function deleteConfirm()
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $id = htmlspecialchars($_POST['id']);
-  $sql = 'DELETE FROM ws_products WHERE id = :id;
-  DELETE FROM ws_images WHERE id = :id';
 
     // Selecting the product images to delete them from the folder on the server
     $sql_images = "SELECT
@@ -33,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_img->bindParam(':id', $id);
     $stmt_img->execute();
 
-    $sql = 'DELETE FROM ws_products WHERE id = :id';
+    $sql = 'DELETE FROM ws_products WHERE id = :id;
+  DELETE FROM ws_images WHERE id = :id';
 
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':id', $id);
