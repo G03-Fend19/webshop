@@ -1059,6 +1059,81 @@ iframe {
   margin: 0;
 }
 
+<<<<<<< HEAD
+.label-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.customer__form input {
+  border-radius: 4px;
+  border: 1px solid grey;
+  margin-right: 2em;
+}
+
+.customer__form__information {
+  padding: 2em;
+  background-color: #dadada;
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 1px 1px black;
+          box-shadow: 1px 1px 1px black;
+  margin: 2em;
+}
+
+@media (min-width: 1000px) {
+  .customer__form__information__name {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media (min-width: 1000px) {
+  .customer__form__information__mailbile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media (min-width: 1000px) {
+  .customer__form__information__cityPost {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.customer__form__payment__invoice {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.customer__form__payment__total {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.customer__form__payment__total p {
+  margin-right: 2em;
+}
+
+.customer__form__payment__shipping {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.customer__form__payment__shipping p {
+  margin-right: 2em;
+=======
 .confirmpage {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1260,6 +1335,7 @@ iframe {
 
 .confirmtable__tbody__productname {
   text-align: left;
+>>>>>>> 5f4f463985637dc8164de74798ffb4de62d5a8ed
 }
 
 .img-wrapper {

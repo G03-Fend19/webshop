@@ -92,7 +92,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         }
 
         $productCards .= "<article class='product-card'>
-	                        <a href='product.php?product_id=$productId' class='product-card__image-link'>
+	                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
 	                          <div class='image-wrapper'>";
         $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
 	                                                            <span class='out-of-stock__msg'>
@@ -103,7 +103,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 	                          </div>
 	                        </a>
 	                        <div class='product-card__content'>
-	                          <a href='product.php?product_id=$productId' class='product-card__product-link'>
+	                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
 	                            $productName
 	                          </a>
 	                          <p>$productPrice SEK</p>
