@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap");
-.header__nav__item a {
+.header__nav__item a, .header__burger {
   font-weight: 500;
   color: white;
   text-shadow: 1px 1px 2px #5c5c5c;
@@ -145,22 +145,16 @@ a {
   }
 }
 
-.search-and-contact, .header__nav__item__contact, .header__nav__item__search {
+/* .search-and-contact {
   height: 60px;
   width: 60px;
   border-radius: 50%;
-  background-color: #e2e2e2;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  background-color: rgb(226, 226, 226);
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
+  justify-content: center;
+  align-items: center;
+  // box-shadow: 1px 1px 3px rgb(168, 168, 168);
+} */
 .header {
   display: -ms-grid;
   display: grid;
@@ -209,105 +203,128 @@ a {
   display: flex;
 }
 
+.header__nav__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media (max-width: 800px) {
+  .header__nav__container {
+    position: fixed;
+    z-index: 2;
+    margin-top: 70px;
+    background: #a1a1a1;
+    top: calc(-100% + 70px);
+    left: 0;
+    width: 100%;
+    min-height: 250px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    padding: 20px;
+    -webkit-transition: all 400ms;
+    transition: all 400ms;
+  }
+}
+
+@media (max-width: 800px) {
+  .header__nav .nav__container__active {
+    top: 0;
+  }
+}
+
 .header__nav__item {
   margin-left: 20px;
+  /*  &__home {
+        display: none;
+      } */
 }
 
 @media (min-width: 800px) {
   .header__nav__item a {
     display: inline;
-    position: relative;
   }
 }
 
-.header__nav__item__home {
-  display: none;
-}
-
-.header__nav__item__contact {
-  position: fixed;
-  margin-top: 75vh;
-  right: 1em;
-}
-
-@media (min-width: 800px) {
-  .header__nav__item__contact i {
-    display: none;
-  }
-}
-
-.header__nav__item__search {
-  position: fixed;
-  margin-top: 85vh;
-  right: 1em;
-}
-
-.header__nav__item__search:hover {
-  cursor: pointer;
+.header__nav__item__searchform {
+  position: static;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 @media (max-width: 800px) {
   .header__nav__item__searchform {
-    position: fixed;
-    margin-top: 87vh;
-    right: 5em;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    top: 70px;
+    position: absolute;
+    z-index: -2;
+    left: 0;
+    width: 100%;
   }
 }
 
 .header__nav__item__searchbar {
-  height: 30px;
-  width: 150px;
-  border-radius: 6px;
-  border: 1px solid #858585;
-  padding-left: 0.5em;
-  font-size: 10px;
-  font-style: italic;
-  margin: auto 0;
-  margin-right: 0.5em;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ffffff;
+  border-right: none;
+  border-radius: 0px 0px 0px 5px;
+  width: calc(100% - 40px);
+  background: #ffffff;
+  margin: 0;
 }
 
 @media (min-width: 800px) {
   .header__nav__item__searchbar {
-    width: 250px;
-    margin-right: 0;
-    font-size: 12px;
+    border-radius: 5px 0px 0px 5px;
   }
 }
 
 .header__nav__item__searchBtn {
-  background: #3c3c3c;
-  color: white;
-  font-weight: 900;
-  border-radius: 6px;
-  font-size: 12px;
-  margin: auto;
+  width: 40px;
+  padding: 8.3px;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 0px 0px 5px 0px;
+  color: #727272;
+  font-size: 15px;
+  border: none;
+  border-left: none;
   cursor: pointer;
-  height: 30px;
-  margin: auto 0;
-  border: 1px solid gray;
-  padding: 0.5em;
 }
 
-.header__nav__item__searchBtn:hover {
-  color: #b6ceb6;
+.header__nav__item__searchBtn i:hover {
+  color: #ff8c8b;
 }
 
 @media (min-width: 800px) {
   .header__nav__item__searchBtn {
-    margin: unset;
-    font-size: 12px;
-    margin-right: 1em;
+    border-radius: 0px 5px 5px 0px;
   }
 }
 
 .header__nav__item__cart {
   margin-right: 1.5em;
+}
+
+.header__burger {
+  font-size: 1.2em;
+  margin-right: 20px;
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .header__burger {
+    display: block;
+  }
 }
 
 .header__hero {
@@ -356,12 +373,11 @@ a {
   top: 0;
 }
 
-@media (max-width: 800px) {
-  #contact-desktop {
+/* #contact-desktop {
+  @media (max-width: 800px) {
     display: none;
   }
-}
-
+} */
 footer {
   padding: 1em;
   color: white;
