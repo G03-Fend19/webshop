@@ -25,7 +25,7 @@
           <form class="header__nav__item__searchform" name="search_form" action="search.php#main"
             onsubmit="return validateSearchForm()" method="GET">
             <input class="header__nav__item__searchbar hidden" placeholder="Search..." type="text" name="search">
-            </input>
+
             <button class="header__nav__item__searchBtn search hidden">Search</button>
           </form>
         </li>
