@@ -141,9 +141,9 @@ uploadBtn.addEventListener('click', () => {
 
 });
 
-let productForm = JSON.parse(localStorage.product_form);
-if (Object.keys(productForm).length != 0 && productForm.constructor === Object) {
-  console.log("hejhej");
+if (JSON.parse(localStorage.getItem('product_form'))) {
+  let productForm = JSON.parse(localStorage.getItem('product_form'));
+
   const title = document.forms["addProductForm"]["title"];
   const description = document.forms["addProductForm"]["description"];
   //const category = document.forms["addProductForm"]["category"].value;
@@ -151,7 +151,6 @@ if (Object.keys(productForm).length != 0 && productForm.constructor === Object) 
   const qty = document.forms["addProductForm"]["qty"];
   const theCategory = document.querySelector(`option[value="${productForm.category}"]`);
 
-  console.log(theCategory);
 
   let options = document.querySelector("#category").options;
 
@@ -167,7 +166,7 @@ if (Object.keys(productForm).length != 0 && productForm.constructor === Object) 
   price.value = productForm.price;
   qty.value = productForm.qty;
 
-  localStorage.setItem('product_form', "");
+  localStorage.removeItem('product_form');
 }
 </script>
 <?php
