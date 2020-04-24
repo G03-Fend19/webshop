@@ -45,7 +45,7 @@ function sortTable(n) {
 }
 
 
-function sortTableDate (n) {
+function sortTableDate(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0, reverse;
   table = document.getElementById("producttable");
  

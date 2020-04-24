@@ -1,4 +1,5 @@
 <?php
+ echo "<script type='text/javascript' src='SortTables.js'></script>";
   $sql = "SELECT 
             ws_active_orders.id         AS OrderNumber,
             ws_active_orders.order_date AS OrderDate,
@@ -70,9 +71,9 @@ echo "<h2>Filter orders</h2>
             <th>Order number</th>
             <th>Customer</th>
             <th>City</th>
-            <th>Order date</>
-            <th>Total Amount</th>
-            <th>Status</th>
+            <th onclick='sortTableDate(4)'>Order date</>
+            <th onclick='sortTable(5)'>Total Amount</th>
+            <th onclick='sortTableStatus(6)'>Status</th>
             <th> </th>
           </tr>
         </thead>
@@ -94,8 +95,8 @@ foreach($activeOrdersGrouped as $key => $order):
           <td>$fullName</td>
           <td>$city</td>
           <td>$orderDate</td>
-          <td>$totalSum SEK</td>
-          <td>
+          <td onclick='sortTables(4)'>$totalSum SEK</td>
+          <td onclick='sortTablesStatus(5)'>
            <select name='$key' id='$key' class='select-status'>
             <option value='1'";
               $orderStatusId == 1 ? $rows.= ' selected':null; $rows.= ">
