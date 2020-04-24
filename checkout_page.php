@@ -74,15 +74,82 @@
 
 
     </section>
+    <section class="customer"> 
+      <form  id="confirm-order" class="customer__form" onsubmit="return orderFormSubmission(event)">
+        <div class="customer__form__information">
+          <h2>Customer Information</h2>
+          <div class="customer__form__information__name">
+            <div class="label-input">
+              <label for="fname">First name:</label>
+              <input class="customer-info"id="firstname"type="text"></input>
+            </div>
+            <div class="label-input">
+              <label for="lname">Last name:</label> 
+              <input class="customer-info"id="lastname"type="text"></input> 
+            </div>
+          </div>
+          <div class="customer__form__information__mailbile">
+            <div class="label-input">
+              <label for="email">Email:</label> 
+              <input class="customer-info"id="email"type="text"></input>   
+            </div>  
+            <div class="label-input">
+              <label for="mobile">Mobile:</label> 
+              <input class="customer-info"id="mobile"type="text"></input>  
+            </div>                      
+          </div>
+          <div class="customer__form__information__street">
+            <div class="label-input">
+              <label for="adress">Street:</label> 
+              <input class="customer-info"id="street"type="text"></input>  
+            </div>            
+          </div>
+          <div>
+
+          </div>
+          <div class="customer__form__information__cityPost"> 
+            <div class="label-input">
+              <label for="postal">Postal:</label> 
+              <input class="customer-info"id="postal"type="text"></input>  
+            </div>      
+             <div class="label-input">
+               <label for="city">City:</label> 
+               <input class="customer-info"id="city"type="text"></input>  
+             </div>                 
+          </div>
+        </div>
+        <div class="customer__form__payment customer__form__information">
+            <h2>Payment Information</h2>
+            <div class="customer__form__payment__shipping">
+              <p>Shipping Fee</p> 
+              <p>kronor</p>
+            </div>
+            <div class="customer__form__payment__total">
+              <p>Total price</p> 
+              <p>kronor</p>
+            </div>
+            <div class="customer__form__payment__invoice">
+              <p>Invoice</p>
+                <label for="email-invoice"> Email </label>
+                <input class="customer-info" type="checkbox" id="email-invoice" name="email-invoice" value="email">
+                <label for="adress-invoice"> Adress </label>
+                <input  class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="adress">                
+            </div>                           
+        </div>
+        
+        <div class="customer__form__submit">
+          <button id="order-confirmation-submit">Confirm order</button>
+        </div>
+      </form>
+    </section>
 
   </main>
 
 
 
 
-
-
-  <script src="./checkout.js"></script>
+<script src="./checkout.js"></script>
+<script src="./order-confirmation.js"></script>
 
   <?php
 require_once 'assets/foot.php';
