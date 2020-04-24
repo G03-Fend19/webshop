@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
@@ -7,10 +8,11 @@
   <link rel="stylesheet" href="./styles/style.css">
   <title>G03 - Webshop</title>
 </head>
+
 <body>
   <header class="header">
     <nav class="fixed">
-      <div class="header__logo"><a href="index.php"> <img src=".\media\images\logo.png" width="40" height="40" /> </a>
+      <div class="header__logo"><a href="index.php"> <img src="./media/images/logo.png" width="40" height="40" /> </a>
       </div>
       <ul class="header__nav">
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home" href="index.php">Home</a>
