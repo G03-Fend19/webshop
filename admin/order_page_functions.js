@@ -66,7 +66,18 @@ function filterOrders(orders) {
 
     const tdStatus = document.createElement('td')
     if (order.OrderType == "active") {
+      const statusForm = document.createElement('form')
+      statusForm.setAttribute('id', 'shouldUpdate' + order['OrderNumber'])
+      statusForm.setAttribute('action', './assets/update_order_status.php')
+      statusForm.setAttribute('method', 'POST')
+
+
       const statusSelect = document.createElement('select')
+      statusSelect.setAttribute('name', "statusSelect" + order['OrderNumber'])
+      statusSelect.setAttribute('id', "statusSelect" + order['OrderNumber'])
+      statusSelect.setAttribute('onchange', 'updateStatus(' + order['OrderNumber'] + ")")
+      statusSelect.classList.add('select-status')
+
 
       const statusOPending = document.createElement('option')
       statusOPending.innerHTML = "Pending";
@@ -86,11 +97,17 @@ function filterOrders(orders) {
       if (order['OrderStatusId'] == statusOCompleted.value) {
         statusOCompleted.setAttribute("selected", "selected")
       }
+      const hiddenStatusSelectInput = document.createElement('input')
+      hiddenStatusSelectInput.setAttribute("type", "hidden")
+      hiddenStatusSelectInput.setAttribute("name", "o_id")
+      hiddenStatusSelectInput.setAttribute("value", order['OrderNumber'])
 
       statusSelect.appendChild(statusOPending);
       statusSelect.appendChild(statusOInProgress);
       statusSelect.appendChild(statusOCompleted);
-      tdStatus.appendChild(statusSelect);
+      statusForm.appendChild(statusSelect);
+      statusForm.appendChild(hiddenStatusSelectInput);
+      tdStatus.appendChild(statusForm);
     } else {
       tdStatus.innerHTML = order['OrderStatus']
     }
@@ -100,21 +117,18 @@ function filterOrders(orders) {
     formLink.setAttribute("action", "")
     formLink.setAttribute("method", "POST")
 
-    const openBtn = document.createElement('button')
-    openBtn.setAttribute("type", "submit")
-    openBtn.innerHTML = "<i class='far fa-eye'></i>"
+    const openOrderBtn = document.createElement('button')
+    openOrderBtn.setAttribute("type", "submit")
+    openOrderBtn.innerHTML = "<i class='far fa-eye'></i>"
 
-    const hiddenInput = document.createElement('input')
-    hiddenInput.setAttribute("type", "hidden")
-    hiddenInput.setAttribute("name", "o_id")
-    hiddenInput.setAttribute("value", order['OrderNumber'])
+    const hiddenOpenOrderInput = document.createElement('input')
+    hiddenOpenOrderInput.setAttribute("type", "hidden")
+    hiddenOpenOrderInput.setAttribute("name", "o_id")
+    hiddenOpenOrderInput.setAttribute("value", order['OrderNumber'])
 
-    formLink.appendChild(openBtn)
-    formLink.appendChild(hiddenInput)
+    formLink.appendChild(openOrderBtn)
+    formLink.appendChild(hiddenOpenOrderInput)
     tdOpen.appendChild(formLink)
-
-
-
 
     tr.appendChild(tdId)
     tr.appendChild(tdCustomer)
@@ -125,4 +139,24 @@ function filterOrders(orders) {
     orders[1].OrderType == "active" ? activeOrdersTable.appendChild(tr) : completedOrdersTable.appendChild(tr)
     tr.appendChild(tdOpen)
   })
+}
+
+function updateStatus(orderToUpdate) {
+  const statusSelect = document.getElementById("statusSelect" + orderToUpdate);
+  const newStatusId = statusSelect.options[statusSelect.selectedIndex].value;
+  const updateStatusForm = document.getElementById('shouldUpdate' + orderToUpdate)
+  console.log(newStatusId)
+
+  let shouldUpdate
+  if (newStatusId !== "3") {
+    shouldUpdate = confirm("Do you really want to change status?")
+  } else {
+    shouldUpdate = confirm("Do you really want to finish this order? (irreversible)")
+  }
+  if (shouldUpdate == true) {
+    updateStatusForm.submit()
+  }
+  if (shouldUpdate == false) {
+    filterOrders(activeOrdersFromPHP);
+  }
 }
