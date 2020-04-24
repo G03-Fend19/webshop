@@ -20,7 +20,6 @@
         ? (qty = document.querySelector("#qtyInput").value)
         : (qty = 1);
       createProduct(productData, qty);
-      console.log(qty);
     })
   );
   // we check the cart object if the product we want to add already exists, if so pressing  add-product only increases
@@ -98,7 +97,9 @@
            ${cart[product].name}
       </p>
       <div class="cart__product__info__btns">
-      <input type=text id="quantity-input"  class="cart__product__info__btns__qty" 
+      <input type=number id="quantity-input" min="1" max="${
+        cart[product].stock
+      }" class="cart__product__info__btns__qty" 
       value="${cart[product].quantity}">
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>

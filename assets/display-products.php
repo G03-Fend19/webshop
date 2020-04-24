@@ -132,6 +132,9 @@ foreach ($results as $row) {
 
 foreach ($grouped as $productId => $product):
     $productName = htmlspecialchars($product['ProductName']);
+    if(strlen($productName) > 20) {
+      $productName = substr($productName, 0, 20) . "...";
+    }
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productQty = htmlspecialchars($product['ProductQty']);
     // $productImg = htmlspecialchars($product['ImageName']); // TODO
@@ -156,7 +159,7 @@ foreach ($grouped as $productId => $product):
 			                          </div>
 			                        </a>
 			                        <div class='product-card__content'>
-			                          <a href='product.php?id=$productId' class='product-card__product-link'>
+			                          <a href='product.php?product_id=$productId' class='product-card__product-link'>
 			                            $productName
 			                          </a>
 			                          <p>$productPrice SEK</p>

@@ -93,11 +93,11 @@
       a {
         display: inline;
         font-weight: 500;
-        font-size: 16px;
-        word-break: break-all;
+        font-size: 12px;
+        // word-break: break-all;
 
         @media (min-width: 1000px) {
-          font-size: 18px;
+          font-size: 15px;
         }
       }
 
