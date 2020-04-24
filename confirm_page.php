@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,8 +10,6 @@
 </head>
 
 <body>
-
-
   <header class="header">
     <nav class="fixed">
       <div class="header__logo"><a href="index.php"> <img src=".\media\images\logo.png" width="40" height="40" /> </a>
@@ -40,53 +35,61 @@
               class="fas fa-shopping-cart"></i></a></li>
       </ul>
     </nav>
-
     <section class="cart">
       <div class="cart__menu"></div>
       <section class="cart__product-wrapper"></section>
       <div class="cart__total-checkout"></div>
     </section>
   </header>
-  <script>
-  (() => {
-    const searchBar = document.querySelector('.header__nav__item__searchbar');
-    const searchButton = document.querySelector('.header__nav__item__search');
-    const searchIcon = document.querySelector('.fa-search')
-    const home = document.querySelector('.header__nav__item__home')
-    const contact = document.querySelector('.header__nav__item__contact')
-    const searchBtn = document.querySelector('.search')
 
+  <main class="confirmpage">
+    <div class="confirmpage__container">
+      <section class="confirmpage__order">
+        <h1>Thank you for your order!</h1>
 
-    searchButton.addEventListener('click', () => {
-      searchIcon.classList.toggle("fa-times")
-      home.classList.toggle("hidden")
-      searchBtn.classList.toggle("hidden");
-      searchBar.classList.toggle("hidden");
-    })
+        <table class="confirmtable">
+          <thead class="confirmtable__thead">
+            <tr>
+              <th class="confirmtable__thead__productname">Product name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody class="confirmtable__tbody">
+            <!-- Här ska kod från localStorage in med JS -->
+          </tbody>
+        </table>
 
-  })();
-  </script>
-  <main class="main-checkout">
-    <h1>Checkout</h1>
-    <h3>You are about to buy these products</h3>
+        <section class="confirmpage__price">
+          <div class="confirmpage__price__shipping">
+            <strong style="margin-right: 1em;">Shopping fee</strong>
+            <p>0 SEK</p>
+          </div>
+          <div class="confirmpage__price__total">
+            <strong>Total price</strong>
+            <p class="confirmpage__totalprice">2 099 SEK</p>
+          </div>
+        </section>
+      </section>
 
+      <section class="confirmpage__information">
+        <h2>It will be shipped to...</h2>
 
+        <div class="confirmpage__shipping">
+          <div class="confirmpage__shipping__customer">
+            <h3>Customer</h3>
+          </div>
 
-    <section id="pTable-section" class="order-summary">
+          <div class="confirmpage__shipping__payment">
+            <h3>Payment method</h3>
+          </div>
+        </div>
+      </section>
+      <a class="confirmpage__shopmorebtn" href="index.php"><button>Shop more</button></a>
 
-
-    </section>
-
+    </div>
   </main>
-
-
-
-
-
-
-  <script src="./checkout.js"></script>
+  <script src="confirm_page.js"></script>
 
   <?php
-require_once 'assets/foot.php';
-
-?>
+require_once './assets/foot.php';

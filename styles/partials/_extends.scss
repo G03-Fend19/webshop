@@ -11,3 +11,22 @@
   font-size: 20px;
   text-decoration: none;
 }
+
+%priceInfoJustify {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.2em 0;
+}
+
+%btnStyler {
+  padding: 0.5em 1em;
+  font-weight: 900;
+  box-shadow: 1px 1px 3px gray;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    transition: ease-in 200ms;
+    transform: scale(1.02);
+  }
+}
