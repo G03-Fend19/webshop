@@ -67,11 +67,13 @@ echo "</pre>"; */
     }
 
     if (isset($_GET['formerror'])) {
+        $p_id = htmlspecialchars($_GET['id']);
         $pName = htmlspecialchars($_GET['title']);
         $descrip = htmlspecialchars($_GET['descrip']);
         $categoryId = htmlspecialchars($_GET['category']);
         $price = htmlspecialchars($_GET['price']);
         $qty = htmlspecialchars($_GET['qty']);
+        $imagesGet = unserialize($_GET['images']);
     }
 
     $options = "";
@@ -154,7 +156,6 @@ require_once './assets/aside-navigation.php';
     <div class="form__image-section">
       <label for="img" class="form__label">Images</label>
       <div class="form__image-section__create">
-        <p>Images</p>
         <button class="add-img button" type="button">Add Images</button>
 
       </div>
@@ -175,6 +176,19 @@ if (count($imagesDb) != 0) {
           ";
         $counter++;
     }
+} else {
+    $counter = 1;
+    foreach ($imagesGet as $image) {
+        echo "
+        <label class='form__image-section__selection'>
+        $image
+        <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+        <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+        </label>
+        ";
+        $counter++;
+    }
+
 }
 ?>
       </div>
@@ -208,6 +222,56 @@ if (!isset($_GET['formerror'])) {
 
 </main>
 <script src="functions.js"></script>
+<script>
+let uploaded = false;
+uploadBtn = document.querySelector('.upload-btn');
+uploadBtn.addEventListener('click', () => {
+  const title = document.forms["addProductForm"]["title"].value;
+  const description = document.forms["addProductForm"]["description"].value;
+  const category = document.forms["addProductForm"]["category"].value;
+  const price = document.forms["addProductForm"]["price"].value;
+  const qty = document.forms["addProductForm"]["qty"].value;
+
+
+  let product = {
+    title: title,
+    description: description,
+    category: category,
+    price: price,
+    qty: qty
+  };
+  localStorage.setItem('product_form', JSON.stringify(product));
+
+});
+
+if (JSON.parse(localStorage.getItem('product_form'))) {
+  let productForm = JSON.parse(localStorage.getItem('product_form'));
+
+  const title = document.forms["addProductForm"]["title"];
+  const description = document.forms["addProductForm"]["description"];
+  //const category = document.forms["addProductForm"]["category"].value;
+  const price = document.forms["addProductForm"]["price"];
+  const qty = document.forms["addProductForm"]["qty"];
+  const theCategory = document.querySelector(`option[value="${productForm.category}"]`);
+
+
+  let options = document.querySelector("#category").options;
+
+  for (var i = 0; i < options.length; i++) {
+    options[i].selected = false;
+  }
+
+  theCategory.selected = true;
+
+
+  title.value = productForm.title;
+  description.value = productForm.description;
+  price.value = productForm.price;
+  qty.value = productForm.qty;
+
+  localStorage.removeItem('product_form');
+}
+</script>
 <?php
 
 require_once './assets/foot.php';

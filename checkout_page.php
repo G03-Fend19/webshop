@@ -42,7 +42,9 @@
     </nav>
 
     <section class="cart">
-
+      <div class="cart__menu"></div>
+      <section class="cart__product-wrapper"></section>
+      <div class="cart__total-checkout"></div>
     </section>
   </header>
   <script>
