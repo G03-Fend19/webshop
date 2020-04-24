@@ -43,7 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $createCompletedOrderStmt->bindParam(":status_id", $newStatusId);
     $createCompletedOrderStmt->execute();
 
-    $deleteActiveOrderSql = "SELECT * FROM ws_active_orders WHERE ws_active_orders.id = :orderId";
+    $deleteActiveOrderSql = "DELETE FROM ws_active_orders WHERE ws_active_orders.id = :orderId";
     $deleteActiveOrderStmt = $db->prepare($deleteActiveOrderSql);
     $deleteActiveOrderStmt->bindParam(":orderId", $orderId);
     $deleteActiveOrderStmt->execute();
