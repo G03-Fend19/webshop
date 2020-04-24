@@ -67,6 +67,7 @@ echo "</pre>"; */
     }
 
     if (isset($_GET['formerror'])) {
+        $p_id = htmlspecialchars($_GET['id']);
         $pName = htmlspecialchars($_GET['title']);
         $descrip = htmlspecialchars($_GET['descrip']);
         $categoryId = htmlspecialchars($_GET['category']);

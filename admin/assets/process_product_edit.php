@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_duplicate->execute();
 
     if (empty($title) || empty($description) || empty($category_id) || $price == "" || $price == null || $qty == "" || $qty == null) {
-        header("Location: ../edit_product.php?formerror=empty&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
+        header("Location: ../edit_product.php?formerror=empty&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
         exit();
     } elseif ($stmt_duplicate->fetch(PDO::FETCH_ASSOC)) {
-        header("Location: ../edit_product.php?formerror=duplicate&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
+        header("Location: ../edit_product.php?formerror=duplicate&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
         exit();
     } elseif ($price < 0 || $qty < 0) {
-        header("Location: ../edit_product.php?formerror=negative&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
+        header("Location: ../edit_product.php?formerror=negative&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
         exit();
     }
     ;
