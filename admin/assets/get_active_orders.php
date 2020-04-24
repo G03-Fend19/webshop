@@ -96,7 +96,8 @@ foreach($activeOrdersGrouped as $key => $order):
           <td>$orderDate</td>
           <td>$totalSum SEK</td>
           <td>
-           <select name='$key' id='$key' class='select-status'>
+          <form id='shouldUpdate$orderNumber' action='./assets/update_order_status.php' method='POST'>
+           <select name='statusSelect$orderNumber' id='statusSelect$orderNumber' onchange='updateStatus($orderNumber)'>
             <option value='1'";
               $orderStatusId == 1 ? $rows.= ' selected':null; $rows.= ">
               Pending
@@ -110,11 +111,13 @@ foreach($activeOrdersGrouped as $key => $order):
               Completed
             </option>
            </select>
+           <input type='hidden' name='o_id' value='$orderNumber'>
+           </form>
           </td>
           <td>
 					  <form action='' method='POST'>
 					    <button type='submit'><i class='far fa-eye'></i></button>
-					    <input type='hidden' name='p_id' value='$id'>
+					    <input type='hidden' name='o_id' value='$orderNumber'>
 					  </form>
 					</td>
         </tr>";
