@@ -93,7 +93,6 @@ if (isset($_GET['product_id'])) {
         if (empty($product['imgNames'])) {
             $productImg = "bored.jpg";
         } else {
-
             $productImg = htmlspecialchars($product['imgNames'][0]);
             $imgList = $product['imgNames'];
         }
@@ -115,17 +114,17 @@ if (isset($_GET['product_id'])) {
       <img class='product-section__images__big' src="./media/product_images/<?php echo $productImg ?>" alt="">
     </div>
     <div class='product-section__images__small-container'>
-    <i class="fas fa-chevron-left"></i>
+    <i class="fas fa-chevron-left" onclick="prevImg()"></i>
       <div  class='product-section__images__small-container__img-container'>
 
       <?php
 foreach ($imgList as $img) {
-    echo "<div class='img-wrapper'><img class='product-section__images__small-container__img-container__img' src='./media/product_images/$img' alt=''></div>";
+    echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$img')\" src='./media/product_images/$img' alt=''></div>";
 }
 ?>
 
       </div>
-      <i class="fas fa-chevron-right"></i>
+      <i class="fas fa-chevron-right" onclick="nextImg()"></i>
     </div>
   </div>
   <div class='product-section__rigth'>
@@ -141,7 +140,18 @@ foreach ($imgList as $img) {
         <button class='product-section__rigth__actions__qty-container__qtyBtn' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
         <button class='product-section__rigth__actions__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
       </div>
-      <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button>
+      <!-- <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button> -->
+      <div
+          data-id=<?php echo $id ?>
+          data-name='<?php echo $name ?>'
+          data-price=<?php echo $price ?>
+          data-img='<?php echo $productImg ?>'
+          data-stock=<?php echo $stock_qty ?>
+          data-quantity= 
+          >
+        <button class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>
+      </div>
+
     </div>
   </div>
   <div class='product-section__description'>
@@ -167,8 +177,42 @@ function higherQty(qty) {
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
   }
+}
+
+
+
+const imgList = <?php echo json_encode($imgList); ?>;
+const selectedImg = imgList[0];
+let selectedIndex = 0;
+
+function changeImg(img) {
+  const bigImg = document.querySelector('.product-section__images__big');
+
+  bigImg.src = './media/product_images/' + img;
+  selectedIndex = imgList.findIndex(listImg => listImg === img);
+}
+
+function nextImg() {
+  const bigImg = document.querySelector('.product-section__images__big');
+
+  if (selectedIndex < imgList.length - 1) {
+    selectedIndex++;
+    bigImg.src = './media/product_images/' + imgList[selectedIndex];
+  }
 
 }
+
+function prevImg() {
+  const bigImg = document.querySelector('.product-section__images__big');
+
+  if (selectedIndex > 0 ) {
+    selectedIndex--;
+    bigImg.src = './media/product_images/' + imgList[selectedIndex];
+  }
+}
+
+
+
 
 </script>
 

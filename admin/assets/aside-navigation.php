@@ -59,19 +59,15 @@ endwhile;
     <ul class="aside__nav__ul">
       <li class="aside__path">
         <i class="fas fa-shopping-cart"></i>
-        <a class="aside__nav__ul__li__title__link" href="">Show all</a>
+        <a class="aside__nav__ul__li__title__link" href="./orders_page.php">Show all</a>
       </li>
       <li class="aside__path">
         <i class="far fa-hourglass"></i>
-        <a class="aside__nav__ul__li__title__link" href="">Pending</a>
-      </li>
-      <li class="aside__path">
-        <i class="fas fa-wrench"></i>
-        <a class="aside__nav__ul__li__title__link" href="">Processed</a>
+        <a class="aside__nav__ul__li__title__link" href="./orders_page.php?orders=active">Active</a>
       </li>
       <li class="aside__path">
         <i class="fas fa-check"></i>
-        <a class="aside__nav__ul__li__title__link" href="">Completed</a>
+        <a class="aside__nav__ul__li__title__link" href="./orders_page.php?orders=completed">Completed</a>
       </li>
     </ul>
   </nav>

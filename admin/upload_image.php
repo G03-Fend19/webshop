@@ -63,10 +63,10 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-let imagesFromPHP = <?php echo json_encode($imageArray); ?> ;
+/* let imagesFromPHP = <?php echo json_encode($imageArray); ?> ;
 
 
-        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ;
+        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; */
 
 
 //     const uploadBtn = document.querySelector('.upload-btn');

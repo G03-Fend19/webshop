@@ -70,18 +70,18 @@
 
       // If we haven't added the product yet
         $products[$currentProductId] = [
-          "id" => $currentProductId, //TODO - Convert to number
-          "name" => $row["ProductName"], 
-          "description" => $row["ProductDescription"],
-          "price" => $row["ProductPrice"], //TODO - Convert to number
-          "qty" => $row["ProductQty"], //TODO - Convert to number
-          "category" => $row["CategoryName"],
+          "id" => htmlspecialchars($currentProductId), //TODO - Convert to number
+          "name" => htmlspecialchars($row["ProductName"]), 
+          "description" => htmlspecialchars($row["ProductDescription"]),
+          "price" => htmlspecialchars($row["ProductPrice"]), //TODO - Convert to number
+          "qty" => htmlspecialchars($row["ProductQty"]), //TODO - Convert to number
+          "category" => htmlspecialchars($row["CategoryName"]),
           "images" => [], // Start with empty
         ];
       
       // If there is an image for this row, add it
       if($row["ProductImageImageId"]) {
-        $products[$currentProductId]["images"][] = "http://matildasoderblom.se/webshop/media/product_images/" . $row["ImageName"];
+        $products[$currentProductId]["images"][] = "http://matildasoderblom.se/webshop/media/product_images/" . htmlspecialchars($row["ImageName"]);
       }
       
     }
