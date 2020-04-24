@@ -1,6 +1,20 @@
 // Check localStorage and declear elements
 function setUp() {
   const tbodyEl = document.querySelector(".confirmtable__tbody");
+  const customer = {
+    firstname: "Elin",
+    lastname: "Boström",
+    email: "ebostrom@live.se",
+    mobile: "0739257636"
+  };
+
+  const paymentMethod = {
+    email: "yes",
+    paper: "no"
+  };
+
+  localStorage.setItem("customer", JSON.stringify(customer));
+  localStorage.setItem("payment", JSON.stringify(paymentMethod));
 
   if (typeof Storage !== "undefined") {
     let productsObj = JSON.parse(localStorage.cart);
@@ -26,8 +40,9 @@ function showConfirmationTable(productsObj) {
   for (let i = 0; i < products.length; i++) {
     // console.log(products[i]);
 
-    productTable += `<tr><td>${products[i].name}</td><td>${
-    products[i].quantity}</td><td>${products[i].price}</td></tr>`;
+    productTable += `<tr><td class="confirmtable__tbody__productname">${
+    products[i].name}</td><td>${products[i].quantity}</td><td>${
+    products[i].price} SEK</td></tr>`;
   }
 
   return productTable;

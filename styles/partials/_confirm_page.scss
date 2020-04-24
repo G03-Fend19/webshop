@@ -1,0 +1,97 @@
+.confirmpage {
+  display: flex;
+  justify-content: center;
+
+  h1 {
+    text-align: center;
+    padding: 2em 0 3em 0;
+  }
+
+  &__price__shipping, &__price__total {
+    @extend %priceInfoJustify;
+
+    strong {
+      margin-right: 1em;
+    }
+  }
+
+  &__price__total {
+    font-size: 20px;
+  }
+
+  &__order {
+    width: 700px;
+    margin: auto;
+  }
+
+  &__information {
+    width: 100%;
+    margin: 3em 1em 0.5em 1em;
+    padding: 2em;
+    background: rgb(228, 228, 228);
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px gray;
+
+    h2 {
+      padding: 1em;
+    }
+  }
+
+  &__shipping {
+    display: flex;
+    justify-content: space-between;
+
+    h3 {
+      padding: 1em;
+    }
+  }
+
+&__shopmorebtn {
+  background: rgb(171, 171, 171);
+  @extend %btnStyler;
+  justify-self: flex-end;
+  width: 250px;
+  margin-left: auto;
+  margin-right: -1em;
+  
+  button {
+    margin: 0.3em 0;
+    background: none;
+    border: none;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+}
+
+.confirmpage__container {
+  padding: 100px;
+  width: 60vw;
+  order: 1;
+  display: flex;
+  flex-direction: column;
+//  margin: auto;
+}
+
+.confirmtable {
+  width: 700px;
+  margin: auto;
+  margin-bottom: 1.5em;
+
+  &__thead {
+    text-align: right;
+
+    &__productname {
+      text-align: left;
+    }
+  }
+
+  &__tbody {
+    text-align: right;
+
+    &__productname {
+      text-align: left;
+    }
+  }
+}
