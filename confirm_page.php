@@ -61,9 +61,13 @@
         </table>
 
         <section class="confirmpage__price">
+          <div class="confirmpage__price__products">
+            <strong>Price</strong>
+            <p class="confirmpage__productprice"></p>
+          </div>
           <div class="confirmpage__price__shipping">
-            <strong style="margin-right: 1em;">Shopping fee</strong>
-            <p>0 SEK</p>
+            <strong>Shipping fee</strong>
+            <p class="confirmpage__shippingfee"></p>
           </div>
           <div class="confirmpage__price__total">
             <strong>Total price</strong>

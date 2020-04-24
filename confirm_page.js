@@ -1,35 +1,27 @@
 // Check localStorage and declear elements
 function setUp() {
   const tbodyEl = document.querySelector(".confirmtable__tbody");
-  const customer = {
-    firstname: "Elin",
-    lastname: "Boström",
-    email: "ebostrom@live.se",
-    mobile: "0739257636"
-  };
-
-  const paymentMethod = {
-    email: "yes",
-    paper: "no"
-  };
-
-  localStorage.setItem("customer", JSON.stringify(customer));
-  localStorage.setItem("payment", JSON.stringify(paymentMethod));
 
   if (typeof Storage !== "undefined") {
     let productsObj = JSON.parse(localStorage.cart);
     let totalPrice = JSON.parse(localStorage.total);
-
+    let customerInfo = JSON.parse(localStorage.customer);
+    let shippingfee = shippingFeeCheck(totalPrice, customerInfo);
     let productsTable = showConfirmationTable(productsObj);
+
+    // Fill elements (Price info)
     tbodyEl.innerHTML = productsTable;
-    document.querySelector(".confirm__totalprice").innerHTML = totalPrice + " SEK";
-  } else {
-    console.log("Nothing in localStorage");
+    document.querySelector(".confirmpage__productprice").innerHTML = totalPrice + " SEK";
+    document.querySelector(".confirmpage__shippingfee").innerHTML = shippingfee + " SEK";
+    document.querySelector(".confirmpage__totalprice").innerHTML = totalPrice + shippingfee + " SEK";
+
+    // Fill element (Customer)
+    document.querySelector(".confirmpage__shipping__customer").innerHTML += customer(customerInfo);
+
+    // Fill element (Payment method)
+    document.querySelector(".confirmpage__shipping__payment").innerHTML += `Your invoice will soon be<br> delivered to your ${checkPayMethod(customerInfo)}`;
   }
 }
-
-// Check localStorage and declear elements
-setUp();
 
 // Get information about product and store it in a variable
 function showConfirmationTable(productsObj) {
@@ -38,8 +30,6 @@ function showConfirmationTable(productsObj) {
   let productTable = "";
 
   for (let i = 0; i < products.length; i++) {
-    // console.log(products[i]);
-
     productTable += `<tr><td class="confirmtable__tbody__productname">${
     products[i].name}</td><td>${products[i].quantity}</td><td>${
     products[i].price} SEK</td></tr>`;
@@ -47,3 +37,42 @@ function showConfirmationTable(productsObj) {
 
   return productTable;
 }
+
+function localStorageCustomer() {
+  const customer = {
+    firstname: "Elin",
+    lastname: "Boström",
+    email: "ebostrom@live.se",
+    mobile: "0739257636",
+    address: "Gästrikegatan 11",
+    postal: "11362",
+    city: "Oslo",
+    invoice: "Email"
+  };
+
+  localStorage.setItem("customer", JSON.stringify(customer));
+}
+
+function shippingFeeCheck(totalPrice, customerInfo) {
+  let shippingFee = totalPrice > 500 || customerInfo.city == "Stockholm"
+    ? 0
+    : 29;
+
+  return shippingFee;
+}
+
+function customer(customerInfo) {
+  return `<p>${customerInfo.firstname} ${customerInfo.lastname}</p>
+  <p>${customerInfo.address}</p><p>${customerInfo.postal} ${
+  customerInfo.city}</p>
+  <br><p>${customerInfo.mobile}</p><p>${customerInfo.email}</p>`;
+}
+
+function checkPayMethod(customerInfo) {
+  return customerInfo.invoice == "Email"
+    ? "email"
+    : "doorstep";
+}
+
+localStorageCustomer();
+setUp();
