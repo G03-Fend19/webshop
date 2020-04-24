@@ -73,6 +73,7 @@ echo "</pre>"; */
         $categoryId = htmlspecialchars($_GET['category']);
         $price = htmlspecialchars($_GET['price']);
         $qty = htmlspecialchars($_GET['qty']);
+        $imagesGet = unserialize($_GET['images']);
     }
 
     $options = "";
@@ -155,7 +156,6 @@ require_once './assets/aside-navigation.php';
     <div class="form__image-section">
       <label for="img" class="form__label">Images</label>
       <div class="form__image-section__create">
-        <p>Images</p>
         <button class="add-img button" type="button">Add Images</button>
 
       </div>
@@ -176,6 +176,19 @@ if (count($imagesDb) != 0) {
           ";
         $counter++;
     }
+} else {
+    $counter = 1;
+    foreach ($imagesGet as $image) {
+        echo "
+        <label class='form__image-section__selection'>
+        $image
+        <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+        <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+        </label>
+        ";
+        $counter++;
+    }
+
 }
 ?>
       </div>
