@@ -79,6 +79,9 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 
     foreach ($grouped as $productId => $product):
         $productName = htmlspecialchars($product['ProductName']);
+        if(strlen($productName) > 20) {
+          $productName = substr($productName, 0, 20) . "...";
+        }
         $productPrice = htmlspecialchars($product['ProductPrice']);
         $productQty = htmlspecialchars($product['ProductQty']);
         // $productImg = htmlspecialchars($product['ImageName']); // TODO
@@ -101,7 +104,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 	                        </a>
 	                        <div class='product-card__content'>
 	                          <a href='product.php?id=$productId' class='product-card__product-link'>
-	                            <h3>$productName</h3>
+	                            $productName
 	                          </a>
 	                          <p>$productPrice SEK</p>
 	                          <button
