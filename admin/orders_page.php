@@ -2,6 +2,7 @@
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
+
 ?>
 <main class="admin__products">
   <div class="admin__products__text">
@@ -23,7 +24,7 @@ require_once "assets/aside-navigation.php";
   }
 ?>
 
-<script src="filter_orders.js"></script>
+<script src="order_page_functions.js"></script>
 <?php
 echo '</main>';
 require_once "assets/foot.php"
