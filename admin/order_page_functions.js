@@ -62,7 +62,7 @@ function filterOrders(orders) {
     tdDate.innerHTML = order['OrderDate']
 
     const tdSum = document.createElement('td')
-    tdSum.innerHTML = order['OrderCost']
+    tdSum.innerHTML = order['OrderCost'] + " SEK"
 
     const tdStatus = document.createElement('td')
     if (order.OrderType == "active") {

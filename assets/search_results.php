@@ -103,7 +103,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 	                          </div>
 	                        </a>
 	                        <div class='product-card__content'>
-	                          <a href='product.php?id=$productId' class='product-card__product-link'>
+	                          <a href='product.php?product_id=$productId' class='product-card__product-link'>
 	                            $productName
 	                          </a>
 	                          <p>$productPrice SEK</p>
