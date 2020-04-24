@@ -21,6 +21,9 @@
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $name = htmlspecialchars($row['CategoryName']);
+    if(strlen($name) > 20) {
+      $name = substr($name, 0, 20) . "...";
+    }
     $categoryId = htmlspecialchars($row['CategoryId']);
 
     $categories .= "<li class='nav-list__item'>

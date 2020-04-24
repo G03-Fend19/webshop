@@ -693,13 +693,12 @@ iframe {
 .display-products .product-card__content a {
   display: inline;
   font-weight: 500;
-  font-size: 16px;
-  word-break: break-all;
+  font-size: 12px;
 }
 
 @media (min-width: 1000px) {
   .display-products .product-card__content a {
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 
@@ -945,6 +944,7 @@ iframe {
       justify-self: center;
   height: 20px;
   width: 40px;
+  font-size: 12px;
   background-color: white;
   text-align: center;
   border-radius: 7px;
@@ -952,6 +952,13 @@ iframe {
   -webkit-box-shadow: inset;
           box-shadow: inset;
   padding-bottom: 4px;
+  -moz-appearance: textfield;
+}
+
+.cart__product__info__btns input[type="number"]::-webkit-inner-spin-button,
+.cart__product__info__btns input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .changeQty {
