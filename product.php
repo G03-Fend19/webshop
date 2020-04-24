@@ -91,7 +91,7 @@ if (isset($_GET['product_id'])) {
         $category = htmlspecialchars($product['CategoryName']);
         $descriptionShort = substr($description, 0, 20);
         if (empty($product['imgNames'])) {
-            $productImg = "bored.jpg";
+            $productImg = "placeholder.jpg";
         } else {
             $productImg = htmlspecialchars($product['imgNames'][0]);
             $imgList = $product['imgNames'];
@@ -118,9 +118,12 @@ if (isset($_GET['product_id'])) {
       <div  class='product-section__images__small-container__img-container'>
 
       <?php
-foreach ($imgList as $img) {
-    echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$img')\" src='./media/product_images/$img' alt=''></div>";
+if (!empty($imgList)) {
+    foreach ($imgList as $img) {
+        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$img')\" src='./media/product_images/$img' alt=''></div>";
+    }
 }
+
 ?>
 
       </div>
@@ -147,7 +150,7 @@ foreach ($imgList as $img) {
           data-price=<?php echo $price ?>
           data-img='<?php echo $productImg ?>'
           data-stock=<?php echo $stock_qty ?>
-          data-quantity= 
+          data-quantity=
           >
         <button class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>
       </div>
@@ -163,6 +166,26 @@ foreach ($imgList as $img) {
 
 <script>
 
+getCartQty();
+
+function getCartQty() {
+  const getCart = () => {
+    cart = JSON.parse(localStorage.getItem("cart"));
+    !cart ? (cart = {}) : null;
+
+  };
+  getCart();
+
+  let input = document.getElementById('qtyInput');
+  let name = "<?php echo "$name" ?>";
+  if (cart[name]) {
+    input.value = cart[name].quantity;
+  }
+
+}
+
+
+
 function lowerQty() {
   let input = document.getElementById('qtyInput');
 
@@ -176,6 +199,8 @@ function higherQty(qty) {
 
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
+  }else{
+    alert('no more in stock')
   }
 }
 
@@ -210,6 +235,14 @@ function prevImg() {
     bigImg.src = './media/product_images/' + imgList[selectedIndex];
   }
 }
+
+
+
+
+
+
+
+
 
 
 
