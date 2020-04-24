@@ -32,7 +32,7 @@
             <input class="header__nav__item__searchbar hidden" placeholder="Search..." type="text" name="search">
             </input>
             <button class="header__nav__item__searchBtn search hidden">Search</button>
-          </form>
+          </form> 
         </li>
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
               class="fas fa-search"></i></a></li>
@@ -74,6 +74,9 @@
 
 
     </section>
+
+
+
     <section class="customer"> 
       <form  id="confirm-order" class="customer__form" onsubmit="return orderFormSubmission(event)">
         <div class="customer__form__information">
@@ -147,9 +150,13 @@
 
 
 
+  
+  
+  
+  
+  <script src="./checkout.js"></script>
 
-<script src="./checkout.js"></script>
-<script src="./order-confirmation.js"></script>
+  <script src="./order-confirmation.js"></script>
 
   <?php
 require_once 'assets/foot.php';
