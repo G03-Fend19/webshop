@@ -1,34 +1,34 @@
-;(() => {
-  const addBtn = document.querySelectorAll(".add-to-cart-btn")
-  const cartDisplay = document.querySelector(".cart")
-  const productWrapper = document.querySelector(".cart__product-wrapper")
-  const totalCheckout = document.querySelector(".cart__total-checkout")
-  const cartMenu = document.querySelector(".cart__menu")
+(() => {
+  const addBtn = document.querySelectorAll(".add-to-cart-btn");
+  const cartDisplay = document.querySelector(".cart");
+  const productWrapper = document.querySelector(".cart__product-wrapper");
+  const totalCheckout = document.querySelector(".cart__total-checkout");
+  const cartMenu = document.querySelector(".cart__menu");
   const getCart = () => {
-    cart = JSON.parse(localStorage.getItem("cart"))
-    !cart ? (cart = {}) : null
-  }
-  getCart()
+    cart = JSON.parse(localStorage.getItem("cart"));
+    !cart ? (cart = {}) : null;
+  };
+  getCart();
   // eventlistener for add-to-cart-btn
   // each button has data-information about their specific product. we send that information
   // to the createProduct function
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.dataset
-      let qty
+      const productData = e.target.parentNode.dataset;
+      let qty;
       document.querySelector("#qtyInput")
         ? (qty = document.querySelector("#qtyInput").value)
-        : (qty = 1)
-      createProduct(productData, qty)
-      console.log(qty)
+        : (qty = 1);
+      createProduct(productData, qty);
+      console.log(qty);
     })
-  )
+  );
   // we check the cart object if the product we want to add already exists, if so pressing  add-product only increases
   // quantity.
   // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
   const createProduct = (productData, qty) => {
     if (cart[productData.name]) {
-      checkStock(productData.name)
+      checkStock(productData.name);
     } else {
       cart = {
         ...cart,
@@ -40,41 +40,41 @@
           quantity: qty,
           stock: productData.stock,
         },
-      }
+      };
     }
-    localStorage.setItem("cart", JSON.stringify(cart))
-    renderCart()
-  }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  };
   // check stock takes current Product
   // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
-  const updateStock = () => {}
+  const updateStock = () => {};
   const checkStock = (product) => {
-    const q = cart[product].quantity
-    const s = cart[product].stock
-    q < s ? cart[product].quantity++ : alert("no more in stock")
-  }
+    const q = cart[product].quantity;
+    const s = cart[product].stock;
+    q < s ? cart[product].quantity++ : alert("no more in stock");
+  };
   const calcTotal = () => {
     total = Object.keys(cart).reduce((acc, cur) => {
-      return acc + cart[cur].price * cart[cur].quantity
-    }, 0)
-    localStorage.setItem("total", JSON.stringify(total))
-    return `<div class="cart__total"><p>Total price</p> <p>${total} SEK</p></div>`
-  }
+      return acc + cart[cur].price * cart[cur].quantity;
+    }, 0);
+    localStorage.setItem("total", JSON.stringify(total));
+    return `<div class="cart__total"><p>Total price</p> <p>${total} SEK</p></div>`;
+  };
   // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
-    let total = 0
+    let total = 0;
     Object.keys(cart).forEach((el) => {
-      total += cart[el].quantity
-    })
-  }
+      total += cart[el].quantity;
+    });
+  };
   const renderCart = () => {
     if (Object.entries(cart).length === 0) {
-      productWrapper.innerHTML = "No products in cart"
-      totalCheckout.innerHTML = ""
+      productWrapper.innerHTML = "No products in cart";
+      totalCheckout.innerHTML = "";
     } else {
-      productWrapper.innerHTML = ""
-      cartMenu.innerHTML = ""
-      totalCheckout.innerHTML = ""
+      productWrapper.innerHTML = "";
+      cartMenu.innerHTML = "";
+      totalCheckout.innerHTML = "";
       cartMenu.innerHTML += `
  
     <button class="clear-cart">
@@ -83,7 +83,7 @@
        </button>
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
-        </button>`
+        </button>`;
       productWrapper.innerHTML += Object.keys(cart)
         .map((product) => {
           return `
@@ -109,47 +109,47 @@
       <p> ${cart[product].quantity * cart[product].price} SEK</p>
       </div>
       </div>
-      `
+      `;
         })
-        .join("")
+        .join("");
       totalCheckout.innerHTML +=
         calcTotal() +
-        `<div class="cart__checkout"><a href="checkout_page.php" >Go To Checkout</a></div>`
+        `<div class="cart__checkout"><a href="checkout_page.php" >Go To Checkout</a></div>`;
     }
 
     // cartDisplay.innerHTML += `<button class="cart__checkout">Go to Checkout</button></div>`;
-  }
-  renderCart()
+  };
+  renderCart();
   // a clicklistener on entire document. fires when user presses
   // anything with class changeQty
   // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
   const changeQty = () => {
     document.addEventListener("click", (e) => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name
-      console.log(e.target.id)
+      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+      console.log(e.target.id);
       if (e.target.dataset.id == "qty+") {
-        checkStock(productId)
+        checkStock(productId);
       } else if (e.target.dataset.id == "qty-") {
-        cart[productId].quantity == 1 ? null : cart[productId].quantity--
+        cart[productId].quantity == 1 ? null : cart[productId].quantity--;
       }
-      localStorage.setItem("cart", JSON.stringify(cart))
-      renderCart()
-    })
-  }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    });
+  };
   const deleteProduct = () => {
     document.addEventListener("click", (e) => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name
+      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       if (e.target.dataset.id == "delete-product") {
-        console.log(productId)
-        let r = confirm("are you sure?")
+        console.log(productId);
+        let r = confirm("are you sure?");
         if (r) {
-          delete cart[productId]
-          localStorage.setItem("cart", JSON.stringify(cart))
-          renderCart()
+          delete cart[productId];
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
         }
       }
-    })
-  }
+    });
+  };
 
   const clearCart = () => {
     document.addEventListener("click", (e) => {
@@ -157,31 +157,31 @@
         e.target.className == "clear-cart" &&
         !Object.entries(cart).length == 0
       ) {
-        let r = confirm("u want to clear the cart?")
+        let r = confirm("u want to clear the cart?");
         if (r) {
-          cart = {}
-          localStorage.setItem("cart", JSON.stringify(cart))
-          renderCart()
+          cart = {};
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
         }
       }
-    })
-  }
-  const cartBtn = document.querySelector(".fa-shopping-cart")
+    });
+  };
+  const cartBtn = document.querySelector(".fa-shopping-cart");
   cartBtn.addEventListener("click", () => {
-    cartDisplay.classList.toggle("hidden")
-  })
+    cartDisplay.classList.toggle("hidden");
+  });
   const closeCart = () => {
     document.addEventListener("click", (e) => {
       if (e.target.className == "close-cart") {
-        cartDisplay.classList.toggle("hidden")
+        cartDisplay.classList.toggle("hidden");
       }
-    })
-  }
-  changeQty()
-  deleteProduct()
-  clearCart()
-  closeCart()
-})()
+    });
+  };
+  changeQty();
+  deleteProduct();
+  clearCart();
+  closeCart();
+})();
 // ;(() => {
 //   const addBtn = document.querySelectorAll(".add-to-cart-btn")
 //   const cartDisplay = document.querySelector(".cart")
