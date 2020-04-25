@@ -292,12 +292,14 @@ a {
   z-index: 10;
   right: 260px;
   width: 30%;
+  -webkit-box-shadow: 1px 1px 3px rgba(194, 194, 194, 0.247);
+          box-shadow: 1px 1px 3px rgba(194, 194, 194, 0.247);
 }
 
 @media (max-width: 800px) {
   .searchform {
-    position: absolute;
-    top: 0px;
+    position: fixed;
+    top: 70px;
     z-index: 1;
     left: 0;
     width: 100%;
@@ -802,7 +804,7 @@ iframe {
   background-color: #dddddd;
   top: 70px;
   right: 0;
-  z-index: 2;
+  z-index: 1;
   padding: 10px;
   padding-bottom: 0;
   -webkit-box-shadow: 1px 1px 2px #b8b8b8;
@@ -1082,7 +1084,6 @@ iframe {
   margin: 0;
 }
 
-<<<<<<< HEAD
 .label-input {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1156,7 +1157,8 @@ iframe {
 
 .customer__form__payment__shipping p {
   margin-right: 2em;
-=======
+}
+
 .confirmpage {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1358,7 +1360,6 @@ iframe {
 
 .confirmtable__tbody__productname {
   text-align: left;
->>>>>>> 5f4f463985637dc8164de74798ffb4de62d5a8ed
 }
 
 .img-wrapper {

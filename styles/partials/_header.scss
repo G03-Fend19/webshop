@@ -100,10 +100,11 @@
   z-index: 10;
   right: 260px;
   width: 30%;
+  box-shadow: 1px 1px 3px rgba(194, 194, 194, 0.247);
 
   @media (max-width: 800px) {
-    position: absolute;
-    top: 0px;
+    position: fixed;
+    top: 70px;
     z-index: 1;
     left: 0;
     width: 100%;
