@@ -19,6 +19,7 @@
       document.querySelector("#qtyInput")
         ? (qty = document.querySelector("#qtyInput").value)
         : (qty = 1);
+
       createProduct(productData, qty);
     })
   );
@@ -27,7 +28,7 @@
   // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
   const createProduct = (productData, qty) => {
     if (cart[productData.name]) {
-      checkStock(productData.name);
+      updateStock(productData.name, qty);
     } else {
       cart = {
         ...cart,
@@ -42,11 +43,16 @@
       };
     }
     localStorage.setItem("cart", JSON.stringify(cart));
+
     renderCart();
   };
   // check stock takes current Product
   // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
-  const updateStock = () => {};
+  const updateStock = (product, qty) => {
+    const q = cart[product].quantity;
+    const s = cart[product].stock;
+    q < s ? (cart[product].quantity = qty) : alert("no more in stock");
+  };
   const checkStock = (product) => {
     const q = cart[product].quantity;
     const s = cart[product].stock;
@@ -127,12 +133,13 @@
   const changeQty = () => {
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-      console.log(e.target.id);
+
       if (e.target.dataset.id == "qty+") {
         checkStock(productId);
       } else if (e.target.dataset.id == "qty-") {
         cart[productId].quantity == 1 ? null : cart[productId].quantity--;
       }
+
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
 
@@ -145,7 +152,6 @@
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       if (e.target.dataset.id == "delete-product") {
-        console.log(productId);
         let r = confirm("are you sure?");
         if (r) {
           delete cart[productId];
