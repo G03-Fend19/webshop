@@ -416,7 +416,7 @@
         align-items: center;
         width: 120px;
         height: 100%;
-        @extend %boxShadowSection;
+        // @extend %boxShadowSection;
         border-radius: 15px;
         color: rgb(145, 145, 145);
         cursor: pointer;
@@ -458,7 +458,7 @@
       }
 
       .main__category-table {
-        @extend %boxShadowSection;
+        // @extend %boxShadowSection;
         padding: 2em;
         border-radius: 5px;
         width: 100%;
