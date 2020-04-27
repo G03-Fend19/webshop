@@ -47,7 +47,7 @@ const renderOrderSummary = () => {
             </td>
             <td>${order[product].name}</td>
             <td class="order-summary__table__qty">
-              <input class="order-summary__table__qty-input" type="number" value="${
+              <input class="order-summary__table__qty-input" type="number" min="0" value="${
                 order[product].quantity
               }">st
               <button class="order-summary__table__btn"><i class="fas fa-minus-circle" data-id="qty-"></i></button>

@@ -119,6 +119,56 @@ if (!isset($_GET['formerror'])) {
   </form>
 </section>
 <script src="functions.js"></script>
+<script>
+let uploaded = false;
+uploadBtn = document.querySelector('.upload-btn');
+uploadBtn.addEventListener('click', () => {
+  const title = document.forms["addProductForm"]["title"].value;
+  const description = document.forms["addProductForm"]["description"].value;
+  const category = document.forms["addProductForm"]["category"].value;
+  const price = document.forms["addProductForm"]["price"].value;
+  const qty = document.forms["addProductForm"]["qty"].value;
+
+
+  let product = {
+    title: title,
+    description: description,
+    category: category,
+    price: price,
+    qty: qty
+  };
+  localStorage.setItem('product_form', JSON.stringify(product));
+
+});
+
+if (JSON.parse(localStorage.getItem('product_form'))) {
+  let productForm = JSON.parse(localStorage.getItem('product_form'));
+
+  const title = document.forms["addProductForm"]["title"];
+  const description = document.forms["addProductForm"]["description"];
+  //const category = document.forms["addProductForm"]["category"].value;
+  const price = document.forms["addProductForm"]["price"];
+  const qty = document.forms["addProductForm"]["qty"];
+  const theCategory = document.querySelector(`option[value="${productForm.category}"]`);
+
+
+  let options = document.querySelector("#category").options;
+
+  for (var i = 0; i < options.length; i++) {
+    options[i].selected = false;
+  }
+
+  theCategory.selected = true;
+
+
+  title.value = productForm.title;
+  description.value = productForm.description;
+  price.value = productForm.price;
+  qty.value = productForm.qty;
+
+  localStorage.removeItem('product_form');
+}
+</script>
 <?php
 require_once './assets/foot.php';
 ?>
