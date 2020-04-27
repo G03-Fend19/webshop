@@ -1844,6 +1844,13 @@ iframe {
             align-items: center;
     width: 120px;
     height: 100%;
+<<<<<<< Updated upstream
+=======
+    padding: 1em;
+    background: white;
+    -webkit-box-shadow: 1px 1px 3px #d4d4d4;
+            box-shadow: 1px 1px 3px #d4d4d4;
+>>>>>>> Stashed changes
     border-radius: 15px;
     color: #919191;
     cursor: pointer;
@@ -1880,6 +1887,13 @@ iframe {
     margin: 3px;
   }
   .product-section .main__admin .main__category-table {
+<<<<<<< Updated upstream
+=======
+    padding: 1em;
+    background: white;
+    -webkit-box-shadow: 1px 1px 3px #d4d4d4;
+            box-shadow: 1px 1px 3px #d4d4d4;
+>>>>>>> Stashed changes
     padding: 2em;
     border-radius: 5px;
     width: 100%;
