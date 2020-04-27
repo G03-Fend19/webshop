@@ -1,0 +1,24 @@
+.header__hero__contact {
+  background: url(https://source.unsplash.com/WHUDOzd5IYU/1600x900);
+    position: relative;
+    margin-top: 70px;
+    text-align: center;
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+    background: rgb(245, 245, 245);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: calc(100vh - 70px);
+    flex-direction: column;
+    h1 {
+      font-size: 10vh;
+      color: rgb(133, 133, 133);
+      text-shadow: 1px 1px 2px black;
+      margin-top: 25vh;
+      @media (max-width: 500px) {
+        font-size: 5vh;
+      }
+    }
+}
