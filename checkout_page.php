@@ -77,10 +77,10 @@
 
     </section>
 
-
+<!-- onsubmit="return orderFormSubmission(event)" -->
 
     <section class="customer"> 
-      <form  id="confirm-order" class="customer__form" onsubmit="return orderFormSubmission(event)">
+      <form  id="confirm-order" action="./confirm_page.php" class="customer__form">
         <div class="customer__form__information">
           <h2>Customer Information</h2>
           <div class="customer__form__information__name">
@@ -136,9 +136,9 @@
             <div class="customer__form__payment__invoice">
               <p>Invoice</p>
                 <label for="email-invoice"> Email </label>
-                <input class="customer-info" type="checkbox" id="email-invoice" name="email-invoice" value="email">
+                <input class="customer-info" type="checkbox" id="email-invoice" name="email-invoice" value="checkbox">
                 <label for="adress-invoice"> Adress </label>
-                <input  class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="adress">                
+                <input  class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="checkbox">                
             </div>                           
         </div>
         

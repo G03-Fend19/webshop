@@ -1059,7 +1059,6 @@ iframe {
   margin: 0;
 }
 
-<<<<<<< HEAD
 .label-input {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1133,7 +1132,8 @@ iframe {
 
 .customer__form__payment__shipping p {
   margin-right: 2em;
-=======
+}
+
 .confirmpage {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1335,7 +1335,6 @@ iframe {
 
 .confirmtable__tbody__productname {
   text-align: left;
->>>>>>> 5f4f463985637dc8164de74798ffb4de62d5a8ed
 }
 
 .img-wrapper {
