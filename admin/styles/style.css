@@ -607,7 +607,7 @@ input[type="checkbox"]:checked + img {
           justify-content: center;
   -webkit-box-align: end;
       -ms-flex-align: end;
-          align-items: end;
+          align-items: flex-end;
 }
 
 .main__admin__dashboard .dashboard__box h2 {
