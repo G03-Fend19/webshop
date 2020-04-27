@@ -95,8 +95,8 @@
 
 .searchform {
   display: flex;
-  position: absolute;
-  top: -55px;
+  position: fixed;
+  top: 15px;
   z-index: 10;
   right: 260px;
   width: 30%;
