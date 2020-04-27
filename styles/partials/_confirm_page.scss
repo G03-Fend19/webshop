@@ -1,0 +1,175 @@
+.confirmpage {
+  display: flex;
+  justify-content: center;
+
+  h1 {
+    text-align: center;
+    padding: 2em 0 3em 0;
+  }
+
+  &__price__shipping, &__price__total {
+    @extend %priceInfoJustify;
+
+    strong {
+      margin-right: 1em;
+    }
+  }
+
+  &__price__shipping  {
+
+    @media (max-width: 500px){
+     font-size: smaller;   
+    }
+
+    strong {
+      font-style: italic;
+    }
+  }
+
+  &__price__products {
+    @extend %priceInfoJustify;
+
+    @media (max-width: 500px){
+     font-size: smaller;   
+    }
+
+    strong {
+      margin-right: 1em;
+      font-style: italic;
+    }
+  }
+
+  &__price__total {
+    font-size: 20px;
+
+    @media (max-width: 500px){
+        font-size: 16px;
+    }
+  }
+
+  &__order {
+    width: 100%;
+    margin: auto;
+  }
+
+  &__information {
+    width: 100%;
+    margin: 3em 0 0.5em 0;
+    padding: 2em;
+    background: rgb(228, 228, 228);
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px gray;
+
+    h2 {
+      padding: 1em;
+
+      @media (max-width: 500px){
+       padding: unset; 
+       text-align: center;
+       padding-bottom: 1em;
+      }
+    }
+  }
+
+  &__shipping {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    width: 100%;
+
+    @media (max-width: 500px){
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+     padding: 0;   
+    }
+
+    h3 {
+      padding-bottom: 1em;
+    }
+
+    &__customer {
+      padding-left: 1em;
+
+      @media (max-width: 500px){
+        font-size: small;
+        padding-left: unset;
+      }
+    }
+
+    &__payment {
+      text-align: left;
+      margin-right: 2em;
+
+      @media (max-width: 500px){
+       text-align: unset;
+       margin-right: unset; 
+       font-size: small;
+       padding-top: 2em;
+      }
+    }
+  }
+
+&__shopmorebtn {
+  background: rgb(171, 171, 171);
+  @extend %btnStyler;
+  justify-self: flex-end;
+  width: 250px;
+  margin-left: auto;
+  margin-bottom: 3em;
+
+  @media (max-width: 500px){
+    width: 100%; 
+  }
+  
+  button {
+    margin: 0.3em 0;
+    background: none;
+    border: none;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+  }
+}
+
+}
+
+.confirmpage__container {
+padding-top: 100px;
+  max-width: 700px;
+  width: 100%;
+  // order: 1;
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+
+ @media (max-width: 500px){
+  padding: 100px 2em 2em 2em;
+}
+}
+
+.confirmtable {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 1.5em;
+
+  @media (max-width: 500px){
+   font-size: smaller;     
+  }
+
+  &__thead {
+    text-align: right;
+
+    &__productname {
+      text-align: left;
+    }
+  }
+
+  &__tbody {
+    text-align: right;
+
+    &__productname {
+      text-align: left;
+    }
+  }
+}

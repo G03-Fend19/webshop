@@ -22,18 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt_duplicate->execute();
 
-    if (empty($title) || empty($description) || empty($category_id) || $price == "" || $price == null || $qty == "" || $qty == null) {
-        header("Location: ../edit_product.php?formerror=empty&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
-        exit();
-    } elseif ($stmt_duplicate->fetch(PDO::FETCH_ASSOC)) {
-        header("Location: ../edit_product.php?formerror=duplicate&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
-        exit();
-    } elseif ($price < 0 || $qty < 0) {
-        header("Location: ../edit_product.php?formerror=negative&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty");
-        exit();
-    }
-    ;
-
     $images = [];
 
     for ($i = 1; $i <= 5; $i++) {
@@ -41,6 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $images += ["image$i" => $_POST["image$i"]];
         }
     }
+
+    $stringImages = serialize($images);
+
+    if (empty($title) || empty($description) || empty($category_id) || $price == "" || $price == null || $qty == "" || $qty == null) {
+        header("Location: ../edit_product.php?formerror=empty&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty&images=$stringImages");
+        exit();
+    } elseif ($stmt_duplicate->fetch(PDO::FETCH_ASSOC)) {
+        header("Location: ../edit_product.php?formerror=duplicate&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty&images=$stringImages");
+        exit();
+    } elseif ($price < 0 || $qty < 0) {
+        header("Location: ../edit_product.php?formerror=negative&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty&images=$stringImages");
+        exit();
+    }
+    ;
 
 //Updating the product and category-relationship
     // $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, 1);
@@ -96,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     print_r($current_images);
     echo '</pre>'; */
 
+    // Inserting the new images to the database
     if (count($images) != 0) {
 
         foreach ($images as $index => $new_img) {
@@ -115,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
     }
+    // Deleting the connection to the images that aren't used anymore
     if (count($current_images) != 0) {
         foreach ($current_images as $img_id => $current_img) {
 

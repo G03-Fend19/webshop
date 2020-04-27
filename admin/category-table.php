@@ -76,7 +76,7 @@ if (isset($_GET['addingerror'])) {
 
 ?>
 
-<main class="main__admin">
+<main class="main__admin" id="main__admin">
 
   <div class="main__admin__text">
     <h1>Categories</h1>

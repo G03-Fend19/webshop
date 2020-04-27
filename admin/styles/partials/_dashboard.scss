@@ -1,0 +1,62 @@
+.main__admin__dashboard {
+  margin: 80px 2em 2em 2em;
+  padding: 2em;
+  display: grid;
+  gap: 1em;
+  grid-template: auto 1fr / 1fr 1fr 1fr;
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+    margin-top: 0.3em;
+  }
+
+  h1::after {
+    content: "|";
+    font-weight: lighter;
+    padding-left: 0.5em;
+  }
+
+  .dashboard__box {
+    background-color: #ffffff;
+    height: 14em;
+    max-width: 100%;
+    grid-row: 2;
+    padding: 2em;
+    border-radius: 5px;
+    @extend %boxShadowSection;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    h2 {
+      font-size: 3.5em;
+      font-weight: 300;
+      color: gray;
+    }
+
+    h3 {
+      font-weight: 300;
+      color: gray;
+    }
+  }
+}
+
+.tracking-in-expand {
+  animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  @keyframes tracking-in-expand {
+    0% {
+      letter-spacing: -0.5em;
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

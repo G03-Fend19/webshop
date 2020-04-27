@@ -63,24 +63,32 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-const uploadBtn = document.querySelector('.upload-btn');
-images = JSON.parse(localStorage.getItem("images"));
-
-if (!images) {
-  images = []
-} else {
-  let imagesJSON = < ? php echo json_encode($imageArray); ? > ;
-
-  imagesLS = JSON.parse(localStorage.getItem("images"));
-
-  localStorage.setItem("images", JSON.stringify(imagesJSON))
-
-}
+/* let imagesFromPHP = <?php echo json_encode($imageArray); ?> ;
 
 
-images = JSON.parse(localStorage.getItem("images"));
-uploadBtn.addEventListener('click', () => {
+        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; */
 
 
-})
+//     const uploadBtn = document.querySelector('.upload-btn');
+
+
+
+//   imagesLS = JSON.parse(localStorage.getItem("images"));
+//   if(imagesLS){
+//       imagesLS.forEach(image => {
+//           imagesFromPHP.push(image)
+//       })
+//   }
+//   localStorage.setItem("images", JSON.stringify(imagesFromPHP))
+
+//   localStorage.clear();
+
+//   imagesLS = JSON.parse(localStorage.getItem("images"));
+//   console.log('heloo')
+
+// images = JSON.parse(localStorage.getItem("images"));
+// uploadBtn.addEventListener('click', () => {
+//   images = JSON.parse(localStorage.getItem("images"));
+
+// })
 </script>

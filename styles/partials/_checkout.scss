@@ -1,0 +1,131 @@
+.main-checkout {
+  margin-top: 100px;
+  width: 100vw;
+  padding-left: 20%;
+  padding-right: 20%;
+  h1,
+  h3 {
+    text-align: center;
+  }
+}
+
+.order-summary {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  &__table {
+    font-size: 18px;
+    width: 100%;
+    border-color: black;
+
+    th {
+      text-align: left;
+    }
+    td {
+      padding: 5px;
+    }
+    thead {
+      border-bottom: solid black 1px;
+    }
+    &__img {
+      object-fit: cover;
+      height: 40px;
+      width: 40px;
+    }
+    &__qty-input {
+      -moz-appearance: textfield;
+      max-width: 50px;
+      background-color: transparent;
+      border: 0px solid;
+      border-radius: 25%;
+      box-shadow: none;
+      text-align: right;
+      margin-right: 3px;
+    }
+
+    &__btn {
+      border-radius: 50%;
+      background-color: Transparent;
+      background-repeat: no-repeat;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      outline: none;
+    }
+
+    &__qty {
+      width: 150px;
+    }
+    .order-summary__table__price {
+      width: 100px;
+      text-align: right;
+      padding-right: 0;
+    }
+  }
+  &__totalcontainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+.label-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer {
+  &__form {
+    input {
+      border-radius: 4px;
+      border: 1px solid grey;
+      margin-right: 2em;
+    }
+    &__information {
+      padding: 2em;
+      background-color: rgb(218, 218, 218);
+      border-radius: 4px;
+      box-shadow: 1px 1px 1px black;
+      margin: 2em;
+
+      &__name {
+        @media (min-width: 1000px) {
+          display: flex;
+        }
+      }
+      &__mailbile {
+        @media (min-width: 1000px) {
+          display: flex;
+        }
+      }
+      &__cityPost {
+        @media (min-width: 1000px) {
+          display: flex;
+        }
+      }
+    }
+
+    &__payment {
+      &__invoice {
+        display: flex;
+      }
+      &__total {
+        display: flex;
+
+        p {
+          margin-right: 2em;
+        }
+      }
+      &__shipping {
+        display: flex;
+        p {
+          margin-right: 2em;
+        }
+      }
+    }
+  }
+}
