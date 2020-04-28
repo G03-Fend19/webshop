@@ -1,13 +1,12 @@
 <?php
 require_once "../db.php";
 
-$sql = "SELECT (SELECT COUNT(ws_products.id ) FROM ws_products) AS NumberOfProducts,
+$sql = "SELECT (SELECT COUNT(ws_products.id ) FROM ws_products WHERE ws_products.active = 1) AS NumberOfProducts,
               (SELECT COUNT(ws_categories.id) FROM ws_categories) AS NumberOfCategories,
               (SELECT COUNT(ws_active_orders.id) FROM ws_active_orders) AS NumberOfActiveOrders";
 
 $stmt = $db->prepare($sql);
 $stmt->execute();
-
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
