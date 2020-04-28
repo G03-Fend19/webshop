@@ -23,7 +23,7 @@ require_once "assets/aside-navigation.php";
   <?php
 if (isset($_GET['category_id'])) {
     $categoryId = htmlspecialchars($_GET['category_id']);
-    $sql = "SELECT 
+    $sql = "SELECT
               ws_products.name          AS ProductName,
               ws_products.description   AS ProductDescription,
               ws_products.price         AS ProductPrice,
@@ -33,7 +33,7 @@ if (isset($_GET['category_id'])) {
               ws_products_images.img_id AS ProductImageImageId,
               ws_categories.id          AS CategoryId,
               ws_categories.name        AS CategoryName
-            FROM 
+            FROM
               ws_products
             LEFT JOIN
               ws_products_images
@@ -55,7 +55,7 @@ if (isset($_GET['category_id'])) {
               ws_categories.id = :category_id
             AND
               ws_products_categories.category_id = :category_id
-              ";
+            AND ws_products.active = 1";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":category_id", $categoryId);
     $stmt->execute();
@@ -71,7 +71,7 @@ if (isset($_GET['category_id'])) {
               ws_products_images.img_id AS ProductImageImageId,
               ws_categories.name      AS CategoryName,
               ws_categories.id        AS CategoryId
-              FROM 
+              FROM
                 ws_products
               LEFT JOIN
                 ws_products_images
@@ -89,64 +89,64 @@ if (isset($_GET['category_id'])) {
                 ws_categories
               ON
                 ws_products_categories.category_id = ws_categories.id
-                  ";
+              WHERE
+              ws_products.active = 1";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 }
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  // echo $sql;
-  // echo "---<br />";
-  // print_r($results);
+// echo $sql;
+// echo "---<br />";
+// print_r($results);
 
+// [
+//   [1] => [ <-- key is ProductId
+//     "imgNames" => [
+//        [0] => "hund.jpg",
+//        [1] => "sfndsjkf.jpg"
+//     ],
+//     "ProductName" => "Korv",
+//     ...
+//   ],
+//   [24] => [
 
-  // [
-  //   [1] => [ <-- key is ProductId
-  //     "imgNames" => [
-  //        [0] => "hund.jpg",
-  //        [1] => "sfndsjkf.jpg"
-  //     ],
-  //     "ProductName" => "Korv",
-  //     ...
-  //   ],
-  //   [24] => [
+//   ]
+// ]
+$grouped = [];
 
-  //   ]
-  // ]
-  $grouped = [];
-
-  foreach($results as $row) {
+foreach ($results as $row) {
     // The product id for this row
     $currentProductId = $row["ProductId"];
 
     // If we've already added this product
-    if(in_array($currentProductId, $grouped)) {
+    if (in_array($currentProductId, $grouped)) {
 
-      // Just add the additional image name to the imgIds array
-      $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+        // Just add the additional image name to the imgIds array
+        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
     } else {
 
-      // If we haven't added the product yet
+        // If we haven't added the product yet
         $grouped[$currentProductId] = [
-          "imgNames" => [], // Start with empty
-          "ProductId" => $currentProductId,
-          "ProductName" => $row["ProductName"],
-          "ProductDescription" => $row["ProductDescription"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductQty" => $row["ProductQty"],
-          "CategoryName" => $row["CategoryName"],
+            "imgNames" => [], // Start with empty
+            "ProductId" => $currentProductId,
+            "ProductName" => $row["ProductName"],
+            "ProductDescription" => $row["ProductDescription"],
+            "ProductPrice" => $row["ProductPrice"],
+            "ProductQty" => $row["ProductQty"],
+            "CategoryName" => $row["CategoryName"],
         ];
-      
-      // If there is an image for this row, add it
-      if($row["ProductImageImageId"]) {
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-      }
-      
+
+        // If there is an image for this row, add it
+        if ($row["ProductImageImageId"]) {
+            $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+        }
+
     }
-  }
-  //   echo "<pre>";
-  // print_r($grouped);
-  // echo "</pre>";
+}
+//   echo "<pre>";
+// print_r($grouped);
+// echo "</pre>";
 
 // $stmtCheck = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -170,7 +170,7 @@ if (empty($results)) {
   <tbody>";
 }
 
-foreach($grouped as $productId => $product):
+foreach ($grouped as $productId => $product):
 
     $stmtCheck = $product;
     $id = htmlspecialchars($product['ProductId']);
@@ -181,31 +181,31 @@ foreach($grouped as $productId => $product):
     $category = htmlspecialchars($product['CategoryName']);
     $descriptionShort = substr($description, 0, 20);
     if (empty($product['imgNames'])) {
-      $productImg = "placeholder.jpg";
+        $productImg = "placeholder.jpg";
     } else {
-      $productImg = htmlspecialchars($product['imgNames'][0]);
+        $productImg = htmlspecialchars($product['imgNames'][0]);
     }
     echo "<tr>
-								            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>
-								            <td>#$id</td>
-								            <td>$name</td>
-								            <td>$descriptionShort...</td>
-								            <td>$category</td>
-								            <td>$stock_qty st</td>
-								            <td>$price SEK</td>
-					                  <td>
-					                    <form action='./edit_product.php' method='POST'>
-					                      <button type='submit'><i class='fas fa-pen'></i></button>
-					                      <input type='hidden' name='p_id' value='$id'>
-					                    </form>
-					                  </td>
-								            <td>
-								                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-								                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-								                  <input type='hidden' name='id' value='$id'>
-								               </form>
-								            </td>
-								         </tr>";
+												            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>
+												            <td>#$id</td>
+												            <td>$name</td>
+												            <td>$descriptionShort...</td>
+												            <td>$category</td>
+												            <td>$stock_qty st</td>
+												            <td>$price SEK</td>
+									                  <td>
+									                    <form action='./edit_product.php' method='POST'>
+									                      <button type='submit'><i class='fas fa-pen'></i></button>
+									                      <input type='hidden' name='p_id' value='$id'>
+									                    </form>
+									                  </td>
+												            <td>
+												                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
+												                  <button type='submit'><i class='far fa-trash-alt'></i></button>
+												                  <input type='hidden' name='id' value='$id'>
+												               </form>
+												            </td>
+												         </tr>";
 endforeach;
 echo '</tbody></table>';
 echo '</main>';
