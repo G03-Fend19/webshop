@@ -1,4 +1,5 @@
 .cart {
+  visibility: hidden;
   max-height: calc(100vh - 70px);
   height: fit-content;
   overflow-y: scroll;
