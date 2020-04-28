@@ -19,7 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $duplicateCheck = "SELECT name FROM ws_products
-WHERE name = :title";
+WHERE name = :title
+AND active = 1";
 
     $stmt = $db->prepare($duplicateCheck);
     $stmt->bindParam(':title', $title);

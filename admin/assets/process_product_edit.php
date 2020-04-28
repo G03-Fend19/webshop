@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Backend validation
     $duplicateCheck = "SELECT name FROM ws_products
-                      WHERE name = :title
+                        WHERE name = :title
+                        AND active = 1
                         AND id <> :p_id";
 
     $stmt_duplicate = $db->prepare($duplicateCheck);
