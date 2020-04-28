@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
@@ -18,8 +16,8 @@ require_once "assets/aside-navigation.php";
   </div>
   <?php
 
-  echo "<script type='text/javascript' src='SortTables.js'></script>";
-  ?>
+echo "<script type='text/javascript' src='SortTables.js'></script>";
+?>
   <?php
 if (isset($_GET['category_id'])) {
     $categoryId = htmlspecialchars($_GET['category_id']);
@@ -186,26 +184,26 @@ foreach ($grouped as $productId => $product):
         $productImg = htmlspecialchars($product['imgNames'][0]);
     }
     echo "<tr>
-												            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>
-												            <td>#$id</td>
-												            <td>$name</td>
-												            <td>$descriptionShort...</td>
-												            <td>$category</td>
-												            <td>$stock_qty st</td>
-												            <td>$price SEK</td>
-									                  <td>
-									                    <form action='./edit_product.php' method='POST'>
-									                      <button type='submit'><i class='fas fa-pen'></i></button>
-									                      <input type='hidden' name='p_id' value='$id'>
-									                    </form>
-									                  </td>
-												            <td>
-												                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-												                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-												                  <input type='hidden' name='id' value='$id'>
-												               </form>
-												            </td>
-												         </tr>";
+													            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>
+													            <td>#$id</td>
+													            <td>$name</td>
+													            <td>$descriptionShort...</td>
+													            <td>$category</td>
+													            <td>$stock_qty st</td>
+													            <td>$price SEK</td>
+										                  <td>
+										                    <form action='./edit_product.php' method='POST'>
+										                      <button type='submit'><i class='fas fa-pen'></i></button>
+										                      <input type='hidden' name='p_id' value='$id'>
+										                    </form>
+										                  </td>
+													            <td>
+													                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
+													                  <button type='submit'><i class='far fa-trash-alt'></i></button>
+													                  <input type='hidden' name='id' value='$id'>
+													               </form>
+													            </td>
+													         </tr>";
 endforeach;
 echo '</tbody></table>';
 echo '</main>';
@@ -221,3 +219,7 @@ echo '</main>';
   }
   </script>
 
+  <?php
+
+require_once 'assets/foot.php';
+?>
