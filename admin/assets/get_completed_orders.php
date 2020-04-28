@@ -58,15 +58,15 @@ if (empty($completedOrdersResults)) {
 echo "<h2>Filter orders</h2>
       <label for='completedTextFilter'>Filter by city</label>
       <input type='text' id='completedTextFilter' oninput='filterOrders(completedOrdersFromPHP)'>
-      <table>
+      <table id='completedtable'>
       <thead>
       <tr>
       <th>Order number</th>
       <th>Customer</th>
       <th>City</th>
-      <th>Order date</th>
-      <th>Total Amount</th>
-      <th>Status</th>
+      <th onclick='sortTableDate(3)'>Order date</th>
+      <th onclick='sortTable(4)'>Total Amount</th>
+      <th onclick='sortTableStatus(5)'>Status</th>
       <th> </th>
       </tr>
       </thead>

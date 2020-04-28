@@ -1,5 +1,4 @@
 <?php
- echo "<script type='text/javascript' src='SortTables.js'></script>";
   $sql = "SELECT 
             ws_active_orders.id         AS OrderNumber,
             ws_active_orders.order_date AS OrderDate,
@@ -65,15 +64,15 @@ echo "<h2>Filter orders</h2>
       </select>
       <label for='activeTextFilter'>Filter by city</label>
       <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>
-      <table>
+      <table id='activetable'>
         <thead>
           <tr>
             <th>Order number</th>
             <th>Customer</th>
             <th>City</th>
-            <th onclick='sortTableDate(4)'>Order date</>
-            <th onclick='sortTable(5)'>Total Amount</th>
-            <th onclick='sortTableStatus(6)'>Status</th>
+            <th onclick='sortTableDate(3)'>Order date</th>
+            <th onclick='sortTable(4)'>Total Amount</th>
+            <th onclick='sortTableStatus(5)'>Status</th>
             <th> </th>
           </tr>
         </thead>
@@ -95,7 +94,7 @@ foreach($activeOrdersGrouped as $key => $order):
           <td>$fullName</td>
           <td>$city</td>
           <td>$orderDate</td>
-          <td>$totalSum SEK</td>
+          <td>$totalSum</td>
           <td>
           <form id='shouldUpdate$orderNumber' action='./assets/update_order_status.php' method='POST'>
            <select name='statusSelect$orderNumber' id='statusSelect$orderNumber' onchange='updateStatus($orderNumber)'>
