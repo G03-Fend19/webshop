@@ -1,3 +1,8 @@
+<?php 
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,4 +101,6 @@
   <script src="confirm_page.js"></script>
 
   <?php
+    
+
 require_once './assets/foot.php';

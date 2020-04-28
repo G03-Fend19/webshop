@@ -793,7 +793,6 @@ iframe {
 }
 
 .cart {
-  visibility: hidden;
   max-height: calc(100vh - 70px);
   height: -webkit-fit-content;
   height: -moz-fit-content;
