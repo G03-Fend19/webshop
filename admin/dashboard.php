@@ -37,6 +37,5 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
        <h2 class="tracking-in-expand"><?php echo $NumberOfActiveOrders; ?></h2>
        <h3 class="tracking-in-expand">Active orders</h3>
   </div> 
- 
 
 </main>

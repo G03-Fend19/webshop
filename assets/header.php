@@ -48,7 +48,7 @@
             </div>
    
       </ul>
-      <section class="cart">
+      <section class="cart hidden">
         <div class="cart__menu"></div>
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>
@@ -56,38 +56,7 @@
       <h1>Welcoming text</h1>
       <p>Describing text about shop...</p>
     </section>
+
   </header>
 
-
-<script>
-//Toggle menu
-const burger = document.querySelector('.header__burger i');
-const nav = document.querySelector('.toggle_menu__container');
-
-function toggleNav() {
-    burger.classList.toggle('fa-bars');
-    burger.classList.toggle('fa-times');
-    nav.classList.toggle('toggle_menu__active');
-}
-
-burger.addEventListener('click', function() {
-    toggleNav();
- 
-});
-
-/* if (nav.classList.contains('toggle_menu__active')) {
-document.addEventListener('click', function(event) {
-        let isClickInside = nav.contains(event.target);
-        if (isClickInside) {
-          console.log('You clicked inside')
-        }
-       else {
-          console.log('You clicked outside')
-          nav.classList.remove("toggle_menu__active");
-         
-        }
-    }); 
-  } 
-     */
-  </script>
   <main id="main">
