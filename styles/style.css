@@ -402,6 +402,24 @@ a {
   }
 }
 
+.header__nav__item__cart .cart_qty_show {
+  position: absolute;
+  right: 27px;
+  top: 14px;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.header__nav__item__cart .round-thing {
+  position: absolute;
+  right: 22px;
+  top: 15px;
+  height: 18px;
+  width: 18px;
+  background: coral;
+  border-radius: 25px;
+}
+
 /* video {
   object-fit: cover;
   width: 150vw;
