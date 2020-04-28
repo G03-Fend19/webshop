@@ -195,19 +195,27 @@
 .header__nav__item__cart {
   .cart_qty_show {
     position: absolute;
-    right: 27px;
+    right: 65px;
     top: 14px;
     font-size: 14px;
     z-index: 2;
+
+    @media (min-width: 800px) {
+      right: 27px;
+    }
   }
   .round-thing {
     position: absolute;
-    right: 22px;
+    right: 60px;
     top: 15px;
     height: 18px;
     width: 18px;
     background: coral;
     border-radius: 25px;
+
+    @media (min-width: 800px) {
+      right: 22px;
+    }
   }
 }
 
