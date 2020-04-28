@@ -20,6 +20,9 @@
 
     th {
       text-align: left;
+      &.price-heading {
+        text-align: right;
+      }
     }
     td {
       padding: 5px;
@@ -31,8 +34,9 @@
       object-fit: cover;
       height: 40px;
       width: 40px;
+      min-width: 40px;
     }
-    &__qty-input {
+    /* &__qty-input {
       -moz-appearance: textfield;
       max-width: 50px;
       background-color: transparent;
@@ -41,9 +45,9 @@
       box-shadow: none;
       text-align: right;
       margin-right: 3px;
-    }
+    } */
 
-    &__btn {
+    /*  &__btn {
       border-radius: 50%;
       background-color: Transparent;
       background-repeat: no-repeat;
@@ -51,13 +55,13 @@
       cursor: pointer;
       overflow: hidden;
       outline: none;
-    }
+    } */
 
     &__qty {
-      width: 150px;
+      width: 100px;
     }
     .order-summary__table__price {
-      width: 100px;
+      width: 150px;
       text-align: right;
       padding-right: 0;
     }
