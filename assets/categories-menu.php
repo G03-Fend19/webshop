@@ -27,11 +27,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $categoryId = htmlspecialchars($row['CategoryId']);
 
     $categories .= "<li class='nav-list__item'>
-		                      <a href='index.php?category_id=$categoryId#main'>
-		                        <img src=''/>
-		                        <span>$name</span>
-		                      </a>
-		                    </li>";
+			                      <a href='index.php?category_id=$categoryId#main'>
+			                        <img src=''/>
+			                        <span>$name</span>
+			                      </a>
+			                    </li>";
 endwhile
 ?>
 
@@ -40,7 +40,7 @@ endwhile
     <h2>Categories</h2>
     <nav>
       <ul class="nav-list">
-      <?php echo $categories; ?>
+        <?php echo $categories; ?>
       </ul>
     </nav>
   </div>
