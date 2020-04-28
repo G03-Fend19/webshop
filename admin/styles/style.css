@@ -608,17 +608,20 @@ input[type="checkbox"]:checked + img {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+  text-decoration: none;
 }
 
 .main__admin__dashboard .dashboard__box h2 {
   font-size: 3.5em;
   font-weight: 300;
   color: gray;
+  text-decoration: none;
 }
 
 .main__admin__dashboard .dashboard__box h3 {
   font-weight: 300;
   color: gray;
+  text-decoration: none;
 }
 
 .tracking-in-expand {
