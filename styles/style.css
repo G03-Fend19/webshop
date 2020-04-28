@@ -793,6 +793,7 @@ iframe {
 }
 
 .cart {
+  visibility: hidden;
   max-height: calc(100vh - 70px);
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -1844,6 +1845,10 @@ iframe {
             align-items: center;
     width: 120px;
     height: 100%;
+    background: white;
+    -webkit-box-shadow: 1px 1px 3px #d4d4d4;
+            box-shadow: 1px 1px 3px #d4d4d4;
+    padding: 1em;
     border-radius: 15px;
     color: #919191;
     cursor: pointer;
@@ -1880,6 +1885,9 @@ iframe {
     margin: 3px;
   }
   .product-section .main__admin .main__category-table {
+    background: white;
+    -webkit-box-shadow: 1px 1px 3px #d4d4d4;
+            box-shadow: 1px 1px 3px #d4d4d4;
     padding: 2em;
     border-radius: 5px;
     width: 100%;
@@ -1921,6 +1929,44 @@ iframe {
     border: none;
     background: none;
     cursor: pointer;
+  }
+}
+
+.header__hero__contact {
+  background: url(https://source.unsplash.com/WHUDOzd5IYU/1600x900);
+  position: relative;
+  margin-top: 70px;
+  text-align: center;
+  background-color: whitesmoke;
+  height: 100%;
+  background: whitesmoke;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  height: calc(100vh - 70px);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.header__hero__contact h1 {
+  font-size: 10vh;
+  color: #858585;
+  text-shadow: 1px 1px 2px black;
+  margin-top: 25vh;
+}
+
+@media (max-width: 500px) {
+  .header__hero__contact h1 {
+    font-size: 5vh;
   }
 }
 /*# sourceMappingURL=style.css.map */

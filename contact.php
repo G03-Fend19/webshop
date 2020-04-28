@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
-  <title>G03 - Webshop</title>
+  <title>G03 - Contact</title>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
           </li>
 
           <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
-              href="contact.php">Contact</a></li>
+              href="">Contact</a></li>
         </div>
 
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
@@ -33,7 +33,7 @@
         <i class="fas fa-bars"></i>
       </div>
     </nav>
-    <section class="header__hero">
+    <section class="header__hero__contact">
       <form class="searchform" name="search_form" action="search.php#main" onsubmit="return validateSearchForm()"
         method="GET">
         <input class="searchform__searchbar " placeholder="Search..." type="text" name="search">
@@ -55,8 +55,8 @@
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>
       </section>
-      <h1>Welcoming text</h1>
-      <p>Describing text about shop...</p>
+      <h1>Say hello</h1>
+      <p>What can we do for you?</p>
     </section>
   </header>
 
@@ -76,20 +76,8 @@
     toggleNav();
 
   });
-
-  /* if (nav.classList.contains('toggle_menu__active')) {
-  document.addEventListener('click', function(event) {
-          let isClickInside = nav.contains(event.target);
-          if (isClickInside) {
-            console.log('You clicked inside')
-          }
-         else {
-            console.log('You clicked outside')
-            nav.classList.remove("toggle_menu__active");
-           
-          }
-      }); 
-    } 
-       */
   </script>
-  <main id="main">
+
+  <?php
+
+require_once "./assets/foot.php";
