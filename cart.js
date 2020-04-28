@@ -51,7 +51,7 @@
   const updateStock = (product, qty) => {
     const q = cart[product].quantity;
     const s = cart[product].stock;
-    q < s ? (cart[product].quantity = qty) : alert("no more in stock");
+    q <= s ? (cart[product].quantity = qty) : alert("no more in stock");
   };
   const checkStock = (product) => {
     const q = cart[product].quantity;

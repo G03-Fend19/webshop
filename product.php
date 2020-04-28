@@ -81,6 +81,15 @@ if (isset($_GET['product_id'])) {
         }
     }
 
+    if (empty($grouped)) {
+        ?>
+      <script type="text/javascript">
+      window.location.href = './product_not_found.php';
+      </script>
+      <?php
+
+    }
+
     foreach ($grouped as $productId => $product):
         $stmtCheck = $product;
         $id = htmlspecialchars($product['ProductId']);
@@ -236,18 +245,8 @@ function prevImg() {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 </script>
+
 
 
 <?php

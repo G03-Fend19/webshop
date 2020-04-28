@@ -1,6 +1,4 @@
-<?php
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,43 +95,40 @@ document.addEventListener('click', function(event) {
     <h1>Checkout</h1>
     <h3>You are about to buy these products</h3>
 
-
-
     <section id="pTable-section" class="order-summary">
 
 
     </section>
 
 
-
     <section class="customer"> 
-      <form  id="confirm-order" class="customer__form" onsubmit="return orderFormSubmission(event)">
+      <form  id="confirm-order"  class="customer__form" method="POST">
         <div class="customer__form__information">
           <h2>Customer Information</h2>
           <div class="customer__form__information__name">
             <div class="label-input">
               <label for="fname">First name:</label>
-              <input class="customer-info"id="firstname"type="text"></input>
+              <input name="firstname" class="customer-info"id="firstname"type="text"></input>
             </div>
             <div class="label-input">
               <label for="lname">Last name:</label> 
-              <input class="customer-info"id="lastname"type="text"></input> 
+              <input name="lastname" class="customer-info"id="lastname"type="text"></input> 
             </div>
           </div>
           <div class="customer__form__information__mailbile">
             <div class="label-input">
               <label for="email">Email:</label> 
-              <input class="customer-info"id="email"type="text"></input>   
+              <input name="email" class="customer-info"id="email"type="text"></input>   
             </div>  
             <div class="label-input">
               <label for="mobile">Mobile:</label> 
-              <input class="customer-info"id="mobile"type="text"></input>  
+              <input name="mobile" class="customer-info"id="mobile"type="text"></input>  
             </div>                      
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
               <label for="adress">Street:</label> 
-              <input class="customer-info"id="street"type="text"></input>  
+              <input name="street"class="customer-info"id="street"type="text"></input>  
             </div>            
           </div>
           <div>
@@ -142,11 +137,11 @@ document.addEventListener('click', function(event) {
           <div class="customer__form__information__cityPost"> 
             <div class="label-input">
               <label for="postal">Postal:</label> 
-              <input class="customer-info"id="postal"type="text"></input>  
+              <input name="postal"class="customer-info"id="postal"type="text"></input>  
             </div>      
              <div class="label-input">
                <label for="city">City:</label> 
-               <input class="customer-info"id="city"type="text"></input>  
+               <input name="city"class="customer-info"id="city"type="text"></input>  
              </div>                 
           </div>
         </div>
@@ -163,10 +158,11 @@ document.addEventListener('click', function(event) {
             <div class="customer__form__payment__invoice">
               <p>Invoice</p>
                 <label for="email-invoice"> Email </label>
-                <input class="customer-info" type="checkbox" id="email-invoice" name="email-invoice" value="email">
+                <input  name="email-invoice"class="customer-info" type="checkbox" id="email-invoice" name="email-invoice" value="checkbox">
                 <label for="adress-invoice"> Adress </label>
-                <input  class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="adress">                
-            </div>                           
+                <input  name="adress-invoice"class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="checkbox">                
+            </div>      
+            <input id="cart-input" name="cart" type="text" ></input>                     
         </div>
         
         <div class="customer__form__submit">
@@ -182,12 +178,15 @@ document.addEventListener('click', function(event) {
   
   
   
-  
+  <script>
+    document.getElementById('cart-input').value = JSON.stringify(localStorage.getItem('cart'));
+  </script>
   <script src="./checkout.js"></script>
 
   <script src="./order-confirmation.js"></script>
 
   <?php
-require_once 'assets/foot.php';
 
+  
+require_once 'assets/foot.php';
 ?>

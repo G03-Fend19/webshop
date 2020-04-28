@@ -1,4 +1,9 @@
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  %boxShadowSection {
+    padding: 1em;
+    background: white;
+    box-shadow: 1px 1px 3px rgb(212, 212, 212);
+  }
   #main {
     .display-products {
       margin: 0;
@@ -416,7 +421,9 @@
         align-items: center;
         width: 120px;
         height: 100%;
-        // @extend %boxShadowSection;
+        background: white;
+        box-shadow: 1px 1px 3px rgb(212, 212, 212);
+        padding: 1em;
         border-radius: 15px;
         color: rgb(145, 145, 145);
         cursor: pointer;
@@ -458,7 +465,8 @@
       }
 
       .main__category-table {
-        // @extend %boxShadowSection;
+        background: white;
+        box-shadow: 1px 1px 3px rgb(212, 212, 212);
         padding: 2em;
         border-radius: 5px;
         width: 100%;

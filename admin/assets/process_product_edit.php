@@ -98,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     print_r($current_images);
     echo '</pre>'; */
 
+    // Inserting the new images to the database
     if (count($images) != 0) {
 
         foreach ($images as $index => $new_img) {
@@ -117,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
     }
+    // Deleting the connection to the images that aren't used anymore
     if (count($current_images) != 0) {
         foreach ($current_images as $img_id => $current_img) {
 
