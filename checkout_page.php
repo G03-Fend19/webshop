@@ -102,16 +102,16 @@ document.addEventListener('click', function(event) {
 
 
     <section class="customer"> 
-      <form  id="confirm-order"  class="customer__form" method="POST">
+      <form action="./confirm_page.php"  id="confirm-order"  class="customer__form" method="POST">
         <div class="customer__form__information">
           <h2>Customer Information</h2>
           <div class="customer__form__information__name">
             <div class="label-input">
-              <label for="fname">First name:</label>
+              <label for="firstname">First name:</label>
               <input name="firstname" class="customer-info"id="firstname"type="text"></input>
             </div>
             <div class="label-input">
-              <label for="lname">Last name:</label> 
+              <label for="lastname">Last name:</label> 
               <input name="lastname" class="customer-info"id="lastname"type="text"></input> 
             </div>
           </div>
@@ -127,7 +127,7 @@ document.addEventListener('click', function(event) {
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
-              <label for="adress">Street:</label> 
+              <label for="street">Street:</label> 
               <input name="street"class="customer-info"id="street"type="text"></input>  
             </div>            
           </div>
@@ -162,7 +162,8 @@ document.addEventListener('click', function(event) {
                 <label for="adress-invoice"> Adress </label>
                 <input  name="adress-invoice"class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="checkbox">                
             </div>      
-            <input id="cart-input" name="cart" type="text" ></input>                     
+            <input id="cart-input" type="hidden" name="cart" type="text" ></input>                     
+            <input id="total-input" type="hidden" name="total" type="text" ></input>                     
         </div>
         
         <div class="customer__form__submit">
@@ -179,7 +180,10 @@ document.addEventListener('click', function(event) {
   
   
   <script>
-    document.getElementById('cart-input').value = JSON.stringify(localStorage.getItem('cart'));
+    // allProductsObj = localStorage.getItem('cart');
+    // console.log(allProductsObj)
+    document.getElementById('cart-input').value = localStorage.getItem('cart');
+    document.getElementById('total-input').value = localStorage.getItem('total');
   </script>
   <script src="./checkout.js"></script>
 

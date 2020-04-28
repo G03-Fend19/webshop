@@ -40,16 +40,26 @@ const renderOrderSummary = () => {
           <tr data-name="${order[product].name}">
             <td>
               <img class="order-summary__table__img" src="./media/product_images/${
-                order[product].img
-              }" alt="Product image">
+          order[product].img
+          }" alt="Product image">
             </td>
             <td>${order[product].name}</td>
+<<<<<<< HEAD
             <td class="order-summary__table__qty">${
               order[product].quantity
             } st</td>
+=======
+            <td class="order-summary__table__qty">
+              <input class="order-summary__table__qty-input" type="number" min="0" value="${
+          order[product].quantity
+          }">st
+              <button class="order-summary__table__btn"><i class="fas fa-minus-circle" data-id="qty-"></i></button>
+              <button class="order-summary__table__btn"><i class="fas fa-plus-circle" data-id="qty+"></i></button>
+            </td>
+>>>>>>> develop
             <td class="order-summary__table__price">${
-              order[product].quantity * order[product].price
-            } SEK</td>
+          order[product].quantity * order[product].price
+          } SEK</td>
           </tr>
     `;
       })
