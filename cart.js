@@ -150,9 +150,9 @@
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
 
-      /* if (document.querySelector("#pTable-section")) {
+      if (document.querySelector("#pTable-section")) {
         renderOrderSummary();
-      } */
+      }
     });
   };
   const deleteProduct = () => {
@@ -164,9 +164,9 @@
           delete cart[productId];
           localStorage.setItem("cart", JSON.stringify(cart));
           renderCart();
-          /* if (document.querySelector("#pTable-section")) {
+          if (document.querySelector("#pTable-section")) {
             renderOrderSummary();
-          } */
+          }
         }
       }
     });
