@@ -53,7 +53,7 @@
 if (empty($activeOrdersResults)) {
     echo "<h2>No active orders</h2>";
 } else {
-    echo "<h2>Active orders</h2>";
+    // echo "<h2 class='headline__php'>Active orders</h2>";
 }
 echo "<h2>Filter orders</h2>
       <label for='activeStatusFilter'>Filter by status</label>
@@ -127,5 +127,5 @@ echo '</tbody></table>';
 ?>
 
 <script>
-  let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped); ?> ;
+let activeOrdersFromPHP = < ? php echo json_encode($activeOrdersGrouped); ? > ;
 </script>

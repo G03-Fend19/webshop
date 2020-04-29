@@ -21,7 +21,7 @@ if (isset($_GET['category_id'])){
 ?>
 <main class="admin__products">
   <div class="admin__products__text">
-    <h1 class="headline__products"><?php echo $headline?></h1>
+    <h1 class="headline__php"><?php echo $headline?></h1>
     <a href="./create_product.php">
       <button class="admin__products__text__addProduct">
         <p>Add new</p>
@@ -223,7 +223,7 @@ endforeach;
 echo '</tbody></table>';
 echo '</main>';
 ?>
-  <script src="active_pages.js"></script>
+  <!-- <script src="active_pages.js"></script> -->
   <script>
   function deleteProductConfirm() {
     if (confirm("Are you sure you want to delete this product?")) {
