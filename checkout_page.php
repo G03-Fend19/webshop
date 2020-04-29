@@ -186,16 +186,16 @@ document.addEventListener('click', function(event) {
   
   <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
-    const customerInformation = document.querySelectorAll(".customer-info");
+    const customerInformationFields = document.querySelectorAll(".customer-info");
     const customerInformationArray = Array.prototype.slice.call(
-      customerInformation
+      customerInformationFields
     );
     customerKeys = Object.keys(customerFromLocalStorage)
 
       if(customerFromLocalStorage) {
         customerKeys.forEach(key => {
             customerInformationArray.filter(field => {
-              field.name === key ? field.value = customerFromLocalStorage[key] :null
+              field.name === key ? field.value = customerFromLocalStorage[key] : null
             })
         })
       }
