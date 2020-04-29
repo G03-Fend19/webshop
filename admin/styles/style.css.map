@@ -7,7 +7,7 @@
         "partials/_extends.scss",
         "partials/_head.scss",
         "partials/_asidemenu-admin.scss",
-        "partials/_product-table.scss",
+        "partials/_admin-tables.scss",
         "partials/_product_form.scss",
         "partials/_dashboard.scss",
         "partials/_category-table.scss",

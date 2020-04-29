@@ -1,8 +1,17 @@
 .main-checkout {
   margin-top: 100px;
   width: 100vw;
-  padding-left: 20%;
-  padding-right: 20%;
+
+  margin: 100px 0 50px 0;
+  padding: 0 5%;
+
+  @media (min-width: 750px) {
+    padding: 0 8%;
+  }
+  @media (min-width: 1100px) {
+    padding: 0 20%;
+  }
+
   h1,
   h3 {
     text-align: center;
@@ -13,8 +22,14 @@
   width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
-  &__table {
+  font-size: 12px;
+  @media (min-width: 750px) {
+    font-size: 14px;
+  }
+  @media (min-width: 1100px) {
     font-size: 18px;
+  }
+  &__table {
     width: 100%;
     border-color: black;
 
@@ -25,16 +40,25 @@
       }
     }
     td {
-      padding: 5px;
+      padding: 2px;
+
+      @media (min-width: 750px) {
+        padding: 5px;
+      }
     }
     thead {
       border-bottom: solid black 1px;
     }
     &__img {
       object-fit: cover;
-      height: 40px;
-      width: 40px;
-      min-width: 40px;
+      height: 25px;
+      width: 25px;
+      min-width: 25px;
+
+      @media (min-width: 750px) {
+        height: 40px;
+        width: 40px;
+      }
     }
     /* &__qty-input {
       -moz-appearance: textfield;
@@ -58,12 +82,19 @@
     } */
 
     &__qty {
-      width: 100px;
+      width: 50px;
+      @media (min-width: 750px) {
+        width: 100px;
+      }
     }
     .order-summary__table__price {
-      width: 150px;
+      width: 70px;
       text-align: right;
       padding-right: 0;
+
+      @media (min-width: 750px) {
+        width: 120px;
+      }
     }
   }
   &__totalcontainer {
@@ -80,55 +111,146 @@
 .label-input {
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 }
 
 .customer {
+  font-size: 12px;
+  @media (min-width: 750px) {
+    font-size: 14px;
+  }
+  @media (min-width: 1100px) {
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 12px;
+    @media (min-width: 750px) {
+      font-size: 18px;
+    }
+  }
   &__form {
+    label {
+      font-weight: 600;
+    }
     input {
       border-radius: 4px;
-      border: 1px solid grey;
-      margin-right: 2em;
+      border: 0.5px solid #c2c2c2;
+      padding: 4px;
+      /* margin-right: 2em; */
+
+      @media (min-width: 750px) {
+        padding: 8px;
+      }
     }
+
     &__information {
       padding: 2em;
-      background-color: rgb(218, 218, 218);
+      background-color: #f4f4f4;
       border-radius: 4px;
-      box-shadow: 1px 1px 1px black;
-      margin: 2em;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      /* margin: 2em; */
+
+      @media (min-width: 750px) {
+      }
 
       &__name {
-        @media (min-width: 1000px) {
-          display: flex;
+        margin-top: 10px;
+        @media (min-width: 750px) {
+          display: grid;
+          grid-template-rows: auto;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 1em;
         }
       }
       &__mailbile {
-        @media (min-width: 1000px) {
-          display: flex;
+        @media (min-width: 750px) {
+          display: grid;
+          grid-template-rows: auto;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 1em;
         }
       }
+      &__street {
+        margin-top: 30px;
+      }
       &__cityPost {
-        @media (min-width: 1000px) {
-          display: flex;
+        display: flex;
+
+        .postalcode {
+          width: 40%;
+          padding-right: 5px;
+
+          @media (min-width: 750px) {
+            padding-right: 1em;
+          }
+        }
+        .city {
+          width: 60%;
         }
       }
     }
-
     &__payment {
+      display: grid;
+      gap: 1em;
+      margin-top: 25px;
+      font-size: 10px;
+
+      @media (min-width: 750px) {
+        font-size: 14px;
+      }
+      @media (min-width: 1100px) {
+        font-size: 18px;
+      }
+      p {
+        font-weight: 600;
+      }
+      .sum {
+        font-weight: 400;
+      }
+
       &__invoice {
-        display: flex;
+        /* display: flex; */
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1em;
+
+        label {
+          display: flex;
+          align-items: center;
+          font-weight: 400;
+        }
+        input {
+          margin-right: 5px;
+        }
       }
       &__total {
-        display: flex;
-
-        p {
-          margin-right: 2em;
-        }
+        /* display: flex; */
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1em;
       }
       &__shipping {
-        display: flex;
-        p {
-          margin-right: 2em;
-        }
+        margin-top: 10px;
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1em;
+      }
+    }
+    &__submit {
+      margin-top: 25px;
+      button {
+        border: none;
+        font-weight: 900;
+        font-size: 18px;
+        background: #c4c4c4;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        width: 100%;
+        padding: 5px;
       }
     }
   }

@@ -23,7 +23,7 @@ if (isset($_GET['category_id'])){
   <div class="admin__products__text">
     <h1 class="headline__php"><?php echo $headline?></h1>
     <a href="./create_product.php">
-      <button class="admin__products__text__addProduct">
+      <button class="admin__tables__text__addProduct">
         <p>Add new</p>
         <i class="fas fa-plus"></i>
       </button>

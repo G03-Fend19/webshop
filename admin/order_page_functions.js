@@ -43,7 +43,6 @@ function filterOrders(orders) {
   }
 
   Object.values(ordersToDraw).forEach(function (order, i) {
-    console.log(order)
     const tr = document.createElement('tr');
 
     const tdId = document.createElement('td');

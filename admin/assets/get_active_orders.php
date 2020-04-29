@@ -49,21 +49,21 @@
     ];
   }
 
-
+echo "<section class='active-orders'>";
 if (empty($activeOrdersResults)) {
     echo "<h2>No active orders</h2>";
 } else {
     // echo "<h2 class='headline__php'>Active orders</h2>";
 }
-echo "<h2>Filter orders</h2>
-      <label for='activeStatusFilter'>Filter by status</label>
-      <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
-        <option value='all' selected>All</option>
-        <option value='1'>Pending</option>
-        <option value='2'>In progress</option>
-      </select>
-      <label for='activeTextFilter'>Filter by city</label>
-      <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>
+echo "<div class='active-orders__filter'>
+        <h3>Filter orders</h3>
+        <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
+          <option value='all' selected>All</option>
+          <option value='1'>Pending</option>
+          <option value='2'>In progress</option>
+        </select>
+        <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)' placeholder='Filter by city'>
+      </div>
       <table id='activetable'>
         <thead>
           <tr>
@@ -123,7 +123,7 @@ foreach($activeOrdersGrouped as $key => $order):
         </tr>";
 endforeach;
 echo $rows;
-echo '</tbody></table>';
+echo '</tbody></table></section>';
 ?>
 
 <script>
