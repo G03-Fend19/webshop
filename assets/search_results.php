@@ -51,8 +51,10 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
     //   ]
     // ]
     $grouped = [];
+    $index = 0;
 
     foreach ($results as $row) {
+      $index = $index + 1;
         // The product id for this row
         $currentProductId = $row["ProductId"];
 
@@ -69,6 +71,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
                 "ProductName" => $row["ProductName"],
                 "ProductPrice" => $row["ProductPrice"],
                 "ProductQty" => $row["ProductQty"],
+                "IndexInArray" => $index,
             ];
 
             // If there is an image for this row, add it
@@ -78,7 +81,16 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         }
     }
 
+    $limitForNew = count($grouped) - 5;
+$newProductMsg = "";
+
     foreach ($grouped as $productId => $product):
+      if ($product['IndexInArray'] > $limitForNew) {
+        $newProductMsg = "<div class='new-in'>
+		                        <span class='new-in__msg'>
+		                        New In
+		                        </span>
+		                      </div>";
         $productName = htmlspecialchars($product['ProductName']);
         if (strlen($productName) > 20) {
             $productName = substr($productName, 0, 20) . "...";
@@ -94,7 +106,8 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 
         $productCards .= "<article class='product-card'>
 			                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-			                          <div class='image-wrapper'>";
+                                <div class='image-wrapper'>
+                                $newProductMsg";
         $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
 			                                                            <span class='out-of-stock__msg'>
 			                                                            Product currently out of stock
