@@ -104,7 +104,9 @@ document.addEventListener('click', function(event) {
 
 
     </section>
-
+    <script>
+     const localStorageCustomer = JSON.parse(localStorage.getItem("customer"))
+    </script>
 
     <section class="customer"> 
       <form action="./confirm_page.php"  id="confirm-order"  class="customer__form" method="POST">
@@ -182,7 +184,23 @@ document.addEventListener('click', function(event) {
 
 
   
-  
+  <script>
+    const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
+    const customerInformation = document.querySelectorAll(".customer-info");
+    const customerInformationArray = Array.prototype.slice.call(
+      customerInformation
+    );
+    customerKeys = Object.keys(customerFromLocalStorage)
+
+      if(customerFromLocalStorage) {
+        customerKeys.forEach(key => {
+            customerInformationArray.filter(field => {
+              field.name === key ? field.value = customerFromLocalStorage[key] :null
+            })
+        })
+      }
+
+  </script>
   
   <script>
     // allProductsObj = localStorage.getItem('cart');
