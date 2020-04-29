@@ -147,7 +147,7 @@
           <div class="customer__form__information__cityPost"> 
           <div class="label-input postalcode">
               <label for="postal">Postal:</label> 
-              <input name="postal"class="customer-info"id="postal"type="text" required></input>  
+              <input name="postal"class="customer-info"id="postal"type="text" maxlength="5" required></input>  
             </div>      
              <div class="label-input city">
                <label for="city">City:</label> 
@@ -167,12 +167,14 @@
             <p class="sum">SEK</p>
           </div>
           <div class="customer__form__payment__invoice">
-            <p>Invoice</p>
+          <p>Invoice: </p>
+            Email
             <label for="email-invoice"><input name="email-invoice" class="customer-info" type="checkbox"
-                id="email-invoice" name="email-invoice" value="checkbox">Email
+                id="email-invoice" name="email-invoice" value="checkbox">
             </label>
+            Address
             <label for="adress-invoice"><input name="adress-invoice" class="customer-info" type="checkbox"
-                id="adress-invoice" name="adress-invoice" value="checkbox">Adress
+                id="adress-invoice" name="adress-invoice" value="checkbox">
             </label>
           </div>
           <input id="cart-input" type="hidden" name="cart" type="text"></input>

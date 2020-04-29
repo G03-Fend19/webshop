@@ -159,14 +159,11 @@
     document.addEventListener("click", (e) => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       if (e.target.dataset.id == "delete-product") {
-        let r = confirm("are you sure?");
-        if (r) {
-          delete cart[productId];
-          localStorage.setItem("cart", JSON.stringify(cart));
-          renderCart();
-          if (document.querySelector("#pTable-section")) {
-            renderOrderSummary();
-          }
+        delete cart[productId];
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+        if (document.querySelector("#pTable-section")) {
+          renderOrderSummary();
         }
       }
     });
