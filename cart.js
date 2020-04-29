@@ -1,5 +1,4 @@
 (() => {
-  const cartCountBG = document.querySelector(".round-thing");
   const cartCount = document.querySelector(".cart_qty_show");
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
   const cartDisplay = document.querySelector(".cart");
@@ -16,7 +15,7 @@
   // to the createProduct function
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
-      cartCountBG.classList.remove("hidden");
+      cartCount.classList.remove("hidden");
       const productData = e.target.parentNode.dataset;
       let qty;
       document.querySelector("#qtyInput")
@@ -72,7 +71,7 @@
   const productsInCart = () => {
     let total = 0;
     Object.keys(cart).forEach((el) => {
-      total += cart[el].quantity;
+      total += parseInt(cart[el].quantity);
       cartCount.textContent = total;
     });
   };
@@ -81,7 +80,7 @@
       productWrapper.innerHTML = "No products in cart";
       totalCheckout.innerHTML = "";
       cartCount.textContent = "";
-      cartCountBG.classList.add("hidden");
+      cartCount.classList.add("hidden");
     } else {
       productsInCart();
       productWrapper.innerHTML = "";

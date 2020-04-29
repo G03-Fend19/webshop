@@ -195,27 +195,25 @@
 .header__nav__item__cart {
   .cart_qty_show {
     position: absolute;
-    right: 65px;
-    top: 14px;
+    top: 10px;
+    right: 57px;
+    display: inline-block;
+    padding: 6px 6px;
+    border-radius: 25px;
+    background: coral;
+    line-height: 10px;
     font-size: 14px;
+    vertical-align: middle;
+    white-space: nowrap;
     z-index: 2;
 
     @media (min-width: 800px) {
-      right: 27px;
+      right: 15px;
     }
   }
-  .round-thing {
-    position: absolute;
-    right: 60px;
-    top: 15px;
-    height: 18px;
-    width: 18px;
-    background: coral;
-    border-radius: 25px;
 
-    @media (min-width: 800px) {
-      right: 22px;
-    }
+  .hidden {
+    display: none;
   }
 }
 
