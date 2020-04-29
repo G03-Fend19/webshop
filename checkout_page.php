@@ -106,10 +106,12 @@
 
 
     </section>
+    <script>
+     const localStorageCustomer = JSON.parse(localStorage.getItem("customer"))
+    </script>
 
-
-    <section class="customer">
-      <form action="./confirm_page.php" id="confirm-order" class="customer__form" method="POST">
+    <section class="customer"> 
+      <form action="./confirm_page.php"  id="confirm-order"  class="customer__form" method="POST">
         <div class="customer__form__information">
           <h2>Customer Information</h2>
           <div class="customer__form__information__name">
@@ -187,9 +189,25 @@
 
 
 
+  
+  <script>
+    const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
+    const customerInformation = document.querySelectorAll(".customer-info");
+    const customerInformationArray = Array.prototype.slice.call(
+      customerInformation
+    );
+    customerKeys = Object.keys(customerFromLocalStorage)
 
+      if(customerFromLocalStorage) {
+        customerKeys.forEach(key => {
+            customerInformationArray.filter(field => {
+              field.name === key ? field.value = customerFromLocalStorage[key] :null
+            })
+        })
+      }
 
-
+  </script>
+  
   <script>
   // allProductsObj = localStorage.getItem('cart');
   // console.log(allProductsObj)
