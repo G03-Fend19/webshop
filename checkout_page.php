@@ -169,12 +169,14 @@ alert('Email already registered on a different name. Please check spelling or us
             <p class="sum">SEK</p>
           </div>
           <div class="customer__form__payment__invoice">
-            <p>Invoice</p>
+          <p>Invoice: </p>
+            Email
             <label for="email-invoice"><input name="email-invoice" class="customer-info" type="checkbox"
-                id="email-invoice" name="email-invoice" value="checkbox">Email
+                id="email-invoice" name="email-invoice" value="checkbox">
             </label>
+            Address
             <label for="adress-invoice"><input name="adress-invoice" class="customer-info" type="checkbox"
-                id="adress-invoice" name="adress-invoice" value="checkbox">Adress
+                id="adress-invoice" name="adress-invoice" value="checkbox">
             </label>
           </div>
           <input id="cart-input" type="hidden" name="cart">
