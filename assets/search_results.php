@@ -59,7 +59,6 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
     $grouped = [];
 
     foreach ($results as $row) {
-        $index = $index + 1;
         // The product id for this row
         $currentProductId = $row["ProductId"];
 
@@ -89,13 +88,13 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
     $newProductMsg = "";
 
     foreach ($grouped as $productId => $product):
-      if ($product['AddedDate'] >= $newInLimitDate) {
-        $newProductMsg = "<div class='new-in'>
-		                        <span class='new-in__msg'>
-		                        New In
-		                        </span>
-		                      </div>";
-    }
+        if ($product['AddedDate'] >= $newInLimitDate) {
+            $newProductMsg = "<div class='new-in'>
+			                        <span class='new-in__msg'>
+			                        New In
+			                        </span>
+			                      </div>";
+        }
 
         $productName = htmlspecialchars($product['ProductName']);
         if (strlen($productName) > 20) {
@@ -111,33 +110,33 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         }
 
         $productCards .= "<article class='product-card'>
-						                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-			                                <div class='image-wrapper'>
-			                                $newProductMsg";
+							                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+				                                <div class='image-wrapper'>
+				                                $newProductMsg";
         $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
-						                                                            <span class='out-of-stock__msg'>
-						                                                            Product currently out of stock
-						                                                            </span>
-						                                                          </div>" : null;
+							                                                            <span class='out-of-stock__msg'>
+							                                                            Product currently out of stock
+							                                                            </span>
+							                                                          </div>" : null;
         $productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
-						                          </div>
-						                        </a>
-						                        <div class='product-card__content'>
-						                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
-						                            $productName
-						                          </a>
-						                          <p>$productPrice SEK</p>
-						                          <button
-						                          	 data-id=$productId
-								                          data-name='$productName'
-								                          data-price=$productPrice
-								                          data-img='$productImg'
-								                          data-stock=$productQty
-						                          class='add-to-cart-btn'>";
+							                          </div>
+							                        </a>
+							                        <div class='product-card__content'>
+							                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
+							                            $productName
+							                          </a>
+							                          <p>$productPrice SEK</p>
+							                          <button
+							                          	 data-id=$productId
+									                          data-name='$productName'
+									                          data-price=$productPrice
+									                          data-img='$productImg'
+									                          data-stock=$productQty
+							                          class='add-to-cart-btn'>";
         $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
         $productCards .= "</button>
-						                          </div>
-						                      </article>";
+							                          </div>
+							                      </article>";
     endforeach;
     $productsContainer .= $productCards;
     $productsContainer .= "</div>";
