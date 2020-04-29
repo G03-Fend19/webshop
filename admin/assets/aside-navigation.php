@@ -10,9 +10,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $id = htmlspecialchars($row['id']);
     $name = htmlspecialchars($row['name']);
 
-    $categories .= "<li class='aside__path aside__nav__ul__li'>
+    $categories .= "<li class='aside__path aside__nav__ul__li toggleThis'>
 					                      <i class='far fa-star'></i>
-					                      <a class='aside__nav__ul__li__title__link' href='./products_page.php?category_id=$id'>$name</a>
+					                      <a class='aside__nav__ul__li__title__link' onclick='return activePage();' href='./products_page.php?category_id=$id'>$name</a>
 					  									</li>";
 
 endwhile;
@@ -92,3 +92,36 @@ saveNewCategoryBtn.addEventListener('click', () => {
   display: none;
 }
 </style>
+
+
+<script>
+function activePage(categoryname) {
+  // const allTitlesVal = document.querySelectorAll(
+  //   ".aside__nav__ul__li__title__link"
+  // );
+  // const allTitlesContainer = document.querySelectorAll(".toggleThis");
+  // console.log(allTitlesVal);
+  console.log("hej");
+  // console.log(categoryname);
+
+  // for (let i = 0; i < allTitlesVal.length; i++) {
+  //   allTitlesVal[i].addEventListener("click", function() {
+  //     console.log(allTitlesVal[i]);
+  //   });
+  // }
+
+  // allTitlesVal.forEach((element) => {
+  //   element.innerHTML == categoryname ?
+  //     element.classList.toggle("activeLink") :
+  //     "";
+  // });
+
+  // allTitlesVal.forEach((element) => {
+  //   headlineVal == allTitlesVal.innerHTML && element.classList !== "activeLink"
+  //     ? element.classList.toggle("activeLink")
+  //     : "";
+  // });
+}
+
+// activePage('');
+</script>
