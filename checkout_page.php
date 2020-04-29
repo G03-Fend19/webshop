@@ -187,39 +187,39 @@ alert('Email already registered on a different name. Please check spelling or us
       </form>
     </section>
 
-  </main>
 
 
 
 
-  <script>
-  const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
-  const customerInformationFields = document.querySelectorAll(".customer-info");
-  const customerInformationArray = Array.prototype.slice.call(
-    customerInformationFields
-  );
-  customerKeys = Object.keys(customerFromLocalStorage)
 
-  if (customerFromLocalStorage) {
-    customerKeys.forEach(key => {
-      customerInformationArray.filter(field => {
-        field.name === key ? field.value = customerFromLocalStorage[key] : null
+    <script>
+    const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
+    const customerInformationFields = document.querySelectorAll(".customer-info");
+    const customerInformationArray = Array.prototype.slice.call(
+      customerInformationFields
+    );
+    customerKeys = Object.keys(customerFromLocalStorage)
+
+    if (customerFromLocalStorage) {
+      customerKeys.forEach(key => {
+        customerInformationArray.filter(field => {
+          field.name === key ? field.value = customerFromLocalStorage[key] : null
+        })
       })
-    })
-  }
-  </script>
+    }
+    </script>
 
-  <script>
-  // allProductsObj = localStorage.getItem('cart');
-  // console.log(allProductsObj)
-  document.getElementById('cart-input').value = localStorage.getItem('cart');
-  document.getElementById('total-input').value = localStorage.getItem('total');
-  </script>
-  <script src="./checkout.js"></script>
+    <script>
+    // allProductsObj = localStorage.getItem('cart');
+    // console.log(allProductsObj)
+    document.getElementById('cart-input').value = localStorage.getItem('cart');
+    document.getElementById('total-input').value = localStorage.getItem('total');
+    </script>
+    <script src="./checkout.js"></script>
 
-  <script src="./order-confirmation.js"></script>
+    <script src="./order-confirmation.js"></script>
 
-  <?php
+    <?php
 
 require_once 'assets/foot.php';
 ?>
