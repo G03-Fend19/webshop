@@ -2,6 +2,11 @@
 $id = "";
 $categoryName = "";
 
+$currentDateTime = date('Y-m-d H:i:s');
+$currentDateTimeDT = new DateTime($currentDateTime);
+$newInLimitDT = $currentDateTimeDT->sub(new DateInterval('P14D'));
+$newInLimitDate = $newInLimitDT->format('Y-m-d H:i:s');
+
 if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     require_once "./db.php";
     $categoryId = htmlspecialchars($_GET['category_id']);
@@ -11,6 +16,7 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_products.price         AS ProductPrice,
             ws_products.id            AS ProductId,
             ws_products.stock_qty     AS ProductQty,
+            ws_products.added_date    AS AddedDate,
             ws_images.img             AS ImageName,
             ws_products_images.img_id AS ProductImageImageId,
             ws_categories.id          AS CategoryId,
@@ -49,6 +55,7 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_products.price         AS ProductPrice,
             ws_products.id            AS ProductId,
             ws_products.stock_qty     AS ProductQty,
+            ws_products.added_date    AS AddedDate,
             ws_images.img             AS ImageName,
             ws_products_images.img_id AS ProductImageImageId
           FROM
@@ -91,10 +98,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //   ]
 // ]
 $grouped = [];
-$index = 0;
 
 foreach ($results as $row) {
-    $index = $index + 1;
     // The product id for this row
     $currentProductId = $row["ProductId"];
 
@@ -113,7 +118,7 @@ foreach ($results as $row) {
                 "ProductPrice" => $row["ProductPrice"],
                 "ProductQty" => $row["ProductQty"],
                 "CategoryName" => $row["CategoryName"],
-                "IndexInArray" => $index,
+                "AddedDate" => $row['AddedDate'],
             ];
         } else {
             $grouped[$currentProductId] = [
@@ -121,7 +126,7 @@ foreach ($results as $row) {
                 "ProductName" => $row["ProductName"],
                 "ProductPrice" => $row["ProductPrice"],
                 "ProductQty" => $row["ProductQty"],
-                "IndexInArray" => $index,
+                "AddedDate" => $row['AddedDate'],
             ];
         }
 
@@ -137,11 +142,10 @@ foreach ($results as $row) {
 // print_r($grouped);
 // echo "</pre>";
 
-$limitForNew = count($grouped) - 5;
 $newProductMsg = "";
 
 foreach ($grouped as $productId => $product):
-    if ($product['IndexInArray'] > $limitForNew) {
+    if ($product['AddedDate'] >= $newInLimitDate) {
         $newProductMsg = "<div class='new-in'>
 		                        <span class='new-in__msg'>
 		                        New In

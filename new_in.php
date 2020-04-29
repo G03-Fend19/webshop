@@ -3,11 +3,19 @@ require_once "./db.php";
 require_once "./assets/header.php";
 require_once "./assets/categories-menu.php";
 
+$currentDateTime = date('Y-m-d H:i:s');
+$currentDateTimeDT = new DateTime($currentDateTime);
+$newInLimitDT = $currentDateTimeDT->sub(new DateInterval('P14D'));
+$newInLimitDate = $newInLimitDT->format('Y-m-d H:i:s');
+
+// echo $newInLimitDate;
+
 $sql = "SELECT
             ws_products.name          AS ProductName,
             ws_products.price         AS ProductPrice,
             ws_products.id            AS ProductId,
             ws_products.stock_qty     AS ProductQty,
+            ws_products.added_date    AS AddedDate,
             ws_images.img             AS ImageName,
             ws_products_images.img_id AS ProductImageImageId
           FROM
@@ -22,11 +30,11 @@ $sql = "SELECT
             ws_products_images.img_id = ws_images.id
           WHERE
             ws_products.stock_qty > 0
-          AND ws_products.active = 1
-          ORDER BY ws_products.id DESC
-          LIMIT 5 ";
+          AND ws_products.added_date >= :newInLimitDate
+          AND ws_products.active = 1 ";
 
 $stmt = $db->prepare($sql);
+$stmt->bindParam(":newInLimitDate", $newInLimitDate);
 $stmt->execute();
 
 $productsContainer = "<div class='products'>";
