@@ -19,8 +19,8 @@ if (isset($_GET['category_id'])){
 }
 
 ?>
-<main class="admin__products">
-  <div class="admin__products__text">
+<main class="admin__tables">
+  <div class="admin__tables__text">
     <h1 class="headline__php"><?php echo $headline?></h1>
     <a href="./create_product.php">
       <button class="admin__tables__text__addProduct">

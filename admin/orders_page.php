@@ -9,9 +9,9 @@ $headline = $_GET['orders'] . " orders";
 };
 
 ?>
-<main class="admin__products">
+<main class="admin__tables">
 
-  <div class="admin__products__text">
+  <div class="admin__tables__text">
     <h1 class="headline__php"><?php echo ucfirst($headline)?></h1>
     <a href="./create_product.php">
   </div>
