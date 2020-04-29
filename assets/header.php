@@ -26,7 +26,7 @@
         </div>
 
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
-              class="fas fa-shopping-cart"></i></a></li>
+              class="fas fa-shopping-cart"></i><span class="cart_qty_show">0</span><span class="round-thing"></span></a></li>
       </ul>
 
       <div class="header__burger">

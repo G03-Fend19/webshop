@@ -3,12 +3,27 @@
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
+
+$headline= "All products";
+if (isset($_GET['category_id'])){
+  $id = $_GET['category_id'];
+  $sql = "SELECT * FROM ws_categories
+  WHERE id = :id";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':id', $id);
+  $stmt->execute();
+
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    $headline = $row['name'];
+  }
+}
+
 ?>
-<main class="admin__products">
-  <div class="admin__products__text">
-    <h1>Products</h1>
+<main class="admin__tables">
+  <div class="admin__tables__text">
+    <h1 class="headline__products"><?php echo $headline?></h1>
     <a href="./create_product.php">
-      <button class="admin__products__text__addProduct">
+      <button class="admin__tables__text__addProduct">
         <p>Add new</p>
         <i class="fas fa-plus"></i>
       </button>
@@ -208,7 +223,7 @@ endforeach;
 echo '</tbody></table>';
 echo '</main>';
 ?>
-
+  <script src="active_pages.js"></script>
   <script>
   function deleteProductConfirm() {
     if (confirm("Are you sure you want to delete this product?")) {

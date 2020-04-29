@@ -1,3 +1,9 @@
+<?php
+
+  if(isset($_GET['error']) && $_GET['error'] == "mail") {
+    ?><script>alert('Email already registered on a different name. Please check spelling or use different mail')</script><?php
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -109,41 +115,43 @@
           <div class="customer__form__information__name">
             <div class="label-input">
               <label for="firstname">First name:</label>
-              <input name="firstname" class="customer-info" id="firstname" type="text"></input>
+              <input name="firstname" class="customer-info"id="firstname"type="text" required></input>
             </div>
             <div class="label-input">
-              <label for="lastname">Last name:</label>
-              <input name="lastname" class="customer-info" id="lastname" type="text"></input>
+              <label for="lastname">Last name:</label> 
+              <input name="lastname" class="customer-info"id="lastname"type="text" required></input> 
             </div>
           </div>
           <div class="customer__form__information__mailbile">
             <div class="label-input">
-              <label for="email">Email:</label>
-              <input name="email" class="customer-info" id="email" type="text"></input>
-            </div>
+              <label for="email">Email:</label> 
+              <input name="email" class="customer-info"id="email"type="email" required></input>   
+            </div>  
             <div class="label-input">
-              <label for="mobile">Mobile:</label>
-              <input name="mobile" class="customer-info" id="mobile" type="text"></input>
-            </div>
+              <label for="mobile">Mobile:</label> 
+              <input name="mobile" class="customer-info"id="mobile"type="text" required></input>  
+            </div>                      
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
-              <label for="street">Street:</label>
-              <input name="street" class="customer-info" id="street" type="text"></input>
-            </div>
+              <label for="street">Street:</label> 
+              <input name="street"class="customer-info"id="street"type="text" required></input>  
+            </div>            
           </div>
           <div>
 
           </div>
-          <div class="customer__form__information__cityPost">
-            <div class="label-input postalcode">
-              <label for="postal">Postal:</label>
-              <input name="postal" class="customer-info" id="postal" type="text"></input>
-            </div>
-            <div class="label-input city">
-              <label for="city">City:</label>
-              <input name="city" class="customer-info" id="city" type="text"></input>
-            </div>
+            
+          <div class="customer__form__information__cityPost"> 
+          <div class="label-input postalcode">
+              <label for="postal">Postal:</label> 
+              <input name="postal"class="customer-info"id="postal"type="text" required></input>  
+            </div>      
+             <div class="label-input city">
+               <label for="city">City:</label> 
+               <input name="city"class="customer-info"id="city"type="text" required></input>  
+             </div>                 
+            
           </div>
         </div>
         <div class="customer__form__payment customer__form__information">
