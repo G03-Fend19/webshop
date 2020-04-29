@@ -92,7 +92,7 @@ foreach ($grouped as $productId => $product):
     $productName = substr($productName, 0, 20) . "...";
   }
   $productPrice = htmlspecialchars($product['ProductPrice']);
-  $discountProductPrice = $productPrice - ($productPrice * 0.1);
+  $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
   $productQty = htmlspecialchars($product['ProductQty']);
   // $productImg = htmlspecialchars($product['ImageName']); // TODO
   if (empty($product['imgNames'])) {
