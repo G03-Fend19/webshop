@@ -177,8 +177,8 @@ alert('Email already registered on a different name. Please check spelling or us
                 id="adress-invoice" name="adress-invoice" value="checkbox">Adress
             </label>
           </div>
-          <input id="cart-input" type="hidden" name="cart" type="text">
-          <input id="total-input" type="hidden" name="total" type="text">
+          <input id="cart-input" type="hidden" name="cart">
+          <input id="total-input" type="hidden" name="total">
         </div>
 
         <div class="customer__form__submit">
