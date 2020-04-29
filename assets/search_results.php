@@ -31,9 +31,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
           ON
             ws_products_images.img_id = ws_images.id
           WHERE
-            (ws_products.name LIKE '%$search%'
-          OR
-            ws_products.description LIKE '%$search')
+            ws_products.name LIKE '%$search%'
           AND ws_products.stock_qty > 0
           AND ws_products.active = 1";
 
@@ -88,8 +86,11 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
     }
 
     $productMsg = "";
+    $priceMsg = "";
 
     foreach ($grouped as $productId => $product):
+      $productMsg = "";
+      $priceMsg = "";
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
 			                        <span class='new-in__msg'>
@@ -104,8 +105,8 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
                             </div>";
         }
         $productPrice = htmlspecialchars($product['ProductPrice']);
-        $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
         if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+          $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
           $priceMsg = "<span class='original-price'>Original price:</span>
                         <p class='original-price__price'>$productPrice SEK</p>
                         <span class='discount'>New price:</span>
