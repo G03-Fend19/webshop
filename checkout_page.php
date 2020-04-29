@@ -1,8 +1,10 @@
 <?php
 
-  if(isset($_GET['error']) && $_GET['error'] == "mail") {
-    ?><script>alert('Email already registered on a different name. Please check spelling or use different mail')</script><?php
-  }
+if (isset($_GET['error']) && $_GET['error'] == "mail") {
+    ?><script>
+alert('Email already registered on a different name. Please check spelling or use different mail')
+</script><?php
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,53 +109,53 @@
 
     </section>
     <script>
-     const localStorageCustomer = JSON.parse(localStorage.getItem("customer"))
+    const localStorageCustomer = JSON.parse(localStorage.getItem("customer"))
     </script>
 
-    <section class="customer"> 
-      <form action="./confirm_page.php"  id="confirm-order"  class="customer__form" method="POST">
+    <section class="customer">
+      <form action="./confirm_page.php" id="confirm-order" class="customer__form" method="POST">
         <div class="customer__form__information">
           <h2>Customer Information</h2>
           <div class="customer__form__information__name">
             <div class="label-input">
               <label for="firstname">First name:</label>
-              <input name="firstname" class="customer-info"id="firstname"type="text" required></input>
+              <input name="firstname" class="customer-info" id="firstname" type="text" required>
             </div>
             <div class="label-input">
-              <label for="lastname">Last name:</label> 
-              <input name="lastname" class="customer-info"id="lastname"type="text" required></input> 
+              <label for="lastname">Last name:</label>
+              <input name="lastname" class="customer-info" id="lastname" type="text" required>
             </div>
           </div>
           <div class="customer__form__information__mailbile">
             <div class="label-input">
-              <label for="email">Email:</label> 
-              <input name="email" class="customer-info"id="email"type="email" required></input>   
-            </div>  
+              <label for="email">Email:</label>
+              <input name="email" class="customer-info" id="email" type="email" required>
+            </div>
             <div class="label-input">
-              <label for="mobile">Mobile:</label> 
-              <input name="mobile" class="customer-info"id="mobile"type="text" required></input>  
-            </div>                      
+              <label for="mobile">Mobile:</label>
+              <input name="mobile" class="customer-info" id="mobile" type="text" required>
+            </div>
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
-              <label for="street">Street:</label> 
-              <input name="street"class="customer-info"id="street"type="text" required></input>  
-            </div>            
+              <label for="street">Street:</label>
+              <input name="street" class="customer-info" id="street" type="text" required>
+            </div>
           </div>
           <div>
 
           </div>
-            
-          <div class="customer__form__information__cityPost"> 
-          <div class="label-input postalcode">
-              <label for="postal">Postal:</label> 
-              <input name="postal"class="customer-info"id="postal"type="text" required></input>  
-            </div>      
-             <div class="label-input city">
-               <label for="city">City:</label> 
-               <input name="city"class="customer-info"id="city"type="text" required></input>  
-             </div>                 
-            
+
+          <div class="customer__form__information__cityPost">
+            <div class="label-input postalcode">
+              <label for="postal">Postal:</label>
+              <input name="postal" class="customer-info" id="postal" type="text" required>
+            </div>
+            <div class="label-input city">
+              <label for="city">City:</label>
+              <input name="city" class="customer-info" id="city" type="text" required>
+            </div>
+
           </div>
         </div>
         <div class="customer__form__payment customer__form__information">
@@ -175,8 +177,8 @@
                 id="adress-invoice" name="adress-invoice" value="checkbox">Adress
             </label>
           </div>
-          <input id="cart-input" type="hidden" name="cart" type="text"></input>
-          <input id="total-input" type="hidden" name="total" type="text"></input>
+          <input id="cart-input" type="hidden" name="cart" type="text">
+          <input id="total-input" type="hidden" name="total" type="text">
         </div>
 
         <div class="customer__form__submit">
@@ -189,25 +191,24 @@
 
 
 
-  
+
   <script>
-    const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
-    const customerInformationFields = document.querySelectorAll(".customer-info");
-    const customerInformationArray = Array.prototype.slice.call(
-      customerInformationFields
-    );
-    customerKeys = Object.keys(customerFromLocalStorage)
+  const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
+  const customerInformationFields = document.querySelectorAll(".customer-info");
+  const customerInformationArray = Array.prototype.slice.call(
+    customerInformationFields
+  );
+  customerKeys = Object.keys(customerFromLocalStorage)
 
-      if(customerFromLocalStorage) {
-        customerKeys.forEach(key => {
-            customerInformationArray.filter(field => {
-              field.name === key ? field.value = customerFromLocalStorage[key] : null
-            })
-        })
-      }
-
+  if (customerFromLocalStorage) {
+    customerKeys.forEach(key => {
+      customerInformationArray.filter(field => {
+        field.name === key ? field.value = customerFromLocalStorage[key] : null
+      })
+    })
+  }
   </script>
-  
+
   <script>
   // allProductsObj = localStorage.getItem('cart');
   // console.log(allProductsObj)
