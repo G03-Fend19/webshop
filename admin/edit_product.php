@@ -142,7 +142,8 @@ require_once './assets/aside-navigation.php';
       </select>
       <label for="price" class="form__label">
         Price
-        <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
+        <input type="number" name="price" id="price" value="<?=$price?>" min="0" step=".01" required
+          class="form__input">
       </label>
       <label for="qty" class="form__label">
         Qty
