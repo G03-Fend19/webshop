@@ -332,6 +332,11 @@ select {
      object-fit: cover;
 }
 
+.activeLink {
+  font-weight: 900;
+  color: #484893;
+}
+
 .new__product__section {
   margin-top: 80px;
   padding: 2em;
