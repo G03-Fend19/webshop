@@ -1242,8 +1242,20 @@ footer {
 .main-checkout {
   margin-top: 100px;
   width: 100vw;
-  padding-left: 20%;
-  padding-right: 20%;
+  margin: 100px 0 50px 0;
+  padding: 0 5%;
+}
+
+@media (min-width: 750px) {
+  .main-checkout {
+    padding: 0 8%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .main-checkout {
+    padding: 0 20%;
+  }
 }
 
 .main-checkout h1,
@@ -1255,10 +1267,16 @@ footer {
   width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
+  font-size: 12px;
+}
+
+@media (min-width: 750px) {
+  .order-summary {
+    font-size: 18px;
+  }
 }
 
 .order-summary__table {
-  font-size: 18px;
   width: 100%;
   border-color: black;
   /* &__qty-input {
@@ -1291,7 +1309,13 @@ footer {
 }
 
 .order-summary__table td {
-  padding: 5px;
+  padding: 2px;
+}
+
+@media (min-width: 750px) {
+  .order-summary__table td {
+    padding: 5px;
+  }
 }
 
 .order-summary__table thead {
@@ -1301,19 +1325,38 @@ footer {
 .order-summary__table__img {
   -o-object-fit: cover;
      object-fit: cover;
-  height: 40px;
-  width: 40px;
-  min-width: 40px;
+  height: 25px;
+  width: 25px;
+  min-width: 25px;
+}
+
+@media (min-width: 750px) {
+  .order-summary__table__img {
+    height: 40px;
+    width: 40px;
+  }
 }
 
 .order-summary__table__qty {
-  width: 100px;
+  width: 50px;
+}
+
+@media (min-width: 750px) {
+  .order-summary__table__qty {
+    width: 100px;
+  }
 }
 
 .order-summary__table .order-summary__table__price {
-  width: 150px;
+  width: 70px;
   text-align: right;
   padding-right: 0;
+}
+
+@media (min-width: 750px) {
+  .order-summary__table .order-summary__table__price {
+    width: 120px;
+  }
 }
 
 .order-summary__totalcontainer {
@@ -1339,71 +1382,191 @@ footer {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.customer {
+  font-size: 12px;
+}
+
+@media (min-width: 750px) {
+  .customer {
+    font-size: 14px;
+  }
+}
+
+.customer h2 {
+  font-size: 12px;
+}
+
+@media (min-width: 750px) {
+  .customer h2 {
+    font-size: 18px;
+  }
+}
+
+.customer__form label {
+  font-weight: 600;
 }
 
 .customer__form input {
   border-radius: 4px;
-  border: 1px solid grey;
-  margin-right: 2em;
+  border: 0.5px solid #c2c2c2;
+  padding: 4px;
+  /* margin-right: 2em; */
+}
+
+@media (min-width: 750px) {
+  .customer__form input {
+    padding: 8px;
+  }
 }
 
 .customer__form__information {
   padding: 2em;
-  background-color: #dadada;
+  background-color: #f4f4f4;
   border-radius: 4px;
-  -webkit-box-shadow: 1px 1px 1px black;
-          box-shadow: 1px 1px 1px black;
-  margin: 2em;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  /* margin: 2em; */
 }
 
-@media (min-width: 1000px) {
+.customer__form__information__name {
+  margin-top: 10px;
+}
+
+@media (min-width: 750px) {
   .customer__form__information__name {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 750px) {
   .customer__form__information__mailbile {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
   }
 }
 
-@media (min-width: 1000px) {
-  .customer__form__information__cityPost {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+.customer__form__information__street {
+  margin-top: 30px;
+}
+
+.customer__form__information__cityPost {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.customer__form__information__cityPost .postalcode {
+  width: 40%;
+  padding-right: 5px;
+}
+
+@media (min-width: 750px) {
+  .customer__form__information__cityPost .postalcode {
+    padding-right: 1em;
   }
+}
+
+.customer__form__information__cityPost .city {
+  width: 60%;
+}
+
+.customer__form__payment {
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  margin-top: 25px;
+  font-size: 10px;
+}
+
+@media (min-width: 750px) {
+  .customer__form__payment {
+    font-size: 14px;
+  }
+}
+
+.customer__form__payment p {
+  font-weight: 600;
+}
+
+.customer__form__payment .sum {
+  font-weight: 400;
 }
 
 .customer__form__payment__invoice {
+  /* display: flex; */
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  gap: 1em;
+}
+
+.customer__form__payment__invoice label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 400;
+}
+
+.customer__form__payment__invoice input {
+  margin-right: 5px;
 }
 
 .customer__form__payment__total {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.customer__form__payment__total p {
-  margin-right: 2em;
+  /* display: flex; */
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
 }
 
 .customer__form__payment__shipping {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  margin-top: 10px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
 }
 
-.customer__form__payment__shipping p {
-  margin-right: 2em;
+.customer__form__submit {
+  margin-top: 25px;
+}
+
+.customer__form__submit button {
+  border: none;
+  font-weight: 900;
+  font-size: 18px;
+  background: #c4c4c4;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  width: 100%;
+  padding: 5px;
 }
 
 .confirmpage {
