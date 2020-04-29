@@ -13,9 +13,15 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 $categories = "<li class='nav-list__item'>
-                  <a href='./new_in.php'>
+                  <a href='./new_in.php#main'>
                     <img src=''/>
                     <span>New In</span>
+                  </a>
+                </li>
+                <li class='nav-list__item'>
+                  <a href='./last-chance.php#main'>
+                    <img src=''/>
+                    <span>Last Chance</span>
                   </a>
                 </li>
                 <li class='nav-list__item'>

@@ -6,6 +6,8 @@ $currentDateTime = date('Y-m-d H:i:s');
 $currentDateTimeDT = new DateTime($currentDateTime);
 $newInLimitDT = $currentDateTimeDT->sub(new DateInterval('P14D'));
 $newInLimitDate = $newInLimitDT->format('Y-m-d H:i:s');
+$lastChanceLimitDT = $currentDateTimeDT->sub(new DateInterval('P1Y'));
+$lastChanceLimitDate = $lastChanceLimitDT->format('Y-m-d H:i:s');
 
 if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     require_once "./db.php";
@@ -142,21 +144,39 @@ foreach ($results as $row) {
 // print_r($grouped);
 // echo "</pre>";
 
-$newProductMsg = "";
+$productMsg = "";
+$priceMsg = "";
 
 foreach ($grouped as $productId => $product):
+    $productMsg = "";
+    $priceMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
-        $newProductMsg = "<div class='new-in'>
+        $productMsg = "<div class='new-in'>
 		                        <span class='new-in__msg'>
 		                        New In
 		                        </span>
 		                      </div>";
+    } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      $productMsg = "<div class='out-of-stock'>
+                          <span class='out-of-stock__msg'>
+                            10% off
+                          </span>
+                        </div>";
+    }
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
+      $priceMsg = "<span class='original-price'>Original price:</span>
+                    <p class='original-price__price'>$productPrice SEK</p>
+                    <span class='discount'>New price:</span>
+                    <p class='discount__price'>$discountProductPrice SEK</p>";
+    } else {
+      $priceMsg = "<p>$productPrice SEK</p>";
     }
     $productName = htmlspecialchars($product['ProductName']);
     if (strlen($productName) > 20) {
         $productName = substr($productName, 0, 20) . "...";
     }
-    $productPrice = htmlspecialchars($product['ProductPrice']);
     $productQty = htmlspecialchars($product['ProductQty']);
     // $productImg = htmlspecialchars($product['ImageName']); // TODO
     if (empty($product['imgNames'])) {
@@ -171,7 +191,7 @@ foreach ($grouped as $productId => $product):
     $productCards .= "<article class='product-card'>
 								                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
 		                                      <div class='image-wrapper'>
-		                                      $newProductMsg";
+		                                      $productMsg";
 
     $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
 								                                                            <span class='out-of-stock__msg'>
@@ -181,11 +201,14 @@ foreach ($grouped as $productId => $product):
     $productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
 								                          </div>
 								                        </a>
-								                        <div class='product-card__content'>
+                                        <div class='product-card__content'>
+                                        <div class='product-card__text'>
 								                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
 								                            $productName
 								                          </a>
-								                          <p>$productPrice SEK</p>
+                                          $priceMsg
+                                          </div>
+                                          
 								                          <button
 								                          data-id=$productId
 								                          data-name='$productName'
@@ -194,7 +217,9 @@ foreach ($grouped as $productId => $product):
 								                          data-stock=$productQty
 								                          class='add-to-cart-btn'>";
     $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
-    $productCards .= "</button>
+                          $productCards .= "</button>
+                                            <span>$productQty</span>
+                                            
 								                          </div>
 								                      </article>";
 endforeach;
