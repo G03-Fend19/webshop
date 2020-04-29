@@ -4,8 +4,8 @@ require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
 
 ?>
-<main class="admin__products">
-  <div class="admin__products__text">
+<main class="admin__tables">
+  <div class="admin__tables__text">
     <h1>Orders</h1>
   </div>
 <?php
