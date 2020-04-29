@@ -13,6 +13,12 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 $categories = "<li class='nav-list__item'>
+                  <a href='./new_in.php'>
+                    <img src=''/>
+                    <span>New In</span>
+                  </a>
+                </li>
+                <li class='nav-list__item'>
                   <a href='index.php#main'>
                     <img src=''/>
                     <span>All products</span>
@@ -24,14 +30,15 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     if (strlen($name) > 20) {
         $name = substr($name, 0, 20) . "...";
     }
+
     $categoryId = htmlspecialchars($row['CategoryId']);
 
     $categories .= "<li class='nav-list__item'>
-			                      <a href='index.php?category_id=$categoryId#main'>
-			                        <img src=''/>
-			                        <span>$name</span>
-			                      </a>
-			                    </li>";
+														                      <a href='index.php?category_id=$categoryId#main'>
+														                        <img src=''/>
+														                        <span>$name</span>
+														                      </a>
+														                    </li>";
 endwhile
 ?>
 
