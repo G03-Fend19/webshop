@@ -12,10 +12,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $postalCode = $_POST['postal'];
   $city = $_POST['city'];
   
-    $customerId;
-    $addressId;
+  $customerId;
+  $addressId;
   
-    //Try to fetch data from database where email from form matches
+  //Try to fetch data from database where email from form matches
     $getCustomerSQL = "SELECT
                         ws_customers.id         AS CustomerId,
                         ws_customers.first_name AS FirstName,
@@ -72,67 +72,70 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       // echo "<br>";
     } else {
       // If email matched but not the rest, display error
-      echo "Email already registered on a different name. Please check spelling or use a different email address";
+      header("Location: ./checkout_page.php?error=mail");
     }
 
-   //Try to fetch address from database where address inputs from form matches
-   $getAddressSQL = "SELECT
-      ws_delivery_address.id           AS AddressId,
-      ws_delivery_address.street       AS Street,
-      ws_delivery_address.postal_code  AS PostalCode,
-      ws_delivery_address.city         AS City
-    FROM 
-      ws_delivery_address
-    WHERE
-      ws_delivery_address.street = :street
-    AND
-      ws_delivery_address.postal_code = :postal_code
-    AND
-      ws_delivery_address.city = :city";
+    if(isset($customerId)) {
+      //Try to fetch address from database where address inputs from form matches
+     $getAddressSQL = "SELECT
+        ws_delivery_address.id           AS AddressId,
+        ws_delivery_address.street       AS Street,
+        ws_delivery_address.postal_code  AS PostalCode,
+        ws_delivery_address.city         AS City
+      FROM 
+        ws_delivery_address
+      WHERE
+        ws_delivery_address.street = :street
+      AND
+        ws_delivery_address.postal_code = :postal_code
+      AND
+        ws_delivery_address.city = :city";
+  
+      $getAddressStmt = $db->prepare($getAddressSQL);
+      $getAddressStmt->bindParam(':street', $street);
+      $getAddressStmt->bindParam(':postal_code', $postalCode);
+      $getAddressStmt->bindParam(':city', $city);
+      $getAddressStmt->execute();
+  
+      $addressResults = $getAddressStmt->fetch(PDO::FETCH_ASSOC);
+  
+      if(empty($addressResults)) {
+      //Create a new customer in database
+      $createAddressSQL = "INSERT INTO ws_delivery_address (street, postal_code, city)
+            VALUES (:street, :postal_code, :city)";
+      $createAddressStmt = $db->prepare($createAddressSQL);
+      $createAddressStmt->bindParam(":street", $street);
+      $createAddressStmt->bindParam(":postal_code", $postalCode);
+      $createAddressStmt->bindParam(":city", $city);
+      $createAddressStmt->execute();
+  
+      //and get the new customer from database to get access to auto incremented customer id
+      $getNewAddressSQL = $getAddressSQL;
+      $getNewAddressStmt = $db->prepare($getNewAddressSQL);
+      $getNewAddressStmt->bindParam(":street", $street);
+      $getNewAddressStmt->bindParam(":postal_code", $postalCode);
+      $getNewAddressStmt->bindParam(":city", $city);
+      $getNewAddressStmt->execute();
+  
+      $newAddressResults = $getNewAddressStmt->fetch(PDO::FETCH_ASSOC);
+      //Set address id
+      $addressId = $newAddressResults['AddressId'];
+      // echo $addressId;
+      // echo "<br>";
+      // echo "New address $addressId now exists and can be billed";
+      // echo "<br>";
+      } else {
+      $addressId = $addressResults['AddressId'];
+      // echo "$addressId exists";
+      // echo "<br>";
+      // echo $addressResults['Street'];
+      // echo "<br>";
+      // echo $addressResults['PostalCode'];
+      // echo "<br>";
+      // echo $addressResults['City'];
+      }
 
-    $getAddressStmt = $db->prepare($getAddressSQL);
-    $getAddressStmt->bindParam(':street', $street);
-    $getAddressStmt->bindParam(':postal_code', $postalCode);
-    $getAddressStmt->bindParam(':city', $city);
-    $getAddressStmt->execute();
-
-    $addressResults = $getAddressStmt->fetch(PDO::FETCH_ASSOC);
-
-    if(empty($addressResults)) {
-    //Create a new customer in database
-    $createAddressSQL = "INSERT INTO ws_delivery_address (street, postal_code, city)
-          VALUES (:street, :postal_code, :city)";
-    $createAddressStmt = $db->prepare($createAddressSQL);
-    $createAddressStmt->bindParam(":street", $street);
-    $createAddressStmt->bindParam(":postal_code", $postalCode);
-    $createAddressStmt->bindParam(":city", $city);
-    $createAddressStmt->execute();
-
-    //and get the new customer from database to get access to auto incremented customer id
-    $getNewAddressSQL = $getAddressSQL;
-    $getNewAddressStmt = $db->prepare($getNewAddressSQL);
-    $getNewAddressStmt->bindParam(":street", $street);
-    $getNewAddressStmt->bindParam(":postal_code", $postalCode);
-    $getNewAddressStmt->bindParam(":city", $city);
-    $getNewAddressStmt->execute();
-
-    $newAddressResults = $getNewAddressStmt->fetch(PDO::FETCH_ASSOC);
-    //Set address id
-    $addressId = $newAddressResults['AddressId'];
-    // echo $addressId;
-    // echo "<br>";
-    // echo "New address $addressId now exists and can be billed";
-    // echo "<br>";
-    } else {
-    $addressId = $addressResults['AddressId'];
-    // echo "$addressId exists";
-    // echo "<br>";
-    // echo $addressResults['Street'];
-    // echo "<br>";
-    // echo $addressResults['PostalCode'];
-    // echo "<br>";
-    // echo $addressResults['City'];
-    }
+   }
       
   
     if (isset($customerId) && isset($addressId)) {
@@ -156,6 +159,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       $createOrderStmt->bindParam(":shipping_id", $shippingId);
       $createOrderStmt->execute();
 
+      $getOrderSQL = "SELECT
+                        ws_active_orders.id AS OrderId
+                      FROM
+                        ws_active_orders
+                      WHERE
+                        ws_active_orders.customer_id = :customer_id 
+                      ORDER BY ID DESC
+                      LIMIT 1";
+      $getOrderStmt = $db->prepare($getOrderSQL);
+      $getOrderStmt->bindParam(":customer_id", $customerId);
+      $getOrderStmt->execute();
+
+      $orderResults = $getOrderStmt->fetch(PDO::FETCH_ASSOC);
+      $orderId = $orderResults['OrderId'];
+
       // echo "Ny order tillagd";
 
   
@@ -166,7 +184,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $productId = $product['id'];
         $qty = $product['quantity'];
   
-        $addProductSQL = "INSERT INTO ws_orders_products (order_id, product_id, product_qty)";
+        $addProductSQL = "INSERT INTO ws_orders_products (order_id, product_id, product_qty)
+                          VALUES (:order_id, :product_id, :product_qty)";
+        $addProductStmt = $db->prepare($addProductSQL);
+        $addProductStmt->bindParam(":order_id", $orderId);
+        $addProductStmt->bindParam(":product_id", $productId);
+        $addProductStmt->bindParam(":product_qty", $qty);
+        $addProductStmt->execute();
+
+        echo "added product $productId";
         // echo "<pre>";
         // print_r($decodedCartJSON[$key]);
         // echo "</pre>";
