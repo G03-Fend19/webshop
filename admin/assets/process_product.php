@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category = htmlspecialchars($_POST['category']);
     $price = htmlspecialchars($_POST['price']);
     $qty = htmlspecialchars($_POST['qty']);
-    $featureImg = htmlspecialchars($_POST['feature']);
 
     //print_r($_POST);
     $images = [];
@@ -19,8 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
     }
-    /* print_r($images);
-    echo($featureImg); */
 
     $duplicateCheck = "SELECT name FROM ws_products
 WHERE name = :title
@@ -76,12 +73,18 @@ SET @p_id = LAST_INSERT_ID()";
             $stmt->bindParam(":img", $img);
             $stmt->execute();
 
+            if (isset($_POST['feature']) && !empty($_POST['feature'])) {
+                $featureImg = htmlspecialchars($_POST['feature']);
+            } else {
+                $featureImg = $images["image1"];
+            }
+
             if ($img == $featureImg) {
                 $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id, feature)
-                    VALUES ( @p_id, LAST_INSERT_ID(), 1)";
+VALUES ( @p_id, LAST_INSERT_ID(), 1)";
             } else {
                 $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
-                    VALUES ( @p_id, LAST_INSERT_ID())";
+VALUES ( @p_id, LAST_INSERT_ID())";
             }
 
             $stmt_rel = $db->prepare($sql_p_img);
@@ -91,4 +94,4 @@ SET @p_id = LAST_INSERT_ID()";
 
 }
 
-// header("Location: ../products_page.php");
+header("Location: ../products_page.php");
