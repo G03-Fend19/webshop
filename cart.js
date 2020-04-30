@@ -39,6 +39,7 @@
           img: productData.img,
           name: productData.name,
           price: productData.price,
+          discount: productData.discount,
           quantity: qty,
           stock: productData.stock,
         },
@@ -101,8 +102,8 @@
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
         <img class="cart__product__image-wrapper__img" src="./media/product_images/${
-          cart[product].img
-        }"></img>
+            cart[product].img
+            }"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
@@ -110,8 +111,8 @@
       </p>
       <div class="cart__product__info__btns">
       <input type=number id="quantity-input" min="1" max="${
-        cart[product].stock
-      }" class="cart__product__info__btns__qty" 
+            cart[product].stock
+            }" class="cart__product__info__btns__qty" 
       value="${cart[product].quantity}">
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
@@ -119,7 +120,10 @@
       <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
 
       </div>
-      <p> ${cart[product].quantity * cart[product].price} SEK</p>
+      <div>
+      <p class='price'> ${cart[product].quantity * cart[product].price} SEK</p>
+      <p class='price__discount'> ${Math.ceil(cart[product].quantity * (cart[product].price * cart[product].discount))} SEK</p>
+      </div>
       </div>
       </div>
       `;
