@@ -72,20 +72,71 @@ require_once './assets/aside-navigation.php';
 
       </div>
 
+      <label for="qty" class="form__label">
+        feature
+        <input type="text" name="feature" id="feature" value=""  required class="form__input">
+      </label>
       <div class="form__image-section__images">
         <?php
 
-$counter = 1;
-foreach ($imageArray as $image) {
-    echo "
-      <label class='form__image-section__selection'>
-      $image
-      <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-      <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-      </label>
-      ";
-    $counter++;
-}
+// $counter = 1;
+// foreach ($imageArray as $image) {
+//     echo "
+//       <label class='form__image-section__selection'>
+//       $image
+//      <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+//       <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+//       </label>
+//       ";
+//     $counter++;
+// }?>
+    <script>
+    const imageSection = document.querySelector('.form__image-section__images')
+    const renderImages = () => {
+      const imagesToDisplay =  JSON.parse(localStorage.getItem("images"))
+        imageSection.innerHTML = ""
+        let counter = 1
+
+      imagesToDisplay.map(image => {
+        imageSection.innerHTML += `
+        <label class='form__image-section__selection' for='image${counter}'>
+         <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${image}' >
+         <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}' data-imgname='${image}'class='thumbnails'>
+         
+         </label>      
+         <button data-name='${image}' "type="button"class="remove-image">x</button>
+        `
+        counter++
+      })
+
+    document.addEventListener('click', e => {
+  
+     const feature = document.getElementById('feature')
+      if(e.target.classList.contains('form__image-section__selection__image')){
+   
+        feature.value = e.target.dataset.imgname
+    
+      }
+    })
+
+    }
+    renderImages()
+    document.addEventListener("click", (e) => {
+      if (e.target.className == "remove-image") {
+        console.log(e.target.dataset.name)
+      
+        let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
+
+        images = imagesFromLocalStorage.filter((el)=> {
+          return el !== e.target.dataset.name
+        })
+          localStorage.setItem("images", JSON.stringify(images));
+        }
+        renderImages()
+    });
+
+    </script>
+    <?php
 
 ?>
       </div>
