@@ -80,7 +80,7 @@ foreach ($grouped as $productId => $product):
 		                        New In
 		                        </span>
 		                      </div>";
-    } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
       $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
                             10% off
@@ -98,7 +98,7 @@ foreach ($grouped as $productId => $product):
     }
 
     $productQty = htmlspecialchars($product['ProductQty']);
-    if ($productQty > 10) {
+    if ($productQty > 9) {
       $qtyMsg = "<span class='in-store'> $productQty in store</span>";
     } else {
       $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";

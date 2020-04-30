@@ -110,7 +110,7 @@ if (isset($_GET['product_id'])) {
                             New In
                             </span>
                           </div>";
-      } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
                               10% off
@@ -121,14 +121,14 @@ if (isset($_GET['product_id'])) {
         $name = htmlspecialchars_decode($product['ProductName']);
         $description = htmlspecialchars($product['ProductDescription']);
         $stock_qty = htmlspecialchars($product['ProductQty']);
-        if ($stock_qty > 10) {
+        if ($stock_qty > 9) {
           $qtyMsg = "<span class='in-store'> $stock_qty in store</span>";
         } else {
           $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
         }
         $price = htmlspecialchars($product['ProductPrice']);
         $discount = 1;
-        if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+        if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
           $discount = 0.9;
           $discountProductPrice = ceil($price - ($price * 0.1));
           $priceMsg = "<div><span class='original-price'>$price SEK</span>

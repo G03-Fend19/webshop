@@ -100,7 +100,7 @@ foreach ($grouped as $productId => $product):
 		                        New In
 		                        </span>
 		                      </div>";
-    } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
       $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
                             10% off
@@ -110,7 +110,7 @@ foreach ($grouped as $productId => $product):
 
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $discount = 1;
-    if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
       $discount = 0.9;
       $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
       $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
@@ -125,7 +125,7 @@ foreach ($grouped as $productId => $product):
     }
 
     $productQty = htmlspecialchars($product['ProductQty']);
-    if ($productQty > 10) {
+    if ($productQty > 9) {
       $qtyMsg = "<span class='in-store'> $productQty in store</span>";
     } else {
       $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
