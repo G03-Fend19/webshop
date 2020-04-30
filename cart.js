@@ -135,7 +135,7 @@
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
-      <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
+      <i data-id="delete-product" id ="deleteSingleProduct" class="delete-product fas fa-trash-alt"></i>
 
       </div>
       <div class='cart__product__info__price'>

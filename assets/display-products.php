@@ -159,12 +159,12 @@ foreach ($grouped as $productId => $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-		                        <span class='new-in__msg'>
-		                        New In
-		                        </span>
-		                      </div>";
-    } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
-      $productMsg = "<div class='out-of-stock'>
+												                        <span class='new-in__msg'>
+												                        New In
+												                        </span>
+												                      </div>";
+    } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
                             10% off
                           </span>
@@ -204,17 +204,17 @@ foreach ($grouped as $productId => $product):
         $categoryName = htmlspecialchars($product['CategoryName']);
     }
 
-    $productCards .= "<article class='product-card'>
+$productCards .= "<article class='product-card'>
 								                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
 		                                      <div class='image-wrapper'>
 		                                      $productMsg";
 
-    $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
+$productQty < 1 ? $productCards .= "<div class='out-of-stock'>
 								                                                            <span class='out-of-stock__msg'>
 								                                                            Currently out of stock
 								                                                            </span>
 								                                                          </div>" : null;
-    $productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
+$productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
 								                          </div>
 								                        </a>
                                         <div class='product-card__content'>
@@ -260,3 +260,9 @@ function getHeader($categoryName)
 echo $productsContainer;
 ?>
 </section>
+
+<script>
+  function checkLocalStorage(pruductName) {
+    console.log(productName);
+  }
+</script>
