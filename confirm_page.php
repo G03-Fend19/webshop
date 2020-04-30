@@ -306,6 +306,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $addProductStmt->bindParam(":product_qty", $qty);
         $addProductStmt->execute();
 
+        $getCurrentStockSQL = "SELECT ws_products.stock_qty
+                                AS CurrentProductQty
+                                FROM ws_products
+                                WHERE ws_products.id = :product_id";
+        $getCurrentStockStmt = $db->prepare($getCurrentStockSQL);
+        $getCurrentStockStmt->bindParam(":product_id", $productId);
+        $getCurrentStockStmt->execute();
+
+        $currentStockResults = $getCurrentStockStmt->fetch(PDO::FETCH_ASSOC);
+        $currentStock = $currentStockResults['CurrentProductQty'];
+        $newStock = $currentStock - $qty;
+
+        $updateQtySQL = "UPDATE ws_products
+                        SET stock_qty = :new_stock
+                        WHERE ws_products.id = :product_id";
+        $updateQtyStmt = $db->prepare($updateQtySQL);
+        $updateQtyStmt->bindParam(":new_stock", $newStock);
+        $updateQtyStmt->bindParam(":product_id", $productId);
+        $updateQtyStmt->execute();
+
         echo "added product $productId";
         ?>
         <script src="confirm_page.js"></script>
