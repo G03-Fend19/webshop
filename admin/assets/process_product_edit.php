@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category_id = htmlspecialchars($_POST['category']);
     $price = htmlspecialchars($_POST['price']);
     $qty = htmlspecialchars($_POST['qty']);
+    //$featureImg = htmlspecialchars($_POST['feature']);
 
     // Backend validation
     $duplicateCheck = "SELECT name FROM ws_products
@@ -137,6 +138,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
+
+// Setting feature-img
+    /* $sql_new_images_db = "SELECT
+ws_images.id AS imgId,
+ws_images.img AS imgName
+FROM
+ws_images,
+ws_products_images
+WHERE
+ws_products_images.product_id = :id
+AND
+ws_images.id = ws_products_images.img_id";
+
+$stmt_new_images_db = $db->prepare($sql_new_images_db);
+$stmt_new_images_db->bindParam(':id', $p_id);
+$stmt_new_images_db->execute();
+
+$new_images_db = [];
+while ($img_row = $stmt_current_img->fetch(PDO::FETCH_ASSOC)) {
+$new_images_db[$img_row['imgId']] = $img_row['imgName'];
+}
+
+foreach ($new_images_db as $img_id => $img_filename) {
+
+if ($img_filename == $featureImg) {
+$sql_update_feature = "UPDATE ws_products_images
+SET feature = 1
+WHERE product_id = :p_id
+AND img_id = :img_id";
+}
+else {
+$sql_update_feature = "UPDATE ws_products_images
+SET feature = 0
+WHERE product_id = :p_id
+AND img_id = :img_id";
+}
+$stmt_update_feature = $db->prepare($sql_update_feature);
+$stmt_update_feature->bindParam(':p_id', $p_id);
+$stmt_update_feature->bindParam(':img_id', $img_id);
+$stmt_update_feature->execute();
+
+} */
 
 }
 header("Location:../products_page.php");
