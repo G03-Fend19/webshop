@@ -13,7 +13,6 @@ $headline = $_GET['orders'] . " orders";
 
   <div class="admin__tables__text">
     <h1 class="headline__php"><?php echo ucfirst($headline)?></h1>
-    <a href="./create_product.php">
   </div>
   <?php
   if(isset($_GET['orders'])) {

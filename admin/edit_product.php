@@ -110,7 +110,7 @@ require_once './assets/aside-navigation.php';
 
 ?>
 
-<main class="admin__products">
+<main class="admin__tables">
 
   <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
     <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
@@ -120,7 +120,7 @@ require_once './assets/aside-navigation.php';
   </form>
 
 
-  <h1>Editing: Product <?="#$p_id"?></h1>
+  <h1 class='headline__php'>Editing: Product <?="#$p_id"?></h1>
 
 
 

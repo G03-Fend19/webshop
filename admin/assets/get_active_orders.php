@@ -127,5 +127,5 @@ echo '</tbody></table></section>';
 ?>
 
 <script>
-let activeOrdersFromPHP = < ? php echo json_encode($activeOrdersGrouped); ? > ;
+let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
