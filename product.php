@@ -93,6 +93,10 @@ if (isset($_GET['product_id'])) {
         }
     }
 
+//     echo "<pre>";
+// print_r($grouped);
+// echo "</pre>";
+
     if (empty($grouped)) {
         ?>
       <script type="text/javascript">
