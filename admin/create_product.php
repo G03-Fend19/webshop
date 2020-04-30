@@ -104,7 +104,7 @@ require_once './assets/aside-navigation.php';
          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}' data-imgname='${image}'class='thumbnails'>
          
          </label>      
-         <button data-name='${image}' "type="button"class="remove-image">x</button>
+         <button data-name='${image}' "type="button" class="remove-image">x</button>
         `
         counter++
       })
@@ -123,7 +123,7 @@ require_once './assets/aside-navigation.php';
     renderImages()
     document.addEventListener("click", (e) => {
       if (e.target.className == "remove-image") {
-        console.log(e.target.dataset.name)
+  
       
         let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
 
