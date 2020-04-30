@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-    
+        console.log('upload image script running')
         // get images from php
         let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; 
       // get images from localstorage
@@ -84,5 +84,7 @@ if (isset($_POST['submit'])) {
              })
              localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
         }
+     
+    
 
 </script>

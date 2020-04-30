@@ -160,37 +160,91 @@ require_once './assets/aside-navigation.php';
 
       </div>
 
-      <div class="form__image-section__images">
+      <div id="update-product-images"class="form__image-section__images">
         <?php
 
-if (count($imagesDb) != 0) {
+// if (count($imagesDb) != 0) {
 
-    $counter = 1;
-    foreach ($imagesDb as $image) {
-        echo "
-          <label class='form__image-section__selection'>
-          $image
-          <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-          </label>
-          ";
-        $counter++;
-    }
-} else {
-    $counter = 1;
-    foreach ($imagesGet as $image) {
-        echo "
-        <label class='form__image-section__selection'>
-        $image
-        <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-        <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-        </label>
-        ";
-        $counter++;
-    }
+//     $counter = 1;
+//     foreach ($imagesDb as $image) {
+//         echo "
+//           <label class='form__image-section__selection'>
+//           $image
+//           <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+//           <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+//           </label>
+//           ";
+//         $counter++;
+//     }
+// } else {
+//     $counter = 1;
+//     foreach ($imagesGet as $image) {
+//         echo "
+//         <label class='form__image-section__selection'>
+//         $image
+//         <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
+//         <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
+//         </label>
+//         ";
+//         $counter++;
+//     }
 
-}
+// }
 ?>
+   <script>
+    const setImagesToLocalStorage = () => {
+
+    let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
+    imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
+    !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null
+
+    imagesFromDb.forEach(image => {
+    !imagesFromLocalStorage.includes(image) ? imagesFromLocalStorage.push(image) : null
+    })
+    localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+    console.log(imagesFromLocalStorage)
+
+    }
+    setImagesToLocalStorage()
+
+    const renderImagesToDOM = () => {
+    const updateImageSection = document.getElementById('update-product-images')
+    let counter = 0
+    if(imagesFromLocalStorage.length > 0){
+    console.log('running render images')
+      updateImageSection.innerHTML = ''
+     imagesFromLocalStorage.map(image => {
+      updateImageSection.innerHTML += `
+    <label class='form__image-section__selection' for='image${counter}'>
+        <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
+            checked value='${image}'>
+        <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}'
+            data-imgname='${image}' class='thumbnails'>
+
+    </label>
+    <button data-name='${image}' "type="button"class="remove-image">x</button>
+    `
+    counter++
+    })  
+
+    }
+    }
+    renderImagesToDOM()
+        document.addEventListener("click", (e) => {
+      if (e.target.className == "remove-image") {
+  
+      
+        let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
+
+        images = imagesFromLocalStorage.filter((el)=> {
+          return el !== e.target.dataset.name
+        })
+          localStorage.setItem("images", JSON.stringify(images));
+        }
+        renderImagesToDOM()
+    });
+   
+  </script>
       </div>
       <button type="submit">Save</button>
       <div id="errorDiv">

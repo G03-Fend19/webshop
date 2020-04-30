@@ -25,7 +25,6 @@ AND active = 1";
 
     $stmt = $db->prepare($duplicateCheck);
     $stmt->bindParam(':title', $title);
-
     $stmt->execute();
     if (empty($title) || empty($description) || $price == "" || $price == null || $qty == "" || $qty == null) {
         header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
@@ -41,6 +40,8 @@ AND active = 1";
         exit();
     }
     ;
+
+
 
 //Inserting the new product into db
     $sql1 = "INSERT INTO ws_products (name, description, price, stock_qty)

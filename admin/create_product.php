@@ -102,40 +102,41 @@ require_once './assets/aside-navigation.php';
         <label class='form__image-section__selection' for='image${counter}'>
          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${image}' >
          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}' data-imgname='${image}'class='thumbnails'>
-
-         </label>
-         <button data-name='${image}' "type="button"class="remove-image">x</button>
+         
+         </label>      
+         <button data-name='${image}' "type="button" class="remove-image">x</button>
         `
             counter++
           })
 
-          document.addEventListener('click', e => {
+         document.addEventListener('click', e => {
+  
+     const feature = document.getElementById('feature')
+      if(e.target.classList.contains('form__image-section__selection__image')){
+   
+        feature.value = e.target.dataset.imgname
+    
+      }
+    })
 
-            const feature = document.getElementById('feature')
-            if (e.target.classList.contains('form__image-section__selection__image')) {
+    }
+    renderImages()
+    document.addEventListener("click", (e) => {
+      if (e.target.className == "remove-image") {
+  
+      
+        let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
 
-              feature.value = e.target.dataset.imgname
-
-            }
-          })
-
+        images = imagesFromLocalStorage.filter((el)=> {
+          return el !== e.target.dataset.name
+        })
+          localStorage.setItem("images", JSON.stringify(images));
         }
         renderImages()
-        document.addEventListener("click", (e) => {
-          if (e.target.className == "remove-image") {
-            console.log(e.target.dataset.name)
+    });
 
-            let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
-
-            images = imagesFromLocalStorage.filter((el) => {
-              return el !== e.target.dataset.name
-            })
-            localStorage.setItem("images", JSON.stringify(images));
-          }
-          renderImages()
-        });
-        </script>
-        <?php
+    </script>
+    <?php
 
 ?>
       </div>
