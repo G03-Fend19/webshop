@@ -9,10 +9,12 @@ $categories = "";
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
     $id = htmlspecialchars($row['id']);
     $name = htmlspecialchars($row['name']);
-    $categoryTitle = htmlspecialchars($_GET['category_id']);
+    if(isset($_GET['category_id'])){
+      $categoryTitle = htmlspecialchars($_GET['category_id']);
+    }
     $class = "aside__nav__ul__li__title__link";
     $arrow = "";
-    if ($categoryTitle == $id) {
+    if (isset($_GET['category_id']) && $categoryTitle == $id) {
       $class .= "-active"; 
       $arrow = '<i class="fas fa-chevron-right"></i>';
     } 
