@@ -164,7 +164,9 @@ foreach ($grouped as $productId => $product):
                         </div>";
     }
     $productPrice = htmlspecialchars($product['ProductPrice']);
+    $discount = 1;
     if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      $discount = 0.9;
       $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
       $priceMsg = "<span class='original-price'>Original price:</span>
                     <p class='original-price__price'>$productPrice SEK</p>
@@ -214,7 +216,8 @@ foreach ($grouped as $productId => $product):
 								                          data-name='$productName'
 								                          data-price=$productPrice
 								                          data-img='$productImg'
-								                          data-stock=$productQty
+                                          data-stock=$productQty
+                                          data-discount=$discount 
 								                          class='add-to-cart-btn'>";
     $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
                           $productCards .= "</button>
