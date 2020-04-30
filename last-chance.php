@@ -3,6 +3,10 @@ require_once "./db.php";
 require_once "./assets/header.php";
 require_once "./assets/categories-menu.php";
 
+$productMsg = "";
+$priceMsg = "";
+$qtyMsg = "";
+
 $currentDateTime = date('Y-m-d H:i:s');
 $currentDateTimeDT = new DateTime($currentDateTime);
 $lastChanceLimitDT = $currentDateTimeDT->sub(new DateInterval('P1Y'));
@@ -87,19 +91,51 @@ foreach ($results as $row) {
 // echo "</pre>";
 
 foreach ($grouped as $productId => $product):
-  $productName = htmlspecialchars($product['ProductName']);
-  if (strlen($productName) > 20) {
-    $productName = substr($productName, 0, 20) . "...";
-  }
-  $productPrice = htmlspecialchars($product['ProductPrice']);
-  $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
-  $productQty = htmlspecialchars($product['ProductQty']);
-  // $productImg = htmlspecialchars($product['ImageName']); // TODO
-  if (empty($product['imgNames'])) {
-  $productImg = "placeholder.jpg";
-  } else {
-  $productImg = htmlspecialchars($product['imgNames'][0]);
-  }
+  $productMsg = "";
+    $priceMsg = "";
+    $qtyMsg = "";
+    if ($product['AddedDate'] >= $newInLimitDate) {
+        $productMsg = "<div class='new-in'>
+		                        <span class='new-in__msg'>
+		                        New In
+		                        </span>
+		                      </div>";
+    } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      $productMsg = "<div class='out-of-stock'>
+                          <span class='out-of-stock__msg'>
+                            10% off
+                          </span>
+                        </div>";
+    }
+
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $discount = 1;
+    if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      $discount = 0.9;
+      $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
+      $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+                    <span class='discount'>$discountProductPrice SEK</span></div>";
+    } else {
+      $priceMsg = "<span>$productPrice SEK</span>";
+    }
+
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+        $productName = substr($productName, 0, 20) . "...";
+    }
+
+    $productQty = htmlspecialchars($product['ProductQty']);
+    if ($productQty > 10) {
+      $qtyMsg = "<span class='in-store'> $productQty in store</span>";
+    } else {
+      $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+    }
+
+    if (empty($product['imgNames'])) {
+        $productImg = "placeholder.jpg";
+    } else {
+        $productImg = htmlspecialchars($product['imgNames'][0]);
+    }
 
   $productCards .= "<article class='product-card'>
                         <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
@@ -117,10 +153,7 @@ foreach ($grouped as $productId => $product):
                           <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
                             $productName
                           </a>
-                          <span class='original-price'>Original price:</span>
-                          <p class='original-price__price'>$productPrice SEK</p>
-                          <span class='discount'>New price:</span>
-                          <p class='discount__price'>$discountProductPrice SEK</p>
+                          $priceMsg
                           </div>
                           <button
                           data-id=$productId
@@ -131,6 +164,7 @@ foreach ($grouped as $productId => $product):
                           class='add-to-cart-btn'>";
   $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
   $productCards .= "</button>
+                          $qtyMsg
                           </div>
                       </article>";
 endforeach;

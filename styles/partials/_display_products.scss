@@ -116,19 +116,21 @@
       grid-row: span 2;
       .original-price {
         font-size: 11px;
-        &__price {
-          text-decoration: line-through;
-        }
+        text-decoration: line-through;
       }
       .discount {
-        font-size: 11px;
         color: red;
-        &__price {
-          color: red;
-        }
       }
+      
     }
 
+  }
+  .in-store {
+    font-size: 11px;
+  }
+  .few-in-store {
+    font-size: 11px;
+    color: red;
   }
 
   .out-of-stock {

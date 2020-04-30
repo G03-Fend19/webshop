@@ -1,5 +1,8 @@
 <?php
 $search = "";
+$productMsg = "";
+$priceMsg = "";
+$qtyMsg = "";
 
 $currentDateTime = date('Y-m-d H:i:s');
 $currentDateTimeDT = new DateTime($currentDateTime);
@@ -85,9 +88,6 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         }
     }
 
-    $productMsg = "";
-    $priceMsg = "";
-
     foreach ($grouped as $productId => $product):
       $productMsg = "";
       $priceMsg = "";
@@ -104,22 +104,30 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
                               </span>
                             </div>";
         }
+
         $productPrice = htmlspecialchars($product['ProductPrice']);
+        $discount = 1;
         if($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
+          $discount = 0.9;
           $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
-          $priceMsg = "<span class='original-price'>Original price:</span>
-                        <p class='original-price__price'>$productPrice SEK</p>
-                        <span class='discount'>New price:</span>
-                        <p class='discount__price'>$discountProductPrice SEK</p>";
+          $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+                        <span class='discount'>$discountProductPrice SEK</span></div>";
         } else {
-          $priceMsg = "<p>$productPrice SEK</p>";
+          $priceMsg = "<span>$productPrice SEK</span>";
         }
+
         $productName = htmlspecialchars($product['ProductName']);
         if (strlen($productName) > 20) {
             $productName = substr($productName, 0, 20) . "...";
         }
+
         $productQty = htmlspecialchars($product['ProductQty']);
-        // $productImg = htmlspecialchars($product['ImageName']); // TODO
+        if ($productQty > 10) {
+          $qtyMsg = "<span class='in-store'> $productQty in store</span>";
+        } else {
+          $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+        }
+
         if (empty($product['imgNames'])) {
             $productImg = "placeholder.jpg";
         } else {
@@ -150,10 +158,12 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 									                          data-name='$productName'
 									                          data-price=$productPrice
 									                          data-img='$productImg'
-									                          data-stock=$productQty
+                                            data-stock=$productQty
+                                            data-discount=$discount 
 							                          class='add-to-cart-btn'>";
         $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
         $productCards .= "</button>
+                                        $qtyMsg
 							                          </div>
 							                      </article>";
     endforeach;
