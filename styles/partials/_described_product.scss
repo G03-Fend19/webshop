@@ -13,10 +13,13 @@
   justify-self: center;
 
   @media (min-width: 750px) {
-    margin: 5em;
+    margin: 8%;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 70% 30%;
     gap: 2em;
+  }
+  @media (min-width: 1100px) {
+    margin: 5em;
     max-width: 60vw;
   }
 
@@ -52,6 +55,11 @@
         @media (min-width: 750px) {
           font-size: 30px;
         }
+
+        @media (min-width: 1100px) {
+          font-size: 30px;
+        }
+
         :hover {
           cursor: pointer;
         }
@@ -70,6 +78,11 @@
           margin: 2px;
 
           @media (min-width: 750px) {
+            height: 9vw;
+            width: 9vw;
+            margin: 12px;
+          }
+          @media (min-width: 1100px) {
             width: 5vw;
             height: 10vh;
           }
@@ -84,6 +97,11 @@
           width: 8vw;
 
           @media (min-width: 750px) {
+            height: 9vw;
+            width: 9vw;
+          }
+
+          @media (min-width: 1100px) {
             height: 10vh;
             width: 5vw;
           }
@@ -186,6 +204,8 @@
         cursor: pointer;
 
         @media (min-width: 750px) {
+        }
+        @media (min-width: 1100px) {
           margin-bottom: 100px;
         }
 
