@@ -14,18 +14,19 @@
   // eventlistener for add-to-cart-btn
   // each button has data-information about their specific product. we send that information
   // to the createProduct function
-  addBtn.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
+  addBtn.forEach(btn =>
+    btn.addEventListener("click", e => {
       cartCountBG.classList.remove("hidden");
       const productData = e.target.parentNode.dataset;
       let qty;
       document.querySelector("#qtyInput")
         ? (qty = document.querySelector("#qtyInput").value)
         : (qty = 1);
-
+      qty;
       createProduct(productData, qty);
     })
   );
+
   // we check the cart object if the product we want to add already exists, if so pressing  add-product only increases
   // quantity.
   // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
@@ -41,14 +42,15 @@
           name: productData.name,
           price: productData.price,
           quantity: qty,
-          stock: productData.stock,
-        },
+          stock: productData.stock
+        }
       };
     }
     localStorage.setItem("cart", JSON.stringify(cart));
 
     renderCart();
   };
+
   // check stock takes current Product
   // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
   const updateStock = (product, qty) => {
@@ -56,7 +58,7 @@
     const s = cart[product].stock;
     q <= s ? (cart[product].quantity = qty) : alert("no more in stock");
   };
-  const checkStock = (product) => {
+  const checkStock = product => {
     const q = cart[product].quantity;
     const s = cart[product].stock;
     q < s ? cart[product].quantity++ : alert("no more in stock");
@@ -71,11 +73,12 @@
   // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
     let total = 0;
-    Object.keys(cart).forEach((el) => {
+    Object.keys(cart).forEach(el => {
       total += cart[el].quantity;
       cartCount.textContent = total;
     });
   };
+
   const renderCart = () => {
     if (Object.entries(cart).length === 0) {
       productWrapper.innerHTML = "No products in cart";
@@ -89,15 +92,15 @@
       totalCheckout.innerHTML = "";
       cartMenu.innerHTML += `
  
-    <button class="clear-cart">
-        Clear Cart 
-        <i id="delete-product"class="fas fa-trash-alt"></i>
-       </button>
+ 
+       <button class="open-modal" id="myBtn">
+       Clear Cart 
+       <i id="delete-product"class="fas fa-trash-alt"></i></button>
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;
       productWrapper.innerHTML += Object.keys(cart)
-        .map((product) => {
+        .map(product => {
           return `
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
@@ -129,16 +132,18 @@
       totalCheckout.innerHTML +=
         calcTotal() +
         `<div class="cart__checkout"><a href="checkout_page.php" >Go To Checkout</a></div>`;
+      productsInCart();
     }
 
     // cartDisplay.innerHTML += `<button class="cart__checkout">Go to Checkout</button></div>`;
   };
   renderCart();
+
   // a clicklistener on entire document. fires when user presses
   // anything with class changeQty
   // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
   const changeQty = () => {
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
       if (e.target.dataset.id == "qty+") {
@@ -156,7 +161,7 @@
     });
   };
   const deleteProduct = () => {
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       if (e.target.dataset.id == "delete-product") {
         let r = confirm("are you sure?");
@@ -173,17 +178,40 @@
   };
 
   const clearCart = () => {
-    document.addEventListener("click", (e) => {
+    const modal = document.getElementById("myModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    document.addEventListener("click", e => {
+      if (e.target.className == "open-modal") {
+        modal.style.display = "block";
+        //close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            modal.style.display = "none";
+          }
+        });
+      }
+    });
+
+    document.addEventListener("click", e => {
       if (
         e.target.className == "clear-cart" &&
         !Object.entries(cart).length == 0
       ) {
-        let r = confirm("u want to clear the cart?");
-        if (r) {
-          cart = {};
-          localStorage.setItem("cart", JSON.stringify(cart));
-          renderCart();
-        }
+        cart = {};
+        modal.style.display = "none";
+        localStorage.setItem("cart", JSON.stringify(cart));
+        cartMenu.innerHTML = "";
+        renderCart();
       }
     });
   };
@@ -192,7 +220,7 @@
     cartDisplay.classList.toggle("hidden");
   });
   const closeCart = () => {
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       if (e.target.className == "close-cart") {
         cartDisplay.classList.toggle("hidden");
       }
@@ -203,6 +231,7 @@
   clearCart();
   closeCart();
 })();
+
 // ;(() => {
 //   const addBtn = document.querySelectorAll(".add-to-cart-btn")
 //   const cartDisplay = document.querySelector(".cart")

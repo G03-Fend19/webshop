@@ -2,6 +2,7 @@
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
+require_once "assets/order_modal.php";
 
 ?>
 <main class="admin__products">
