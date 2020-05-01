@@ -154,6 +154,15 @@ require_once './assets/aside-navigation.php';
 
     <input type="hidden" name="product_id" value="<?=$p_id; ?>">
 
+<?php
+
+   /*  echo'$imagesDb: <pre>'; 
+print_r($imagesDb);
+
+echo'</pre>';  */
+
+?>
+
     <div class="form__image-section">
       <label for="img" class="form__label">Images</label>
       <div class="form__image-section__create">
@@ -161,6 +170,10 @@ require_once './assets/aside-navigation.php';
 
       </div>
 
+      <label for="qty" class="form__label">
+        feature
+        <input type="text" name="feature" id="feature" value="" class="form__input">
+      </label>
       <div id="update-product-images" class="form__image-section__images">
         <?php
 
@@ -191,28 +204,44 @@ require_once './assets/aside-navigation.php';
 //     }
 
 // }
+
 ?>
         <script>
         const setImagesToLocalStorage = () => {
 
+
           let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
+          console.log("ImagesFromDb: ");
+          console.log(imagesFromDb);
+          
           imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
           !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null
 
+         console.log("localstorage: ", imagesFromLocalStorage);
          
-          if (imagesFromLocalStorage.length != 0) {
-            imagesFromDb.forEach(imgIndex => {
+          if (imagesFromLocalStorage.length > 0) {
+            imagesFromDb.forEach((imgObj, index) => {
       
+           
+         
+           
+            console.log(imagesFromLocalStorage[index]);
+            console.log(Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1);
             
-            console.log("bilden från db: " + imgIndex.img);
             
-
-            /* !imagesFromLocalStorage.imgIndex.img.includes(imgIndex.img) ? imagesFromLocalStorage.push(imgIndex) : null; */
+             Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push({
+                img: imgObj.img,
+                feature: imgObj.feature
+              }); 
           })
             }
             else {
-              imagesFromDb.forEach(imgIndex => {
-              imagesFromLocalStorage.push(imgIndex);
+              imagesFromDb.forEach(imgObj => {
+              imagesFromLocalStorage.push({
+                img: imgObj.img,
+                feature: imgObj.feature
+
+              });
           });
             }
         
@@ -235,43 +264,63 @@ require_once './assets/aside-navigation.php';
           if (imagesFromLocalStorage.length > 0) {
             console.log('running render images')
             updateImageSection.innerHTML = ''
-            imagesFromLocalStorage.map(imgIndex => {
+            imagesFromLocalStorage.map(imgObj => {
               updateImageSection.innerHTML += `
                       <label class='form__image-section__selection' for='image${counter}'>
                           <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
-                              checked value='${imgIndex['img']}'>
-                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgIndex['img']}'
-                              data-imgname='${imgIndex['img']}' class='thumbnails'>
+                              checked value='${imgObj['img']}'>
+                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}'
+                              data-imgname='${imgObj['img']}' class='thumbnails'>
 
                       </label>
-                      <button data-name='${imgIndex['img']}' type="button"class="remove-image">x</button>`;
+                      <button data-name='${imgObj['img']}' type="button"class="remove-image">x</button>`;
               counter++
-            })
+            });
+
+            
+
+            const feature = document.getElementById('feature');
+
+
+            imagesFromLocalStorage.forEach(imgObj => {
+
+              if (imgObj['feature'] == 1) {
+                feature.value = imgObj['img']
+              }
+              
+            });
+            
+
 
           }
 
 
-          /* const updateImageSection = document.getElementById('update-product-images')
-                            let counter = 0
-                            if (imagesFromLocalStorage.length > 0) {
-                              console.log('running render images')
-                              updateImageSection.innerHTML = ''
-                              imagesFromLocalStorage.map(image => {
-                                updateImageSection.innerHTML += `
-                      <label class='form__image-section__selection' for='image${counter}'>
-                          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
-                              checked value='${image}'>
-                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}'
-                              data-imgname='${image}' class='thumbnails'>
-
-                      </label>
-                      <button data-name='${image}' "type="button"class="remove-image">x</button>
-                      `
-                                counter++
-                              })
-
-                            } */
+         
         }
+
+
+
+        document.addEventListener('click', e => {
+              if(e.target.classList.contains('form__image-section__selection__image')){
+
+                /* feature.value = e.target.dataset.imgname */
+                imagesFromLocalStorage.forEach(imgObj => {
+
+                  if (imgObj['img'] == e.target.dataset.imgname) {
+                    imgObj['feature'] = 1;
+                  }
+                  else {
+                    imgObj['feature'] = 0;
+                  }
+                  
+                });
+                localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+ 
+              }
+
+
+              renderImagesToDOM()
+            });
         renderImagesToDOM()
         document.addEventListener("click", (e) => {
           if (e.target.className == "remove-image") {
@@ -362,6 +411,32 @@ if (JSON.parse(localStorage.getItem('product_form'))) {
 
   localStorage.removeItem('product_form');
 }
+
+
+
+ /* const updateImageSection = document.getElementById('update-product-images')
+                            let counter = 0
+                            if (imagesFromLocalStorage.length > 0) {
+                              console.log('running render images')
+                              updateImageSection.innerHTML = ''
+                              imagesFromLocalStorage.map(image => {
+                                updateImageSection.innerHTML += `
+                      <label class='form__image-section__selection' for='image${counter}'>
+                          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
+                              checked value='${image}'>
+                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}'
+                              data-imgname='${image}' class='thumbnails'>
+
+                      </label>
+                      <button data-name='${image}' "type="button"class="remove-image">x</button>
+                      `
+                                counter++
+                              })
+
+                            } */
+
+
+
 </script>
 <?php
 
