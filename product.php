@@ -148,7 +148,7 @@ if (isset($_GET['product_id'])) {
 if (!empty($imgList)) {
     foreach ($imgList as $img) {
       $imageName = $img['ImageName'];
-        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt=''></div>";
+        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt='product image'></div>";
     }
 }
 
