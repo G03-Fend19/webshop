@@ -267,7 +267,7 @@ a {
   margin-top: 25vh;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 750px) {
   .header__hero h1 {
     font-size: 5vh;
   }
@@ -1947,16 +1947,26 @@ footer {
     margin: 8%;
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
-    -ms-grid-rows: 70% 30%;
-        grid-template-rows: 70% 30%;
+    -ms-grid-rows: 75% 25%;
+        grid-template-rows: 75% 25%;
     gap: 2em;
   }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1013px) {
   .product-section {
     margin: 5em;
     max-width: 60vw;
+    -ms-grid-rows: 70% 30%;
+        grid-template-rows: 70% 30%;
+    max-height: 1000px;
+  }
+}
+
+@media (min-width: 750px) and (min-height: 1000px) {
+  .product-section {
+    -ms-grid-rows: 60% 40%;
+        grid-template-rows: 60% 40%;
   }
 }
 
@@ -1972,6 +1982,13 @@ footer {
     -ms-grid-rows: 70% 10vh;
         grid-template-rows: 70% 10vh;
     gap: 2em;
+  }
+}
+
+@media (min-width: 750px) and (min-height: 1000px) {
+  .product-section__images {
+    -ms-grid-rows: 70% 7vh;
+        grid-template-rows: 70% 7vh;
   }
 }
 
@@ -2011,7 +2028,7 @@ footer {
   }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1013px) {
   .product-section__images__small-container i {
     font-size: 30px;
   }
@@ -2051,10 +2068,12 @@ footer {
   }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1013px) {
   .product-section__images__small-container__img-container .img-wrapper {
-    width: 5vw;
-    height: 10vh;
+    /*  width: 5vw;
+            height: 10vh; */
+    height: 6.5vw;
+    width: 6.5vw;
   }
 }
 
@@ -2074,10 +2093,12 @@ footer {
   }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1013px) {
   .product-section__images__small-container__img-container__img {
-    height: 10vh;
-    width: 5vw;
+    /*  height: 10vh;
+            width: 5vw; */
+    height: 6.5vw;
+    width: 6.5vw;
   }
 }
 
@@ -2210,7 +2231,7 @@ footer {
   cursor: pointer;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1013px) {
   .product-section__rigth__actions .add-to-cart-btn {
     margin-bottom: 100px;
   }
@@ -2976,6 +2997,135 @@ footer {
     border: none;
     background: none;
     cursor: pointer;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.137);
+}
+
+.modal__content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border-radius: 15px;
+  width: 280px;
+  -webkit-animation-name: animatetop;
+          animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
+  text-align: left;
+}
+
+@media (min-width: 500px) {
+  .modal__content {
+    width: 450px;
+  }
+}
+
+.modal__content__header {
+  padding: 2px 16px;
+  background-color: #ffffff;
+  color: #616161;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.modal__content__header h2 {
+  margin-top: 1em;
+  font-weight: 500;
+}
+
+.modal__content__header .close {
+  color: #979797;
+  float: right;
+  font-size: 28px;
+}
+
+.modal__content__header .close:hover,
+.modal__content__header .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal__content__body {
+  padding: 2px 16px;
+  min-height: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1em;
+}
+
+.modal__content__footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 2px 16px;
+  background-color: #ebebeb;
+  color: white;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.modal__content__footer button {
+  background-color: #a5a5a5;
+  border: none;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 0.5em;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+.modal__content__footer button:hover {
+  background-color: #888888;
+}
+
+.modal__content__footer .clear-cart {
+  background-color: #dd4f4f;
+}
+
+.modal__content__footer .clear-cart:hover {
+  background-color: #bd4343;
+}
+
+/* Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
   }
 }
 /*# sourceMappingURL=style.css.map */

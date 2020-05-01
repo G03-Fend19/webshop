@@ -11,7 +11,8 @@
         "partials/_product_form.scss",
         "partials/_dashboard.scss",
         "partials/_category-table.scss",
-        "partials/_foot.scss"
+        "partials/_foot.scss",
+        "partials/_modal.scss"
     ],
     "names": [],
     "file": "style.css"

@@ -56,9 +56,29 @@
         <div class="cart__menu"></div>
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>
+   
       </section>
       <h1>Welcoming text</h1>
       <p>Describing text about shop...</p>
+
+<div id="myModal" class="modal">
+  <div class="modal__content">
+    <div class="modal__content__header">
+      <span class="close">&times;</span>
+      <h2>Confirmation</h2> 
+    </div>
+    <div class="modal__content__body">
+    <p>Are you sure you would like to remove all items from the shopping cart?</p>
+    </div>
+    <div class="modal__content__footer">
+    <button class="cancel-btn">Cancel</button>  <button class="clear-cart">
+        Clear Cart 
+       </button>
+    </div>
+  </div>
+
+</div>
+
     </section>
 
   </header>
