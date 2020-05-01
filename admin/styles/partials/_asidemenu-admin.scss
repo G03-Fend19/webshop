@@ -28,12 +28,12 @@
     padding: 1.5em 0 0.5em 0.5em;
     font-weight: 500;
     color: gray;
-  }
 
-  a {
-    color: black;
-    text-decoration: none;
-    font-size: 0.8em;
+    &__link {
+      color: black;
+      text-decoration: none;
+      font-size: 16px;
+    }
   }
 
   &__nav {
@@ -45,4 +45,20 @@
       }
     }
   }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-size: 0.8em;
+}
+
+.aside__nav__ul__li__title__link-active {
+  font-weight: 900;
+  color: rgb(84, 84, 169);
+}
+
+.orders__link-active {
+  font-weight: 900;
+  color: rgb(84, 84, 169);
 }

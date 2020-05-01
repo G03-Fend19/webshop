@@ -51,7 +51,7 @@
         </div>
 
       </ul>
-      <section class="cart">
+      <section class="cart hidden">
         <div class="cart__menu"></div>
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>

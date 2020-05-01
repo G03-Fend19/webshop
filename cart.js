@@ -1,5 +1,4 @@
 (() => {
-  const cartCountBG = document.querySelector(".round-thing");
   const cartCount = document.querySelector(".cart_qty_show");
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
   const cartDisplay = document.querySelector(".cart");
@@ -14,9 +13,9 @@
   // eventlistener for add-to-cart-btn
   // each button has data-information about their specific product. we send that information
   // to the createProduct function
-  addBtn.forEach(btn =>
-    btn.addEventListener("click", e => {
-      cartCountBG.classList.remove("hidden");
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      cartCount.classList.remove("hidden");
       const productData = e.target.parentNode.dataset;
       let qty;
       document.querySelector("#qtyInput")
@@ -41,6 +40,7 @@
           img: productData.img,
           name: productData.name,
           price: productData.price,
+          discount: productData.discount,
           quantity: qty,
           stock: productData.stock
         }
@@ -73,8 +73,8 @@
   // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
     let total = 0;
-    Object.keys(cart).forEach(el => {
-      total += cart[el].quantity;
+    Object.keys(cart).forEach((el) => {
+      total += parseInt(cart[el].quantity);
       cartCount.textContent = total;
     });
   };
@@ -84,7 +84,7 @@
       productWrapper.innerHTML = "No products in cart";
       totalCheckout.innerHTML = "";
       cartCount.textContent = "";
-      cartCountBG.classList.add("hidden");
+      cartCount.classList.add("hidden");
     } else {
       productsInCart();
       productWrapper.innerHTML = "";
@@ -105,8 +105,8 @@
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
         <img class="cart__product__image-wrapper__img" src="./media/product_images/${
-          cart[product].img
-        }"></img>
+            cart[product].img
+            }"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
@@ -114,8 +114,8 @@
       </p>
       <div class="cart__product__info__btns">
       <input type=number id="quantity-input" min="1" max="${
-        cart[product].stock
-      }" class="cart__product__info__btns__qty" 
+            cart[product].stock
+            }" class="cart__product__info__btns__qty" 
       value="${cart[product].quantity}">
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
@@ -123,7 +123,10 @@
       <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
 
       </div>
-      <p> ${cart[product].quantity * cart[product].price} SEK</p>
+      <div>
+      <p class='price'> ${cart[product].quantity * cart[product].price} SEK</p>
+      <p class='price__discount'> ${Math.ceil(cart[product].quantity * (cart[product].price * cart[product].discount))} SEK</p>
+      </div>
       </div>
       </div>
       `;
@@ -155,23 +158,20 @@
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
 
-      /* if (document.querySelector("#pTable-section")) {
+      if (document.querySelector("#pTable-section")) {
         renderOrderSummary();
-      } */
+      }
     });
   };
   const deleteProduct = () => {
     document.addEventListener("click", e => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       if (e.target.dataset.id == "delete-product") {
-        let r = confirm("are you sure?");
-        if (r) {
-          delete cart[productId];
-          localStorage.setItem("cart", JSON.stringify(cart));
-          renderCart();
-          /* if (document.querySelector("#pTable-section")) {
-            renderOrderSummary();
-          } */
+        delete cart[productId];
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+        if (document.querySelector("#pTable-section")) {
+          renderOrderSummary();
         }
       }
     });

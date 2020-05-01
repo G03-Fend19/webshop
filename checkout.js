@@ -20,8 +20,6 @@ const productsInCheckout = () => {
 const renderOrderSummary = () => {
   let order = JSON.parse(localStorage.cart);
 
-  console.log(order);
-
   if (Object.keys(order).length != 0 && order.constructor === Object) {
     let productTable = `<table class="order-summary__table">
                         <thead>

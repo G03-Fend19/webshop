@@ -49,15 +49,16 @@
       "OrderStatusId" => $row["OrderStatusId"],
     ];
   }
-
+echo "<section class='completed-orders'>";
 if (empty($completedOrdersResults)) {
     echo "<h2>No completed orders</h2>";
 } else {
-    echo "<h2>Completed orders</h2>";
+    // echo "<h2>Completed orders</h2>";
   }
-echo "<h2>Filter orders</h2>
-      <label for='completedTextFilter'>Filter by city</label>
-      <input type='text' id='completedTextFilter' oninput='filterOrders(completedOrdersFromPHP)'>
+echo "<div class='completed-orders__filter'>
+        <h3>Filter orders</h3>
+        <input type='text' id='completedTextFilter' oninput='filterOrders(completedOrdersFromPHP)' placeholder='Filter by city'>
+      </div>
       <table id='completedtable'>
       <thead>
       <tr>
@@ -100,9 +101,9 @@ foreach($completedOrdersGrouped as $key => $order):
         </tr>";
 endforeach;
 echo $rows;
-echo '</tbody></table>';
+echo '</tbody></table></section>';
 ?>
 
 <script>
-  let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped); ?> ;
+let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped);?> ;
 </script>
