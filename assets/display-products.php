@@ -107,7 +107,6 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // print_r($results);
 // echo "</pre>";
 
-
 $grouped = [];
 $hiddenClass = "hidden";
 
@@ -162,10 +161,10 @@ foreach ($grouped as $productId => $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-																																																																																																									                        <span class='new-in__msg'>
-																																																																																																									                        New In
-																																																																																																									                        </span>
-																																																																																																									                      </div>";
+																																																																																																															                        <span class='new-in__msg'>
+																																																																																																															                        New In
+																																																																																																															                        </span>
+																																																																																																															                      </div>";
     } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
                     <span class='out-of-stock__msg'>
@@ -239,7 +238,7 @@ $productCards .= "<img class='product-thumb' src=./media/product_images/$product
                                           <i class='fas fa-cart-plus'></i>
                                           </button>
                                           <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
-          <input class='product-section__rigth__actions__amount__qty-container__input'  value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+          <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
           <div
             data-id=$productId
             data-name='$productName'
@@ -249,8 +248,8 @@ $productCards .= "<img class='product-thumb' src=./media/product_images/$product
             data-discount=$discount
             >
 
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty()'><i class='fas fa-minus-circle'></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $$productQty ?>)'><i class='fas fa-plus-circle'></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
           </div>
 
         </div>
@@ -318,12 +317,12 @@ function checkLocalStorage(name, id) {
 
 
   if (name in cart) {
-    console.log('true');
+    // console.log('true');
 
     qtyBtns.classList.remove("hidden");
     addToCartBtn.classList.add("hidden");
   } else {
-    console.log('false');
+    // console.log('false');
 
     qtyBtns.classList.add("hidden");
     addToCartBtn.classList.remove("hidden");
@@ -350,6 +349,27 @@ document.addEventListener("click", (e) => {
     }
   }
 });
+
+function lowerQty(id) {
+  let input = document.getElementById('qtyInput-' + id);
+
+  if (input.value > 1)
+  input.value = input.value - 1;
+}
+
+function higherQty(qty, id) {
+  let input = document.getElementById('qtyInput');
+  // let button = document.getElementById('higherBtn');
+  console.log(input);
+
+
+  if (input.value < qty) {
+    input.value = parseInt(input.value) + 1;
+  }
+  // else{
+  //   alert('no more in stock')
+  // }
+}
 
 
 

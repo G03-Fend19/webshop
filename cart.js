@@ -243,7 +243,7 @@
         const productId =
           e.target.parentNode.parentNode.parentNode.dataset.name;
         delete cart[productId];
-        console.log(cart);
+        // console.log(cart);
 
         localStorage.setItem("cart", JSON.stringify(cart));
         renderCart();

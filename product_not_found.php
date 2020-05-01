@@ -5,10 +5,21 @@ require_once "./assets/categories-menu.php";
 
 ?>
 
-<h1 class="notfound">Product not found :(</h1>
+<section class="not-found">
+  <section>
+    <h1>OOPS!</h1>
+    <h2>We seem to have lost that product..</h2>
+  </section>
 
-<style>
-.notfound {
-  margin: 40px;
-}
-</style>
+
+<img src="./media/images/Product_not_found(ps).png" alt="">
+</section>
+
+
+
+<?php
+
+require_once "./assets/foot.php";
+
+?>
+

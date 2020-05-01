@@ -3491,4 +3491,27 @@ footer {
     opacity: 1;
   }
 }
+
+.not-found {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
+  justify-items: center;
+}
+
+.not-found h1 {
+  font-size: 70px;
+  margin: 40px;
+  text-align: center;
+}
+
+.not-found h2 {
+  font-size: 25px;
+}
+
+.not-found img {
+  width: 400px;
+  margin-top: 40px;
+}
 /*# sourceMappingURL=style.css.map */
