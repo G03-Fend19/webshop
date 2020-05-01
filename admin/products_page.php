@@ -44,6 +44,7 @@ if (isset($_GET['category_id'])) {
               ws_products.stock_qty     AS ProductQty,
               ws_images.img             AS ImageName,
               ws_products_images.img_id AS ProductImageImageId,
+              ws_products_images.feature  AS FeatureImg,
               ws_categories.id          AS CategoryId,
               ws_categories.name        AS CategoryName
             FROM
@@ -52,6 +53,8 @@ if (isset($_GET['category_id'])) {
               ws_products_images
             ON
               ws_products.id = ws_products_images.product_id
+            AND
+              ws_products_images.feature = 1
             LEFT JOIN
               ws_images
             ON
@@ -82,6 +85,7 @@ if (isset($_GET['category_id'])) {
               ws_images.img           AS ImageName,
               ws_images.id            AS ImageId,
               ws_products_images.img_id AS ProductImageImageId,
+              ws_products_images.feature  AS FeatureImg,
               ws_categories.name      AS CategoryName,
               ws_categories.id        AS CategoryId
               FROM
@@ -90,6 +94,8 @@ if (isset($_GET['category_id'])) {
                 ws_products_images
               ON
                 ws_products.id = ws_products_images.product_id
+              AND
+                ws_products_images.feature = 1
               LEFT JOIN
                 ws_images
               ON
@@ -126,37 +132,37 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //   ]
 // ]
-$grouped = [];
+// $grouped = [];
 
-foreach ($results as $row) {
-    // The product id for this row
-    $currentProductId = $row["ProductId"];
+// foreach ($results as $row) {
+//     // The product id for this row
+//     $currentProductId = $row["ProductId"];
 
-    // If we've already added this product
-    if (in_array($currentProductId, $grouped)) {
+//     // If we've already added this product
+//     if (in_array($currentProductId, $grouped)) {
 
-        // Just add the additional image name to the imgIds array
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    } else {
+//         // Just add the additional image name to the imgIds array
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     } else {
 
-        // If we haven't added the product yet
-        $grouped[$currentProductId] = [
-            "imgNames" => [], // Start with empty
-            "ProductId" => $currentProductId,
-            "ProductName" => $row["ProductName"],
-            "ProductDescription" => $row["ProductDescription"],
-            "ProductPrice" => $row["ProductPrice"],
-            "ProductQty" => $row["ProductQty"],
-            "CategoryName" => $row["CategoryName"],
-        ];
+//         // If we haven't added the product yet
+//         $grouped[$currentProductId] = [
+//             "imgNames" => [], // Start with empty
+//             "ProductId" => $currentProductId,
+//             "ProductName" => $row["ProductName"],
+//             "ProductDescription" => $row["ProductDescription"],
+//             "ProductPrice" => $row["ProductPrice"],
+//             "ProductQty" => $row["ProductQty"],
+//             "CategoryName" => $row["CategoryName"],
+//         ];
 
-        // If there is an image for this row, add it
-        if ($row["ProductImageImageId"]) {
-            $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-        }
+//         // If there is an image for this row, add it
+//         if ($row["ProductImageImageId"]) {
+//             $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//         }
 
-    }
-}
+//     }
+// }
 //   echo "<pre>";
 // print_r($grouped);
 // echo "</pre>";
@@ -183,7 +189,7 @@ if (empty($results)) {
   <tbody>";
 }
 
-foreach ($grouped as $productId => $product):
+foreach ($results as $product):
 
     $stmtCheck = $product;
     $id = htmlspecialchars($product['ProductId']);
@@ -193,10 +199,10 @@ foreach ($grouped as $productId => $product):
     $price = htmlspecialchars($product['ProductPrice']);
     $category = htmlspecialchars($product['CategoryName']);
     $descriptionShort = substr($description, 0, 20);
-    if (empty($product['imgNames'])) {
-        $productImg = "placeholder.jpg";
+    if ($product['ImageName'] == NULL) {
+      $productImg = "placeholder.jpg";
     } else {
-        $productImg = htmlspecialchars($product['imgNames'][0]);
+      $productImg = htmlspecialchars($product['ImageName']);
     }
     echo "<tr>
 													            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>

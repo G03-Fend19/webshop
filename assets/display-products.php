@@ -7,20 +7,23 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     $categoryId = htmlspecialchars($_GET['category_id']);
 
     $sql = "SELECT
-            ws_products.name          AS ProductName,
-            ws_products.price         AS ProductPrice,
-            ws_products.id            AS ProductId,
-            ws_products.stock_qty     AS ProductQty,
-            ws_images.img             AS ImageName,
-            ws_products_images.img_id AS ProductImageImageId,
-            ws_categories.id          AS CategoryId,
-            ws_categories.name        AS CategoryName
+            ws_products.name            AS ProductName,
+            ws_products.price           AS ProductPrice,
+            ws_products.id              AS ProductId,
+            ws_products.stock_qty       AS ProductQty,
+            ws_images.img               AS ImageName,
+            ws_products_images.img_id   AS ProductImageImageId,
+            ws_products_images.feature  AS FeatureImg,
+            ws_categories.id            AS CategoryId,
+            ws_categories.name          AS CategoryName
           FROM
             ws_products
           LEFT JOIN
             ws_products_images
           ON
             ws_products.id = ws_products_images.product_id
+          AND
+            ws_products_images.feature = 1
           LEFT JOIN
             ws_images
           ON
@@ -45,18 +48,21 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
     $stmt->execute();
 } else {
     $sql = "SELECT
-            ws_products.name          AS ProductName,
-            ws_products.price         AS ProductPrice,
-            ws_products.id            AS ProductId,
-            ws_products.stock_qty     AS ProductQty,
-            ws_images.img             AS ImageName,
-            ws_products_images.img_id AS ProductImageImageId
+            ws_products.name            AS ProductName,
+            ws_products.price           AS ProductPrice,
+            ws_products.id              AS ProductId,
+            ws_products.stock_qty       AS ProductQty,
+            ws_images.img               AS ImageName,
+            ws_products_images.img_id   AS ProductImageImageId,
+            ws_products_images.feature  AS FeatureImg
           FROM
             ws_products
           LEFT JOIN
             ws_products_images
           ON
             ws_products.id = ws_products_images.product_id
+          AND
+            ws_products_images.feature = 1
           LEFT JOIN
             ws_images
           ON
@@ -90,49 +96,50 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //   ]
 // ]
-$grouped = [];
+// $grouped = [];
 
-foreach ($results as $row) {
-    // The product id for this row
-    $currentProductId = $row["ProductId"];
+// foreach ($results as $row) {
+//     // The product id for this row
+//     $currentProductId = $row["ProductId"];
 
-    // If we've already added this product
-    if (in_array($currentProductId, $grouped)) {
+//     // If we've already added this product
+//     if (in_array($currentProductId, $grouped)) {
 
-        // Just add the additional image name to the imgIds array
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    } else {
+//         // Just add the additional image name to the imgIds array
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     } else {
 
-        // If we haven't added the product yet
-        if (isset($_GET['category_id'])) {
-            $grouped[$currentProductId] = [
-                "imgNames" => [], // Start with empty
-                "ProductName" => $row["ProductName"],
-                "ProductPrice" => $row["ProductPrice"],
-                "ProductQty" => $row["ProductQty"],
-                "CategoryName" => $row["CategoryName"],
-            ];
-        } else {
-            $grouped[$currentProductId] = [
-                "imgNames" => [], // Start with empty
-                "ProductName" => $row["ProductName"],
-                "ProductPrice" => $row["ProductPrice"],
-                "ProductQty" => $row["ProductQty"],
-            ];
-        }
+//         // If we haven't added the product yet
+//         if (isset($_GET['category_id'])) {
+//             $grouped[$currentProductId] = [
+//                 "imgNames" => [], // Start with empty
+//                 "ProductName" => $row["ProductName"],
+//                 "ProductPrice" => $row["ProductPrice"],
+//                 "ProductQty" => $row["ProductQty"],
+//                 "CategoryName" => $row["CategoryName"],
+//             ];
+//         } else {
+//             $grouped[$currentProductId] = [
+//                 "imgNames" => [], // Start with empty
+//                 "ProductName" => $row["ProductName"],
+//                 "ProductPrice" => $row["ProductPrice"],
+//                 "ProductQty" => $row["ProductQty"],
+//             ];
+//         }
 
-        // If there is an image for this row, add it
-        if ($row["ProductImageImageId"]) {
-            $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-        }
+//         // If there is an image for this row, add it
+//         if ($row["ProductImageImageId"]) {
+//             $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//         }
 
-    }
-}
+//     }
+// }
 // echo "<pre>";
 // print_r($grouped);
 // echo "</pre>";
 
-foreach ($grouped as $productId => $product):
+foreach ($results as $product):
+    $productId = $product['ProductId'];
     $productName = htmlspecialchars($product['ProductName']);
     if (strlen($productName) > 20) {
         $productName = substr($productName, 0, 20) . "...";
@@ -140,10 +147,10 @@ foreach ($grouped as $productId => $product):
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productQty = htmlspecialchars($product['ProductQty']);
     // $productImg = htmlspecialchars($product['ImageName']); // TODO
-    if (empty($product['imgNames'])) {
+    if ($product['ImageName'] == NULL) {
         $productImg = "placeholder.jpg";
     } else {
-        $productImg = htmlspecialchars($product['imgNames'][0]);
+        $productImg = htmlspecialchars($product['ImageName']);
     }
     if (isset($_GET['category_id'])) {
         $categoryName = htmlspecialchars($product['CategoryName']);

@@ -6,15 +6,16 @@ require_once "./assets/categories-menu.php";
 if (isset($_GET['product_id'])) {
     $productId = htmlspecialchars($_GET['product_id']);
     $sql = "SELECT
-            ws_products.name          AS ProductName,
-            ws_products.description   AS ProductDescription,
-            ws_products.price         AS ProductPrice,
-            ws_products.id            AS ProductId,
-            ws_products.stock_qty     AS ProductQty,
-            ws_images.img             AS ImageName,
-            ws_products_images.img_id AS ProductImageImageId,
-            ws_categories.id          AS CategoryId,
-            ws_categories.name        AS CategoryName
+            ws_products.name            AS ProductName,
+            ws_products.description     AS ProductDescription,
+            ws_products.price           AS ProductPrice,
+            ws_products.id              AS ProductId,
+            ws_products.stock_qty       AS ProductQty,
+            ws_images.img               AS ImageName,
+            ws_products_images.img_id   AS ProductImageImageId,
+            ws_products_images.feature  AS FeatureImg,
+            ws_categories.id            AS CategoryId,
+            ws_categories.name          AS CategoryName
           FROM
             ws_products
           LEFT JOIN
@@ -56,17 +57,20 @@ if (isset($_GET['product_id'])) {
     //   ]
     // ]
     $grouped = [];
-    foreach ($results as $row) {
+    foreach ($results as $currentProductId => $row) {
         // The product id for this row
         $currentProductId = $row["ProductId"];
         // If we've already added this product
         if (isset($grouped[$currentProductId])) {
             // Just add the additional image name to the imgIds array
-            $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+            $grouped[$currentProductId]["imgs"][] =  [
+              "ImageName" => $row['ImageName'],
+              "FeatureImg" => $row['FeatureImg'],
+            ];
         } else {
             // If we haven't added the product yet
             $grouped[$currentProductId] = [
-                "imgNames" => [], // Start with empty
+                "imgs" => [], // Start with empty
                 "ProductId" => $currentProductId,
                 "ProductName" => $row["ProductName"],
                 "ProductDescription" => $row["ProductDescription"],
@@ -76,10 +80,16 @@ if (isset($_GET['product_id'])) {
             ];
             // If there is an image for this row, add it
             if ($row["ProductImageImageId"]) {
-                $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+              $grouped[$currentProductId]["imgs"][] =  [
+                "ImageName" => $row['ImageName'],
+                "FeatureImg" => $row['FeatureImg'],
+              ];
             }
         }
     }
+    // echo "<pre>";
+    //   print_r($grouped);
+    //   echo "</pre>";
 
     if (empty($grouped)) {
         ?>
@@ -91,6 +101,9 @@ if (isset($_GET['product_id'])) {
     }
 
     foreach ($grouped as $productId => $product):
+      // echo "<pre>";
+      // print_r($product['imgs']);
+      // echo "</pre>";
         $stmtCheck = $product;
         $id = htmlspecialchars($product['ProductId']);
         $name = htmlspecialchars_decode($product['ProductName']);
@@ -99,11 +112,16 @@ if (isset($_GET['product_id'])) {
         $price = htmlspecialchars($product['ProductPrice']);
         $category = htmlspecialchars($product['CategoryName']);
         $descriptionShort = substr($description, 0, 20);
-        if (empty($product['imgNames'])) {
+        if (empty($product['imgs'])) {
             $productImg = "placeholder.jpg";
         } else {
-            $productImg = htmlspecialchars($product['imgNames'][0]);
-            $imgList = $product['imgNames'];
+            $imgArray = $product['imgs'];
+            foreach ($imgArray as $key => $img) {
+              if ($img['FeatureImg'] == 1) {
+                $productImg = $img['ImageName'];
+              }
+            }
+            $imgList = $imgArray;
         }
     endforeach;
 }
@@ -129,7 +147,8 @@ if (isset($_GET['product_id'])) {
       <?php
 if (!empty($imgList)) {
     foreach ($imgList as $img) {
-        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$img')\" src='./media/product_images/$img' alt=''></div>";
+      $imageName = $img['ImageName'];
+        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt=''></div>";
     }
 }
 
