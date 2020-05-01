@@ -20,7 +20,7 @@
     animation-name: animatetop;
     animation-duration: 0.4s;
     text-align: left;
-    font-size: 1.3em;
+    font-size: 14px;
     @media (min-width: 500px) {
       width: 450px;
     }
@@ -32,7 +32,7 @@
 
       h2 {
         margin-top: 1em;
-        font-weight: 300;
+        font-weight: 500;
       }
       .close {
         color: rgb(151, 151, 151);
@@ -70,7 +70,7 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 16px;
+        font-size: 14px;
         border-radius: 5px;
         margin: 0.5em;
         transition-duration: 0.3s;
@@ -87,7 +87,7 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 16px;
+        font-size: 14px;
         border-radius: 5px;
         margin: 0.5em;
         transition-duration: 0.3s;
