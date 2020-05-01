@@ -110,10 +110,10 @@ if (isset($_GET['product_id'])) {
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
-	                            <span class='new-in__msg'>
-	                            New In
-	                            </span>
-	                          </div>";
+																																                            <span class='new-in__msg'>
+																																                            New In
+																																                            </span>
+																																                          </div>";
         } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
@@ -195,8 +195,19 @@ if (!empty($imgList)) {
         <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
         <div class='product-section__rigth__actions__amount__qty-container'>
           <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
-          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
+          <div
+            data-id=<?php echo $id ?>
+            data-name='<?php echo $name ?>'
+            data-price=<?php echo $price ?>
+            data-img='<?php echo $productImg ?>'
+            data-stock=<?php echo $stock_qty ?>
+            data-discount=<?php echo $discount ?>
+            >
+
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
+          </div>
+
         </div>
       </div>
 
@@ -253,13 +264,14 @@ function lowerQty() {
 
 function higherQty(qty) {
   let input = document.getElementById('qtyInput');
-  let button = document.getElementById('higherBtn');
+  // let button = document.getElementById('higherBtn');
 
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
-  }else{
-    alert('no more in stock')
   }
+  // else{
+  //   alert('no more in stock')
+  // }
 }
 
 const imgList = <?php echo json_encode($imgList); ?>;
@@ -303,7 +315,7 @@ function checkLocalStorage() {
   }
 }
 
-const addBtn = document.querySelector(".add-to-cart-btn");
+
 // const deleteSingleProduct = document.getElementById("deleteSingleProduct");
 // console.log(deleteSingleProduct);
 
@@ -315,12 +327,57 @@ const addBtn = document.querySelector(".add-to-cart-btn");
 
 // })
 
+
+const addBtn = document.querySelector(".add-to-cart-btn");
 addBtn.addEventListener("click", function() {
 
   setTimeout(function(){
     checkLocalStorage();
   }, 300);
 });
+
+
+//When deleting a spesific product from cart
+document.addEventListener("click", (e) => {
+  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+  const input = document.getElementById('qtyInput');
+
+  if (e.target.dataset.id == "delete-product") {
+    const name = "<?php echo "$name" ?>";
+    const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+    cart = JSON.parse(localStorage['cart']);
+
+    if (cart[name] == cart[productId]) {
+      qtyBtns.classList.add("hidden");
+      addToCartBtn.classList.remove("hidden");
+      input.value = 1;
+    }
+  }
+});
+
+
+//When clearing cart
+document.addEventListener("click", (e) => {
+  const input = document.getElementById('qtyInput');
+  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+    qtyBtns.classList.add("hidden");
+    addToCartBtn.classList.remove("hidden");
+    input.value = 1;
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+
+  if (e.target.dataset.id == "qty+") {
+    setTimeout(getCartQty(), 1000);
+
+  } else if (e.target.dataset.id == "qty-") {
+    setTimeout(getCartQty(), 1000);
+  }
+});
+
+
 
 </script>
 

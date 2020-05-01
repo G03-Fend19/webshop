@@ -109,6 +109,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 $grouped = [];
+$hiddenClass = "hidden";
 
 foreach ($results as $row) {
     // The product id for this row
@@ -125,6 +126,7 @@ foreach ($results as $row) {
         if (isset($_GET['category_id'])) {
             $grouped[$currentProductId] = [
                 "imgNames" => [], // Start with empty
+                "ProductId" => $row["ProductId"],
                 "ProductName" => $row["ProductName"],
                 "ProductPrice" => $row["ProductPrice"],
                 "ProductQty" => $row["ProductQty"],
@@ -134,6 +136,7 @@ foreach ($results as $row) {
         } else {
             $grouped[$currentProductId] = [
                 "imgNames" => [], // Start with empty
+                "ProductId" => $row["ProductId"],
                 "ProductName" => $row["ProductName"],
                 "ProductPrice" => $row["ProductPrice"],
                 "ProductQty" => $row["ProductQty"],
@@ -159,50 +162,50 @@ foreach ($grouped as $productId => $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-												                        <span class='new-in__msg'>
-												                        New In
-												                        </span>
-												                      </div>";
+																																																																																																									                        <span class='new-in__msg'>
+																																																																																																									                        New In
+																																																																																																									                        </span>
+																																																																																																									                      </div>";
     } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
-                          <span class='out-of-stock__msg'>
-                            10% off
-                          </span>
-                        </div>";
-    }
+                    <span class='out-of-stock__msg'>
+                      10% off
+                    </span>
+                  </div>";
+}
 
-    $productPrice = htmlspecialchars($product['ProductPrice']);
-    $discount = 1;
-    if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
-      $discount = 0.9;
-      $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
-      $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+$productPrice = htmlspecialchars($product['ProductPrice']);
+$discount = 1;
+if ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    $discount = 0.9;
+    $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
+    $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
                     <span class='discount'>$discountProductPrice SEK</span></div>";
-    } else {
-      $priceMsg = "<span>$productPrice SEK</span>";
-    }
+} else {
+    $priceMsg = "<span>$productPrice SEK</span>";
+}
 
-    $productName = htmlspecialchars($product['ProductName']);
-    if (strlen($productName) > 20) {
-        $productName = substr($productName, 0, 20) . "...";
-    }
+$productName = htmlspecialchars($product['ProductName']);
+if (strlen($productName) > 20) {
+    $productName = substr($productName, 0, 20) . "...";
+}
 
-    $productQty = htmlspecialchars($product['ProductQty']);
-    if ($productQty > 9) {
-      $qtyMsg = "<span class='in-store'> $productQty in store</span>";
-    } else {
-      $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
-    }
+$productQty = htmlspecialchars($product['ProductQty']);
+if ($productQty > 9) {
+    $qtyMsg = "<span class='in-store'> $productQty in store</span>";
+} else {
+    $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+}
 
-    if (empty($product['imgNames'])) {
-        $productImg = "placeholder.jpg";
-    } else {
-        $productImg = htmlspecialchars($product['imgNames'][0]);
-    }
+if (empty($product['imgNames'])) {
+    $productImg = "placeholder.jpg";
+} else {
+    $productImg = htmlspecialchars($product['imgNames'][0]);
+}
 
-    if (isset($_GET['category_id'])) {
-        $categoryName = htmlspecialchars($product['CategoryName']);
-    }
+if (isset($_GET['category_id'])) {
+    $categoryName = htmlspecialchars($product['CategoryName']);
+}
 
 $productCards .= "<article class='product-card'>
 								                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
@@ -225,15 +228,32 @@ $productCards .= "<img class='product-thumb' src=./media/product_images/$product
                                           $priceMsg
                                           </div>
 								                          <button
-								                          data-id=$productId
-								                          data-name='$productName'
-								                          data-price=$productPrice
-								                          data-img='$productImg'
-                                          data-stock=$productQty
-                                          data-discount=$discount 
-								                          class='add-to-cart-btn'>";
-    $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
-                          $productCards .= "</button>
+                                            data-id=$productId
+                                            data-name='$productName'
+                                            data-price=$productPrice
+                                            data-img='$productImg'
+                                            data-stock=$productQty
+                                            data-discount=$discount
+                                            class='add-to-cart-btn'
+                                            id='addToCartBtn-$productId'>
+                                          <i class='fas fa-cart-plus'></i>
+                                          </button>
+                                          <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
+          <input class='product-section__rigth__actions__amount__qty-container__input'  value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+          <div
+            data-id=$productId
+            data-name='$productName'
+            data-price=$productPrice
+            data-img='$productImg'
+            data-stock=$productQty
+            data-discount=$discount
+            >
+
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty()'><i class='fas fa-minus-circle'></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $$productQty ?>)'><i class='fas fa-plus-circle'></i></button>
+          </div>
+
+        </div>
                                             $qtyMsg
 								                          </div>
                                       </article>";
@@ -262,7 +282,79 @@ echo $productsContainer;
 </section>
 
 <script>
-  function checkLocalStorage(pruductName) {
-    console.log(productName);
+
+let grouped = <?php echo json_encode($grouped) ?>;
+
+checkCartProducts(grouped);
+
+function checkCartProducts(grouped) {
+
+  for (let product of Object.values(grouped)) {
+  let name = product['ProductName'];
+  let id = product['ProductId'];
+  let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
+
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+
+      setTimeout(function(){
+      checkLocalStorage(name, id);
+    }, 100);
+    })
+  );
+
+
+  checkLocalStorage(name, id);
   }
+}
+
+
+function checkLocalStorage(name, id) {
+
+  let addToCartBtn = document.querySelector('#addToCartBtn-' + id);
+  let qtyBtns = document.querySelector('#productQty-' + id);
+  cart = JSON.parse(localStorage['cart']);
+  // console.log(cart);
+
+
+  if (name in cart) {
+    console.log('true');
+
+    qtyBtns.classList.remove("hidden");
+    addToCartBtn.classList.add("hidden");
+  } else {
+    console.log('false');
+
+    qtyBtns.classList.add("hidden");
+    addToCartBtn.classList.remove("hidden");
+  }
+}
+
+//When deleting a spesific product from cart
+document.addEventListener("click", (e) => {
+  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+  const input = document.getElementById('qtyInput');
+
+  if (e.target.dataset.id == "delete-product") {
+
+    for (let product of Object.values(grouped)) {
+      let name = product['ProductName'];
+      let id = product['ProductId'];
+
+
+
+      setTimeout(function(){
+      checkLocalStorage(name, id);
+      }, 100);
+
+    }
+  }
+});
+
+
+
+
+  // function checkLocalStorage(pruductName) {
+  //   console.log(productName);
+  // }
 </script>
