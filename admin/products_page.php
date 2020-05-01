@@ -214,10 +214,9 @@ foreach ($grouped as $productId => $product):
 										                  </td>
 													            <td>
 													                
-													                  <button id='openModal' class='open-modal'><i class='far fa-trash-alt'></i></button>
+													              <button id='openModal' class='open-modal'><i class='far fa-trash-alt'></i></button>
 													             
-                                         
-                                         <div id='myModal' data-id='$id' class='modal'>
+                                        <div id='myModal' data-id='$id' class='modal'>
                                          <div class='modal__content'>
                                            <div class='modal__content__header'>
                                              <span class='close'>&times;</span>
@@ -248,43 +247,33 @@ echo '</tbody></table>';
 echo '</main>';
 ?>
   <!-- <script src="active_pages.js"></script> -->
-  <script>
-
-    
-const modal = document.getElementById("myModal");
+  <script> 
+  const modal = document.getElementById("myModal");
   const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");
-  const changeStatusBtn = document.getElementById("changeStatus");
-
- 
 
   document.querySelectorAll('.open-modal').forEach(item => {
   item.addEventListener('click', event => {
-    
-    
- 
-console.log(modal.dataset.id);
-    modal.style.display = "block";
+    let currentModal = event.currentTarget.nextElementSibling;
+
+    currentModal.style.display = "block";
         //close the modal
         span.onclick = function() {
-          modal.style.display = "none";
+          currentModal.style.display = "none";
         };
         // clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal) {
-            modal.style.display = "none";
+            currentModal.style.display = "none";
           }
         };
         document.addEventListener("click", e => {
           if (e.target.className == "cancel-btn") {
-            modal.style.display = "none";
+            currentModal.style.display = "none";
           }
         });
-
   });
 });
-
-
   </script>
 
   <?php
