@@ -30,18 +30,20 @@ alert('Email already registered on a different name. Please check spelling or us
           </li>
 
           <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
-              href="">Contact</a></li>
+              href="contact.php">Contact</a></li>
         </div>
 
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
-              class="fas fa-shopping-cart"></i></a></li>
+              class="fas fa-shopping-cart"></i>
+              <span class="cart_qty_show"></span>
+            </a></li>
       </ul>
 
       <div class="header__burger">
         <i class="fas fa-bars"></i>
       </div>
     </nav>
-    <section>
+    <section class="header__hero">
       <form class="searchform" name="search_form" action="search.php#main" onsubmit="return validateSearchForm()"
         method="GET">
         <input class="searchform__searchbar " placeholder="Search..." type="text" name="search">
@@ -54,7 +56,7 @@ alert('Email already registered on a different name. Please check spelling or us
               href="index.php">Home</a>
           </li>
           <li class="toggle_menu__item"><a id="contact-desktop" class="toggle_menu__item__a toggle_menu__item__contact2"
-              href="">Contact</a></li>
+              href="contact.php">Contact</a></li>
         </div>
 
       </ul>
@@ -62,28 +64,49 @@ alert('Email already registered on a different name. Please check spelling or us
         <div class="cart__menu"></div>
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>
+   
       </section>
       <h1>Welcoming text</h1>
       <p>Describing text about shop...</p>
+
+<div id="myModal" class="modal">
+  <div class="modal__content">
+    <div class="modal__content__header">
+      <span class="close">&times;</span>
+      <h2>Confirmation</h2> 
+    </div>
+    <div class="modal__content__body">
+    <p>Are you sure you would like to remove all items from the shopping cart?</p>
+    </div>
+    <div class="modal__content__footer">
+    <button class="cancel-btn">Cancel</button>  <button class="clear-cart">
+        Clear Cart 
+       </button>
+    </div>
+  </div>
+
+</div>
+
     </section>
+
   </header>
 
 
   <script>
   //Toggle menu
-  const burger = document.querySelector('.header__burger i');
-  const nav = document.querySelector('.toggle_menu__container');
+  // const burger = document.querySelector('.header__burger i');
+  // const nav = document.querySelector('.toggle_menu__container');
 
-  function toggleNav() {
-    burger.classList.toggle('fa-bars');
-    burger.classList.toggle('fa-times');
-    nav.classList.toggle('toggle_menu__active');
-  }
+  // function toggleNav() {
+  //   burger.classList.toggle('fa-bars');
+  //   burger.classList.toggle('fa-times');
+  //   nav.classList.toggle('toggle_menu__active');
+  // }
 
-  burger.addEventListener('click', function() {
-    toggleNav();
+  // burger.addEventListener('click', function() {
+  //   toggleNav();
 
-  });
+  // });
 
   /* if (nav.classList.contains('toggle_menu__active')) {
   document.addEventListener('click', function(event) {
@@ -100,7 +123,7 @@ alert('Email already registered on a different name. Please check spelling or us
     }
        */
   </script>
-  <main class="main-checkout">
+  <main id="main-checkout" class="main-checkout">
     <h1>Checkout</h1>
     <h3>You are about to buy these products</h3>
 
@@ -188,26 +211,23 @@ alert('Email already registered on a different name. Please check spelling or us
         </div>
       </form>
     </section>
-
-
-
-
-
-
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
-    const customerInformationArray = Array.prototype.slice.call(
-      customerInformationFields
-    );
-    customerKeys = Object.keys(customerFromLocalStorage)
-
-    if (customerFromLocalStorage) {
-      customerKeys.forEach(key => {
-        customerInformationArray.filter(field => {
-          field.name === key ? field.value = customerFromLocalStorage[key] : null
+    if(customerFromLocalStorage == null || customerInformationFields == null){}
+    else  {
+      const customerInformationArray = Array.prototype.slice.call(
+        customerInformationFields
+      );
+      customerKeys = Object.keys(customerFromLocalStorage)
+  
+      if (customerFromLocalStorage) {
+        customerKeys.forEach(key => {
+          customerInformationArray.filter(field => {
+            field.name === key ? field.value = customerFromLocalStorage[key] : null
+          })
         })
-      })
+      }
     }
     </script>
 
@@ -218,6 +238,7 @@ alert('Email already registered on a different name. Please check spelling or us
     document.getElementById('total-input').value = localStorage.getItem('total');
     </script>
     <script src="./checkout.js"></script>
+    <script src="./cart.js"></script>
 
     <script src="./order-confirmation.js"></script>
 

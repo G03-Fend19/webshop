@@ -236,7 +236,7 @@ foreach ($grouped as $productId => $product):
                           $productCards .= "</button>
                                             $qtyMsg
 								                          </div>
-								                      </article>";
+                                      </article>";
 endforeach;
 $productsContainer .= $productCards;
 $productsContainer .= "</div>";

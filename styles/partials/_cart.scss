@@ -158,6 +158,19 @@
           margin: 0;
         }
       }
+      &__price {
+        .price {
+          font-size: 15px;
+          &__line-through {
+            font-size: 12px;
+            text-decoration: line-through;
+          }
+          &__discount {
+            font-size: 15px;
+            color: red;
+          }
+        }
+      }
     }
   }
 }

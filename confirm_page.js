@@ -37,7 +37,16 @@ function showConfirmationTable(productsObj) {
   let productTable = "";
 
   for (let i = 0; i < products.length; i++) {
-    productTable += `<tr><td class="confirmtable__tbody__productname">${products[i].name}</td><td>${products[i].quantity}</td><td>${products[i].price} SEK</td></tr>`;
+    priceDisplay = ""
+    if (products[i].discount === 1) {
+      console.log(products[i].discount)
+      priceDisplay = `<p class='price'> ${products[i].quantity * products[i].price} SEK</p>`
+    } else {
+      console.log("discount")
+      priceDisplay = `<p class='price__line-through'> ${products[i].quantity * products[i].price} SEK</p>
+                            <p class='price__discount'> ${Math.ceil(products[i].quantity * (products[i].price * products[i].discount))} SEK</p>`
+    }
+    productTable += `<tr><td class="confirmtable__tbody__productname">${products[i].name}</td><td>${products[i].quantity}</td><td>${priceDisplay}</td></tr>`;
   }
 
   return productTable;

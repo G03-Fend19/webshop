@@ -40,7 +40,7 @@
           img: productData.img,
           name: productData.name,
           price: productData.price,
-          discount: productData.discount,
+          discount: parseFloat(productData.discount),
           quantity: qty,
           stock: productData.stock
         }
@@ -65,7 +65,7 @@
   };
   const calcTotal = () => {
     total = Object.keys(cart).reduce((acc, cur) => {
-      return acc + cart[cur].price * cart[cur].quantity;
+      return acc + Math.ceil((cart[cur].price * cart[cur].discount) * cart[cur].quantity);
     }, 0);
     localStorage.setItem("total", JSON.stringify(total));
     return `<div class="cart__total"><p>Total price</p> <p>${total} SEK</p></div>`;
@@ -101,6 +101,15 @@
         </button>`;
       productWrapper.innerHTML += Object.keys(cart)
         .map(product => {
+          priceDisplay = ""
+          if (cart[product].discount === 1) {
+            console.log(cart[product].discount)
+            priceDisplay = `<p class='price'> ${cart[product].quantity * cart[product].price} SEK</p>`
+          } else {
+            console.log("discount")
+            priceDisplay = `<p class='price__line-through'> ${cart[product].quantity * cart[product].price} SEK</p>
+                            <p class='price__discount'> ${Math.ceil(cart[product].quantity * (cart[product].price * cart[product].discount))} SEK</p>`
+          }
           return `
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
@@ -123,9 +132,8 @@
       <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
 
       </div>
-      <div>
-      <p class='price'> ${cart[product].quantity * cart[product].price} SEK</p>
-      <p class='price__discount'> ${Math.ceil(cart[product].quantity * (cart[product].price * cart[product].discount))} SEK</p>
+      <div class='cart__product__info__price'>
+      ${priceDisplay}
       </div>
       </div>
       </div>
@@ -134,7 +142,7 @@
         .join("");
       totalCheckout.innerHTML +=
         calcTotal() +
-        `<div class="cart__checkout"><a href="checkout_page.php" >Go To Checkout</a></div>`;
+        `<div class="cart__checkout"><a href="checkout_page.php#main-checkout" >Go To Checkout</a></div>`;
       productsInCart();
     }
 
@@ -147,11 +155,12 @@
   // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
   const changeQty = () => {
     document.addEventListener("click", e => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
       if (e.target.dataset.id == "qty+") {
+        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
         checkStock(productId);
       } else if (e.target.dataset.id == "qty-") {
+        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
         cart[productId].quantity == 1 ? null : cart[productId].quantity--;
       }
 
@@ -165,8 +174,8 @@
   };
   const deleteProduct = () => {
     document.addEventListener("click", e => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       if (e.target.dataset.id == "delete-product") {
+        const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
         delete cart[productId];
         localStorage.setItem("cart", JSON.stringify(cart));
         renderCart();
@@ -185,11 +194,11 @@
       if (e.target.className == "open-modal") {
         modal.style.display = "block";
         //close the modal
-        span.onclick = function() {
+        span.onclick = function () {
           modal.style.display = "none";
         };
         // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
           if (event.target == modal) {
             modal.style.display = "none";
           }
