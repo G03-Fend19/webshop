@@ -164,7 +164,7 @@ foreach ($results as $product):
 					                                                            Currently out of stock
 					                                                            </span>
 					                                                          </div>" : null;
-    $productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
+    $productCards .= "<img class='product-thumb' src='./media/product_images/$productImg' alt='product image'>
 					                          </div>
 					                        </a>
 					                        <div class='product-card__content'>
