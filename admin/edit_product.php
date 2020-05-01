@@ -3,10 +3,9 @@ require_once '../db.php';
 require_once 'upload_image.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
-
     $productId = htmlspecialchars($_POST['p_id']);
 
-    $sql = "SELECT
+    $sql = 'SELECT
             ws_products.id AS ProductId,
             ws_products.name AS ProductName,
             ws_products.description AS ProductDescription,
@@ -25,35 +24,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
           AND
             ws_products_categories.product_id = :id
           AND
-            ws_categories.id = ws_products_categories.category_id";
+            ws_categories.id = ws_products_categories.category_id';
 
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':id', $productId);
     $stmt->execute();
 
-    $sql_images = "SELECT
+    $sql_images = 'SELECT
                     ws_images.id AS imgId,
-                    ws_images.img AS imgName
+                    ws_images.img AS imgName,
+                    ws_products_images.feature AS featureImg
                   FROM
                     ws_images,
                     ws_products_images
                   WHERE
                     ws_products_images.product_id = :id
                   AND
-                    ws_images.id = ws_products_images.img_id";
+                    ws_images.id = ws_products_images.img_id';
 
     $stmt_img = $db->prepare($sql_images);
     $stmt_img->bindParam(':id', $productId);
     $stmt_img->execute();
 
-// Selecting all categories
-    $sql_categories = "SELECT * FROM ws_categories";
+    // Selecting all categories
+    $sql_categories = 'SELECT * FROM ws_categories';
     $stmt_categories = $db->prepare($sql_categories);
     $stmt_categories->execute();
 
-/* echo "<pre>";
-print_r($stmt_categories->fetch(PDO::FETCH_ASSOC));
-echo "</pre>"; */
+    /* echo "<pre>";
+    print_r($stmt_categories->fetch(PDO::FETCH_ASSOC));
+    echo "</pre>"; */
 
     while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $p_id = htmlspecialchars($productRow['ProductId']);
@@ -63,7 +63,6 @@ echo "</pre>"; */
         $categoryName = htmlspecialchars($productRow['CategoryName']);
         $price = htmlspecialchars($productRow['ProductPrice']);
         $qty = htmlspecialchars($productRow['ProductQty']);
-
     }
 
     if (isset($_GET['formerror'])) {
@@ -76,33 +75,35 @@ echo "</pre>"; */
         $imagesGet = unserialize($_GET['images']);
     }
 
-    $options = "";
+    $options = '';
     while ($categoryRows = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
         if ($categoryRows['id'] == $categoryId) {
             $options .= "<option value='$categoryRows[id]' selected>$categoryRows[name]</option>";
         } else {
             $options .= "<option value='$categoryRows[id]'>$categoryRows[name]</option>";
         }
-
     }
 
     $imagesDb = [];
     while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
-        $imagesDb[] = $imagesRows['imgName'];
+        $imagesDb[] = [
+            'img' => $imagesRows['imgName'],
+            'feature' => $imagesRows['featureImg'], ];
     }
     if (isset($_FILES['file']['name'])) {
         if (count($_FILES) != 0) {
             foreach ($imageArray as $image) {
-                $imagesDb[] = $image;
+                $imagesDb[] = [
+                    'img' => $image,
+                    'feature' => 0,
+                ];
             }
-
         }
     }
 
-//print_r($stmt_img->fetch(PDO::FETCH_ASSOC));
+    //print_r($stmt_img->fetch(PDO::FETCH_ASSOC));
 } elseif (!isset($_GET['formerror']) && $_SERVER['REQUEST_METHOD'] != 'POST') {
-    header("Location:products_page.php");
-
+    header('Location:products_page.php');
 }
 
 require_once './assets/head.php';
@@ -115,43 +116,43 @@ require_once './assets/aside-navigation.php';
   <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
     <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
     <input type="file" name="file[]" id="file" multiple>
-    <input type="hidden" name="p_id" value="<?=$productId?>">
+    <input type="hidden" name="p_id" value="<?=$productId; ?>">
     <input class="upload-btn" type='submit' name='submit' value='Upload'>
   </form>
 
 
-  <h1>Editing: Product <?="#$p_id"?></h1>
+  <h1>Editing: Product <?="#$p_id"; ?></h1>
 
-
+  <!--   <?php print_r($imagesDb); ?> -->
 
   <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
     onsubmit="return validateProductForm()" method="POST">
     <div class="form__group">
       <label for="title" class="form__label">
         Product name
-        <input type="text" name="title" id="title" value="<?=$pName?>" minlength="2" maxlength="50" required
+        <input type="text" name="title" id="title" value="<?=$pName; ?>" minlength="2" maxlength="50" required
           class="form__input">
       </label>
       <label for="description" class="form__label descrip">
         Description
         <textarea name="description" id="description" maxlength="800" required
-          class="form__input"><?=$descrip?></textarea>
+          class="form__input"><?=$descrip; ?></textarea>
       </label>
       <select name="category" id="category">
-        <?=$options?>
+        <?=$options; ?>
       </select>
       <label for="price" class="form__label">
         Price
-        <input type="number" name="price" id="price" value="<?=$price?>" min="0" required class="form__input">
+        <input type="number" name="price" id="price" value="<?=$price; ?>" min="0" required class="form__input">
       </label>
       <label for="qty" class="form__label">
         Qty
-        <input type="number" name="qty" id="qty" value="<?=$qty?>" min="0" required class="form__input">
+        <input type="number" name="qty" id="qty" value="<?=$qty; ?>" min="0" required class="form__input">
       </label>
 
     </div>
 
-    <input type="hidden" name="product_id" value="<?=$p_id?>">
+    <input type="hidden" name="product_id" value="<?=$p_id; ?>">
 
     <div class="form__image-section">
       <label for="img" class="form__label">Images</label>
@@ -160,7 +161,7 @@ require_once './assets/aside-navigation.php';
 
       </div>
 
-      <div id="update-product-images"class="form__image-section__images">
+      <div id="update-product-images" class="form__image-section__images">
         <?php
 
 // if (count($imagesDb) != 0) {
@@ -191,82 +192,118 @@ require_once './assets/aside-navigation.php';
 
 // }
 ?>
-   <script>
-    const setImagesToLocalStorage = () => {
+        <script>
+        const setImagesToLocalStorage = () => {
 
-    let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
-    imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
-    !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null
+          let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
+          imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
+          !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null
 
-    imagesFromDb.forEach(image => {
-    !imagesFromLocalStorage.includes(image) ? imagesFromLocalStorage.push(image) : null
-    })
-    localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
-    console.log(imagesFromLocalStorage)
-
-    }
-    setImagesToLocalStorage()
-
-    const renderImagesToDOM = () => {
-    const updateImageSection = document.getElementById('update-product-images')
-    let counter = 0
-    if(imagesFromLocalStorage.length > 0){
-    console.log('running render images')
-      updateImageSection.innerHTML = ''
-     imagesFromLocalStorage.map(image => {
-      updateImageSection.innerHTML += `
-    <label class='form__image-section__selection' for='image${counter}'>
-        <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
-            checked value='${image}'>
-        <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}'
-            data-imgname='${image}' class='thumbnails'>
-
-    </label>
-    <button data-name='${image}' "type="button"class="remove-image">x</button>
-    `
-    counter++
-    })  
-
-    }
-    }
-    renderImagesToDOM()
-        document.addEventListener("click", (e) => {
-      if (e.target.className == "remove-image") {
-  
+         
+          if (imagesFromLocalStorage.length != 0) {
+            imagesFromDb.forEach(imgIndex => {
       
-        let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
+            
+            console.log("bilden från db: " + imgIndex.img);
+            
 
-        images = imagesFromLocalStorage.filter((el)=> {
-          return el !== e.target.dataset.name
-        })
-          localStorage.setItem("images", JSON.stringify(images));
+            /* !imagesFromLocalStorage.imgIndex.img.includes(imgIndex.img) ? imagesFromLocalStorage.push(imgIndex) : null; */
+          })
+            }
+            else {
+              imagesFromDb.forEach(imgIndex => {
+              imagesFromLocalStorage.push(imgIndex);
+          });
+            }
+        
+          localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+         
+
+          /* imagesFromDb.forEach(image => {
+            !imagesFromLocalStorage.includes(image) ? imagesFromLocalStorage.push(image) : null
+          })
+          localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+          console.log(imagesFromLocalStorage) */
+
+
+        }
+        setImagesToLocalStorage()
+
+        const renderImagesToDOM = () => {
+          const updateImageSection = document.getElementById('update-product-images')
+          let counter = 0
+          if (imagesFromLocalStorage.length > 0) {
+            console.log('running render images')
+            updateImageSection.innerHTML = ''
+            imagesFromLocalStorage.map(imgIndex => {
+              updateImageSection.innerHTML += `
+                      <label class='form__image-section__selection' for='image${counter}'>
+                          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
+                              checked value='${imgIndex['img']}'>
+                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgIndex['img']}'
+                              data-imgname='${imgIndex['img']}' class='thumbnails'>
+
+                      </label>
+                      <button data-name='${imgIndex['img']}' type="button"class="remove-image">x</button>`;
+              counter++
+            })
+
+          }
+
+
+          /* const updateImageSection = document.getElementById('update-product-images')
+                            let counter = 0
+                            if (imagesFromLocalStorage.length > 0) {
+                              console.log('running render images')
+                              updateImageSection.innerHTML = ''
+                              imagesFromLocalStorage.map(image => {
+                                updateImageSection.innerHTML += `
+                      <label class='form__image-section__selection' for='image${counter}'>
+                          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
+                              checked value='${image}'>
+                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}'
+                              data-imgname='${image}' class='thumbnails'>
+
+                      </label>
+                      <button data-name='${image}' "type="button"class="remove-image">x</button>
+                      `
+                                counter++
+                              })
+
+                            } */
         }
         renderImagesToDOM()
-    });
-   
-  </script>
+        document.addEventListener("click", (e) => {
+          if (e.target.className == "remove-image") {
+
+
+            let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
+
+            images = imagesFromLocalStorage.filter((el) => {
+              return el !== e.target.dataset.name
+            })
+            localStorage.setItem("images", JSON.stringify(images));
+          }
+          renderImagesToDOM()
+        });
+        </script>
       </div>
+
       <button type="submit">Save</button>
       <div id="errorDiv">
         <?php
 
 if (!isset($_GET['formerror'])) {
-
 } else {
     $errorCheck = $_GET['formerror'];
     if ($errorCheck == 'duplicate') {
-
         echo "<p class='errormsg'>You already have a product called <strong>$pName</strong>.</p>";
-
     } elseif ($errorCheck == 'empty') {
         echo "<p class='errormsg'>Please fill in all fields.</p>";
-
     } elseif ($errorCheck == 'nocategory') {
         echo "<p class='errormsg'>Please select a category for the product.</p>";
-
     } elseif ($errorCheck == 'negative') {
         echo "<p class='errormsg'>The product price and quantity can't be less than 0.</p>";
-
     }
 }
 
