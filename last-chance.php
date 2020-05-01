@@ -79,6 +79,7 @@ foreach ($results as $row) {
         "ProductName" => $row["ProductName"],
         "ProductPrice" => $row["ProductPrice"],
         "ProductQty" => $row["ProductQty"],
+        "AddedDate" => $row['AddedDate'],
       ];
     }
     // If there is an image for this row, add it
