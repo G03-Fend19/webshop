@@ -971,7 +971,6 @@ footer {
 
 .display-products .out-of-stock {
   background: #4133335d;
-  z-index: 2;
   position: absolute;
   height: 100%;
   top: 0;
@@ -1012,7 +1011,6 @@ footer {
 }
 
 .display-products .new-in {
-  z-index: 2;
   position: absolute;
   height: 100%;
   top: 0;
@@ -1857,7 +1855,6 @@ footer {
 }
 
 .new-in {
-  z-index: 2;
   position: absolute;
   height: 100%;
   top: 0;
@@ -1893,7 +1890,6 @@ footer {
 
 .out-of-stock {
   background: #4133335d;
-  z-index: 2;
   position: absolute;
   height: 100%;
   top: 0;

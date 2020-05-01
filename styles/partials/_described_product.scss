@@ -4,7 +4,7 @@
   width: 100%;
 }
 .new-in {
-  z-index: 2;
+  // z-index: 2;
   position: absolute;
   height: 100%;
   top: 0;
@@ -32,7 +32,7 @@
 }
 .out-of-stock {
   background: #4133335d;
-  z-index: 2;
+  // z-index: 2;
   position: absolute;
   height: 100%;
   top: 0;
@@ -212,6 +212,7 @@
         font-size: 24px;
         font-weight: 600;
         line-height: 1.2;
+        word-break: break-word;
 
         @media (min-width: 750px) {
           font-size: 35px;
