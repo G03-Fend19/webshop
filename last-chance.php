@@ -9,6 +9,8 @@ $qtyMsg = "";
 
 $currentDateTime = date('Y-m-d H:i:s');
 $currentDateTimeDT = new DateTime($currentDateTime);
+$newInLimitDT = $currentDateTimeDT->sub(new DateInterval('P14D'));
+$newInLimitDate = $newInLimitDT->format('Y-m-d H:i:s');
 $lastChanceLimitDT = $currentDateTimeDT->sub(new DateInterval('P1Y'));
 $lastChanceLimitDate = $lastChanceLimitDT->format('Y-m-d H:i:s');
 
