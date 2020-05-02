@@ -177,7 +177,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 function getSearchHeader($search)
 {
     if ($search !== "") {
-        echo "You searced for '$search' and the result is...";
+        echo "You searched for '$search' and the result is...";
     } else {
         echo "Unvalid search";
     }
