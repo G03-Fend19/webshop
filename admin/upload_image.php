@@ -80,8 +80,11 @@ if (isset($_POST['submit'])) {
 
              }
              imagesFromPHP.forEach(image => {
-                imagesFromLocalStorage.push(image)
-             })
+                imagesFromLocalStorage.push({
+                    img: image,
+                    feature:  0
+                });
+             });
              localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
         }
      

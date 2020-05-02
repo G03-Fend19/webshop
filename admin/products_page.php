@@ -238,6 +238,9 @@ echo '</main>';
       return false;
     }
   }
+
+  localStorage.removeItem("images");
+  localStorage.removeItem("deleted");
   </script>
 
   <?php

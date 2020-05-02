@@ -124,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               VALUES ( $p_id, LAST_INSERT_ID())";
                 $stmt_rel = $db->prepare($sql_p_img);
                 $stmt_rel->execute();
+                $stmt_rel->nextRowset();
             }
         }
 
@@ -136,13 +137,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $sql_delete = "DELETE
                             FROM ws_products_images
-                            WHERE img_id = :img_id;
+                            WHERE img_id = :img_id
                             AND product_id = :product_id";
 
                 $stmt_delete = $db->prepare($sql_delete);
                 $stmt_delete->bindParam(':img_id', $img_id);
                 $stmt_delete->bindParam(':product_id', $p_id);
                 $stmt_delete->execute();
+                $stmt_delete->nextRowset();
                 
             }
         }
@@ -200,5 +202,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
+    // Delete all images that aren't used from the server
+
+   /*  $sql_all_images = "SELECT
+                            ws_images.img AS imgName
+                        FROM
+                            ws_images";
+
+    $stmt_all_images = $db->prepare($sql_all_images);
+    $stmt_all_images->execute();
+
+    $all_images_array = [];
+    while ($row_img = $stmt_all_images->fetch(PDO::FETCH_ASSOC)) {
+        $all_images_array[] = $row_img['imgName'];
+    }
+
+    $directory = '../../media/product_images';
+    $scanned_image_directory = array_diff(scandir($directory), array('..', '.'));;
+    
+    echo '<pre>';
+    print_r($scanned_image_directory);
+    echo '</pre>'; */
 }
-/* header("Location:../products_page.php"); */
+
+
+
+ header("Location:../products_page.php"); 
