@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Delete all images that aren't used from the server
 
-   /*  $sql_all_images = "SELECT
+    $sql_all_images = "SELECT
                             ws_images.img AS imgName
                         FROM
                             ws_images";
@@ -217,14 +217,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $all_images_array[] = $row_img['imgName'];
     }
 
+
+   /*  echo '<pre>';
+    print_r($all_images_array);
+    echo '</pre>'; */
+
     $directory = '../../media/product_images';
-    $scanned_image_directory = array_diff(scandir($directory), array('..', '.'));;
+    $scanned_image_directory = array_diff(scandir($directory), array('..', '.'));
+
+    foreach ($scanned_image_directory as $filename) {
+
+        if (!in_array($filename, $all_images_array)) {
+            unlink("../../media/product_images/$filename");
+        }
+    }
     
-    echo '<pre>';
+   /*  echo '<pre>';
     print_r($scanned_image_directory);
     echo '</pre>'; */
 }
 
 
 
- header("Location:../products_page.php"); 
+/*  header("Location:../products_page.php");  */
