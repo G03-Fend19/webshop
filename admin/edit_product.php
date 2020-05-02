@@ -207,64 +207,84 @@ echo'</pre>';  */
 
 ?>
         <script>
-        const setImagesToLocalStorage = () => {
+          // 1. grab images from db
+          let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
+
+          // 2. Grab all images from localStorage, create array if null
+          imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
+          !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null;
+
+          // 3. Push all images from db to localStorage
+          imagesFromDb.forEach((imgObj, index) => {
+       
+
+            Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj); 
+
+          });
+
+          console.log(imagesFromLocalStorage);
+          localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+
+         
+         
+          
+
+
+
+
+
+       /*  const setImagesToLocalStorage = () => {
 
 
           let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
-          console.log("ImagesFromDb: ");
-          console.log(imagesFromDb);
+     
           
           imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
           !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null
 
-         console.log("localstorage: ", imagesFromLocalStorage);
-         
-          if (imagesFromLocalStorage.length > 0) {
+         console.log("localstorage: ", imagesFromLocalStorage);         
+ */
+
+       /*    if (imagesFromLocalStorage.length > 0) {
+
             imagesFromDb.forEach((imgObj, index) => {
-      
-           
-         
-           
-            console.log(imagesFromLocalStorage[index]);
-            console.log(Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1);
-            
-            
-             Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push({
+              Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push({
                 img: imgObj.img,
                 feature: imgObj.feature
               }); 
-          })
+            })
             }
             else {
               imagesFromDb.forEach(imgObj => {
-              imagesFromLocalStorage.push({
-                img: imgObj.img,
-                feature: imgObj.feature
+                imagesFromLocalStorage.push({
+                  img: imgObj.img,
+                  feature: imgObj.feature
 
+                });
               });
-          });
             }
         
           localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
-         
-
-          /* imagesFromDb.forEach(image => {
-            !imagesFromLocalStorage.includes(image) ? imagesFromLocalStorage.push(image) : null
-          })
-          localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
-          console.log(imagesFromLocalStorage) */
-
 
         }
-        setImagesToLocalStorage()
+        setImagesToLocalStorage() */
 
-        const renderImagesToDOM = () => {
+       /*  const renderImagesToDOM = () => {
           const updateImageSection = document.getElementById('update-product-images')
-          let counter = 0
+
+          deletedImages = JSON.parse(localStorage.getItem('deleted'));
+          !deletedImages ? deletedImages = [] : null 
+          updateImageSection.innerHTML = ""
+ */
+
+        /*   let counter = 0
           if (imagesFromLocalStorage.length > 0) {
-            console.log('running render images')
+            
             updateImageSection.innerHTML = ''
             imagesFromLocalStorage.map(imgObj => {
+
+              if(!deletedImages.includes(imgObj['img'])){
+
               updateImageSection.innerHTML += `
                       <label class='form__image-section__selection' for='image${counter}'>
                           <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
@@ -275,9 +295,10 @@ echo'</pre>';  */
                       </label>
                       <button data-name='${imgObj['img']}' type="button"class="remove-image">x</button>`;
               counter++
-            });
-
             
+            
+              }
+            });
 
             const feature = document.getElementById('feature');
 
@@ -298,12 +319,41 @@ echo'</pre>';  */
          
         }
 
+        renderImagesToDOM()
+ */
 
 
-        document.addEventListener('click', e => {
+        /* const deleteImages = () => {
+         document.addEventListener("click", (e) => {
+
+          if (e.target.className == "remove-image") {
+            console.log('running deleted images');
+            
+            // get deletedImages from localstorage
+                deletedImages = JSON.parse(localStorage.getItem("deleted"))
+                !deletedImages ? deletedImages = [] : null
+            // push deleted image to localstorage
+            deletedImages.push(e.target.dataset.name)
+            localStorage.setItem("deleted", JSON.stringify(deletedImages));
+            // remove image from image array
+            images = imagesFromLocalStorage.filter((el)=> {
+              return el !== e.target.dataset.name
+            })
+            console.log(images)
+              localStorage.setItem("images", JSON.stringify(images));
+          }
+            renderImagesToDOM()
+        });
+      }
+
+      deleteImages() */
+
+
+
+       /*  document.addEventListener('click', e => {
               if(e.target.classList.contains('form__image-section__selection__image')){
 
-                /* feature.value = e.target.dataset.imgname */
+          
                 imagesFromLocalStorage.forEach(imgObj => {
 
                   if (imgObj['img'] == e.target.dataset.imgname) {
@@ -320,9 +370,8 @@ echo'</pre>';  */
 
 
               renderImagesToDOM()
-            });
-        renderImagesToDOM()
-        document.addEventListener("click", (e) => {
+            }); */
+      /*   document.addEventListener("click", (e) => {
           if (e.target.className == "remove-image") {
 
 
@@ -334,7 +383,7 @@ echo'</pre>';  */
             localStorage.setItem("images", JSON.stringify(images));
           }
           renderImagesToDOM()
-        });
+        }); */
         </script>
       </div>
 
