@@ -22,13 +22,16 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
             ws_products.stock_qty     AS ProductQty,
             ws_products.added_date    AS AddedDate,
             ws_images.img             AS ImageName,
-            ws_products_images.img_id AS ProductImageImageId
+            ws_products_images.img_id AS ProductImageImageId,
+            ws_products_images.feature AS FeatureImg
           FROM
             ws_products
           LEFT JOIN
             ws_products_images
           ON
             ws_products.id = ws_products_images.product_id
+          AND
+            ws_products_images.feature = 1
           LEFT JOIN
             ws_images
           ON
@@ -59,53 +62,43 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 
     //   ]
     // ]
-    $grouped = [];
+    // $grouped = [];
 
-    foreach ($results as $row) {
-        // The product id for this row
-        $currentProductId = $row["ProductId"];
+    // foreach ($results as $row) {
+    //     // The product id for this row
+    //     $currentProductId = $row["ProductId"];
 
-        // If we've already added this product
-        if (isset($grouped[$currentProductId])) {
+    //     // If we've already added this product
+    //     if (in_array($currentProductId, $grouped)) {
 
-            // Just add the additional image name to the imgIds array
-            $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-        } else {
+    //         // Just add the additional image name to the imgIds array
+    //         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+    //     } else {
 
-            // If we haven't added the product yet
-            $grouped[$currentProductId] = [
-                "imgNames" => [], // Start with empty
-                "ProductName" => $row["ProductName"],
-                "ProductPrice" => $row["ProductPrice"],
-                "ProductQty" => $row["ProductQty"],
-                "AddedDate" => $row['AddedDate'],
-            ];
+    //         // If we haven't added the product yet
+    //         $grouped[$currentProductId] = [
+    //             "imgNames" => [], // Start with empty
+    //             "ProductName" => $row["ProductName"],
+    //             "ProductPrice" => $row["ProductPrice"],
+    //             "ProductQty" => $row["ProductQty"],
+    //         ];
 
-            // If there is an image for this row, add it
-            if ($row["ProductImageImageId"]) {
-                $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-            }
-        }
-    }
+    //         // If there is an image for this row, add it
+    //         if ($row["ProductImageImageId"]) {
+    //             $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+    //         }
+    //     }
+    // }
 
-    foreach ($grouped as $productId => $product):
-      $productMsg = "";
-      $priceMsg = "";
-        if ($product['AddedDate'] >= $newInLimitDate) {
-            $productMsg = "<div class='new-in'>
-			                        <span class='new-in__msg'>
-			                        New In
-			                        </span>
-			                      </div>";
-        } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
-          $productMsg = "<div class='out-of-stock'>
-                              <span class='out-of-stock__msg'>
-                                10% off
-                              </span>
-                            </div>";
+    foreach ($results as $product):
+      $productId = $product['ProductId'];
+      $productPrice = htmlspecialchars($product['ProductPrice']);
+        $productName = htmlspecialchars($product['ProductName']);
+        if (strlen($productName) > 20) {
+            $productName = substr($productName, 0, 20) . "...";
         }
 
-        $productPrice = htmlspecialchars($product['ProductPrice']);
+
         $discount = 1;
         if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
           $discount = 0.9;
@@ -115,12 +108,6 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         } else {
           $priceMsg = "<span>$productPrice SEK</span>";
         }
-
-        $productName = htmlspecialchars($product['ProductName']);
-        if (strlen($productName) > 20) {
-            $productName = substr($productName, 0, 20) . "...";
-        }
-
         $productQty = htmlspecialchars($product['ProductQty']);
         if ($productQty > 9) {
           $qtyMsg = "<span class='in-store'> $productQty in store</span>";
@@ -128,10 +115,11 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
           $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
         }
 
-        if (empty($product['imgNames'])) {
-            $productImg = "placeholder.jpg";
+        // $productImg = htmlspecialchars($product['ImageName']); // TODO
+        if ($product['ImageName'] == NULL) {
+          $productImg = "placeholder.jpg";
         } else {
-            $productImg = htmlspecialchars($product['imgNames'][0]);
+          $productImg = htmlspecialchars($product['ImageName']);
         }
 
         $productCards .= "<article class='product-card'>

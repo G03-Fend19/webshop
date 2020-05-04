@@ -1,8 +1,16 @@
-
 function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0, reverse;
+  var table,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0,
+    reverse;
 
-  clickedTableId = this.event['target'].parentNode.parentNode.parentNode.id
+  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -12,30 +20,26 @@ function sortTable(n) {
   switching = true;
   dir = "asc";
   while (switching) {
-
     switching = false;
     rows = table.rows;
 
-    for (i = 1; i < (rows.length - 1); i++) {
-
+    for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
 
       x = rows[i].getElementsByTagName("td")[n];
       y = rows[i + 1].getElementsByTagName("td")[n];
 
       if (dir == "asc") {
-        console.log("asc")
-        console.log(x)
-        console.log(y)
+        console.log("asc");
+        console.log(x);
+        console.log(y);
         if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
-
           shouldSwitch = true;
-          console.log("x > y")
+          console.log("x > y");
           break;
         }
       } else if (dir == "desc") {
         if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
-
           shouldSwitch = true;
           break;
         }
@@ -54,10 +58,18 @@ function sortTable(n) {
   }
 }
 
-
 function sortTableDate(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0, reverse;
-  clickedTableId = this.event['target'].parentNode.parentNode.parentNode.id
+  var table,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0,
+    reverse;
+  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -67,30 +79,26 @@ function sortTableDate(n) {
   switching = true;
   dir = "asc";
   while (switching) {
-
     switching = false;
     rows = table.rows;
 
-    for (i = 1; i < (rows.length - 1); i++) {
-
+    for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
 
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
 
-      console.log("date asc")
-      console.log(x)
-      console.log(y)
+      console.log("date asc");
+      console.log(x);
+      console.log(y);
 
       if (dir == "asc") {
         if (Date.parse(x.innerHTML) < Date.parse(y.innerHTML)) {
-
           shouldSwitch = true;
           break;
         }
       } else if (dir == "desc") {
         if (Date.parse(x.innerHTML) > Date.parse(y.innerHTML)) {
-
           shouldSwitch = true;
           break;
         }
@@ -109,11 +117,18 @@ function sortTableDate(n) {
   }
 }
 
-
-
 function sortTableStatus(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0, reverse;
-  clickedTableId = this.event['target'].parentNode.parentNode.parentNode.id
+  var table,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0,
+    reverse;
+  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -123,30 +138,27 @@ function sortTableStatus(n) {
   switching = true;
   dir = "asc";
   while (switching) {
-
     switching = false;
     rows = table.rows;
 
-    for (i = 1; i < (rows.length - 1); i++) {
-
+    for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
 
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
 
-      xForm = x.children[0][0]
-      yForm = y.children[0][0]
-
+      xForm = x.children[0][0];
+      yForm = y.children[0][0];
 
       if (dir == "asc") {
         if (parseInt(xForm.value) > parseInt(yForm.value)) {
-          console.log("x > y")
+          console.log("x > y");
           shouldSwitch = true;
           break;
         }
       } else if (dir == "desc") {
         if (parseInt(xForm.value) < parseInt(yForm.value)) {
-          console.log("x < y")
+          console.log("x < y");
           shouldSwitch = true;
           break;
         }

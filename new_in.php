@@ -90,13 +90,16 @@ foreach ($grouped as $productId => $product):
                         </div>";
 }
 
-$productPrice = htmlspecialchars($product['ProductPrice']);
-$priceMsg = "<span>$productPrice SEK</span>";
+  
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $priceMsg = "<span>$productPrice SEK</span>";
 
-$productName = htmlspecialchars($product['ProductName']);
-if (strlen($productName) > 20) {
-    $productName = substr($productName, 0, 20) . "...";
-}
+    $discount = 1;
+    
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+        $productName = substr($productName, 0, 20) . "...";
+    }
 
 $productQty = htmlspecialchars($product['ProductQty']);
 if ($productQty > 9) {
@@ -136,6 +139,7 @@ $productCards .= "<article class='product-card'>
 															                          data-price=$productPrice
 															                          data-img='$productImg'
 															                          data-stock=$productQty
+                                                                                      data-discount=$discount 
                                                         class='add-to-cart-btn'
                                                         id='addToCartBtn-$productId'>
                                                         <i class='fas fa-cart-plus'></i>
@@ -148,6 +152,7 @@ $productCards .= "<article class='product-card'>
             data-price=$productPrice
             data-img='$productImg'
             data-stock=$productQty
+            data-discount=$discount 
             >
 
             <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
@@ -155,6 +160,7 @@ $productCards .= "<article class='product-card'>
           </div>
 
         </div>
+                                                        
                                                         $qtyMsg
 															                          </div>
 															                      </article>";
