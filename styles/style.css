@@ -3379,6 +3379,7 @@ footer {
   -webkit-animation-duration: 0.4s;
           animation-duration: 0.4s;
   text-align: left;
+  font-size: 15px;
 }
 
 @media (min-width: 500px) {
@@ -3451,6 +3452,7 @@ footer {
 
 .modal__content__footer button:hover {
   background-color: #888888;
+  cursor: pointer;
 }
 
 .modal__content__footer .clear-cart {
@@ -3459,6 +3461,7 @@ footer {
 
 .modal__content__footer .clear-cart:hover {
   background-color: #bd4343;
+  cursor: pointer;
 }
 
 /* Animation */
