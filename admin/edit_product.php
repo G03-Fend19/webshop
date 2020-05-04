@@ -51,9 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
     $stmt_categories = $db->prepare($sql_categories);
     $stmt_categories->execute();
 
-    /* echo "<pre>";
-    print_r($stmt_categories->fetch(PDO::FETCH_ASSOC));
-    echo "</pre>"; */
+  
 
     while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $p_id = htmlspecialchars($productRow['ProductId']);
@@ -90,18 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
             'img' => $imagesRows['imgName'],
             'feature' => $imagesRows['featureImg'], ];
     }
-    /* if (isset($_FILES['file']['name'])) {
-        if (count($_FILES) != 0) {
-            foreach ($imageArray as $image) {
-                $imagesDb[] = [
-                    'img' => $image,
-                    'feature' => 0,
-                ];
-            }
-        }
-    } */
+   
 
-    //print_r($stmt_img->fetch(PDO::FETCH_ASSOC));
+
 } elseif (!isset($_GET['formerror']) && $_SERVER['REQUEST_METHOD'] != 'POST') {
     header('Location:products_page.php');
 }
@@ -156,10 +145,7 @@ require_once './assets/aside-navigation.php';
 
 <?php
 
-   /*  echo'$imagesDb: <pre>'; 
-print_r($imagesDb);
-
-echo'</pre>';  */
+  
 
 ?>
 
@@ -178,33 +164,7 @@ echo'</pre>';  */
       <div id="update-product-images" class="form__image-section__images">
         <?php
 
-// if (count($imagesDb) != 0) {
 
-//     $counter = 1;
-//     foreach ($imagesDb as $image) {
-//         echo "
-//           <label class='form__image-section__selection'>
-//           $image
-//           <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-//           <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-//           </label>
-//           ";
-//         $counter++;
-//     }
-// } else {
-//     $counter = 1;
-//     foreach ($imagesGet as $image) {
-//         echo "
-//         <label class='form__image-section__selection'>
-//         $image
-//         <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-//         <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-//         </label>
-//         ";
-//         $counter++;
-//     }
-
-// }
 
 ?>
         <script>
@@ -372,157 +332,7 @@ echo'</pre>';  */
         renderImagesToDOM()
         });
 
-       /*  const setImagesToLocalStorage = () => {
-
-
-          let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
-     
-          
-          imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
-          !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null
-
-         console.log("localstorage: ", imagesFromLocalStorage);         
- */
-
-       /*    if (imagesFromLocalStorage.length > 0) {
-
-            imagesFromDb.forEach((imgObj, index) => {
-              Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push({
-                img: imgObj.img,
-                feature: imgObj.feature
-              }); 
-            })
-            }
-            else {
-              imagesFromDb.forEach(imgObj => {
-                imagesFromLocalStorage.push({
-                  img: imgObj.img,
-                  feature: imgObj.feature
-
-                });
-              });
-            }
-        
-          localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
-
-        }
-        setImagesToLocalStorage() */
-
-       /*  const renderImagesToDOM = () => {
-          const updateImageSection = document.getElementById('update-product-images')
-
-          deletedImages = JSON.parse(localStorage.getItem('deleted'));
-          !deletedImages ? deletedImages = [] : null 
-          updateImageSection.innerHTML = ""
- */
-
-        /*   let counter = 0
-          if (imagesFromLocalStorage.length > 0) {
-            
-            updateImageSection.innerHTML = ''
-            imagesFromLocalStorage.map(imgObj => {
-
-              if(!deletedImages.includes(imgObj['img'])){
-
-              updateImageSection.innerHTML += `
-                      <label class='form__image-section__selection' for='image${counter}'>
-                          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
-                              checked value='${imgObj['img']}'>
-                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}'
-                              data-imgname='${imgObj['img']}' class='thumbnails'>
-
-                      </label>
-                      <button data-name='${imgObj['img']}' type="button"class="remove-image">x</button>`;
-              counter++
-            
-            
-              }
-            });
-
-            const feature = document.getElementById('feature');
-
-
-            imagesFromLocalStorage.forEach(imgObj => {
-
-              if (imgObj['feature'] == 1) {
-                feature.value = imgObj['img']
-              }
-              
-            });
-            
-
-
-          }
-
-
-         
-        }
-
-        renderImagesToDOM()
- */
-
-
-        /* const deleteImages = () => {
-         document.addEventListener("click", (e) => {
-
-          if (e.target.className == "remove-image") {
-            console.log('running deleted images');
-            
-            // get deletedImages from localstorage
-                deletedImages = JSON.parse(localStorage.getItem("deleted"))
-                !deletedImages ? deletedImages = [] : null
-            // push deleted image to localstorage
-            deletedImages.push(e.target.dataset.name)
-            localStorage.setItem("deleted", JSON.stringify(deletedImages));
-            // remove image from image array
-            images = imagesFromLocalStorage.filter((el)=> {
-              return el !== e.target.dataset.name
-            })
-            console.log(images)
-              localStorage.setItem("images", JSON.stringify(images));
-          }
-            renderImagesToDOM()
-        });
-      }
-
-      deleteImages() */
-
-
-
-       /*  document.addEventListener('click', e => {
-              if(e.target.classList.contains('form__image-section__selection__image')){
-
-          
-                imagesFromLocalStorage.forEach(imgObj => {
-
-                  if (imgObj['img'] == e.target.dataset.imgname) {
-                    imgObj['feature'] = 1;
-                  }
-                  else {
-                    imgObj['feature'] = 0;
-                  }
-                  
-                });
-                localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
- 
-              }
-
-
-              renderImagesToDOM()
-            }); */
-      /*   document.addEventListener("click", (e) => {
-          if (e.target.className == "remove-image") {
-
-
-            let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
-
-            images = imagesFromLocalStorage.filter((el) => {
-              return el !== e.target.dataset.name
-            })
-            localStorage.setItem("images", JSON.stringify(images));
-          }
-          renderImagesToDOM()
-        }); */
+      
         </script>
       </div>
 
@@ -610,29 +420,6 @@ if (JSON.parse(localStorage.getItem('product_form'))) {
 
   localStorage.removeItem('product_form');
 }
-
-
-
- /* const updateImageSection = document.getElementById('update-product-images')
-                            let counter = 0
-                            if (imagesFromLocalStorage.length > 0) {
-                              console.log('running render images')
-                              updateImageSection.innerHTML = ''
-                              imagesFromLocalStorage.map(image => {
-                                updateImageSection.innerHTML += `
-                      <label class='form__image-section__selection' for='image${counter}'>
-                          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
-                              checked value='${image}'>
-                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}'
-                              data-imgname='${image}' class='thumbnails'>
-
-                      </label>
-                      <button data-name='${image}' "type="button"class="remove-image">x</button>
-                      `
-                                counter++
-                              })
-
-                            } */
 
 
 

@@ -78,19 +78,7 @@ require_once './assets/aside-navigation.php';
         <input type="text" name="feature" id="feature" value="" class="form__input">
       </label>
       <div class="form__image-section__images">
-        <?php
-
-// $counter = 1;
-// foreach ($imageArray as $image) {
-//     echo "
-//       <label class='form__image-section__selection'>
-//       $image
-//      <input class='form__image-section__selection__checkbox' type='checkbox' id='no_img' name='image$counter' value='$image' checked>
-//       <img class='form__image-section__selection__image thumbnails' src='../media/product_images/$image' class='thumbnails'>
-//       </label>
-//       ";
-//     $counter++;
-// }?>
+        
         <script>
           const imageSection = document.querySelector('.form__image-section__images')
 
@@ -170,8 +158,7 @@ require_once './assets/aside-navigation.php';
           img.dataset.imgname === feature.value ? img.classList.add('featured-image') : null
         })
 
-          // console.log(e.target.classList)
-          // console.log(e.target)
+        
 
       }
 
