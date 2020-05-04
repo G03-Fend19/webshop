@@ -35,7 +35,7 @@ $sql = "SELECT
           WHERE
             ws_products.stock_qty > 0
           AND ws_products.added_date >= :newInLimitDate
-          AND ws_products.active = 1 ";
+          AND ws_products.active = 1";
 
 $stmt = $db->prepare($sql);
 $stmt->bindParam(":newInLimitDate", $newInLimitDate);

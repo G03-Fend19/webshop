@@ -36,7 +36,8 @@ WHERE
 ws_products.stock_qty < 11
 AND
 ws_products.added_date <= :lastChanceLimitDate
-AND ws_products.active = 1";
+AND ws_products.active = 1
+AND ws_products.stock_qty > 0";
 
 $stmt = $db->prepare($sql);
 $stmt->bindParam(":lastChanceLimitDate", $lastChanceLimitDate);
