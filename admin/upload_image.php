@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
         }
         // check if file exists
         if (file_exists('../media/product_images/' . $filename)) {
-            $failedUploads[$filename][] = " file already exists.";
+            $failedUploads[$filename][] = " file already exists. Change file name or upload another image.";
             $uploadOk = 0;
         }
 
@@ -51,9 +51,9 @@ if (isset($_POST['submit'])) {
             $imageArray[] = $filename;
             move_uploaded_file($_FILES['file']['tmp_name'][$i], '../media/product_images/' . $filename);
 
-        } else {
+        } /* else {
             count($failedUploads) !== 0 ? print_r($failedUploads) : null;
-        }
+        } */
     }
 
 }

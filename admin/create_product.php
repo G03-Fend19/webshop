@@ -146,6 +146,17 @@ require_once './assets/aside-navigation.php';
     <div id="errorDiv">
       <?php
 
+if (count($failedUploads) !== 0) {
+  foreach ($failedUploads as $file_name => $errorArray) {
+    foreach ($errorArray as $error) {
+      echo "<p class='errormsg'><strong>$file_name:</strong> $error</p>";
+    }
+   
+  }
+
+}
+
+
 if (!isset($_GET['formerror'])) {
 
 } else {
