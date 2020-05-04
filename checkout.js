@@ -1,4 +1,9 @@
 const productSection = document.querySelector("#pTable-section");
+const shippingP = document.getElementById('shipping_fee');
+const totalSumP = document.getElementById('total_sum');
+const cityInput = document.getElementById('city');
+let fee;
+
 const calcTotalCheckout = () => {
   console.log("running calc total")
   let order = JSON.parse(localStorage.cart);
@@ -9,6 +14,23 @@ const calcTotalCheckout = () => {
   console.log(total)
   return `${total}`;
 };
+
+const calcTotalWithShipping = () => {
+  let totalSum = calcTotalCheckout();
+  totalSum = parseInt(totalSum);
+  const city = cityInput.value;
+  if (totalSum > 500) {
+    fee = 0;
+  } else if (city.toLowerCase() == "stockholm") {
+    fee = 0;
+  } else {
+    fee = 29;
+  }
+  shippingP.innerHTML = `${fee} SEK`;
+  totalSumP.innerHTML = `${totalSum + fee} SEK`;
+  localStorage.setItem("shipping", JSON.stringify(fee));
+
+}
 
 // const calcTotal = () => {
 //   total = Object.keys(cart).reduce((acc, cur) => {
@@ -83,6 +105,7 @@ const renderOrderSummary = () => {
 
     productSection.append(totalDiv);
 
+
     //${productsInCheckout()} st
   } else {
     productSection.innerHTML = "<h3>Your cart is empty.</h3>";
@@ -90,6 +113,11 @@ const renderOrderSummary = () => {
 };
 
 renderOrderSummary();
+calcTotalWithShipping();
+
+cityInput.addEventListener("input", function () {
+  calcTotalWithShipping();
+})
 
 // old table
 /*<tr data-name="${order[product].name}">

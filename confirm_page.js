@@ -76,7 +76,7 @@ function shippingFeeCheck(totalPrice, customerInfo) {
 
 function customer(customerInfo) {
   return `<p>${customerInfo.firstname} ${customerInfo.lastname}</p>
-  <p>${customerInfo.address}</p><p>${customerInfo.postal} ${customerInfo.city}</p>
+  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${customerInfo.city}</p>
   <br><p>${customerInfo.mobile}</p><p>${customerInfo.email}</p>`;
   localStorage.clear();
 }

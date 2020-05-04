@@ -185,11 +185,11 @@ alert('Email already registered on a different name. Please check spelling or us
           <h2>Payment Information</h2>
           <div class="customer__form__payment__shipping">
             <p>Shipping Fee</p>
-            <p class="sum">SEK</p>
+            <p id='shipping_fee' class="sum"></p>
           </div>
           <div class="customer__form__payment__total">
             <p>Total price</p>
-            <p class="sum">SEK</p>
+            <p id='total_sum' class="sum"></p>
           </div>
           <div class="customer__form__payment__invoice">
             <p>Invoice: </p>
