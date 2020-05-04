@@ -2,7 +2,7 @@
   max-inline-size: 100%;
   background-color: #828a8e;
   // box-shadow: 1px 1px 3px rgb(212, 212, 212);
-  padding: 2em;
+  padding: 2em 1em;
   white-space: nowrap;
 
   @media (min-width: 1013px) {
@@ -28,18 +28,21 @@
 
   span {
     font-weight: 400;
-    color: #d9d7d1;
-    font-size: 15px;
+    color:white;
+    font-size: 12px;
+    padding: 0.1em 0.5em;
 
-    &:hover {
-      font-weight: 900;
-      text-shadow: 1px 1px 2px rgb(60, 60, 60);
-      color: whitesmoke;
-    }
-
+    
     @media (min-width: 1013px) {
       font-weight: unset;
       font-size: 14px;
+      padding: unset;
+            
+      &:hover {
+              font-weight: 900;
+              text-shadow: 1px 1px 2px rgb(60, 60, 60);
+              color: whitesmoke;
+            }
     }
   }
 
@@ -72,11 +75,6 @@
       font-size: 12px;
       // font-weight: 700;
 
-      &:hover {
-        transition: ease-in 250ms;
-        transform: scale(1.05);
-      }
-
       @media (min-width: 1013px) {
         max-width: 100%;
         padding: unset;
@@ -86,11 +84,6 @@
         background: unset;
         margin: 0.5em 0;
         word-break: break-all;
-
-        &:hover {
-          transition: unset;
-          transform: unset;
-        }
       }
 
       @media (max-width: 900px) {
@@ -101,12 +94,14 @@
 
       a {
         text-decoration: none;
-        width: 20vw;
+        // width: 20vw;
         display: block;
         font-size: 10px;
-        min-width: fit-content;
+        // min-width: fit-content;
         color: white;
         font-weight: 500;
+        // max-width: 20vw;
+        // width: 100%;
 
         &:visited {
           color: black;
@@ -117,7 +112,8 @@
         // }
 
         @media (min-width: 1013px) {
-          width: 100%;
+          // max-width: unset;
+          // width: 100%;
           height: 100%;
           font-size: 1em;
           min-width: unset;
