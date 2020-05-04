@@ -237,7 +237,6 @@ alert('Email already registered on a different name. Please check spelling or us
     document.getElementById('total-input').value = localStorage.getItem('total');
     </script>
     <script src="./checkout.js"></script>
-    <script src="./cart.js"></script>
 
     <script src="./order-confirmation.js"></script>
 
