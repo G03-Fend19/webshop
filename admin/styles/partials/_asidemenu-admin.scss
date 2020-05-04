@@ -3,11 +3,14 @@
   flex-direction: column;
   max-width: 17vw;
   height: fit-content;
-  position: relative;
-  top: 70px;
-  padding-left: 2em;
+  position: sticky;
+  margin-top: 67px;
+  top: 67px;
+  padding: 2em;
   margin-bottom: 5em;
   overflow-wrap: break-word;
+  background-color: $primary-color2;
+  color: #9da9b8;
   @extend %boxShadowSection;
 
   &__path {
@@ -15,7 +18,7 @@
 
     i {
       font-size: 0.8em;
-      color: rgb(63, 63, 63);
+      color: $font-color2;
     }
   }
 
@@ -27,13 +30,13 @@
     font-size: 0.8em;
     padding: 1.5em 0 0.5em 0.5em;
     font-weight: 500;
-    color: gray;
-  }
+    color: $font-color2;
 
-  a {
-    color: black;
-    text-decoration: none;
-    font-size: 0.8em;
+    &__link {
+      color: $font-color2;
+      text-decoration: none;
+      font-size: 16px;
+    }
   }
 
   &__nav {
@@ -45,4 +48,20 @@
       }
     }
   }
+}
+
+a {
+  text-decoration: none;
+  color: $font-color2;
+  font-size: 0.8em;
+}
+
+.aside__nav__ul__li__title__link-active {
+  font-weight: 500;
+  color: $active-font-color;
+}
+
+.orders__link-active {
+  font-weight: 500;
+  color: $active-font-color;
 }

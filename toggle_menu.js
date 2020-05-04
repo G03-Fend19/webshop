@@ -8,7 +8,7 @@ function toggleNav() {
   nav.classList.toggle("toggle_menu__active");
 }
 
-burger.addEventListener("click", function() {
+burger.addEventListener("click", function () {
   toggleNav();
 });
 

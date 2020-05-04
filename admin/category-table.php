@@ -79,8 +79,8 @@ if (isset($_GET['addingerror'])) {
 <main class="main__admin" id="main__admin">
 
   <div class="main__admin__text">
-    <h1>Categories</h1>
-    <button><a href="?addCategory=true" class="main__admin__addCategory">
+    <h1 class="headline__php">Categories</h1>
+    <button class="addCategory_btn"><a href="?addCategory=true" class="main__admin__addCategory">
         Add new
         <i class="fas fa-plus"></i>
       </a></button>

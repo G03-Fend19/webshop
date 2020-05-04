@@ -26,7 +26,9 @@
         </div>
 
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
-              class="fas fa-shopping-cart"></i><span class="cart_qty_show">0</span><span class="round-thing"></span></a></li>
+              class="fas fa-shopping-cart"></i>
+            <span class="cart_qty_show"></span>
+          </a></li>
       </ul>
 
       <div class="header__burger">
@@ -46,7 +48,7 @@
               href="index.php">Home</a>
           </li>
           <li class="toggle_menu__item"><a id="contact-desktop" class="toggle_menu__item__a toggle_menu__item__contact2"
-              href="">Contact</a></li>
+              href="contact.php">Contact</a></li>
         </div>
 
       </ul>
@@ -54,9 +56,29 @@
         <div class="cart__menu"></div>
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>
+
       </section>
-      <h1>Welcoming text</h1>
-      <p>Describing text about shop...</p>
+      <h1>Spring vibes</h1>
+      <p class="desc__hero__text">More new amazing products in stock...</p>
+
+      <div id="myModal" class="modal">
+        <div class="modal__content">
+          <div class="modal__content__header">
+            <span class="close">&times;</span>
+            <h2>Confirmation</h2>
+          </div>
+          <div class="modal__content__body">
+            <p>Are you sure you would like to remove all items from the shopping cart?</p>
+          </div>
+          <div class="modal__content__footer">
+            <button class="cancel-btn">Cancel</button> <button class="clear-cart">
+              Clear Cart
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </section>
 
   </header>

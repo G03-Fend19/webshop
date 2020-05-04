@@ -1,0 +1,104 @@
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.137);
+
+  &__content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 280px;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    text-align: left;
+    font-size: 15px;
+    @media (min-width: 500px) {
+      width: 450px;
+    }
+    &__header {
+      padding: 2px 16px;
+      background-color: #ffffff;
+      color: rgb(97, 97, 97);
+      border-radius: 5px 5px 0px 0px;
+
+      h2 {
+        margin-top: 1em;
+        font-weight: 500;
+      }
+      .close {
+        color: rgb(151, 151, 151);
+        float: right;
+        font-size: 28px;
+      }
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    &__body {
+      padding: 2px 16px;
+      min-height: 100px;
+      display: flex;
+      font-size: 1em;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 2px 16px;
+      background-color: #ebebeb;
+      color: white;
+      border-radius: 0px 0px 5px 5px;
+
+      button {
+        background-color: rgb(165, 165, 165);
+        border: none;
+        color: white;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 0.5em;
+        transition-duration: 0.3s;
+        &:hover {
+          background-color: rgb(136, 136, 136);
+          cursor: pointer;
+        }
+      }
+      .clear-cart {
+        background-color: rgb(221, 79, 79);
+
+        &:hover {
+          background-color: rgb(189, 67, 67);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+/* Animation */
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}

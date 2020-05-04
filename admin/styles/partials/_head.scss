@@ -1,12 +1,13 @@
 .admin__header {
   width: 100vw;
-  color: rgb(97, 97, 97);
+  color: #ffffff;
 
   nav {
     display: flex;
     width: 100%;
     align-items: center;
     @extend %boxShadowSection;
+    background-color: $primary-color1;
     position: fixed;
     top: 0;
     border-radius: 0 0 5px 5px;
@@ -18,7 +19,7 @@
     margin-right: auto;
     margin-left: 1em;
     text-decoration: none;
-    color: rgb(97, 96, 96);
+    color: #afb7c2;
     font-weight: 500;
   }
 
@@ -48,19 +49,16 @@
     }
 
     &__img {
-      max-width: 35px;
+      //max-width: 35px;
+
       display: flex;
       align-items: center;
 
-      img {
-        width: 100%;
+      i {
+        font-size: 30px;
       }
     }
-
   }
-
-
-
 }
 
 .siteWrapper {

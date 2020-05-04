@@ -25,7 +25,7 @@ require_once './assets/aside-navigation.php';
 
 ?>
 <section class="new__product__section">
-  <h1>Add new product</h1>
+  <h1 class="headline__php">Add new product</h1>
 
   <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
     <div class="upload-form__border">

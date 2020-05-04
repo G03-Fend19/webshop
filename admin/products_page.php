@@ -21,7 +21,7 @@ if (isset($_GET['category_id'])){
 ?>
 <main class="admin__tables">
   <div class="admin__tables__text">
-    <h1 class="headline__products"><?php echo $headline?></h1>
+    <h1 class="headline__php"><?php echo $headline?></h1>
     <a href="./create_product.php">
       <button class="admin__tables__text__addProduct">
         <p>Add new</p>
@@ -219,28 +219,69 @@ foreach ($results as $product):
 										                    </form>
 										                  </td>
 													            <td>
-													                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-													                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-													                  <input type='hidden' name='id' value='$id'>
-													               </form>
+													                
+													              <button id='openModal' class='open-modal'><i class='far fa-trash-alt'></i></button>
+													             
+                                        <div id='myModal' data-id='$id' class='modal'>
+                                         <div class='modal__content'>
+                                           <div class='modal__content__header'>
+                                             <span class='close'>&times;</span>
+                                             <h2>Confirmation</h2> 
+                                           </div>
+                                           <div class='modal__content__body'>
+                                           <p>Are you sure you want to delete this product?</p>
+                                           <p>This change is irreversible</p>
+                                           </div>
+                                           <div class='modal__content__footer'>
+                                           <button id='cancel' class='cancel-btn'>Cancel</button>  
+                                              <form action='assets/delete-product.php' method='POST'>
+                                           <button class='delete-btn' type='submit'>Delete</button>
+                                            <input type='hidden' name='id' value='$id'>
+                                           </form>
+                                           </div>
+                                         </div>
+                                       
+                                       </div>
+
 													            </td>
-													         </tr>";
+                                   </tr> 
+                                   
+ 
+";
 endforeach;
 echo '</tbody></table>';
 echo '</main>';
 ?>
   <script src="active_pages.js"></script>
-  <script>
-  function deleteProductConfirm() {
-    if (confirm("Are you sure you want to delete this product?")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  <!-- <script src="active_pages.js"></script> -->
+  <script> 
+  const modal = document.getElementById("myModal");
+  const span = document.getElementsByClassName("close")[0];
+  const cancelBtn = document.getElementById("cancel");
 
-  localStorage.removeItem("images");
-  localStorage.removeItem("deleted");
+  document.querySelectorAll('.open-modal').forEach(item => {
+  item.addEventListener('click', event => {
+    let currentModal = event.currentTarget.nextElementSibling;
+    let currentSpan = event.currentTarget.nextElementSibling;
+
+    currentModal.style.display = "block";
+        //close the modal
+        currentSpan.onclick = function() {
+          currentModal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            currentModal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            currentModal.style.display = "none";
+          }
+        });
+  });
+});
   </script>
 
   <?php

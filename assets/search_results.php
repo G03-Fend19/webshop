@@ -1,5 +1,15 @@
 <?php
 $search = "";
+$productMsg = "";
+$priceMsg = "";
+$qtyMsg = "";
+
+$currentDateTime = date('Y-m-d H:i:s');
+$currentDateTimeDT = new DateTime($currentDateTime);
+$newInLimitDT = $currentDateTimeDT->sub(new DateInterval('P14D'));
+$newInLimitDate = $newInLimitDT->format('Y-m-d H:i:s');
+$lastChanceLimitDT = $currentDateTimeDT->sub(new DateInterval('P1Y'));
+$lastChanceLimitDate = $lastChanceLimitDT->format('Y-m-d H:i:s');
 
 if (isset($_GET['search']) && $_GET['search'] !== "") {
     require_once "./db.php";
@@ -10,6 +20,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
             ws_products.price         AS ProductPrice,
             ws_products.id            AS ProductId,
             ws_products.stock_qty     AS ProductQty,
+            ws_products.added_date    AS AddedDate,
             ws_images.img             AS ImageName,
             ws_products_images.img_id AS ProductImageImageId,
             ws_products_images.feature AS FeatureImg
@@ -26,9 +37,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
           ON
             ws_products_images.img_id = ws_images.id
           WHERE
-            (ws_products.name LIKE '%$search%'
-          OR
-            ws_products.description LIKE '%$search')
+            ws_products.name LIKE '%$search%'
           AND ws_products.stock_qty > 0
           AND ws_products.active = 1";
 
@@ -87,8 +96,14 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         if (strlen($productName) > 20) {
             $productName = substr($productName, 0, 20) . "...";
         }
-        $productPrice = htmlspecialchars($product['ProductPrice']);
+
         $productQty = htmlspecialchars($product['ProductQty']);
+        if ($productQty > 9) {
+          $qtyMsg = "<span class='in-store'> $productQty in store</span>";
+        } else {
+          $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+        }
+
         // $productImg = htmlspecialchars($product['ImageName']); // TODO
         if ($product['ImageName'] == NULL) {
           $productImg = "placeholder.jpg";
@@ -97,32 +112,37 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         }
 
         $productCards .= "<article class='product-card'>
-			                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-			                          <div class='image-wrapper'>";
+							                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+				                                <div class='image-wrapper'>
+				                                $productMsg";
         $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
-			                                                            <span class='out-of-stock__msg'>
-			                                                            Product currently out of stock
-			                                                            </span>
-			                                                          </div>" : null;
+							                                                            <span class='out-of-stock__msg'>
+							                                                            Product currently out of stock
+							                                                            </span>
+							                                                          </div>" : null;
         $productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
-			                          </div>
-			                        </a>
-			                        <div class='product-card__content'>
-			                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
-			                            $productName
-			                          </a>
-			                          <p>$productPrice SEK</p>
-			                          <button
-			                          	 data-id=$productId
-					                          data-name='$productName'
-					                          data-price=$productPrice
-					                          data-img='$productImg'
-					                          data-stock=$productQty
-			                          class='add-to-cart-btn'>";
+							                          </div>
+							                        </a>
+                                      <div class='product-card__content'>
+                                      <div class='product-card__text'>
+							                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
+							                            $productName
+							                          </a>
+                                        $priceMsg
+                                        </div>
+							                          <button
+							                          	 data-id=$productId
+									                          data-name='$productName'
+									                          data-price=$productPrice
+									                          data-img='$productImg'
+                                            data-stock=$productQty
+                                            data-discount=$discount 
+							                          class='add-to-cart-btn'>";
         $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
         $productCards .= "</button>
-			                          </div>
-			                      </article>";
+                                        $qtyMsg
+							                          </div>
+							                      </article>";
     endforeach;
     $productsContainer .= $productCards;
     $productsContainer .= "</div>";
@@ -134,7 +154,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 function getSearchHeader($search)
 {
     if ($search !== "") {
-        echo "You searced for '$search' and the result is...";
+        echo "You searched for '$search' and the result is...";
     } else {
         echo "Unvalid search";
     }

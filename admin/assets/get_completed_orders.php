@@ -53,7 +53,7 @@ echo "<section class='completed-orders'>";
 if (empty($completedOrdersResults)) {
     echo "<h2>No completed orders</h2>";
 } else {
-    echo "<h2>Completed orders</h2>";
+    // echo "<h2>Completed orders</h2>";
   }
 echo "<div class='completed-orders__filter'>
         <h3>Filter orders</h3>
@@ -105,5 +105,5 @@ echo '</tbody></table></section>';
 ?>
 
 <script>
-  let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped); ?> ;
+let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped);?> ;
 </script>

@@ -3,6 +3,16 @@ require_once "./db.php";
 require_once "./assets/header.php";
 require_once "./assets/categories-menu.php";
 
+$productMsg = "";
+$priceMsg = "";
+$qtyMsg = "";
+
+$currentDateTime = date('Y-m-d H:i:s');
+$currentDateTimeDT = new DateTime($currentDateTime);
+$newInLimitDT = $currentDateTimeDT->sub(new DateInterval('P14D'));
+$newInLimitDate = $newInLimitDT->format('Y-m-d H:i:s');
+$lastChanceLimitDT = $currentDateTimeDT->sub(new DateInterval('P1Y'));
+$lastChanceLimitDate = $lastChanceLimitDT->format('Y-m-d H:i:s');
 if (isset($_GET['product_id'])) {
     $productId = htmlspecialchars($_GET['product_id']);
     $sql = "SELECT
@@ -16,6 +26,7 @@ if (isset($_GET['product_id'])) {
             ws_products_images.feature  AS FeatureImg,
             ws_categories.id            AS CategoryId,
             ws_categories.name          AS CategoryName
+            ws_products.added_date    AS AddedDate,
           FROM
             ws_products
           LEFT JOIN
@@ -76,6 +87,7 @@ if (isset($_GET['product_id'])) {
                 "ProductDescription" => $row["ProductDescription"],
                 "ProductPrice" => $row["ProductPrice"],
                 "ProductQty" => $row["ProductQty"],
+                "AddedDate" => $row['AddedDate'],
                 "CategoryName" => $row["CategoryName"],
             ];
             // If there is an image for this row, add it
@@ -91,6 +103,10 @@ if (isset($_GET['product_id'])) {
     //   print_r($grouped);
     //   echo "</pre>";
 
+//     echo "<pre>";
+// print_r($grouped);
+// echo "</pre>";
+
     if (empty($grouped)) {
         ?>
       <script type="text/javascript">
@@ -105,11 +121,38 @@ if (isset($_GET['product_id'])) {
       // print_r($product['imgs']);
       // echo "</pre>";
         $stmtCheck = $product;
+        if ($product['AddedDate'] >= $newInLimitDate) {
+          $productMsg = "<div class='new-in'>
+                            <span class='new-in__msg'>
+                            New In
+                            </span>
+                          </div>";
+      } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+        $productMsg = "<div class='out-of-stock'>
+                            <span class='out-of-stock__msg'>
+                              10% off
+                            </span>
+                          </div>";
+      }
         $id = htmlspecialchars($product['ProductId']);
         $name = htmlspecialchars_decode($product['ProductName']);
         $description = htmlspecialchars($product['ProductDescription']);
         $stock_qty = htmlspecialchars($product['ProductQty']);
+        if ($stock_qty > 9) {
+          $qtyMsg = "<span class='in-store'> $stock_qty in store</span>";
+        } else {
+          $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+        }
         $price = htmlspecialchars($product['ProductPrice']);
+        $discount = 1;
+        if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+          $discount = 0.9;
+          $discountProductPrice = ceil($price - ($price * 0.1));
+          $priceMsg = "<div><span class='original-price'>$price SEK</span>
+                        <span class='discount'>$discountProductPrice SEK</span></div>";
+        } else {
+          $priceMsg = "<span>$price SEK</span>";
+        }
         $category = htmlspecialchars($product['CategoryName']);
         $descriptionShort = substr($description, 0, 20);
         if (empty($product['imgs'])) {
@@ -138,6 +181,7 @@ if (isset($_GET['product_id'])) {
 <section id='product-section' class='product-section'>
   <div class='product-section__images'>
     <div class='img-wrapper'>
+      <?php echo $productMsg?>
       <img class='product-section__images__big' src="./media/product_images/<?php echo $productImg ?>" alt="">
     </div>
     <div class='product-section__images__small-container'>
@@ -162,7 +206,8 @@ if (!empty($imgList)) {
     <div class='product-section__rigth__info'>
       <h1 class='product-section__rigth__info__name'><?php echo $name ?></h1>
       <h3 class='product-section__right__info__categories'><?php echo $category ?></h3>
-      <h2 class='product-section__rigth__info__price'><?php echo $price ?> SEK</h2>
+      <h2 class='product-section__rigth__info__price'><?php echo $priceMsg ?></h2>
+      <?php echo $qtyMsg?>
     </div>
     <div class='product-section__rigth__actions'>
       <label class='product-section__rigth__actions__lable' for="">Amount</label>
@@ -178,6 +223,7 @@ if (!empty($imgList)) {
           data-price=<?php echo $price ?>
           data-img='<?php echo $productImg ?>'
           data-stock=<?php echo $stock_qty ?>
+          data-discount=<?php echo $discount ?>
           data-quantity=
           >
         <button class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>

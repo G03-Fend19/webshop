@@ -87,7 +87,7 @@
           </div>
           <div class="confirmpage__price__total">
             <strong>Total price</strong>
-            <p class="confirmpage__totalprice">2 099 SEK</p>
+            <p class="confirmpage__totalprice"></p>
           </div>
         </section>
       </section>
@@ -306,7 +306,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $addProductStmt->bindParam(":product_qty", $qty);
         $addProductStmt->execute();
 
-        echo "added product $productId";
+        $getCurrentStockSQL = "SELECT ws_products.stock_qty
+                                AS CurrentProductQty
+                                FROM ws_products
+                                WHERE ws_products.id = :product_id";
+        $getCurrentStockStmt = $db->prepare($getCurrentStockSQL);
+        $getCurrentStockStmt->bindParam(":product_id", $productId);
+        $getCurrentStockStmt->execute();
+
+        $currentStockResults = $getCurrentStockStmt->fetch(PDO::FETCH_ASSOC);
+        $currentStock = $currentStockResults['CurrentProductQty'];
+        $newStock = $currentStock - $qty;
+
+        $updateQtySQL = "UPDATE ws_products
+                        SET stock_qty = :new_stock
+                        WHERE ws_products.id = :product_id";
+        $updateQtyStmt = $db->prepare($updateQtySQL);
+        $updateQtyStmt->bindParam(":new_stock", $newStock);
+        $updateQtyStmt->bindParam(":product_id", $productId);
+        $updateQtyStmt->execute();
+
         ?>
         <script src="confirm_page.js"></script>
         <script>localStorage.clear()</script>

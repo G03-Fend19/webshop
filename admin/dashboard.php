@@ -17,10 +17,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 ?>
 
-<main class="main__admin__dashboard">
+<main class="main__admin__dashboard admin__tables">
 
   <div class="main__admin__text">
-    <h1>Dashboard</h1>
+    <h1 class="headline__php">Dashboard</h1>
   </div>
   <a href="products_page.php" class="dashboard__box">
     <h2 class="tracking-in-expand"><?php echo $NumberOfProducts; ?></h2>
@@ -37,5 +37,6 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <h3 class="tracking-in-expand">Active orders</h3>
   </a>
 
-
+ <?php require_once "assets/get_active_orders.php";?>
 </main>
+
