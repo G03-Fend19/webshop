@@ -3,19 +3,22 @@
   flex-direction: column;
   max-width: 17vw;
   height: fit-content;
-  position: relative;
-  top: 70px;
-  padding-left: 2em;
+  position: sticky;
+  margin-top: 67px;
+  top: 67px;
+  padding: 2em;
   margin-bottom: 5em;
   overflow-wrap: break-word;
-  @extend %boxShadowSection;
+  background-color: $primary-color2;
+  color: #9da9b8;
+  box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
 
   &__path {
     @extend %asideGridContainer;
 
     i {
       font-size: 0.8em;
-      color: rgb(63, 63, 63);
+      color: $font-color2;
     }
   }
 
@@ -27,10 +30,10 @@
     font-size: 0.8em;
     padding: 1.5em 0 0.5em 0.5em;
     font-weight: 500;
-    color: gray;
+    color: $font-color2;
 
     &__link {
-      color: black;
+      color: $font-color2;
       text-decoration: none;
       font-size: 16px;
     }
@@ -49,16 +52,16 @@
 
 a {
   text-decoration: none;
-  color: black;
+  color: $font-color2;
   font-size: 0.8em;
 }
 
 .aside__nav__ul__li__title__link-active {
-  font-weight: 900;
-  color: rgb(84, 84, 169);
+  font-weight: 500;
+  color: $active-font-color;
 }
 
 .orders__link-active {
-  font-weight: 900;
-  color: rgb(84, 84, 169);
+  font-weight: 500;
+  color: $active-font-color;
 }

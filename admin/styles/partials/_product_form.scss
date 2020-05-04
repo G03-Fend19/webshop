@@ -1,5 +1,5 @@
 .new__product__section {
-  margin-top: 80px;
+  margin: 80px 2em 2em 2em;
   padding: 2em;
 
   h1 {
@@ -24,7 +24,7 @@
 
   &__group {
     display: flex;
-    width: 80%;
+    //width: 80%;
     // min-height: 300px;
     border-radius: 10px;
     // margin: auto;
@@ -61,7 +61,6 @@
 
   // }
 
-
   &__input {
     display: block;
     @extend %inputStyles;
@@ -70,7 +69,7 @@
   &__image-section {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    //width: 80%;
     border-radius: 10px;
     @extend %boxShadowSection;
 
@@ -84,18 +83,8 @@
     }
 
     button {
-      width: 140px;
-      // margin: auto;
-      padding: 1em;
-      display: flex;
-      font-size: 14px;
-      font-weight: 900;
-      color: white;
-      // height: 60px;
-      border: none;
-      border-radius: 10px;
-      background: rgb(103, 136, 103);
-      box-shadow: 1px 1px 3px rgb(96, 96, 96);
+      @extend %boxShadowSection;
+      @extend %buttonStyles;
       cursor: pointer;
 
       i {
@@ -147,15 +136,8 @@
   }
 
   .upload-btn {
-    margin-top: 1em;
-    padding: 0.5em;
-    grid-row: 3;
-    width: 300px;
-    background: rgb(81, 142, 81);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 900;
+    @extend %boxShadowSection;
+    @extend %buttonStyles;
     // margin: auto;
 
     &:hover {
@@ -174,14 +156,14 @@ input[type="checkbox"] {
   opacity: 0;
 }
 
-input[type="checkbox"]+img {
+input[type="checkbox"] + img {
   cursor: pointer;
   height: 150px;
   width: 150px;
 }
 
 /* CHECKED STYLES */
-input[type="checkbox"]:checked+img {
+input[type="checkbox"]:checked + img {
   outline: 5px solid rgba(11, 108, 235, 0.728);
 }
 
@@ -194,7 +176,7 @@ input[type="checkbox"]:checked+img {
   font-weight: 900;
   color: white;
   border-radius: 10px;
-  background: rgb(103, 136, 103);
+  background: #9ab9bb;
   cursor: pointer;
   padding: 0.5em 1em;
   margin-top: 1em;

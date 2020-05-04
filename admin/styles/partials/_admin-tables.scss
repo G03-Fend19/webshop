@@ -6,7 +6,7 @@
     font-weight: 500;
     font-size: 1.5em;
     padding-bottom: 0.5em;
-    color: gray;
+    color: $font-color1;
     margin-top: 0.3em;
   }
 
@@ -15,7 +15,16 @@
     font-weight: lighter;
     padding-left: 0.5em;
   }
-
+  h2 {
+    font-weight: 500;
+    font-size: 1.2em;
+    color: $font-color1;
+  }
+  h3 {
+    font-weight: 500;
+    font-size: 1em;
+    color: $font-color1;
+  }
   &__text {
     display: flex;
     align-items: center;
@@ -26,18 +35,8 @@
     }
 
     button {
-      display: flex;
-      align-items: center;
-      width: 120px;
-      height: 100%;
       @extend %boxShadowSection;
-      border-radius: 15px;
-      color: rgb(145, 145, 145);
-      cursor: pointer;
-      font-size: 0.8em;
-      justify-content: space-evenly;
-      margin-left: 1em;
-      border: none;
+      @extend %buttonStyles;
     }
   }
 
@@ -52,7 +51,7 @@
     th,
     td {
       font-weight: 400;
-      color: gray;
+      color: $font-color1;
       padding: 15px;
       text-align: left;
       border-bottom: 1px solid #ddd;
@@ -89,7 +88,6 @@
         padding: 10px;
       }
     }
-
   }
   .completed-orders {
     &__filter {
