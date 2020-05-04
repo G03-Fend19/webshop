@@ -12,7 +12,7 @@ ol[class] {
 }
 
 body {
-  background: rgb(243, 243, 243);
+  background: $base-color;
 }
 
 /* Remove default margin and add font*/
@@ -31,7 +31,7 @@ blockquote,
 dl,
 dd {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 /* Set core body defaults */
@@ -61,7 +61,7 @@ img {
 }
 
 /* Natural flow and rhythm in articles by default */
-article>*+* {
+article > * + * {
   margin-top: 1em;
 }
 

@@ -255,10 +255,11 @@ echo '</main>';
   document.querySelectorAll('.open-modal').forEach(item => {
   item.addEventListener('click', event => {
     let currentModal = event.currentTarget.nextElementSibling;
+    let currentSpan = event.currentTarget.nextElementSibling;
 
     currentModal.style.display = "block";
         //close the modal
-        span.onclick = function() {
+        currentSpan.onclick = function() {
           currentModal.style.display = "none";
         };
         // clicks anywhere outside of the modal, close it
