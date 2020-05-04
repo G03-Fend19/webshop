@@ -20,7 +20,7 @@
 
 .form {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
 
   &__group {
     display: flex;
@@ -60,7 +60,6 @@
   //   }
 
   // }
-
 
   &__input {
     display: block;
@@ -174,14 +173,14 @@ input[type="checkbox"] {
   opacity: 0;
 }
 
-input[type="checkbox"]+img {
+input[type="checkbox"] + img {
   cursor: pointer;
   height: 150px;
   width: 150px;
 }
 
 /* CHECKED STYLES */
-input[type="checkbox"]:checked+img {
+input[type="checkbox"]:checked + img {
   outline: 5px solid rgba(11, 108, 235, 0.728);
 }
 
