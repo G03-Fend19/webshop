@@ -1338,7 +1338,7 @@ footer {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  background-color: #dddddd;
+  background-color: #f7f7f7;
   top: 70px;
   right: 0;
   z-index: 3;
@@ -1393,7 +1393,7 @@ footer {
   bottom: 0;
   width: auto;
   height: auto;
-  background: #828a8e;
+  background: #54626a;
   padding: 0.5em 1em 4em 1em;
   margin: -10px;
   border-top: 0.5px solid #bfbfbf;
@@ -1411,7 +1411,7 @@ footer {
 
 @media (min-width: 450px) {
   .cart__total-checkout {
-    padding-bottom: unset;
+    padding-bottom: 2em;
   }
 }
 
