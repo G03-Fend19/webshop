@@ -326,7 +326,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $updateQtyStmt->bindParam(":product_id", $productId);
         $updateQtyStmt->execute();
 
-        echo "added product $productId";
         ?>
         <script src="confirm_page.js"></script>
         <script>localStorage.clear()</script>

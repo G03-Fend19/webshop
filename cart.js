@@ -109,16 +109,16 @@
             console.log(cart[product].discount);
             priceDisplay = `<p class='price'> ${
               cart[product].quantity * cart[product].price
-            } SEK</p>`;
+              } SEK</p>`;
           } else {
             console.log("discount");
             priceDisplay = `<p class='price__line-through'> ${
               cart[product].quantity * cart[product].price
-            } SEK</p>
+              } SEK</p>
                             <p class='price__discount'> ${Math.ceil(
-                              cart[product].quantity *
-                                (cart[product].price * cart[product].discount)
-                            )} SEK</p>`;
+                cart[product].quantity *
+                (cart[product].price * cart[product].discount)
+              )} SEK</p>`;
           }
           return `
       <div class="cart__product" data-name='${cart[product].name}'>
