@@ -174,6 +174,7 @@
 
       if (document.querySelector("#pTable-section")) {
         renderOrderSummary();
+        calcTotalWithShipping();
       }
     });
   };
@@ -187,6 +188,8 @@
         renderCart();
         if (document.querySelector("#pTable-section")) {
           renderOrderSummary();
+          calcTotalWithShipping();
+
         }
       }
     });
