@@ -233,6 +233,7 @@ if (count($new_images_db) != 0) {
    /*  echo '<pre>';
     print_r($scanned_image_directory);
     echo '</pre>'; */
+    
 }
 
 
