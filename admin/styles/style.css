@@ -563,10 +563,6 @@ input[type="checkbox"] + img {
 }
 
 /* CHECKED STYLES */
-input[type="checkbox"]:checked + img {
-  outline: 5px solid rgba(11, 108, 235, 0.728);
-}
-
 .add-product-btn {
   -ms-grid-row: 3;
   grid-row: 3;
@@ -600,6 +596,38 @@ input[type="checkbox"]:checked + img {
 
 .form__image-section__selection__image {
   margin-bottom: 2em;
+}
+
+.images-max {
+  color: red;
+}
+
+.hide-images-max {
+  display: none;
+}
+
+.product-img {
+  margin-right: 20px;
+}
+
+label.form__image-section__selection > div > button {
+  background-color: #b33636;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: larger;
+  padding: 0;
+}
+
+.featured-image {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .main__admin__dashboard {

@@ -67,13 +67,14 @@ require_once './assets/aside-navigation.php';
 
     <div class="form__image-section">
       <div class="form__image-section__create">
-        <p>Images</p>
+        <p>Upload images</p>
+        <p class="images-max hide-images-max">You can only upload 5 images</p>
         <button class="add-img button" type="button">Add images <i class="fas fa-images"></i></button>
 
       </div>
 
       <label for="qty" class="form__label">
-        feature
+        Click to choose feature image
         <input type="text" name="feature" id="feature" value="" class="form__input">
       </label>
       <div class="form__image-section__images">
@@ -91,9 +92,32 @@ require_once './assets/aside-navigation.php';
 //     $counter++;
 // }?>
         <script>
-        const imageSection = document.querySelector('.form__image-section__images')
-        const renderImages = () => {
-          const imagesToDisplay = JSON.parse(localStorage.getItem("images"))
+          const imageSection = document.querySelector('.form__image-section__images')
+
+          const showMaxImgMessage = (arr) => {
+            const imageMaxMessage = document.querySelector('.images-max')
+            if (arr.length == 2) {
+              imageMaxMessage.classList.remove("hide-images-max");
+            } else {
+              imageMaxMessage.classList.add("hide-images-max");
+            }
+          };          
+
+                 
+
+      const renderImages = () => {
+         let imagesToDisplay = JSON.parse(localStorage.getItem("images"))
+
+         // remove feature i
+             if(imagesToDisplay.length===0){
+             
+                feature.value = ""
+             }
+
+        // show max image msg
+          showMaxImgMessage(imagesToDisplay)
+       ////////////
+
           imageSection.innerHTML = ""
           let counter = 1
 
@@ -102,33 +126,27 @@ require_once './assets/aside-navigation.php';
             imagesToDisplay.map(imgObj => {
               imageSection.innerHTML += `
           <label class='form__image-section__selection' for='image${counter}'>
+          <div class="product-img">
           <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${imgObj['img']}' >
           <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}' data-imgname='${imgObj['img']}'class='thumbnails'>
           
           </label>      
           <button data-name='${imgObj['img']}' "type="button" class="remove-image">x</button>
+          </div>
           `
               counter++
             })
         }
-         document.addEventListener('click', e => {
-  
-     const feature = document.getElementById('feature')
-      if(e.target.classList.contains('form__image-section__selection__image')){
-   
-        feature.value = e.target.dataset.imgname
-    
-      }
-    })
+
+
+        
 
     }
     renderImages()
     document.addEventListener("click", (e) => {
       if (e.target.className == "remove-image") {
-  
-      
+        e.target.dataset.name == feature.value ? feature.value = "" : null
         let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
-
         images = imagesFromLocalStorage.filter((el)=> {
           return el.img !== e.target.dataset.name
         })
@@ -136,6 +154,32 @@ require_once './assets/aside-navigation.php';
         }
         renderImages()
     });
+
+
+
+      document.addEventListener('click', e => {
+ 
+      if(e.target.classList.contains('form__image-section__selection__image')){ 
+        feature.value = e.target.dataset.imgname     
+        e.target.classList.add('featured-image')
+
+        const featureImg = document.querySelectorAll('.form__image-section__selection__image')
+        featureImg.forEach(img => {
+          img.classList.remove('featured-image')
+          img.dataset.imgname === feature.value ? img.classList.add('featured-image') : null
+        })
+
+          // console.log(e.target.classList)
+          // console.log(e.target)
+
+      }
+
+
+    })
+
+
+    let imagesToDisplay = JSON.parse(localStorage.getItem("images"))
+
 
     </script>
     <?php

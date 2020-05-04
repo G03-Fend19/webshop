@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-        console.log('upload image script running')
+
         // get images from php
         let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; 
       // get images from localstorage
@@ -80,10 +80,16 @@ if (isset($_POST['submit'])) {
 
              }
              imagesFromPHP.forEach(image => {
-                imagesFromLocalStorage.push({
-                    img: image,
-                    feature:  0
-                });
+               if(imagesFromLocalStorage.length < 5){
+              
+                   imagesFromLocalStorage.push({
+                        img: image,
+                        feature:  0
+                    });            
+               }
+               else {
+                   console.log('to many')
+               }
              });
              localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
         }

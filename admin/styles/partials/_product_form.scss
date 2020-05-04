@@ -61,7 +61,6 @@
 
   // }
 
-
   &__input {
     display: block;
     @extend %inputStyles;
@@ -174,16 +173,13 @@ input[type="checkbox"] {
   opacity: 0;
 }
 
-input[type="checkbox"]+img {
+input[type="checkbox"] + img {
   cursor: pointer;
   height: 150px;
   width: 150px;
 }
 
 /* CHECKED STYLES */
-input[type="checkbox"]:checked+img {
-  outline: 5px solid rgba(11, 108, 235, 0.728);
-}
 
 .add-product-btn {
   grid-row: 3;
@@ -212,4 +208,28 @@ input[type="checkbox"]:checked+img {
   &__image {
     margin-bottom: 2em;
   }
+}
+
+.images-max {
+  color: red;
+}
+
+.hide-images-max {
+  display: none;
+}
+.product-img {
+  margin-right: 20px;
+}
+
+label.form__image-section__selection > div > button {
+  background-color: rgb(179, 54, 54);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+  padding: 0;
+}
+
+.featured-image {
+  transform: scale(1.2);
 }

@@ -166,6 +166,7 @@ echo'</pre>';  */
     <div class="form__image-section">
       <label for="img" class="form__label">Images</label>
       <div class="form__image-section__create">
+         <p class="images-max hide-images-max">You can only upload 5 images</p>
         <button class="add-img button" type="button">Add Images</button>
 
       </div>
@@ -207,6 +208,17 @@ echo'</pre>';  */
 
 ?>
         <script>
+
+          const showMaxImgMessage = (arr) => {
+            const imageMaxMessage = document.querySelector('.images-max')
+            if (arr.length == 5) {
+              imageMaxMessage.classList.remove("hide-images-max");
+            } else {
+              imageMaxMessage.classList.add("hide-images-max");
+            }
+          };  
+
+
        const setImagesToLocalStorage = () => {
 
           // 1. grab images from db
@@ -216,27 +228,34 @@ echo'</pre>';  */
           imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
           !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null;
 
-          console.log(imagesFromDb);
-          
-          console.log(imagesFromLocalStorage);
+          // 3. check deleted
+           deletedImages = JSON.parse(localStorage.getItem('deleted'));
+          !deletedImages ? deletedImages = [] : null; 
           
 
           // 3. Push all images from db to localStorage
           if (imagesFromLocalStorage.length > 0) {
             imagesFromDb.forEach((imgObj, index) => {
-        
-              Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj); 
+              if(!deletedImages.includes(imgObj.img)){
+                Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj); 
+              } 
 
             });
 
           }
           else {
+
             imagesFromDb.forEach((imgObj, index) => {
-              imagesFromLocalStorage.push(imgObj);
+              if(!deletedImages.includes(imgObj.img)){
+                
+                imagesFromLocalStorage.push(imgObj);
+              }
             });
           }
 
           localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+
+            showMaxImgMessage(imagesFromLocalStorage)
 
         }    
         setImagesToLocalStorage()
@@ -258,13 +277,16 @@ echo'</pre>';  */
 
               updateImageSection.innerHTML += `
                       <label class='form__image-section__selection' for='image${counter}'>
+                      <div product-img>
                           <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
                               checked value='${imgObj['img']}'>
                           <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}'
                               data-imgname='${imgObj['img']}' class='thumbnails'>
 
                       </label>
-                      <button data-name='${imgObj['img']}' type="button"class="remove-image">x</button>`;
+                      <button data-name='${imgObj['img']}' type="button"class="remove-image">x</button>
+                      </div>`
+                      ;
               counter++
             
             
@@ -290,21 +312,25 @@ echo'</pre>';  */
          document.addEventListener("click", (e) => {
 
           if (e.target.className == "remove-image") {
-            console.log('running deleted images');
-            
+           
+   
+                       
             // get deletedImages from localstorage
-                deletedImages = JSON.parse(localStorage.getItem("deleted"))
-                !deletedImages ? deletedImages = [] : null
+            deletedImages = JSON.parse(localStorage.getItem("deleted"))
+            !deletedImages ? deletedImages = [] : null
             // push deleted image to localstorage
             deletedImages.push(e.target.dataset.name)
             localStorage.setItem("deleted", JSON.stringify(deletedImages));
             // remove image from image array
             images = imagesFromLocalStorage.filter((el)=> {
-              return el !== e.target.dataset.name
+              return el.img !== e.target.dataset.name
             })
             console.log(images)
-              localStorage.setItem("images", JSON.stringify(images));
+         
+            localStorage.setItem("images", JSON.stringify(images));
+
           }
+            setImagesToLocalStorage()
             renderImagesToDOM();
         });
       }
