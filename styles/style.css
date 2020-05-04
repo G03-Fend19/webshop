@@ -2512,17 +2512,17 @@ footer {
   color: red;
 }
 
-.product-section__rigth__actions__lable {
+.product-section__rigth__actions__amount__lable {
   display: block;
 }
 
-.product-section__rigth__actions__qty-container {
+.product-section__rigth__actions__amount__qty-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.product-section__rigth__actions__qty-container__input {
+.product-section__rigth__actions__amount__qty-container__input {
   -moz-appearance: textfield;
   width: 80px;
   height: 30px;
@@ -2537,26 +2537,28 @@ footer {
           box-shadow: 1px 1px 3px #606060;
 }
 
-.product-section__rigth__actions__qty-container input[type="number"]::-webkit-inner-spin-button,
-.product-section__rigth__actions__qty-container input[type="number"]::-webkit-outer-spin-button {
+.product-section__rigth__actions__amount__qty-container input[type="number"]::-webkit-inner-spin-button,
+.product-section__rigth__actions__amount__qty-container input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.product-section__rigth__actions__qty-container__qtyBtn {
+.product-section__rigth__actions__amount__qty-container__qtyBtn {
   padding: 0;
+  color: #54626a;
+  margin: 1px;
   border: none;
   background: none;
 }
 
-.product-section__rigth__actions__qty-container__qtyBtn :hover {
+.product-section__rigth__actions__amount__qty-container__qtyBtn :hover {
   cursor: pointer;
 }
 
-.product-section__rigth__actions__qty-container__qtyBtn i {
+.product-section__rigth__actions__amount__qty-container__qtyBtn i {
   font-size: 30px;
   padding: 0;
-  color: #54626a;
+  color: #a0a0a0;
   margin: 1px;
 }
 
@@ -2624,6 +2626,10 @@ footer {
   .product-section__description p {
     font-size: 16px;
   }
+}
+
+.product-section .hidden {
+  display: none;
 }
 
 .contact {
@@ -3534,5 +3540,28 @@ footer {
     top: 0;
     opacity: 1;
   }
+}
+
+.not-found {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
+  justify-items: center;
+}
+
+.not-found h1 {
+  font-size: 70px;
+  margin: 40px;
+  text-align: center;
+}
+
+.not-found h2 {
+  font-size: 25px;
+}
+
+.not-found img {
+  width: 400px;
+  margin-top: 40px;
 }
 /*# sourceMappingURL=style.css.map */

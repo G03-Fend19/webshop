@@ -94,8 +94,8 @@ if (isset($_GET['product_id'])) {
     }
 
 //     echo "<pre>";
-// print_r($grouped);
-// echo "</pre>";
+    // print_r($grouped);
+    // echo "</pre>";
 
     if (empty($grouped)) {
         ?>
@@ -109,45 +109,45 @@ if (isset($_GET['product_id'])) {
     foreach ($grouped as $productId => $product):
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
-          $productMsg = "<div class='new-in'>
-                            <span class='new-in__msg'>
-                            New In
-                            </span>
-                          </div>";
-      } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+            $productMsg = "<div class='new-in'>
+																																			                            <span class='new-in__msg'>
+																																			                            New In
+																																			                            </span>
+																																			                          </div>";
+        } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
                               10% off
                             </span>
                           </div>";
-      }
-        $id = htmlspecialchars($product['ProductId']);
-        $name = htmlspecialchars_decode($product['ProductName']);
-        $description = htmlspecialchars($product['ProductDescription']);
-        $stock_qty = htmlspecialchars($product['ProductQty']);
-        if ($stock_qty > 9) {
-          $qtyMsg = "<span class='in-store'> $stock_qty in store</span>";
-        } else {
-          $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
-        }
-        $price = htmlspecialchars($product['ProductPrice']);
-        $discount = 1;
-        if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
-          $discount = 0.9;
-          $discountProductPrice = ceil($price - ($price * 0.1));
-          $priceMsg = "<div><span class='original-price'>$price SEK</span>
+    }
+    $id = htmlspecialchars($product['ProductId']);
+    $name = htmlspecialchars_decode($product['ProductName']);
+    $description = htmlspecialchars($product['ProductDescription']);
+    $stock_qty = htmlspecialchars($product['ProductQty']);
+    if ($stock_qty > 9) {
+        $qtyMsg = "<span class='in-store'> $stock_qty in store</span>";
+    } else {
+        $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+    }
+    $price = htmlspecialchars($product['ProductPrice']);
+    $discount = 1;
+    if ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+        $discount = 0.9;
+        $discountProductPrice = ceil($price - ($price * 0.1));
+        $priceMsg = "<div><span class='original-price'>$price SEK</span>
                         <span class='discount'>$discountProductPrice SEK</span></div>";
-        } else {
-          $priceMsg = "<span>$price SEK</span>";
-        }
-        $category = htmlspecialchars($product['CategoryName']);
-        $descriptionShort = substr($description, 0, 20);
-        if (empty($product['imgNames'])) {
-            $productImg = "placeholder.jpg";
-        } else {
-            $productImg = htmlspecialchars($product['imgNames'][0]);
-            $imgList = $product['imgNames'];
-        }
+    } else {
+        $priceMsg = "<span>$price SEK</span>";
+    }
+    $category = htmlspecialchars($product['CategoryName']);
+    $descriptionShort = substr($description, 0, 20);
+    if (empty($product['imgNames'])) {
+        $productImg = "placeholder.jpg";
+    } else {
+        $productImg = htmlspecialchars($product['imgNames'][0]);
+        $imgList = $product['imgNames'];
+    }
     endforeach;
 }
 // echo $stock_qty;
@@ -163,7 +163,7 @@ if (isset($_GET['product_id'])) {
 <section id='product-section' class='product-section'>
   <div class='product-section__images'>
     <div class='img-wrapper'>
-      <?php echo $productMsg?>
+      <?php echo $productMsg ?>
       <img class='product-section__images__big' src="./media/product_images/<?php echo $productImg ?>" alt="">
     </div>
     <div class='product-section__images__small-container'>
@@ -188,15 +188,29 @@ if (!empty($imgList)) {
       <h1 class='product-section__rigth__info__name'><?php echo $name ?></h1>
       <h3 class='product-section__right__info__categories'><?php echo $category ?></h3>
       <h2 class='product-section__rigth__info__price'><?php echo $priceMsg ?></h2>
-      <?php echo $qtyMsg?>
+      <?php echo $qtyMsg ?>
     </div>
     <div class='product-section__rigth__actions'>
-      <label class='product-section__rigth__actions__lable' for="">Amount</label>
-      <div class='product-section__rigth__actions__qty-container'>
-        <input class='product-section__rigth__actions__qty-container__input' id='qtyInput' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
-        <button class='product-section__rigth__actions__qty-container__qtyBtn' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-        <button class='product-section__rigth__actions__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
+      <div class='product-section__rigth__actions__amount hidden'>
+        <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
+        <div class='product-section__rigth__actions__amount__qty-container'>
+          <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-product-page' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
+          <div
+            data-id=<?php echo $id ?>
+            data-name='<?php echo $name ?>'
+            data-price=<?php echo $price ?>
+            data-img='<?php echo $productImg ?>'
+            data-stock=<?php echo $stock_qty ?>
+            data-discount=<?php echo $discount ?>
+            >
+
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+        </div>
       </div>
+
       <!-- <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button> -->
       <div
           data-id=<?php echo $id ?>
@@ -221,45 +235,44 @@ if (!empty($imgList)) {
 
 <script>
 
+
+
 getCartQty();
+
+checkLocalStorage();
 
 function getCartQty() {
   const getCart = () => {
     cart = JSON.parse(localStorage.getItem("cart"));
     !cart ? (cart = {}) : null;
-
   };
   getCart();
 
-  let input = document.getElementById('qtyInput');
+  let input = document.getElementById('qtyInput-product-page');
   let name = "<?php echo "$name" ?>";
   if (cart[name]) {
     input.value = cart[name].quantity;
   }
-
 }
 
-
-
 function lowerQty() {
-  let input = document.getElementById('qtyInput');
+  let input = document.getElementById('qtyInput-product-page');
 
   if (input.value > 1)
-  input.value = input.value - 1;
+  input.value = parseInt(input.value) - 1;
 }
 
 function higherQty(qty) {
-  let input = document.getElementById('qtyInput');
-  let button = document.getElementById('higherBtn');
+  let input = document.getElementById('qtyInput-product-page');
+  // let button = document.getElementById('higherBtn');
 
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
-  }else{
-    alert('no more in stock')
   }
+  // else{
+  //   alert('no more in stock')
+  // }
 }
-
-
 
 const imgList = <?php echo json_encode($imgList); ?>;
 const selectedImg = imgList[0];
@@ -267,7 +280,6 @@ let selectedIndex = 0;
 
 function changeImg(img) {
   const bigImg = document.querySelector('.product-section__images__big');
-
   bigImg.src = './media/product_images/' + img;
   selectedIndex = imgList.findIndex(listImg => listImg === img);
 }
@@ -290,6 +302,82 @@ function prevImg() {
     bigImg.src = './media/product_images/' + imgList[selectedIndex];
   }
 }
+
+function checkLocalStorage() {
+  addToCartBtn = document.querySelector('.add-to-cart-btn');
+  qtyBtns = document.querySelector('.product-section__rigth__actions__amount');
+  let name = "<?php echo "$name" ?>";
+  cart = JSON.parse(localStorage['cart']);
+
+  if (cart[name]) {
+    qtyBtns.classList.remove("hidden");
+    addToCartBtn.classList.add("hidden");
+  }
+}
+
+
+// const deleteSingleProduct = document.getElementById("deleteSingleProduct");
+// console.log(deleteSingleProduct);
+
+
+// deleteSingleProduct.addEventlistener("click", function() {
+//   let name = "<?php echo "$name" ?>";
+//   cart = JSON.parse(localStorage['cart']);
+//   console.log(cart[name]);
+
+// })
+
+
+const addBtn = document.querySelector(".add-to-cart-btn");
+addBtn.addEventListener("click", function() {
+
+  setTimeout(function(){
+    checkLocalStorage();
+  }, 300);
+});
+
+
+//When deleting a spesific product from cart
+document.addEventListener("click", (e) => {
+  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+  const input = document.getElementById('qtyInput');
+
+  if (e.target.dataset.id == "delete-product") {
+    const name = "<?php echo "$name" ?>";
+    const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+    cart = JSON.parse(localStorage['cart']);
+
+    if (cart[name] == cart[productId]) {
+      qtyBtns.classList.add("hidden");
+      addToCartBtn.classList.remove("hidden");
+      input.value = 1;
+    }
+  }
+});
+
+
+//When clearing cart
+document.addEventListener("click", (e) => {
+  const input = document.getElementById('qtyInput');
+  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+    qtyBtns.classList.add("hidden");
+    addToCartBtn.classList.remove("hidden");
+    input.value = 1;
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+
+  if (e.target.dataset.id == "qty+") {
+    setTimeout(getCartQty(), 1000);
+
+  } else if (e.target.dataset.id == "qty-") {
+    setTimeout(getCartQty(), 1000);
+  }
+});
+
+
 
 </script>
 

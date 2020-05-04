@@ -1,0 +1,20 @@
+.not-found {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+
+  h1 {
+    font-size: 70px;
+    margin: 40px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+
+  img {
+    width: 400px;
+    margin-top: 40px;
+  }
+}

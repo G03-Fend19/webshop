@@ -91,4 +91,12 @@
   grid-column: 1/4;
   justify-self: center;
   width: 100%;
+
+  h4 {
+    font-weight: 500;
+    font-size: 1.2em;
+    padding-bottom: 1em;
+    color: $font-color1;
+    margin-top: 0.3em;
+  }
 }

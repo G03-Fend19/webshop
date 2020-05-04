@@ -100,7 +100,7 @@ select {
   }
 }
 
-.admin__header nav, .aside, .admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .form__image-section button, .upload-form, .upload-form .upload-btn, .main__admin__dashboard .dashboard__box, .main__admin__addCategory, .main__admin .main__category-table {
+.admin__header nav, .aside, .admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .form__image-section button, .upload-form, .upload-form .upload-btn, .main__admin__dashboard .dashboard__box, .main__admin .main__category-table {
   background: white;
   padding: 1em;
   -webkit-box-shadow: 4px 4px 5px rgba(226, 226, 226, 0.233);
@@ -127,18 +127,20 @@ select {
   padding: 0.5em 1em;
 }
 
-.admin__tables__text button, .form__image-section button, .upload-form .upload-btn {
+.admin__tables__text button, .form__image-section button, .upload-form .upload-btn, .add-product-btn, .main__admin__addCategory {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 120px;
+  min-width: 120px;
+  max-width: 170px;
+  max-height: 40px;
   height: 100%;
   border-radius: 10px;
   color: white;
-  background: #8478a6;
+  background: #7d9aaf;
   cursor: pointer;
   font-size: 0.8em;
   -webkit-box-pack: space-evenly;
@@ -161,7 +163,7 @@ select {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #8ab8b2;
+  background-color: #afcac7;
   position: fixed;
   top: 0;
   border-radius: 0 0 5px 5px;
@@ -329,6 +331,14 @@ a {
   color: gray;
 }
 
+.admin__tables h4 {
+  font-weight: 500;
+  font-size: 1.2em;
+  padding-bottom: 0.5em;
+  color: gray;
+  margin-top: 0.3em;
+}
+
 .admin__tables__text {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -441,6 +451,7 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding: 3em;
   border-radius: 10px;
   margin-top: 2em;
   display: -ms-grid;
@@ -575,27 +586,14 @@ input[type="checkbox"] + img {
 
 /* CHECKED STYLES */
 input[type="checkbox"]:checked + img {
-  outline: 5px solid rgba(11, 108, 235, 0.728);
+  outline: 5px solid #7d9aaf;
 }
 
 .add-product-btn {
   -ms-grid-row: 3;
   grid-row: 3;
-  place-self: end;
-  -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
-      align-self: start;
-  margin-right: 15em;
-  border: none;
-  font-weight: 900;
-  color: white;
-  border-radius: 10px;
-  background: #9ab9bb;
-  cursor: pointer;
-  padding: 0.5em 1em;
-  margin-top: 1em;
-  -webkit-box-shadow: 1px 1px 3px #606060;
-          box-shadow: 1px 1px 3px #606060;
+  justify-self: flex-end;
+  margin: 2em;
 }
 
 .add-product-btn:hover {
@@ -611,6 +609,12 @@ input[type="checkbox"]:checked + img {
 
 .form__image-section__selection__image {
   margin-bottom: 2em;
+}
+
+select {
+  max-height: 35px;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
 }
 
 .main__admin__dashboard {
@@ -732,6 +736,14 @@ input[type="checkbox"]:checked + img {
   width: 100%;
 }
 
+.active-orders h4 {
+  font-weight: 500;
+  font-size: 1.2em;
+  padding-bottom: 1em;
+  color: gray;
+  margin-top: 0.3em;
+}
+
 .hidden {
   display: none;
 }
@@ -739,12 +751,7 @@ input[type="checkbox"]:checked + img {
 .main__admin {
   margin: 80px 2em 2em 2em;
   padding: 2em;
-  display: -ms-grid;
-  display: grid;
-  gap: 1em;
-  -ms-grid-rows: auto 1fr;
-  -ms-grid-columns: 1fr;
-      grid-template: auto 1fr / 1fr;
+  height: auto;
 }
 
 .main__admin h1 {
@@ -768,6 +775,7 @@ input[type="checkbox"]:checked + img {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-bottom: 1em;
 }
 
 .main__admin__text button {
@@ -783,11 +791,9 @@ input[type="checkbox"]:checked + img {
       -ms-flex-align: center;
           align-items: center;
   width: 120px;
-  height: 100%;
-  border-radius: 15px;
-  color: #919191;
+  min-height: 35px;
   cursor: pointer;
-  font-size: 0.8em;
+  font-size: 0.7em;
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
@@ -796,15 +802,15 @@ input[type="checkbox"]:checked + img {
 }
 
 .main__admin__addCategory__form__input {
-  height: 25px;
+  height: 35px;
   border-radius: 6px;
-  border: 1px solid #a0a0a0;
   padding-left: 0.5em;
   font-size: 14px;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 20px;
   margin-right: 10px;
+  border: none;
 }
 
 .main__admin__addCategory__form__saveBtn {
@@ -838,11 +844,11 @@ input[type="checkbox"]:checked + img {
 }
 
 .main__admin .main__category-table .fa-check {
-  color: green;
+  color: #4c8b4c;
 }
 
 .main__admin .main__category-table .fa-times {
-  color: red;
+  color: #e96363;
 }
 
 .main__admin .main__category-table__tr__td-category {
@@ -874,6 +880,12 @@ input[type="checkbox"]:checked + img {
   border: none;
   background: none;
   cursor: pointer;
+}
+
+.main__admin__addCategory__form__input {
+  font-size: 12px;
+  font-style: italic;
+  min-width: 200px;
 }
 
 footer {
