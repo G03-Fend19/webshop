@@ -89,8 +89,18 @@ foreach ($grouped as $productId => $product):
                         </div>";
     }
 
+  
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $priceMsg = "<span>$productPrice SEK</span>";
+
+    $discount = 1;
+    
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+        $productName = substr($productName, 0, 20) . "...";
+    }
+
+
 
 
     $productName = htmlspecialchars($product['ProductName']);
@@ -135,7 +145,8 @@ foreach ($grouped as $productId => $product):
 															                          data-name='$productName'
 															                          data-price=$productPrice
 															                          data-img='$productImg'
-															                          data-stock=$productQty
+                                                        data-stock=$productQty
+                                                        data-discount=$discount 
 															                          class='add-to-cart-btn'>";
     $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
     $productCards .= "</button>

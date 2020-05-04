@@ -25,8 +25,8 @@ if (isset($_GET['product_id'])) {
             ws_products_images.img_id   AS ProductImageImageId,
             ws_products_images.feature  AS FeatureImg,
             ws_categories.id            AS CategoryId,
-            ws_categories.name          AS CategoryName
-            ws_products.added_date    AS AddedDate,
+            ws_categories.name          AS CategoryName,
+            ws_products.added_date    AS AddedDate
           FROM
             ws_products
           LEFT JOIN

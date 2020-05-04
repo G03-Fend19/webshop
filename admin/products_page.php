@@ -255,6 +255,9 @@ echo '</main>';
   <script src="active_pages.js"></script>
   <!-- <script src="active_pages.js"></script> -->
   <script> 
+  localStorage.removeItem('images');
+  localStorage.removeItem('deleted');
+
   const modal = document.getElementById("myModal");
   const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");

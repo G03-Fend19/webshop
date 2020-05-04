@@ -25,8 +25,8 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_products_images.img_id   AS ProductImageImageId,
             ws_products_images.feature  AS FeatureImg,
             ws_categories.id            AS CategoryId,
-            ws_categories.name          AS CategoryName
-            ws_products.added_date    AS AddedDate,
+            ws_categories.name          AS CategoryName,
+            ws_products.added_date      AS AddedDate
           FROM
             ws_products
           LEFT JOIN
@@ -65,8 +65,8 @@ if (isset($_GET['category_id']) && $_GET['category_id'] !== "") {
             ws_products.stock_qty       AS ProductQty,
             ws_images.img               AS ImageName,
             ws_products_images.img_id   AS ProductImageImageId,
-            ws_products_images.feature  AS FeatureImg
-            ws_products.added_date    AS AddedDate,
+            ws_products_images.feature  AS FeatureImg,
+            ws_products.added_date      AS AddedDate
           FROM
             ws_products
           LEFT JOIN
@@ -154,10 +154,23 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($results as $product):
     $productId = $product['ProductId'];
+
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+
+    $discount = 1;
+    if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+      $discount = 0.9;
+      $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
+      $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+                    <span class='discount'>$discountProductPrice SEK</span></div>";
+    } else {
+      $priceMsg = "<span>$productPrice SEK</span>";
+    }
     $productName = htmlspecialchars($product['ProductName']);
     if (strlen($productName) > 20) {
         $productName = substr($productName, 0, 20) . "...";
     }
+
 
     $productQty = htmlspecialchars($product['ProductQty']);
     if ($productQty > 9) {
@@ -176,38 +189,40 @@ foreach ($results as $product):
         $categoryName = htmlspecialchars($product['CategoryName']);
     }
 
-    $productCards .= "<article class='product-card'>
-								                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-		                                      <div class='image-wrapper'>
-		                                      $productMsg";
 
-    $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
-					                                                            <span class='out-of-stock__msg'>
-					                                                            Currently out of stock
-					                                                            </span>
-					                                                          </div>" : null;
-    $productCards .= "<img class='product-thumb' src='./media/product_images/$productImg' alt='product image'>
-					                        </a>
-					                          </div>
-					                        <div class='product-card__content'>
-					                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
-					                            $productName
-					                          </a>
-                                          $priceMsg
-                                          </div>
-								                          <button
-								                          data-id=$productId
-								                          data-name='$productName'
-								                          data-price=$productPrice
-								                          data-img='$productImg'
-                                          data-stock=$productQty
-                                          data-discount=$discount 
-								                          class='add-to-cart-btn'>";
-    $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
-                          $productCards .= "</button>
-                                            $qtyMsg
-								                          </div>
-                                      </article>";
+    /*******************************************************************/
+    $productCards .= "<article class='product-card'>
+    <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+      <div class='image-wrapper'>
+      $productMsg";
+$productQty < 1 ? $productCards .= "<div class='out-of-stock'>
+                                        <span class='out-of-stock__msg'>
+                                        Currently out of stock
+                                        </span>
+                                      </div>" : null;
+$productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
+      </div>
+    </a>
+    <div class='product-card__content'>
+    <div class='product-card__text'>
+      <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
+        $productName
+      </a>
+      $priceMsg
+      </div>
+      <button
+      data-id=$productId
+      data-name='$productName'
+      data-price=$productPrice
+      data-img='$productImg'
+      data-stock=$productQty
+      data-discount=$discount 
+      class='add-to-cart-btn'>";
+$productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
+$productCards .= "</button>
+        $qtyMsg
+      </div>
+  </article>";
 endforeach;
 $productsContainer .= $productCards;
 $productsContainer .= "</div>";

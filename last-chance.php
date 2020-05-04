@@ -165,6 +165,7 @@ foreach ($grouped as $productId => $product):
                           data-price=$productPrice
                           data-img='$productImg'
                           data-stock=$productQty
+                          data-discount=$discount 
                           class='add-to-cart-btn'>";
   $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
   $productCards .= "</button>

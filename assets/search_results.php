@@ -92,11 +92,22 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
 
     foreach ($results as $product):
       $productId = $product['ProductId'];
+      $productPrice = htmlspecialchars($product['ProductPrice']);
         $productName = htmlspecialchars($product['ProductName']);
         if (strlen($productName) > 20) {
             $productName = substr($productName, 0, 20) . "...";
         }
 
+
+        $discount = 1;
+        if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+          $discount = 0.9;
+          $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
+          $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+                        <span class='discount'>$discountProductPrice SEK</span></div>";
+        } else {
+          $priceMsg = "<span>$productPrice SEK</span>";
+        }
         $productQty = htmlspecialchars($product['ProductQty']);
         if ($productQty > 9) {
           $qtyMsg = "<span class='in-store'> $productQty in store</span>";
