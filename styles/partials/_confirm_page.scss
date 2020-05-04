@@ -75,13 +75,15 @@
   }
 
   &__shipping {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    // justify-content: space-between;
+grid-template: 1fr / 1fr 1fr;
     padding: 1em;
     width: 100%;
 
     @media (max-width: 500px) {
-      flex-direction: column;
+      // flex-direction: column;
+grid-template: 1fr 1fr / 1fr;
       align-items: center;
       text-align: center;
       padding: 0;

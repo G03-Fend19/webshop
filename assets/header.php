@@ -58,8 +58,10 @@
         <div class="cart__total-checkout"></div>
 
       </section>
-      <h1>Spring vibes</h1>
-      <p class="desc__hero__text">More new amazing products in stock...</p>
+      <div class="header__hero__text">
+        <h1>Spring vibes</h1>
+        <p class="desc__hero__text">More new amazing products in stock...</p>
+      </div>
 
       <div id="myModal" class="modal">
         <div class="modal__content">

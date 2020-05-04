@@ -66,8 +66,10 @@ alert('Email already registered on a different name. Please check spelling or us
         <div class="cart__total-checkout"></div>
 
       </section>
-      <h1>Lucky you!</h1>
-      <p class="desc__hero__text">Soon the products is yours!</p>
+      <div class="header__hero__text">
+        <h1>Lucky you!</h1>
+        <p class="desc__hero__text">Soon the products is yours!</p>
+      </div>
 
       <div id="myModal" class="modal">
         <div class="modal__content">
