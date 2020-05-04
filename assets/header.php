@@ -12,7 +12,7 @@
 <body>
   <header class="header">
     <nav class="fixed">
-      <div class="header__logo"><a href="index.php"> <img src="./media/images/logo.png" width="100" height="40" /> </a>
+      <div class="header__logo"><a href="index.php"> <img src="./media/images/logo.png" width="40" height="40" /> </a>
       </div>
 
       <ul class="header__nav">
