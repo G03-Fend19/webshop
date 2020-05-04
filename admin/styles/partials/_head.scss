@@ -1,12 +1,12 @@
 .admin__header {
   width: 100vw;
-  color: #afb7c2;
+  color: #ffffff;
 
   nav {
     display: flex;
     width: 100%;
     align-items: center;
-    box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
+    @extend %boxShadowSection;
     background-color: $primary-color1;
     position: fixed;
     top: 0;

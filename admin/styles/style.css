@@ -1,4 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap");
+/* Lovas
+
+$base-color: rgb(243, 243, 243); //body
+//$detail-color: #9ab9bb;buttons
+$primary-color1: #414a55; //top nav bar
+$primary-color2: #656e7a; //side navigation
+$secondary-color: #8478a6; //buttons
+$font-color1: gray; //main font color
+$font-color2: #9aa6b6; //font color sidebar #9da9b8
+$active-font-color: #fbfbfb; // sidebar
+ */
 /* Box sizing rules */
 *,
 *::before,
@@ -89,7 +100,7 @@ select {
   }
 }
 
-.admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .form__image-section button, .upload-form, .upload-form .upload-btn, .main__admin__dashboard .dashboard__box, .main__admin__addCategory, .main__admin .main__category-table {
+.admin__header nav, .aside, .admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .form__image-section button, .upload-form, .upload-form .upload-btn, .main__admin__dashboard .dashboard__box, .main__admin__addCategory, .main__admin .main__category-table {
   background: white;
   padding: 1em;
   -webkit-box-shadow: 4px 4px 5px rgba(226, 226, 226, 0.233);
@@ -139,7 +150,7 @@ select {
 
 .admin__header {
   width: 100vw;
-  color: #afb7c2;
+  color: #ffffff;
 }
 
 .admin__header nav {
@@ -150,9 +161,7 @@ select {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
-          box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
-  background-color: #414a55;
+  background-color: #8ab8b2;
   position: fixed;
   top: 0;
   border-radius: 0 0 5px 5px;
@@ -239,15 +248,13 @@ select {
   padding: 2em;
   margin-bottom: 5em;
   overflow-wrap: break-word;
-  background-color: #656e7a;
+  background-color: #ffffff;
   color: #9da9b8;
-  -webkit-box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
-          box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
 }
 
 .aside__path i {
   font-size: 0.8em;
-  color: #9aa6b6;
+  color: #7e7f81;
 }
 
 .aside__dashboard {
@@ -258,11 +265,11 @@ select {
   font-size: 0.8em;
   padding: 1.5em 0 0.5em 0.5em;
   font-weight: 500;
-  color: #9aa6b6;
+  color: #7e7f81;
 }
 
 .aside__title__link {
-  color: #9aa6b6;
+  color: #7e7f81;
   text-decoration: none;
   font-size: 16px;
 }
@@ -277,18 +284,18 @@ select {
 
 a {
   text-decoration: none;
-  color: #9aa6b6;
+  color: #7e7f81;
   font-size: 0.8em;
 }
 
 .aside__nav__ul__li__title__link-active {
   font-weight: 500;
-  color: #fbfbfb;
+  color: #494949;
 }
 
 .orders__link-active {
   font-weight: 500;
-  color: #fbfbfb;
+  color: #494949;
 }
 
 .admin__tables {
@@ -633,8 +640,8 @@ input[type="checkbox"]:checked + img {
 
 .main__admin__dashboard .dashboard__box {
   background: #b6e2e5;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(182, 226, 229, 0.705)), to(#76b4b8));
-  background: linear-gradient(180deg, rgba(182, 226, 229, 0.705) 0%, #76b4b8 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(182, 226, 229, 0.705)), to(rgba(118, 180, 184, 0.753)));
+  background: linear-gradient(180deg, rgba(182, 226, 229, 0.705) 0%, rgba(118, 180, 184, 0.753) 100%);
   height: 14em;
   max-width: 100%;
   -ms-grid-row: 2;
@@ -659,14 +666,14 @@ input[type="checkbox"]:checked + img {
 
 .main__admin__dashboard .dashboard__box:nth-of-type(2) {
   background: #ffc79e;
-  background: -webkit-gradient(linear, left top, left bottom, from(#ffc79e), to(#fc966a));
-  background: linear-gradient(180deg, #ffc79e 0%, #fc966a 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffc79e), to(rgba(252, 150, 106, 0.829)));
+  background: linear-gradient(180deg, #ffc79e 0%, rgba(252, 150, 106, 0.829) 100%);
 }
 
 .main__admin__dashboard .dashboard__box:nth-of-type(3) {
   background: #d0c1e3;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(208, 193, 227, 0.753)), to(rgba(170, 143, 204, 0.849)));
-  background: linear-gradient(180deg, rgba(208, 193, 227, 0.753) 0%, rgba(170, 143, 204, 0.849) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(208, 193, 227, 0.753)), to(rgba(170, 143, 204, 0.644)));
+  background: linear-gradient(180deg, rgba(208, 193, 227, 0.753) 0%, rgba(170, 143, 204, 0.644) 100%);
 }
 
 .main__admin__dashboard .dashboard__box h2 {

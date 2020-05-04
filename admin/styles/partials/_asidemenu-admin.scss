@@ -11,7 +11,7 @@
   overflow-wrap: break-word;
   background-color: $primary-color2;
   color: #9da9b8;
-  box-shadow: 4px 4px 5px rgba(48, 48, 48, 0.13);
+  @extend %boxShadowSection;
 
   &__path {
     @extend %asideGridContainer;

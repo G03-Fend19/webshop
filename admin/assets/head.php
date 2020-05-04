@@ -11,7 +11,7 @@
 <body>
 
   <header class="admin__header">
-    <nav><a href="index.php">Company name</a>
+    <nav><a href="index.php"><img src="../media/images/logo_white.png" width="120" height="40" /></a>
       <div class="admin__header__login">
         <div class="admin__header__login__text">
           <h5>Admin</h5>
