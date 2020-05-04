@@ -166,7 +166,6 @@ if (isset($_GET['product_id'])) {
               }
             }
             $imgList = $imgArray;
-            echo $imgList;
         }
     endforeach;
 }
