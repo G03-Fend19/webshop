@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category_id = htmlspecialchars($_POST['category']);
     $price = htmlspecialchars($_POST['price']);
     $qty = htmlspecialchars($_POST['qty']);
-    $featureImg = htmlspecialchars($_POST['feature']);
+  /*   $featureImg = htmlspecialchars($_POST['feature']); */
 
    /*  echo "Feature: " . $featureImg; */
 
@@ -176,8 +176,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 if (count($new_images_db) != 0) {
-    foreach ($new_images_db as $img_id => $img_filename) {
+    if (isset($_POST['feature']) && !empty($_POST['feature'])) {
+        $featureImg = htmlspecialchars($_POST['feature']);
+    } else {
+        $featureImg = $images["image0"];
+    }
 
+    foreach ($new_images_db as $img_id => $img_filename) {      
         if ($img_filename == $featureImg) {
             $sql_update_feature = "UPDATE ws_products_images
             SET feature = 1
@@ -225,7 +230,9 @@ if (count($new_images_db) != 0) {
         foreach ($scanned_image_directory as $filename) {
 
             if (!in_array($filename, $all_images_array)) {
-                unlink("../../media/product_images/$filename");
+                if ($filename != 'placeholder.jpg') {   
+                    unlink("../../media/product_images/$filename");
+                }
             }
         }
     }
@@ -233,7 +240,7 @@ if (count($new_images_db) != 0) {
    /*  echo '<pre>';
     print_r($scanned_image_directory);
     echo '</pre>'; */
-    
+
 }
 
 

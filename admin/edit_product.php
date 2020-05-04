@@ -530,21 +530,32 @@ echo'</pre>';  */
       <div id="errorDiv">
         <?php
 
-if (!isset($_GET['formerror'])) {
-} else {
-    $errorCheck = $_GET['formerror'];
-    if ($errorCheck == 'duplicate') {
-        echo "<p class='errormsg'>You already have a product called <strong>$pName</strong>.</p>";
-    } elseif ($errorCheck == 'empty') {
-        echo "<p class='errormsg'>Please fill in all fields.</p>";
-    } elseif ($errorCheck == 'nocategory') {
-        echo "<p class='errormsg'>Please select a category for the product.</p>";
-    } elseif ($errorCheck == 'negative') {
-        echo "<p class='errormsg'>The product price and quantity can't be less than 0.</p>";
-    }
-}
+          if (count($failedUploads) !== 0) {
+            foreach ($failedUploads as $file_name => $errorArray) {
+              foreach ($errorArray as $error) {
+                echo "<p class='errormsg'><strong>$file_name:</strong> $error</p>";
+              }
+            
+            }
 
-?>
+          }
+
+
+          if (!isset($_GET['formerror'])) {
+          } else {
+              $errorCheck = $_GET['formerror'];
+              if ($errorCheck == 'duplicate') {
+                  echo "<p class='errormsg'>You already have a product called <strong>$pName</strong>.</p>";
+              } elseif ($errorCheck == 'empty') {
+                  echo "<p class='errormsg'>Please fill in all fields.</p>";
+              } elseif ($errorCheck == 'nocategory') {
+                  echo "<p class='errormsg'>Please select a category for the product.</p>";
+              } elseif ($errorCheck == 'negative') {
+                  echo "<p class='errormsg'>The product price and quantity can't be less than 0.</p>";
+              }
+          }
+
+        ?>
       </div>
   </form>
 
