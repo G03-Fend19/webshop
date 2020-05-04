@@ -96,7 +96,7 @@ require_once './assets/aside-navigation.php';
 
           const showMaxImgMessage = (arr) => {
             const imageMaxMessage = document.querySelector('.images-max')
-            if (arr.length == 2) {
+            if (arr.length == 5) {
               imageMaxMessage.classList.remove("hide-images-max");
             } else {
               imageMaxMessage.classList.add("hide-images-max");
@@ -117,6 +117,7 @@ require_once './assets/aside-navigation.php';
         // show max image msg
           showMaxImgMessage(imagesToDisplay)
        ////////////
+
 
           imageSection.innerHTML = ""
           let counter = 1
@@ -189,17 +190,6 @@ require_once './assets/aside-navigation.php';
     </div>
     <div id="errorDiv">
       <?php
-
-if (count($failedUploads) !== 0) {
-  foreach ($failedUploads as $file_name => $errorArray) {
-    foreach ($errorArray as $error) {
-      echo "<p class='errormsg'><strong>$file_name:</strong> $error</p>";
-    }
-   
-  }
-
-}
-
 
 if (!isset($_GET['formerror'])) {
 
