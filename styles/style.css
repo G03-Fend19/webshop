@@ -185,6 +185,10 @@ a {
   margin-left: 20px;
 }
 
+.header__logo img {
+  width: unset;
+}
+
 .header__nav {
   list-style-type: none;
   margin-right: 20px;
