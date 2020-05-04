@@ -166,6 +166,7 @@ $productCards .= "<article class='product-card'>
                           data-price=$productPrice
                           data-img='$productImg'
                           data-stock=$productQty
+                        data-discount=$discount 
                           class='add-to-cart-btn' id='addToCartBtn-$productId'>";
 $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
 $productCards .= "</button>
@@ -177,6 +178,7 @@ $productCards .= "</button>
   data-price=$productPrice
   data-img='$productImg'
   data-stock=$productQty
+data-discount=$discount 
   >
 
   <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
@@ -184,6 +186,7 @@ $productCards .= "</button>
 </div>
 
 </div>
+                     
                           $qtyMsg
                           </div>
                       </article>";

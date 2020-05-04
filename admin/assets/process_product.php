@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST["image$i"])) {
             $images += ["image$i" => $_POST["image$i"]];
         }
+
     }
 
     $duplicateCheck = "SELECT name FROM ws_products
@@ -24,7 +25,6 @@ AND active = 1";
 
     $stmt = $db->prepare($duplicateCheck);
     $stmt->bindParam(':title', $title);
-
     $stmt->execute();
     if (empty($title) || empty($description) || $price == "" || $price == null || $qty == "" || $qty == null) {
         header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
@@ -40,6 +40,8 @@ AND active = 1";
         exit();
     }
     ;
+
+
 
 //Inserting the new product into db
     $sql1 = "INSERT INTO ws_products (name, description, price, stock_qty)
@@ -62,20 +64,69 @@ SET @p_id = LAST_INSERT_ID()";
     $stmt2 = $db->prepare($sql2);
     $stmt2->bindParam(':category', $category);
     $stmt2->execute();
+    $stmt2->nextRowset();
 
 //Inserting the images and product img relationship
 
     if (count($images) != 0) {
+        if (isset($_POST['feature']) && !empty($_POST['feature'])) {
+            $featureImg = htmlspecialchars($_POST['feature']);
+        } else {
+            $featureImg = $images["image1"];
+        }
         foreach ($images as $index => $img) {
             $sql_img = "INSERT INTO ws_images (img) VALUES (:img)";
             $stmt = $db->prepare($sql_img);
             $stmt->bindParam(":img", $img);
             $stmt->execute();
+            $stmt->nextRowset();
 
-            $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
-                    VALUES ( @p_id, LAST_INSERT_ID())";
+            if ($img == $featureImg) {
+                $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id, feature)
+VALUES ( @p_id, LAST_INSERT_ID(), 1)";
+            } else {
+                $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
+VALUES ( @p_id, LAST_INSERT_ID())";
+            }
+
             $stmt_rel = $db->prepare($sql_p_img);
             $stmt_rel->execute();
+            $stmt_rel->nextRowset();
+        }
+    }
+
+
+    // Delete all images that aren't used from the server
+
+    $sql_all_images = "SELECT
+                            ws_images.img AS imgName
+                        FROM
+                            ws_images";
+
+    $stmt_all_images = $db->prepare($sql_all_images);
+    $stmt_all_images->execute();
+
+    $all_images_array = [];
+    while ($row_img = $stmt_all_images->fetch(PDO::FETCH_ASSOC)) {
+        $all_images_array[] = $row_img['imgName'];
+    }
+
+
+   /*  echo '<pre>';
+    print_r($all_images_array);
+    echo '</pre>'; */
+
+    $directory = '../../media/product_images';
+    $scanned_image_directory = array_diff(scandir($directory), array('..', '.'));
+
+    if (count($scanned_image_directory) != 0) {
+        foreach ($scanned_image_directory as $filename) {
+
+            if (!in_array($filename, $all_images_array)) {
+                if ($filename != 'placeholder.jpg') {   
+                    unlink("../../media/product_images/$filename");
+                }
+            }
         }
     }
 

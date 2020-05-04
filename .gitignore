@@ -5,3 +5,7 @@ db.php
 *.css.map
 *.sass.map
 *.scss.map
+
+media/product_images/
+
+*.map
