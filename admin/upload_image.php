@@ -63,32 +63,31 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-/* let imagesFromPHP = <?php echo json_encode($imageArray); ?> ;
+        console.log('upload image script running')
+        // get images from php
+        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; 
+      // get images from localstorage
+        let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
 
+        // if there are no images yet uploaded, do nothing
+        if(imagesFromPHP.length  === 0 ){
+        
+       
+        } else {
+             if(!imagesFromLocalStorage) {
+                imagesFromLocalStorage = []
+             } else {
 
-        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; */
+             }
+             imagesFromPHP.forEach(image => {
+                imagesFromLocalStorage.push({
+                    img: image,
+                    feature:  0
+                });
+             });
+             localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+        }
+     
+    
 
-
-//     const uploadBtn = document.querySelector('.upload-btn');
-
-
-
-//   imagesLS = JSON.parse(localStorage.getItem("images"));
-//   if(imagesLS){
-//       imagesLS.forEach(image => {
-//           imagesFromPHP.push(image)
-//       })
-//   }
-//   localStorage.setItem("images", JSON.stringify(imagesFromPHP))
-
-//   localStorage.clear();
-
-//   imagesLS = JSON.parse(localStorage.getItem("images"));
-//   console.log('heloo')
-
-// images = JSON.parse(localStorage.getItem("images"));
-// uploadBtn.addEventListener('click', () => {
-//   images = JSON.parse(localStorage.getItem("images"));
-
-// })
 </script>

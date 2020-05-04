@@ -1,24 +1,42 @@
 <?php
+
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
+
+$headline= "All products";
+if (isset($_GET['category_id'])){
+  $id = $_GET['category_id'];
+  $sql = "SELECT * FROM ws_categories
+  WHERE id = :id";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':id', $id);
+  $stmt->execute();
+
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    $headline = $row['name'];
+  }
+}
+
 ?>
-<main class="admin__products">
-  <div class="admin__products__text">
-    <h1>Products</h1>
+<main class="admin__tables">
+  <div class="admin__tables__text">
+    <h1 class="headline__products"><?php echo $headline?></h1>
     <a href="./create_product.php">
-      <button class="admin__products__text__addProduct">
+      <button class="admin__tables__text__addProduct">
         <p>Add new</p>
         <i class="fas fa-plus"></i>
       </button>
     </a>
   </div>
-
   <?php
 
+echo "<script type='text/javascript' src='SortTables.js'></script>";
+?>
+  <?php
 if (isset($_GET['category_id'])) {
     $categoryId = htmlspecialchars($_GET['category_id']);
-    $sql = "SELECT 
+    $sql = "SELECT
               ws_products.name          AS ProductName,
               ws_products.description   AS ProductDescription,
               ws_products.price         AS ProductPrice,
@@ -26,14 +44,17 @@ if (isset($_GET['category_id'])) {
               ws_products.stock_qty     AS ProductQty,
               ws_images.img             AS ImageName,
               ws_products_images.img_id AS ProductImageImageId,
+              ws_products_images.feature  AS FeatureImg,
               ws_categories.id          AS CategoryId,
               ws_categories.name        AS CategoryName
-            FROM 
+            FROM
               ws_products
             LEFT JOIN
               ws_products_images
             ON
               ws_products.id = ws_products_images.product_id
+            AND
+              ws_products_images.feature = 1
             LEFT JOIN
               ws_images
             ON
@@ -50,7 +71,7 @@ if (isset($_GET['category_id'])) {
               ws_categories.id = :category_id
             AND
               ws_products_categories.category_id = :category_id
-              ";
+            AND ws_products.active = 1";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":category_id", $categoryId);
     $stmt->execute();
@@ -64,14 +85,17 @@ if (isset($_GET['category_id'])) {
               ws_images.img           AS ImageName,
               ws_images.id            AS ImageId,
               ws_products_images.img_id AS ProductImageImageId,
+              ws_products_images.feature  AS FeatureImg,
               ws_categories.name      AS CategoryName,
               ws_categories.id        AS CategoryId
-              FROM 
+              FROM
                 ws_products
               LEFT JOIN
                 ws_products_images
               ON
                 ws_products.id = ws_products_images.product_id
+              AND
+                ws_products_images.feature = 1
               LEFT JOIN
                 ws_images
               ON
@@ -84,71 +108,71 @@ if (isset($_GET['category_id'])) {
                 ws_categories
               ON
                 ws_products_categories.category_id = ws_categories.id
-                  ";
+              WHERE
+              ws_products.active = 1";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 }
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  // echo $sql;
-  // echo "---<br />";
-  // print_r($results);
+// echo $sql;
+// echo "---<br />";
+// print_r($results);
 
+// [
+//   [1] => [ <-- key is ProductId
+//     "imgNames" => [
+//        [0] => "hund.jpg",
+//        [1] => "sfndsjkf.jpg"
+//     ],
+//     "ProductName" => "Korv",
+//     ...
+//   ],
+//   [24] => [
 
-  // [
-  //   [1] => [ <-- key is ProductId
-  //     "imgNames" => [
-  //        [0] => "hund.jpg",
-  //        [1] => "sfndsjkf.jpg"
-  //     ],
-  //     "ProductName" => "Korv",
-  //     ...
-  //   ],
-  //   [24] => [
+//   ]
+// ]
+// $grouped = [];
 
-  //   ]
-  // ]
-  $grouped = [];
+// foreach ($results as $row) {
+//     // The product id for this row
+//     $currentProductId = $row["ProductId"];
 
-  foreach($results as $row) {
-    // The product id for this row
-    $currentProductId = $row["ProductId"];
+//     // If we've already added this product
+//     if (in_array($currentProductId, $grouped)) {
 
-    // If we've already added this product
-    if(in_array($currentProductId, $grouped)) {
+//         // Just add the additional image name to the imgIds array
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     } else {
 
-      // Just add the additional image name to the imgIds array
-      $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    } else {
+//         // If we haven't added the product yet
+//         $grouped[$currentProductId] = [
+//             "imgNames" => [], // Start with empty
+//             "ProductId" => $currentProductId,
+//             "ProductName" => $row["ProductName"],
+//             "ProductDescription" => $row["ProductDescription"],
+//             "ProductPrice" => $row["ProductPrice"],
+//             "ProductQty" => $row["ProductQty"],
+//             "CategoryName" => $row["CategoryName"],
+//         ];
 
-      // If we haven't added the product yet
-        $grouped[$currentProductId] = [
-          "imgNames" => [], // Start with empty
-          "ProductId" => $currentProductId,
-          "ProductName" => $row["ProductName"],
-          "ProductDescription" => $row["ProductDescription"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductQty" => $row["ProductQty"],
-          "CategoryName" => $row["CategoryName"],
-        ];
-      
-      // If there is an image for this row, add it
-      if($row["ProductImageImageId"]) {
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-      }
-      
-    }
-  }
-  //   echo "<pre>";
-  // print_r($grouped);
-  // echo "</pre>";
+//         // If there is an image for this row, add it
+//         if ($row["ProductImageImageId"]) {
+//             $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//         }
+
+//     }
+// }
+//   echo "<pre>";
+// print_r($grouped);
+// echo "</pre>";
 
 // $stmtCheck = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (empty($results)) {
     echo "<h4>No products in this category</h4>";
 } else {
-    echo "<table>
+    echo "<table id='producttable'>
   <thead>
   <tr>
   <th></th>
@@ -157,7 +181,7 @@ if (empty($results)) {
   <th>Description</th>
   <th>Category</th>
   <th>Stock qty</th>
-  <th>Price</th>
+  <th onclick='sortTable(6)'>Price</th>
   <th> </th>
   <th> </th>
   </tr>
@@ -165,7 +189,7 @@ if (empty($results)) {
   <tbody>";
 }
 
-foreach($grouped as $productId => $product):
+foreach ($results as $product):
 
     $stmtCheck = $product;
     $id = htmlspecialchars($product['ProductId']);
@@ -175,37 +199,37 @@ foreach($grouped as $productId => $product):
     $price = htmlspecialchars($product['ProductPrice']);
     $category = htmlspecialchars($product['CategoryName']);
     $descriptionShort = substr($description, 0, 20);
-    if (empty($product['imgNames'])) {
+    if ($product['ImageName'] == NULL) {
       $productImg = "placeholder.jpg";
     } else {
-      $productImg = htmlspecialchars($product['imgNames'][0]);
+      $productImg = htmlspecialchars($product['ImageName']);
     }
     echo "<tr>
-								            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>
-								            <td>#$id</td>
-								            <td>$name</td>
-								            <td>$descriptionShort...</td>
-								            <td>$category</td>
-								            <td>$stock_qty st</td>
-								            <td>$price SEK</td>
-					                  <td>
-					                    <form action='./edit_product.php' method='POST'>
-					                      <button type='submit'><i class='fas fa-pen'></i></button>
-					                      <input type='hidden' name='p_id' value='$id'>
-					                    </form>
-					                  </td>
-								            <td>
-								                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
-								                  <button type='submit'><i class='far fa-trash-alt'></i></button>
-								                  <input type='hidden' name='id' value='$id'>
-								               </form>
-								            </td>
-								         </tr>";
+													            <td><img src='../media/product_images/$productImg' alt='placeholder'></td>
+													            <td>#$id</td>
+													            <td>$name</td>
+													            <td>$descriptionShort...</td>
+													            <td>$category</td>
+													            <td>$stock_qty st</td>
+													            <td>$price SEK</td>
+										                  <td>
+										                    <form action='./edit_product.php' method='POST'>
+										                      <button type='submit'><i class='fas fa-pen'></i></button>
+										                      <input type='hidden' name='p_id' value='$id'>
+										                    </form>
+										                  </td>
+													            <td>
+													                <form action='assets/delete-product.php' onsubmit='return deleteProductConfirm()' method='POST'>
+													                  <button type='submit'><i class='far fa-trash-alt'></i></button>
+													                  <input type='hidden' name='id' value='$id'>
+													               </form>
+													            </td>
+													         </tr>";
 endforeach;
 echo '</tbody></table>';
 echo '</main>';
 ?>
-
+  <script src="active_pages.js"></script>
   <script>
   function deleteProductConfirm() {
     if (confirm("Are you sure you want to delete this product?")) {
@@ -214,6 +238,12 @@ echo '</main>';
       return false;
     }
   }
+
+  localStorage.removeItem("images");
+  localStorage.removeItem("deleted");
   </script>
 
-  <?php require_once 'assets/foot.php';
+  <?php
+
+require_once 'assets/foot.php';
+?>

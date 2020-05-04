@@ -10,10 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category_id = htmlspecialchars($_POST['category']);
     $price = htmlspecialchars($_POST['price']);
     $qty = htmlspecialchars($_POST['qty']);
+    $featureImg = htmlspecialchars($_POST['feature']);
+
+   /*  echo "Feature: " . $featureImg; */
 
     // Backend validation
     $duplicateCheck = "SELECT name FROM ws_products
-                      WHERE name = :title
+                        WHERE name = :title
+                        AND active = 1
                         AND id <> :p_id";
 
     $stmt_duplicate = $db->prepare($duplicateCheck);
@@ -24,11 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $images = [];
 
-    for ($i = 1; $i <= 5; $i++) {
+    for ($i = 0; $i < 5; $i++) {
         if (isset($_POST["image$i"])) {
             $images += ["image$i" => $_POST["image$i"]];
         }
     }
+   
+  /*   echo "images: <pre>";
+    print_r($images);
+    echo "</pre>"; */
 
     $stringImages = serialize($images);
 
@@ -93,13 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     while ($imagesRow = $stmt_current_img->fetch(PDO::FETCH_ASSOC)) {
         $current_images[$imagesRow['imgId']] = $imagesRow['imgName'];
     }
+    $stmt_current_img->nextRowset();
+   
 
-    /* echo '<pre>';
+ /*    echo 'current images: <pre>';
     print_r($current_images);
     echo '</pre>'; */
 
     // Inserting the new images to the database
-    if (count($images) != 0) {
+    if (count($images) > 0) {
 
         foreach ($images as $index => $new_img) {
 
@@ -114,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               VALUES ( $p_id, LAST_INSERT_ID())";
                 $stmt_rel = $db->prepare($sql_p_img);
                 $stmt_rel->execute();
+                $stmt_rel->nextRowset();
             }
         }
 
@@ -126,16 +137,104 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $sql_delete = "DELETE
                             FROM ws_products_images
-                            WHERE img_id = :img_id;
+                            WHERE img_id = :img_id
                             AND product_id = :product_id";
 
                 $stmt_delete = $db->prepare($sql_delete);
                 $stmt_delete->bindParam(':img_id', $img_id);
                 $stmt_delete->bindParam(':product_id', $p_id);
                 $stmt_delete->execute();
+                $stmt_delete->nextRowset();
+                
+            }
+        }
+       
+    }
+
+// Setting feature-img
+    $sql_new_images_db = "SELECT
+                                ws_images.id AS imgId,
+                                ws_images.img AS imgName
+                            FROM
+                                ws_images,
+                                ws_products_images
+                            WHERE
+                                ws_products_images.product_id = :product_id
+                            AND
+                                ws_images.id = ws_products_images.img_id";
+
+/* echo $p_id;    */
+
+    $stmt_new_images_db = $db->prepare($sql_new_images_db);
+    $stmt_new_images_db->bindParam(':product_id', $p_id);
+    $stmt_new_images_db->execute();
+    
+
+    $new_images_db = [];
+    while ($img_row = $stmt_new_images_db->fetch(PDO::FETCH_ASSOC)) {
+        $new_images_db[$img_row['imgId']] = $img_row['imgName'];
+    }
+
+if (count($new_images_db) != 0) {
+    foreach ($new_images_db as $img_id => $img_filename) {
+
+        if ($img_filename == $featureImg) {
+            $sql_update_feature = "UPDATE ws_products_images
+            SET feature = 1
+            WHERE product_id = :p_id
+            AND img_id = :img_id";
+        }
+        else {
+            $sql_update_feature = "UPDATE ws_products_images
+            SET feature = 0
+            WHERE product_id = :p_id
+            AND img_id = :img_id";
+        }
+        $stmt_update_feature = $db->prepare($sql_update_feature);
+        $stmt_update_feature->bindParam(':p_id', $p_id);
+        $stmt_update_feature->bindParam(':img_id', $img_id);
+        $stmt_update_feature->execute();
+
+    }
+}
+
+    // Delete all images that aren't used from the server
+
+    $sql_all_images = "SELECT
+                            ws_images.img AS imgName
+                        FROM
+                            ws_images";
+
+    $stmt_all_images = $db->prepare($sql_all_images);
+    $stmt_all_images->execute();
+
+    $all_images_array = [];
+    while ($row_img = $stmt_all_images->fetch(PDO::FETCH_ASSOC)) {
+        $all_images_array[] = $row_img['imgName'];
+    }
+
+
+   /*  echo '<pre>';
+    print_r($all_images_array);
+    echo '</pre>'; */
+
+    $directory = '../../media/product_images';
+    $scanned_image_directory = array_diff(scandir($directory), array('..', '.'));
+
+    if (count($scanned_image_directory) != 0) {
+        foreach ($scanned_image_directory as $filename) {
+
+            if (!in_array($filename, $all_images_array)) {
+                unlink("../../media/product_images/$filename");
             }
         }
     }
-
+    
+   /*  echo '<pre>';
+    print_r($scanned_image_directory);
+    echo '</pre>'; */
 }
-header("Location:../products_page.php");
+
+
+
+header("Location:../products_page.php"); 

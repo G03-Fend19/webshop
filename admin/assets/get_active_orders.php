@@ -49,30 +49,30 @@
     ];
   }
 
-
+echo "<section class='active-orders'>";
 if (empty($activeOrdersResults)) {
     echo "<h2>No active orders</h2>";
 } else {
     echo "<h2>Active orders</h2>";
 }
-echo "<h2>Filter orders</h2>
-      <label for='activeStatusFilter'>Filter by status</label>
-      <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
-        <option value='all' selected>All</option>
-        <option value='1'>Pending</option>
-        <option value='2'>In progress</option>
-      </select>
-      <label for='activeTextFilter'>Filter by city</label>
-      <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>
-      <table>
+echo "<div class='active-orders__filter'>
+        <h3>Filter orders</h3>
+        <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
+          <option value='all' selected>All</option>
+          <option value='1'>Pending</option>
+          <option value='2'>In progress</option>
+        </select>
+        <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)' placeholder='Filter by city'>
+      </div>
+      <table id='activetable'>
         <thead>
           <tr>
             <th>Order number</th>
             <th>Customer</th>
             <th>City</th>
-            <th>Order date</>
-            <th>Total Amount</th>
-            <th>Status</th>
+            <th onclick='sortTableDate(3)'>Order date</th>
+            <th onclick='sortTable(4)'>Total Amount</th>
+            <th onclick='sortTableStatus(5)'>Status</th>
             <th> </th>
           </tr>
         </thead>
@@ -94,7 +94,7 @@ foreach($activeOrdersGrouped as $key => $order):
           <td>$fullName</td>
           <td>$city</td>
           <td>$orderDate</td>
-          <td>$totalSum SEK</td>
+          <td>$totalSum</td>
           <td>
           <form id='shouldUpdate$orderNumber' action='./assets/update_order_status.php' method='POST'>
            <select name='statusSelect$orderNumber' id='statusSelect$orderNumber' onchange='updateStatus($orderNumber)'>
@@ -123,7 +123,7 @@ foreach($activeOrdersGrouped as $key => $order):
         </tr>";
 endforeach;
 echo $rows;
-echo '</tbody></table>';
+echo '</tbody></table></section>';
 ?>
 
 <script>

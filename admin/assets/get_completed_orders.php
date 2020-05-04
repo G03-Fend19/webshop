@@ -49,24 +49,25 @@
       "OrderStatusId" => $row["OrderStatusId"],
     ];
   }
-
+echo "<section class='completed-orders'>";
 if (empty($completedOrdersResults)) {
     echo "<h2>No completed orders</h2>";
 } else {
     echo "<h2>Completed orders</h2>";
   }
-echo "<h2>Filter orders</h2>
-      <label for='completedTextFilter'>Filter by city</label>
-      <input type='text' id='completedTextFilter' oninput='filterOrders(completedOrdersFromPHP)'>
-      <table>
+echo "<div class='completed-orders__filter'>
+        <h3>Filter orders</h3>
+        <input type='text' id='completedTextFilter' oninput='filterOrders(completedOrdersFromPHP)' placeholder='Filter by city'>
+      </div>
+      <table id='completedtable'>
       <thead>
       <tr>
       <th>Order number</th>
       <th>Customer</th>
       <th>City</th>
-      <th>Order date</th>
-      <th>Total Amount</th>
-      <th>Status</th>
+      <th onclick='sortTableDate(3)'>Order date</th>
+      <th onclick='sortTable(4)'>Total Amount</th>
+      <th onclick='sortTableStatus(5)'>Status</th>
       <th> </th>
       </tr>
       </thead>
@@ -100,7 +101,7 @@ foreach($completedOrdersGrouped as $key => $order):
         </tr>";
 endforeach;
 echo $rows;
-echo '</tbody></table>';
+echo '</tbody></table></section>';
 ?>
 
 <script>

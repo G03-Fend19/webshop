@@ -89,7 +89,7 @@ select {
   }
 }
 
-.admin__header nav, .aside, .admin__products__text button, .admin__products table, .form__group, .form__image-section, .upload-form, .main__admin__dashboard .dashboard__box, .main__admin__addCategory, .main__admin .main__category-table {
+.admin__header nav, .aside, .admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .upload-form, .main__admin__dashboard .dashboard__box, .main__admin__addCategory, .main__admin .main__category-table {
   background: white;
   padding: 1em;
   -webkit-box-shadow: 4px 4px 5px rgba(226, 226, 226, 0.233);
@@ -246,12 +246,12 @@ select {
   word-break: break-all;
 }
 
-.admin__products {
+.admin__tables {
   margin: 80px 2em 2em 2em;
   padding: 2em;
 }
 
-.admin__products h1 {
+.admin__tables h1 {
   font-weight: 500;
   font-size: 1.5em;
   padding-bottom: 0.5em;
@@ -259,13 +259,13 @@ select {
   margin-top: 0.3em;
 }
 
-.admin__products h1::after {
+.admin__tables h1::after {
   content: "|";
   font-weight: lighter;
   padding-left: 0.5em;
 }
 
-.admin__products__text {
+.admin__tables__text {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -275,11 +275,11 @@ select {
   padding-bottom: 1em;
 }
 
-.admin__products__text a {
+.admin__tables__text a {
   text-decoration: none;
 }
 
-.admin__products__text button {
+.admin__tables__text button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -299,15 +299,15 @@ select {
   border: none;
 }
 
-.admin__products table {
+.admin__tables table {
   width: 100%;
   font-size: 0.7em;
   border-radius: 15px;
   padding: 4em 4em;
 }
 
-.admin__products table th,
-.admin__products table td {
+.admin__tables table th,
+.admin__tables table td {
   font-weight: 400;
   color: gray;
   padding: 15px;
@@ -315,21 +315,61 @@ select {
   border-bottom: 1px solid #ddd;
 }
 
-.admin__products table button {
+.admin__tables table button {
   border: none;
   background: none;
   cursor: pointer;
 }
 
-.admin__products table td {
+.admin__tables table td {
   max-height: 50px;
 }
 
-.admin__products table td img {
+.admin__tables table td img {
   height: 50px;
   width: 50px;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.admin__tables .active-orders {
+  margin-bottom: 2em;
+}
+
+.admin__tables .active-orders__filter {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 20%;
+      grid-template-columns: 1fr 20%;
+  grid-row-gap: 20px;
+  margin: 20px 0;
+}
+
+.admin__tables .active-orders__filter input {
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 3;
+  border-radius: 6px;
+  border: 0;
+  padding: 10px;
+}
+
+.admin__tables .completed-orders__filter {
+  display: -ms-grid;
+  display: grid;
+  grid-row-gap: 20px;
+  margin-bottom: 20px;
+}
+
+.admin__tables .completed-orders__filter input {
+  border-radius: 6px;
+  border: 0;
+  padding: 10px;
+}
+
+.activeLink {
+  font-weight: 900;
+  color: #484893;
 }
 
 .new__product__section {
@@ -608,17 +648,20 @@ input[type="checkbox"]:checked + img {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+  text-decoration: none;
 }
 
 .main__admin__dashboard .dashboard__box h2 {
   font-size: 3.5em;
   font-weight: 300;
   color: gray;
+  text-decoration: none;
 }
 
 .main__admin__dashboard .dashboard__box h3 {
   font-weight: 300;
   color: gray;
+  text-decoration: none;
 }
 
 .tracking-in-expand {

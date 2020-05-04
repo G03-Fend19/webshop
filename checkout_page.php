@@ -1,5 +1,8 @@
 <?php
 
+  if(isset($_GET['error']) && $_GET['error'] == "mail") {
+    ?><script>alert('Email already registered on a different name. Please check spelling or use different mail')</script><?php
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,135 +16,171 @@
 </head>
 
 <body>
-
-
   <header class="header">
     <nav class="fixed">
-      <div class="header__logo"><a href="index.php"> <img src=".\media\images\logo.png" width="40" height="40" /> </a>
+      <div class="header__logo"><a href="index.php"> <img src="./media/images/logo.png" width="40" height="40" /> </a>
       </div>
+
       <ul class="header__nav">
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home" href="index.php">Home</a>
-        </li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__contact" href=""><i
-              class="fas fa-phone"></i></a></li>
-        <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
-            href="">Contact</a></li>
-        <li class="header__nav__item">
-          <form class="header__nav__item__searchform" name="search_form" action="search.php#main"
-            onsubmit="return validateSearchForm()" method="GET">
-            <input class="header__nav__item__searchbar hidden" placeholder="Search..." type="text" name="search">
-            </input>
-            <button class="header__nav__item__searchBtn search hidden">Search</button>
-          </form> 
-        </li>
-        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__search"><i
-              class="fas fa-search"></i></a></li>
+        <div class="header__nav__container">
+          <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home"
+              href="index.php">Home</a>
+          </li>
+
+          <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
+              href="">Contact</a></li>
+        </div>
+
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
               class="fas fa-shopping-cart"></i></a></li>
       </ul>
-    </nav>
 
-    <section class="cart">
-      <div class="cart__menu"></div>
-      <section class="cart__product-wrapper"></section>
-      <div class="cart__total-checkout"></div>
+      <div class="header__burger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+    <section>
+      <form class="searchform" name="search_form" action="search.php#main" onsubmit="return validateSearchForm()"
+        method="GET">
+        <input class="searchform__searchbar " placeholder="Search..." type="text" name="search">
+        <button class="searchform__searchBtn search "> <i class="fa fa-search"></i></button>
+      </form>
+
+      <ul class="toggle_menu">
+        <div class="toggle_menu__container">
+          <li class="toggle_menu__item"><a class="toggle_menu__item__a toggle_menu__item__home"
+              href="index.php">Home</a>
+          </li>
+          <li class="toggle_menu__item"><a id="contact-desktop" class="toggle_menu__item__a toggle_menu__item__contact2"
+              href="">Contact</a></li>
+        </div>
+
+      </ul>
+      <section class="cart hidden">
+        <div class="cart__menu"></div>
+        <section class="cart__product-wrapper"></section>
+        <div class="cart__total-checkout"></div>
+      </section>
+      <h1>Welcoming text</h1>
+      <p>Describing text about shop...</p>
     </section>
   </header>
+
+
   <script>
-  (() => {
-    const searchBar = document.querySelector('.header__nav__item__searchbar');
-    const searchButton = document.querySelector('.header__nav__item__search');
-    const searchIcon = document.querySelector('.fa-search')
-    const home = document.querySelector('.header__nav__item__home')
-    const contact = document.querySelector('.header__nav__item__contact')
-    const searchBtn = document.querySelector('.search')
+  //Toggle menu
+  const burger = document.querySelector('.header__burger i');
+  const nav = document.querySelector('.toggle_menu__container');
 
+  function toggleNav() {
+    burger.classList.toggle('fa-bars');
+    burger.classList.toggle('fa-times');
+    nav.classList.toggle('toggle_menu__active');
+  }
 
-    searchButton.addEventListener('click', () => {
-      searchIcon.classList.toggle("fa-times")
-      home.classList.toggle("hidden")
-      searchBtn.classList.toggle("hidden");
-      searchBar.classList.toggle("hidden");
-    })
+  burger.addEventListener('click', function() {
+    toggleNav();
 
-  })();
+  });
+
+  /* if (nav.classList.contains('toggle_menu__active')) {
+  document.addEventListener('click', function(event) {
+          let isClickInside = nav.contains(event.target);
+          if (isClickInside) {
+            console.log('You clicked inside')
+          }
+         else {
+            console.log('You clicked outside')
+            nav.classList.remove("toggle_menu__active");
+
+          }
+      });
+    }
+       */
   </script>
   <main class="main-checkout">
     <h1>Checkout</h1>
     <h3>You are about to buy these products</h3>
 
-
-
     <section id="pTable-section" class="order-summary">
 
 
     </section>
-
-<!-- onsubmit="return orderFormSubmission(event)" -->
+    <script>
+     const localStorageCustomer = JSON.parse(localStorage.getItem("customer"))
+    </script>
 
     <section class="customer"> 
-      <form  id="confirm-order" action="./confirm_page.php" class="customer__form">
+      <form action="./confirm_page.php"  id="confirm-order"  class="customer__form" method="POST">
         <div class="customer__form__information">
           <h2>Customer Information</h2>
           <div class="customer__form__information__name">
             <div class="label-input">
-              <label for="fname">First name:</label>
-              <input class="customer-info"id="firstname"type="text"></input>
+              <label for="firstname">First name:</label>
+              <input name="firstname" class="customer-info"id="firstname"type="text" required></input>
             </div>
             <div class="label-input">
-              <label for="lname">Last name:</label> 
-              <input class="customer-info"id="lastname"type="text"></input> 
+              <label for="lastname">Last name:</label> 
+              <input name="lastname" class="customer-info"id="lastname"type="text" required></input> 
             </div>
           </div>
           <div class="customer__form__information__mailbile">
             <div class="label-input">
               <label for="email">Email:</label> 
-              <input class="customer-info"id="email"type="text"></input>   
+              <input name="email" class="customer-info"id="email"type="email" required></input>   
             </div>  
             <div class="label-input">
               <label for="mobile">Mobile:</label> 
-              <input class="customer-info"id="mobile"type="text"></input>  
+              <input name="mobile" class="customer-info"id="mobile"type="text" required></input>  
             </div>                      
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
-              <label for="adress">Street:</label> 
-              <input class="customer-info"id="street"type="text"></input>  
+              <label for="street">Street:</label> 
+              <input name="street"class="customer-info"id="street"type="text" required></input>  
             </div>            
           </div>
           <div>
 
           </div>
+            
           <div class="customer__form__information__cityPost"> 
-            <div class="label-input">
+          <div class="label-input postalcode">
               <label for="postal">Postal:</label> 
-              <input class="customer-info"id="postal"type="text"></input>  
+              <input name="postal"class="customer-info"id="postal"type="text" maxlength="5" required></input>  
             </div>      
-             <div class="label-input">
+             <div class="label-input city">
                <label for="city">City:</label> 
-               <input class="customer-info"id="city"type="text"></input>  
+               <input name="city"class="customer-info"id="city"type="text" required></input>  
              </div>                 
+            
           </div>
         </div>
         <div class="customer__form__payment customer__form__information">
-            <h2>Payment Information</h2>
-            <div class="customer__form__payment__shipping">
-              <p>Shipping Fee</p> 
-              <p>kronor</p>
-            </div>
-            <div class="customer__form__payment__total">
-              <p>Total price</p> 
-              <p>kronor</p>
-            </div>
-            <div class="customer__form__payment__invoice">
-              <p>Invoice</p>
-                <label for="email-invoice"> Email </label>
-                <input class="customer-info" type="checkbox" id="email-invoice" name="email-invoice" value="checkbox">
-                <label for="adress-invoice"> Adress </label>
-                <input  class="customer-info" type="checkbox" id="adress-invoice" name="adress-invoice" value="checkbox">                
-            </div>                           
+          <h2>Payment Information</h2>
+          <div class="customer__form__payment__shipping">
+            <p>Shipping Fee</p>
+            <p class="sum">SEK</p>
+          </div>
+          <div class="customer__form__payment__total">
+            <p>Total price</p>
+            <p class="sum">SEK</p>
+          </div>
+          <div class="customer__form__payment__invoice">
+          <p>Invoice: </p>
+            Email
+            <label for="email-invoice"><input name="email-invoice" class="customer-info" type="checkbox"
+                id="email-invoice" name="email-invoice" value="checkbox">
+            </label>
+            Address
+            <label for="adress-invoice"><input name="adress-invoice" class="customer-info" type="checkbox"
+                id="adress-invoice" name="adress-invoice" value="checkbox">
+            </label>
+          </div>
+          <input id="cart-input" type="hidden" name="cart" type="text"></input>
+          <input id="total-input" type="hidden" name="total" type="text"></input>
         </div>
-        
+
         <div class="customer__form__submit">
           <button id="order-confirmation-submit">Confirm order</button>
         </div>
@@ -153,14 +192,35 @@
 
 
   
+  <script>
+    const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
+    const customerInformationFields = document.querySelectorAll(".customer-info");
+    const customerInformationArray = Array.prototype.slice.call(
+      customerInformationFields
+    );
+    customerKeys = Object.keys(customerFromLocalStorage)
+
+      if(customerFromLocalStorage) {
+        customerKeys.forEach(key => {
+            customerInformationArray.filter(field => {
+              field.name === key ? field.value = customerFromLocalStorage[key] : null
+            })
+        })
+      }
+
+  </script>
   
-  
-  
+  <script>
+  // allProductsObj = localStorage.getItem('cart');
+  // console.log(allProductsObj)
+  document.getElementById('cart-input').value = localStorage.getItem('cart');
+  document.getElementById('total-input').value = localStorage.getItem('total');
+  </script>
   <script src="./checkout.js"></script>
 
   <script src="./order-confirmation.js"></script>
 
   <?php
-require_once 'assets/foot.php';
 
+require_once 'assets/foot.php';
 ?>

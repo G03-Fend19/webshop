@@ -1,4 +1,4 @@
-.admin__products {
+.admin__tables {
   margin: 80px 2em 2em 2em;
   padding: 2em;
 
@@ -74,4 +74,38 @@
       }
     }
   }
+  .active-orders {
+    margin-bottom: 2em;
+    &__filter {
+      display: grid;
+      grid-template-columns: 1fr 20%;
+      grid-row-gap: 20px;
+      margin: 20px 0;
+      input {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        border-radius: 6px;
+        border: 0;
+        padding: 10px;
+      }
+    }
+
+  }
+  .completed-orders {
+    &__filter {
+      display: grid;
+      grid-row-gap: 20px;
+      margin-bottom: 20px;
+      input {
+        border-radius: 6px;
+        border: 0;
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.activeLink {
+  font-weight: 900;
+  color: rgb(72, 72, 147);
 }

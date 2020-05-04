@@ -15,7 +15,6 @@
       <div class="admin__header__login">
         <div class="admin__header__login__text">
           <h5>Admin</h5>
-          <p>Available</p>
         </div>
         <div class="admin__header__login__img"><img src="../media/images/person.png" alt="picture admin"></div>
       </div>

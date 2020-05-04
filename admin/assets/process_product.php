@@ -16,14 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST["image$i"])) {
             $images += ["image$i" => $_POST["image$i"]];
         }
+
     }
 
     $duplicateCheck = "SELECT name FROM ws_products
-WHERE name = :title";
+WHERE name = :title
+AND active = 1";
 
     $stmt = $db->prepare($duplicateCheck);
     $stmt->bindParam(':title', $title);
-
     $stmt->execute();
     if (empty($title) || empty($description) || $price == "" || $price == null || $qty == "" || $qty == null) {
         header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
@@ -39,6 +40,8 @@ WHERE name = :title";
         exit();
     }
     ;
+
+
 
 //Inserting the new product into db
     $sql1 = "INSERT INTO ws_products (name, description, price, stock_qty)
@@ -71,8 +74,20 @@ SET @p_id = LAST_INSERT_ID()";
             $stmt->bindParam(":img", $img);
             $stmt->execute();
 
-            $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
-                    VALUES ( @p_id, LAST_INSERT_ID())";
+            if (isset($_POST['feature']) && !empty($_POST['feature'])) {
+                $featureImg = htmlspecialchars($_POST['feature']);
+            } else {
+                $featureImg = $images["image1"];
+            }
+
+            if ($img == $featureImg) {
+                $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id, feature)
+VALUES ( @p_id, LAST_INSERT_ID(), 1)";
+            } else {
+                $sql_p_img = "INSERT INTO ws_products_images (product_id, img_id)
+VALUES ( @p_id, LAST_INSERT_ID())";
+            }
+
             $stmt_rel = $db->prepare($sql_p_img);
             $stmt_rel->execute();
         }
