@@ -24,6 +24,7 @@
 
   &__group {
     display: flex;
+    padding: 3em;
     //width: 80%;
     // min-height: 300px;
     border-radius: 10px;
@@ -164,24 +165,14 @@ input[type="checkbox"] + img {
 
 /* CHECKED STYLES */
 input[type="checkbox"]:checked + img {
-  outline: 5px solid rgba(11, 108, 235, 0.728);
+  outline: 5px solid $secondary-color;
 }
 
 .add-product-btn {
   grid-row: 3;
-  place-self: end;
-  align-self: start;
-  margin-right: 15em;
-  border: none;
-  font-weight: 900;
-  color: white;
-  border-radius: 10px;
-  background: #9ab9bb;
-  cursor: pointer;
-  padding: 0.5em 1em;
-  margin-top: 1em;
-  box-shadow: 1px 1px 3px rgb(96, 96, 96);
-
+  @extend %buttonStyles;
+  justify-self: flex-end;
+  margin: 2em;
   &:hover {
     transition: ease-in 250ms;
     transform: scale(1.025);
@@ -194,4 +185,9 @@ input[type="checkbox"]:checked + img {
   &__image {
     margin-bottom: 2em;
   }
+}
+
+select {
+  max-height: 35px;
+  align-self: flex-end;
 }

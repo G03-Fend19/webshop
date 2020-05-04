@@ -5,9 +5,7 @@
 .main__admin {
   margin: 80px 2em 2em 2em;
   padding: 2em;
-  display: grid;
-  gap: 1em;
-  grid-template: auto 1fr / 1fr;
+  height: auto;
 
   h1 {
     font-weight: 500;
@@ -26,6 +24,7 @@
   &__text {
     display: flex;
     align-items: center;
+    margin-bottom: 1em;
 
     button {
       background: none;
@@ -37,27 +36,25 @@
     display: flex;
     align-items: center;
     width: 120px;
-    height: 100%;
-    @extend %boxShadowSection;
-    border-radius: 15px;
-    color: rgb(145, 145, 145);
+    min-height: 35px;
+    @extend %buttonStyles;
     cursor: pointer;
-    font-size: 0.8em;
+    font-size: 0.7em;
     justify-content: space-evenly;
     margin-left: 1em;
     text-decoration: none;
 
     &__form {
       &__input {
-        height: 25px;
+        height: 35px;
         border-radius: 6px;
-        border: 1px solid rgb(160, 160, 160);
         padding-left: 0.5em;
         font-size: 14px;
         margin-top: auto;
         margin-bottom: auto;
         margin-left: 20px;
         margin-right: 10px;
+        border: none;
       }
 
       &__saveBtn {
@@ -93,11 +90,11 @@
     }
 
     .fa-check {
-      color: green;
+      color: rgb(76, 139, 76);
     }
 
     .fa-times {
-      color: red;
+      color: rgb(233, 99, 99);
     }
 
     &__tr {
@@ -130,4 +127,10 @@
       cursor: pointer;
     }
   }
+}
+
+.main__admin__addCategory__form__input {
+  font-size: 12px;
+  font-style: italic;
+  min-width: 200px;
 }

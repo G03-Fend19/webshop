@@ -40,7 +40,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 if (isset($_GET['addCategory'])) {
     $addCategory = "<form class='main__admin__addCategory__form' action='./assets/add-category.php' method='POST'>
-                      <input class='main__admin__addCategory__form__input' type='text' name='name' maxlength='30'>
+                      <input placeholder='Name your category'  class='main__admin__addCategory__form__input' type='text' name='name' maxlength='30'>
                       <button class='main__admin__addCategory__form__saveBtn' type='submit' id='saveBtn'><i class='fas fa-check'></i></button>
                       <a class='main__admin__addCategory__form__exitBtn' href='./category-table.php'><i class='fas fa-times'></i></a>
                     </form>";

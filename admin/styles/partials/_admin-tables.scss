@@ -25,6 +25,13 @@
     font-size: 1em;
     color: $font-color1;
   }
+  h4 {
+    font-weight: 500;
+    font-size: 1.2em;
+    padding-bottom: 0.5em;
+    color: $font-color1;
+    margin-top: 0.3em;
+  }
   &__text {
     display: flex;
     align-items: center;
