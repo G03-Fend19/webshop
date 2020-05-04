@@ -12,9 +12,9 @@
     width: 100vw;
     height: 70px;
     align-items: center;
-    background-color: rgb(226, 226, 226);
-    font-size: 20px;
-    box-shadow: 1px 1px 3px rgb(194, 194, 194);
+    background-color: #54626a;
+    box-shadow: 1px 1px 3px rgb(87, 87, 87);
+    color: #d9d7d1;
   }
   &__logo {
     margin-right: auto;
@@ -42,13 +42,32 @@
       margin-left: 20px;
       a {
         @extend %linkStyle;
+        font-size: 18px;
+        font-weight: 900;
         @media (min-width: 800px) {
           display: inline;
+        }
+
+        &:hover {
+          @keyframes changeColor {
+            0% {
+              color: #d9d7d1;
+            }
+
+            100% {
+              color: #353535;
+              text-shadow: 1px 1px 2px rgb(206, 206, 206);
+            }
+          }
+
+          animation: changeColor 500ms;
+          animation-fill-mode: forwards;
         }
       }
 
       &__cart {
         margin-right: 1.5em;
+        cursor: pointer;
       }
     }
   }
@@ -65,26 +84,60 @@
     position: relative;
     margin-top: 70px;
     text-align: center;
-    background-color: rgb(245, 245, 245);
-    height: 100%;
-    //background: rgb(245, 245, 245);
+    background: url(../media/images/webshop-background.jpeg);
+    background-position: top;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
     height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
     height: calc(100vh - 70px);
     flex-direction: column;
+    padding-left: 13vw;
     h1 {
       font-size: 10vh;
-      color: rgb(133, 133, 133);
-      text-shadow: 1px 1px 2px black;
-      margin-top: 25vh;
-      @media (max-width: 750px) {
-        font-size: 5vh;
+      color: white;
+      // text-shadow: 1px 1px 2px black;
+      background: linear-gradient(
+        70deg,
+        #fff 20%,
+        #828a8e 30%,
+        #54626a 50%,
+        #828a8e 60%,
+        #fff 80%
+      );
+      background-size: 200% auto;
+
+      color: #000;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      animation: shine 15s linear infinite;
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
       }
+    }
+
+    @media (max-width: 750px) {
+      font-size: 5vh;
+      padding-left: unset;
+    }
+
+    .desc__hero__text {
+      font-weight: 700;
+      color: white;
+      text-shadow: 1px 1px 2px black;
     }
   }
 }
+
 .hidden {
   display: none;
 }
@@ -119,6 +172,7 @@
     width: calc(100% - 40px);
     background: #ffffff;
     margin: 0;
+    font-style: italic;
 
     @media (min-width: 800px) {
       border-radius: 5px 0px 0px 5px;
@@ -129,21 +183,23 @@
     width: 40px;
     padding: 8.3px;
     margin: 0;
-    background: #ffffff;
+    background: white;
     border: 1px solid #ffffff;
     border-radius: 0px 0px 5px 0px;
-    color: rgb(114, 114, 114);
+    color: black;
     font-size: 15px;
     border: none;
     border-left: none;
     cursor: pointer;
     i {
       &:hover {
-        color: #ff8c8b;
+        color: #54626a !important;
       }
     }
     @media (min-width: 800px) {
       border-radius: 0px 5px 5px 0px;
+      background: #d9d7d1 !important;
+      color: white !important;
     }
   }
 }
@@ -163,7 +219,7 @@
       position: fixed;
       z-index: 2;
       margin-top: 70px;
-      background-color: rgb(226, 226, 226);
+      background-color: #d9d7d1;
       top: calc(-100% + 70px);
       left: 0;
       width: 100%;
@@ -173,6 +229,7 @@
       align-items: flex-end;
       padding: 20px;
       transition: all 500ms;
+      color: #54626a;
     }
   }
 
@@ -197,15 +254,19 @@
     position: absolute;
     top: 10px;
     right: 57px;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-self: center;
     padding: 6px 6px;
-    border-radius: 25px;
-    background: coral;
+    border-radius: 50%;
+    background: #ff4343;
     line-height: 10px;
     font-size: 14px;
     vertical-align: middle;
     white-space: nowrap;
     z-index: 2;
+    width: 20px;
+    height: 20px;
 
     @media (min-width: 800px) {
       right: 15px;

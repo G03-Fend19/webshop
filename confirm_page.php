@@ -87,7 +87,7 @@
           </div>
           <div class="confirmpage__price__total">
             <strong>Total price</strong>
-            <p class="confirmpage__totalprice">2 099 SEK</p>
+            <p class="confirmpage__totalprice"></p>
           </div>
         </section>
       </section>

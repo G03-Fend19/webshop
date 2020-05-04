@@ -40,10 +40,10 @@
           img: productData.img,
           name: productData.name,
           price: productData.price,
-          discount: productData.discount,
+          discount: parseFloat(productData.discount),
           quantity: qty,
-          stock: productData.stock
-        }
+          stock: productData.stock,
+        },
       };
     }
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -58,17 +58,20 @@
     const s = cart[product].stock;
     q <= s ? (cart[product].quantity = qty) : alert("no more in stock");
   };
-  const checkStock = product => {
+  const checkStock = (product) => {
     const q = cart[product].quantity;
     const s = cart[product].stock;
     q < s ? cart[product].quantity++ : alert("no more in stock");
   };
   const calcTotal = () => {
     total = Object.keys(cart).reduce((acc, cur) => {
-      return acc + cart[cur].price * cart[cur].quantity;
+      return (
+        acc +
+        Math.ceil(cart[cur].price * cart[cur].discount * cart[cur].quantity)
+      );
     }, 0);
     localStorage.setItem("total", JSON.stringify(total));
-    return `<div class="cart__total"><p>Total price</p> <p>${total} SEK</p></div>`;
+    return `<div class="cart__total"><p class="priceHeadline">Total price</p> <p class="totalSum">${total} SEK</p></div>`;
   };
   // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
@@ -100,22 +103,34 @@
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;
       productWrapper.innerHTML += Object.keys(cart)
-        .map(product => {
+        .map((product) => {
+          priceDisplay = "";
+          if (cart[product].discount === 1) {
+            console.log(cart[product].discount);
+            priceDisplay = `<p class='price'> ${
+              cart[product].quantity * cart[product].price
+            } SEK</p>`;
+          } else {
+            console.log("discount");
+            priceDisplay = `<p class='price__line-through'> ${
+              cart[product].quantity * cart[product].price
+            } SEK</p>
+                            <p class='price__discount'> ${Math.ceil(
+                              cart[product].quantity *
+                                (cart[product].price * cart[product].discount)
+                            )} SEK</p>`;
+          }
           return `
       <div class="cart__product" data-name='${cart[product].name}'>
       <div class="cart__product__image-wrapper">
-        <img class="cart__product__image-wrapper__img" src="./media/product_images/${
-            cart[product].img
-            }"></img>
+        <img class="cart__product__image-wrapper__img" src="./media/product_images/${cart[product].img}"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
            ${cart[product].name}
       </p>
       <div class="cart__product__info__btns">
-      <input type=number id="quantity-input" min="1" max="${
-            cart[product].stock
-            }" class="cart__product__info__btns__qty" 
+      <input type=number id="quantity-input" min="1" max="${cart[product].stock}" class="cart__product__info__btns__qty" 
       value="${cart[product].quantity}">
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
@@ -123,9 +138,8 @@
       <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
 
       </div>
-      <div>
-      <p class='price'> ${cart[product].quantity * cart[product].price} SEK</p>
-      <p class='price__discount'> ${Math.ceil(cart[product].quantity * (cart[product].price * cart[product].discount))} SEK</p>
+      <div class='cart__product__info__price'>
+      ${priceDisplay}
       </div>
       </div>
       </div>
@@ -134,7 +148,7 @@
         .join("");
       totalCheckout.innerHTML +=
         calcTotal() +
-        `<div class="cart__checkout"><a href="checkout_page.php" >Go To Checkout</a></div>`;
+        `<button class="cart__checkout"><a href="checkout_page.php#main-checkout" >Go To Checkout</a></button>`;
       productsInCart();
     }
 
@@ -146,12 +160,12 @@
   // anything with class changeQty
   // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
   const changeQty = () => {
-    document.addEventListener("click", e => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-
+    document.addEventListener("click", (e) => {
       if (e.target.dataset.id == "qty+") {
+        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
         checkStock(productId);
       } else if (e.target.dataset.id == "qty-") {
+        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
         cart[productId].quantity == 1 ? null : cart[productId].quantity--;
       }
 
@@ -164,9 +178,10 @@
     });
   };
   const deleteProduct = () => {
-    document.addEventListener("click", e => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+    document.addEventListener("click", (e) => {
       if (e.target.dataset.id == "delete-product") {
+        const productId =
+          e.target.parentNode.parentNode.parentNode.dataset.name;
         delete cart[productId];
         localStorage.setItem("cart", JSON.stringify(cart));
         renderCart();
@@ -181,20 +196,20 @@
     const modal = document.getElementById("myModal");
     const span = document.getElementsByClassName("close")[0];
 
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (e.target.className == "open-modal") {
         modal.style.display = "block";
         //close the modal
-        span.onclick = function() {
+        span.onclick = function () {
           modal.style.display = "none";
         };
         // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
           if (event.target == modal) {
             modal.style.display = "none";
           }
         };
-        document.addEventListener("click", e => {
+        document.addEventListener("click", (e) => {
           if (e.target.className == "cancel-btn") {
             modal.style.display = "none";
           }
@@ -202,7 +217,7 @@
       }
     });
 
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (
         e.target.className == "clear-cart" &&
         !Object.entries(cart).length == 0
@@ -220,7 +235,7 @@
     cartDisplay.classList.toggle("hidden");
   });
   const closeCart = () => {
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (e.target.className == "close-cart") {
         cartDisplay.classList.toggle("hidden");
       }
