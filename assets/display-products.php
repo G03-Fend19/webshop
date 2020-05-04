@@ -149,11 +149,27 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //     }
 // }
 // echo "<pre>";
-// print_r($grouped);
+// print_r($results);
 // echo "</pre>";
 
 foreach ($results as $product):
     $productId = $product['ProductId'];
+    $productMsg = "";
+    $priceMsg = "";
+    $qtyMsg = "";
+    if ($product['AddedDate'] >= $newInLimitDate) {
+        $productMsg = "<div class='new-in'>
+								                        <span class='new-in__msg'>
+								                        New In
+								                        </span>
+								                      </div>";
+    } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    $productMsg = "<div class='out-of-stock'>
+                          <span class='out-of-stock__msg'>
+                            10% off
+                          </span>
+                        </div>";
+    }
 
     $productPrice = htmlspecialchars($product['ProductPrice']);
 
@@ -161,7 +177,7 @@ foreach ($results as $product):
     if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
       $discount = 0.9;
       $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
-      $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+      $priceMsg = "<div class='price_display'><span class='original-price'>$productPrice SEK</span>
                     <span class='discount'>$discountProductPrice SEK</span></div>";
     } else {
       $priceMsg = "<span>$productPrice SEK</span>";
@@ -195,6 +211,7 @@ if (isset($_GET['category_id'])) {
     <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
       <div class='image-wrapper'>
       $productMsg";
+
 $productQty < 1 ? $productCards .= "<div class='out-of-stock'>
                                         <span class='out-of-stock__msg'>
                                         Currently out of stock
@@ -211,15 +228,32 @@ $productCards .= "<img class='product-thumb' src=./media/product_images/$product
       $priceMsg
       </div>
       <button
-      data-id=$productId
-      data-name='$productName'
-      data-price=$productPrice
-      data-img='$productImg'
-      data-stock=$productQty
-      data-discount=$discount 
-      class='add-to-cart-btn'>";
-$productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
-$productCards .= "</button>
+        data-id=$productId
+        data-name='$productName'
+        data-price=$productPrice
+        data-img='$productImg'
+        data-stock=$productQty
+        data-discount=$discount
+        class='add-to-cart-btn'
+        id='addToCartBtn-$productId'>
+      <i class='fas fa-cart-plus'></i>
+      </button>
+      <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
+<input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+<div
+data-id=$productId
+data-name='$productName'
+data-price=$productPrice
+data-img='$productImg'
+data-stock=$productQty
+data-discount=$discount
+>
+
+<button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
+<button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
+</div>
+
+</div>
         $qtyMsg
       </div>
   </article>";
@@ -249,7 +283,7 @@ echo $productsContainer;
 
 <script>
 
-let grouped = <?php echo json_encode($grouped) ?>;
+let grouped = <?php echo json_encode($results) ?>;
 
 
 checkCartProducts(grouped);
@@ -259,6 +293,7 @@ function checkCartProducts(grouped) {
   for (let product of Object.values(grouped)) {
   let name = product['ProductName'];
   let id = product['ProductId'];
+  console.log(product['ProductId'])
   let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
 
   addBtn.forEach((btn) =>

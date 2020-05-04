@@ -1126,12 +1126,16 @@ footer {
   grid-row: span 2;
 }
 
-.display-products .product-card__text .original-price {
+.display-products .product-card__text .price_display {
+  max-width: 70px;
+}
+
+.display-products .product-card__text .price_display .original-price {
   font-size: 11px;
   text-decoration: line-through;
 }
 
-.display-products .product-card__text .discount {
+.display-products .product-card__text .price_display .discount {
   color: red;
 }
 

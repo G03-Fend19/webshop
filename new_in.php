@@ -21,13 +21,16 @@ $sql = "SELECT
             ws_products.stock_qty     AS ProductQty,
             ws_products.added_date    AS AddedDate,
             ws_images.img             AS ImageName,
-            ws_products_images.img_id AS ProductImageImageId
+            ws_products_images.img_id AS ProductImageImageId,
+            ws_products_images.feature  AS FeatureImg
           FROM
             ws_products
           LEFT JOIN
             ws_products_images
           ON
             ws_products.id = ws_products_images.product_id
+          AND
+            ws_products_images.feature = 1
           LEFT JOIN
             ws_images
           ON
@@ -45,37 +48,38 @@ $productsContainer = "<div class='products'>";
 $productCards = "";
 
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$grouped = [];
+// $grouped = [];
 
-foreach ($results as $row) {
+// foreach ($results as $row) {
 
-    // The product id for this row
-    $currentProductId = $row["ProductId"];
-    // If we've already added this product
-    if (isset($grouped[$currentProductId])) {
-        // Just add the additional image name to the imgIds array
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    } else {
-        // If we haven't added the product yet
-        $grouped[$currentProductId] = [
-            "imgNames" => [], // Start with empty
-            "ProductId" => $row["ProductId"],
-            "ProductName" => $row["ProductName"],
-            "ProductPrice" => $row["ProductPrice"],
-            "ProductQty" => $row["ProductQty"],
-            "AddedDate" => $row['AddedDate'],
-        ];
-    }
-    // If there is an image for this row, add it
-    if ($row["ProductImageImageId"]) {
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    }
-}
+//     // The product id for this row
+//     $currentProductId = $row["ProductId"];
+//     // If we've already added this product
+//     if (isset($grouped[$currentProductId])) {
+//         // Just add the additional image name to the imgIds array
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     } else {
+//         // If we haven't added the product yet
+//         $grouped[$currentProductId] = [
+//             "imgNames" => [], // Start with empty
+//             "ProductId" => $row["ProductId"],
+//             "ProductName" => $row["ProductName"],
+//             "ProductPrice" => $row["ProductPrice"],
+//             "ProductQty" => $row["ProductQty"],
+//             "AddedDate" => $row['AddedDate'],
+//         ];
+//     }
+//     // If there is an image for this row, add it
+//     if ($row["ProductImageImageId"]) {
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     }
+// }
 
-foreach ($grouped as $productId => $product):
-    $productMsg = "";
-    $priceMsg = "";
-    $qtyMsg = "";
+foreach ($results as $productId => $product):
+  $productId = $product['ProductId'];
+  $productMsg = "";
+  $priceMsg = "";
+  $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
 																			                        <span class='new-in__msg'>
@@ -108,62 +112,59 @@ if ($productQty > 9) {
     $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
 }
 
-if (empty($product['imgNames'])) {
+if (empty($product['ImageName'])) {
     $productImg = "placeholder.jpg";
 } else {
-    $productImg = htmlspecialchars($product['imgNames'][0]);
+    $productImg = htmlspecialchars($product['ImageName']);
 }
 // if (isset($_GET['category_id'])) {
 //     $categoryName = htmlspecialchars($product['CategoryName']);
 // }
 
 $productCards .= "<article class='product-card'>
-															                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-															                          <div class='image-wrapper'>
-					                                                <div class='new-in'>
-				                                                    <span class='new-in__msg'>
-				                                                    New In
-				                                                    </span>
-				                                                  </div>
-					                                                <img class='product-thumb' src=./media/product_images/$productImg alt=''>
-															                          </div>
-															                        </a>
-															                        <div class='product-card__content'>
-															                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
-															                            $productName
-															                          </a>
-															                          $priceMsg
-															                          <button
-															                          data-id=$productId
-															                          data-name='$productName'
-															                          data-price=$productPrice
-															                          data-img='$productImg'
-															                          data-stock=$productQty
-                                                                                      data-discount=$discount 
-                                                        class='add-to-cart-btn'
-                                                        id='addToCartBtn-$productId'>
-                                                        <i class='fas fa-cart-plus'></i>
-                                                        </button>
-                                                        <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
-          <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-          <div
-            data-id=$productId
-            data-name='$productName'
-            data-price=$productPrice
-            data-img='$productImg'
-            data-stock=$productQty
-            data-discount=$discount 
-            >
-
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
-          </div>
-
-        </div>
-                                                        
-                                                        $qtyMsg
-															                          </div>
-															                      </article>";
+										<a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+										  <div class='image-wrapper'>
+					              <div class='new-in'>
+				                  <span class='new-in__msg'>
+				                  New In
+				                  </span>
+				                </div>
+					              <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+										  </div>
+										</a>
+										<div class='product-card__content'>
+											<a href='product.php?product_id=$productId#main' class='product-card__product-link'>
+												$productName
+											</a>
+											$priceMsg
+											<button
+												data-id=$productId
+												data-name='$productName'
+												data-price=$productPrice
+												data-img='$productImg'
+												data-stock=$productQty
+                        data-discount=$discount 
+                        class='add-to-cart-btn'
+                        id='addToCartBtn-$productId'>
+                        <i class='fas fa-cart-plus'></i>
+                      </button>
+                      <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
+                        <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+                        <div
+                          data-id=$productId
+                          data-name='$productName'
+                          data-price=$productPrice
+                          data-img='$productImg'
+                          data-stock=$productQty
+                          data-discount=$discount 
+                          >
+                          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
+                          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
+                        </div>
+                      </div>
+                      $qtyMsg
+									  </div>
+									</article>";
 endforeach;
 $productsContainer .= $productCards;
 $productsContainer .= "</div>";
@@ -180,7 +181,7 @@ echo $productsContainer;
 </section>
 
 <script>
-  let grouped = <?php echo json_encode($grouped) ?>;
+  let grouped = <?php echo json_encode($results) ?>;
 
 checkCartProducts(grouped);
 
