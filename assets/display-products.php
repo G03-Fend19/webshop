@@ -161,10 +161,10 @@ foreach ($grouped as $productId => $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-																																																																																																															                        <span class='new-in__msg'>
-																																																																																																															                        New In
-																																																																																																															                        </span>
-																																																																																																															                      </div>";
+																																																																																																																																	                        <span class='new-in__msg'>
+																																																																																																																																	                        New In
+																																																																																																																																	                        </span>
+																																																																																																																																	                      </div>";
     } elseif ($product['ProductQty'] < 11 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
                     <span class='out-of-stock__msg'>
@@ -284,6 +284,7 @@ echo $productsContainer;
 
 let grouped = <?php echo json_encode($grouped) ?>;
 
+
 checkCartProducts(grouped);
 
 function checkCartProducts(grouped) {
@@ -302,7 +303,6 @@ function checkCartProducts(grouped) {
     })
   );
 
-
   checkLocalStorage(name, id);
   }
 }
@@ -312,17 +312,17 @@ function checkLocalStorage(name, id) {
 
   let addToCartBtn = document.querySelector('#addToCartBtn-' + id);
   let qtyBtns = document.querySelector('#productQty-' + id);
+  let qtyInput = document.querySelector('#qtyInput-' + id);
   cart = JSON.parse(localStorage['cart']);
-  // console.log(cart);
-
 
   if (name in cart) {
-    // console.log('true');
 
     qtyBtns.classList.remove("hidden");
     addToCartBtn.classList.add("hidden");
+
+    qtyInput.value = cart[name].quantity;
+
   } else {
-    // console.log('false');
 
     qtyBtns.classList.add("hidden");
     addToCartBtn.classList.remove("hidden");
@@ -350,18 +350,42 @@ document.addEventListener("click", (e) => {
   }
 });
 
+//When clearing cart
+document.addEventListener("click", (e) => {
+  const input = document.getElementById('qtyInput');
+  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+    for (let product of Object.values(grouped)) {
+      let name = product['ProductName'];
+      let id = product['ProductId'];
+
+      setTimeout(function(){
+      checkLocalStorage(name, id);
+      }, 100);
+
+    }
+  }
+});
+
+// document.addEventListener("click", (e) => {
+//   const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+
+//   if (e.target.dataset.id == "qty+") {
+//     setTimeout(getCartQty(), 1000);
+
+//   } else if (e.target.dataset.id == "qty-") {
+//     setTimeout(getCartQty(), 1000);
+//   }
+// });
+
 function lowerQty(id) {
   let input = document.getElementById('qtyInput-' + id);
 
   if (input.value > 1)
-  input.value = input.value - 1;
+  input.value = parseInt(input.value) - 1;
 }
 
 function higherQty(qty, id) {
-  let input = document.getElementById('qtyInput');
-  // let button = document.getElementById('higherBtn');
-  console.log(input);
-
+  let input = document.getElementById('qtyInput-' + id);
 
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;

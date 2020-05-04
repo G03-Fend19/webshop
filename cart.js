@@ -2,6 +2,9 @@
   const cartCount = document.querySelector(".cart_qty_show");
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
   const qtyBtnProductPage = document.querySelectorAll(
+    ".product-section__rigth__actions__amount__qty-container__qtyBtn-product-page"
+  );
+  const qtyBtns = document.querySelectorAll(
     ".product-section__rigth__actions__amount__qty-container__qtyBtn"
   );
   const cartDisplay = document.querySelector(".cart");
@@ -32,7 +35,17 @@
   qtyBtnProductPage.forEach((btn) =>
     btn.addEventListener("click", (e) => {
       const productData = e.target.parentNode.parentNode.dataset;
-      let qty = document.querySelector("#qtyInput").value;
+      let qty = document.querySelector("#qtyInput-product-page").value;
+
+      createProduct(productData, qty);
+    })
+  );
+
+  qtyBtns.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      const productData = e.target.parentNode.parentNode.dataset;
+      let id = productData.id;
+      let qty = document.querySelector("#qtyInput-" + id).value;
 
       createProduct(productData, qty);
     })
@@ -138,35 +151,31 @@
         .map((product) => {
           priceDisplay = "";
           if (cart[product].discount === 1) {
-            console.log(cart[product].discount);
+            // console.log(cart[product].discount)
             priceDisplay = `<p class='price'> ${
               cart[product].quantity * cart[product].price
-              } SEK</p>`;
+            } SEK</p>`;
           } else {
-            console.log("discount");
+            // console.log("discount")
             priceDisplay = `<p class='price__line-through'> ${
               cart[product].quantity * cart[product].price
-              } SEK</p>
+            } SEK</p>
                             <p class='price__discount'> ${Math.ceil(
-                cart[product].quantity *
-                (cart[product].price * cart[product].discount)
-              )} SEK</p>`;
+                              cart[product].quantity *
+                                (cart[product].price * cart[product].discount)
+                            )} SEK</p>`;
           }
           return `
-      <div class="cart__product" data-name='${cart[product].name}'>
+      <div class="cart__product" data-name='${cart[product].name}' data-id='${cart[product].id}'>
       <div class="cart__product__image-wrapper">
-        <img class="cart__product__image-wrapper__img" src="./media/product_images/${
-          cart[product].img
-        }"></img>
+        <img class="cart__product__image-wrapper__img" src="./media/product_images/${cart[product].img}"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
            ${cart[product].name}
       </p>
       <div class="cart__product__info__btns">
-      <input type=number id="quantity-input" min="1" max="${
-        cart[product].stock
-      }" class="cart__product__info__btns__qty" 
+      <input type=number id="quantity-input" min="1" max="${cart[product].stock}" class="cart__product__info__btns__qty" 
       value="${cart[product].quantity}">
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
@@ -197,11 +206,33 @@
   // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
   const changeQty = () => {
     document.addEventListener("click", (e) => {
-      const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-      let input = document.getElementById("qtyInput");
+      // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+      let input = document.getElementById("qtyInput-product-page");
 
-      if (e.target.dataset.id == "qty+") {
+      if (e.target.dataset.id == "qty+" && !input) {
         let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+        let id = e.target.parentNode.parentNode.parentNode.dataset.id;
+        let qtyInput = document.getElementById("qtyInput-" + id);
+
+        checkStock(productId);
+
+        if (qtyInput) {
+          qtyInput.value = cart[productId].quantity;
+        }
+      } else if (e.target.dataset.id == "qty-" && !input) {
+        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+        let id = e.target.parentNode.parentNode.parentNode.dataset.id;
+        let qtyInput = document.getElementById("qtyInput-" + id);
+
+        cart[productId].quantity == 1 ? null : cart[productId].quantity--;
+
+        // checkStock(productId);
+        if (qtyInput) {
+          qtyInput.value = cart[productId].quantity;
+        }
+      } else if (e.target.dataset.id == "qty+") {
+        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+
         checkStock(productId);
 
         if (

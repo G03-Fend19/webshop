@@ -94,8 +94,8 @@ if (isset($_GET['product_id'])) {
     }
 
 //     echo "<pre>";
-// print_r($grouped);
-// echo "</pre>";
+    // print_r($grouped);
+    // echo "</pre>";
 
     if (empty($grouped)) {
         ?>
@@ -110,10 +110,10 @@ if (isset($_GET['product_id'])) {
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
-																																                            <span class='new-in__msg'>
-																																                            New In
-																																                            </span>
-																																                          </div>";
+																																			                            <span class='new-in__msg'>
+																																			                            New In
+																																			                            </span>
+																																			                          </div>";
         } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
@@ -194,7 +194,7 @@ if (!empty($imgList)) {
       <div class='product-section__rigth__actions__amount hidden'>
         <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
         <div class='product-section__rigth__actions__amount__qty-container'>
-          <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
+          <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-product-page' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
           <div
             data-id=<?php echo $id ?>
             data-name='<?php echo $name ?>'
@@ -204,8 +204,8 @@ if (!empty($imgList)) {
             data-discount=<?php echo $discount ?>
             >
 
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
           </div>
 
         </div>
@@ -248,7 +248,7 @@ function getCartQty() {
   };
   getCart();
 
-  let input = document.getElementById('qtyInput');
+  let input = document.getElementById('qtyInput-product-page');
   let name = "<?php echo "$name" ?>";
   if (cart[name]) {
     input.value = cart[name].quantity;
@@ -256,14 +256,14 @@ function getCartQty() {
 }
 
 function lowerQty() {
-  let input = document.getElementById('qtyInput');
+  let input = document.getElementById('qtyInput-product-page');
 
   if (input.value > 1)
-  input.value = input.value - 1;
+  input.value = parseInt(input.value) - 1;
 }
 
 function higherQty(qty) {
-  let input = document.getElementById('qtyInput');
+  let input = document.getElementById('qtyInput-product-page');
   // let button = document.getElementById('higherBtn');
 
   if (input.value < qty) {
