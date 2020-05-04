@@ -118,7 +118,30 @@ foreach($activeOrdersGrouped as $key => $order):
 					  <form action='' method='POST'>
 					    <button type='submit'><i class='far fa-eye'></i></button>
 					    <input type='hidden' name='o_id' value='$orderNumber'>
-					  </form>
+            </form>
+
+            <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
+
+            <div id='myModal' data-id='$id' class='modal'>
+            <div class='modal__content'>
+              <div class='modal__content__header'>
+                <span class='close'>&times;</span>
+                <h2>Order overview</h2> 
+              </div>
+              <div class='modal__content__body'>
+              <p>#$orderNumber</p>
+              <p>$fullName</p>
+              <p>$city</p>
+              <p>$orderDate</p>
+              <p>$totalSum</p>
+              </div>
+              <div class='modal__content__footer'>
+              <button id='cancel' class='cancel-btn'>Cancel</button>  
+             
+              </div>
+            </div>
+          
+          </div>
 					</td>
         </tr>";
 endforeach;
@@ -129,3 +152,32 @@ echo '</tbody></table></section>';
 <script>
 let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
+ <script> 
+  const modal = document.getElementById("myModal");
+  const span = document.getElementsByClassName("close")[0];
+  const cancelBtn = document.getElementById("cancel");
+
+  document.querySelectorAll('.open-modal').forEach(item => {
+  item.addEventListener('click', event => {
+    let currentModal = event.currentTarget.nextElementSibling;
+    let currentSpan = event.currentTarget.nextElementSibling;
+
+    currentModal.style.display = "block";
+        //close the modal
+        currentSpan.onclick = function() {
+          currentModal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            currentModal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            currentModal.style.display = "none";
+          }
+        });
+  });
+});
+  </script>
