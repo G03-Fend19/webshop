@@ -173,14 +173,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_images_db = [];
     while ($img_row = $stmt_new_images_db->fetch(PDO::FETCH_ASSOC)) {
         $new_images_db[$img_row['imgId']] = $img_row['imgName'];
-      /*   echo "ny bild från db<br>" . $img_row['imgId'] ."<br>". $img_row['imgName']; */
     }
 
-  /*   echo 'new images db: <pre>';
-    print_r($new_images_db);
-    echo '</pre>'; */
-
-
+if (count($new_images_db) != 0) {
     foreach ($new_images_db as $img_id => $img_filename) {
 
         if ($img_filename == $featureImg) {
@@ -201,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_update_feature->execute();
 
     }
+}
 
     // Delete all images that aren't used from the server
 
@@ -225,10 +221,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $directory = '../../media/product_images';
     $scanned_image_directory = array_diff(scandir($directory), array('..', '.'));
 
-    foreach ($scanned_image_directory as $filename) {
+    if (count($scanned_image_directory) != 0) {
+        foreach ($scanned_image_directory as $filename) {
 
-        if (!in_array($filename, $all_images_array)) {
-            unlink("../../media/product_images/$filename");
+            if (!in_array($filename, $all_images_array)) {
+                unlink("../../media/product_images/$filename");
+            }
         }
     }
     
@@ -239,4 +237,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-/*  header("Location:../products_page.php");  */
+header("Location:../products_page.php"); 

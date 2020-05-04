@@ -97,18 +97,20 @@ require_once './assets/aside-navigation.php';
           imageSection.innerHTML = ""
           let counter = 1
 
-          imagesToDisplay.map(image => {
-            imageSection.innerHTML += `
-        <label class='form__image-section__selection' for='image${counter}'>
-         <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${image}' >
-         <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${image}' data-imgname='${image}'class='thumbnails'>
-         
-         </label>      
-         <button data-name='${image}' "type="button" class="remove-image">x</button>
-        `
-            counter++
-          })
-
+        if (imagesToDisplay) {
+  
+            imagesToDisplay.map(imgObj => {
+              imageSection.innerHTML += `
+          <label class='form__image-section__selection' for='image${counter}'>
+          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${imgObj['img']}' >
+          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}' data-imgname='${imgObj['img']}'class='thumbnails'>
+          
+          </label>      
+          <button data-name='${imgObj['img']}' "type="button" class="remove-image">x</button>
+          `
+              counter++
+            })
+        }
          document.addEventListener('click', e => {
   
      const feature = document.getElementById('feature')
@@ -128,7 +130,7 @@ require_once './assets/aside-navigation.php';
         let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
 
         images = imagesFromLocalStorage.filter((el)=> {
-          return el !== e.target.dataset.name
+          return el.img !== e.target.dataset.name
         })
           localStorage.setItem("images", JSON.stringify(images));
         }
