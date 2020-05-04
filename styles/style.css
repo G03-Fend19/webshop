@@ -1314,6 +1314,10 @@ footer {
   }
 }
 
+.display-products .hidden {
+  display: none;
+}
+
 .cart {
   max-height: calc(100vh - 70px);
   height: 100%;

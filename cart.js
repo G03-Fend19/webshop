@@ -1,12 +1,8 @@
 (() => {
   const cartCount = document.querySelector(".cart_qty_show");
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
-  const qtyBtnProductPage = document.querySelectorAll(
-    ".product-section__rigth__actions__amount__qty-container__qtyBtn-product-page"
-  );
-  const qtyBtns = document.querySelectorAll(
-    ".product-section__rigth__actions__amount__qty-container__qtyBtn"
-  );
+  const qtyBtnProductPage = document.querySelectorAll(".product-section__rigth__actions__amount__qty-container__qtyBtn-product-page");
+  const qtyBtns = document.querySelectorAll(".product-section__rigth__actions__amount__qty-container__qtyBtn");
   const cartDisplay = document.querySelector(".cart");
   const productWrapper = document.querySelector(".cart__product-wrapper");
   const totalCheckout = document.querySelector(".cart__total-checkout");
@@ -23,25 +19,29 @@
   // to the createProduct function
   addBtn.forEach(btn => btn.addEventListener("click", e => {
     cartCount.classList.remove("hidden");
+    const productData = e.target.parentNode.dataset;
+    let qty;
+    document.querySelector("#qtyInput")
+      ? (qty = document.querySelector("#qtyInput").value)
+      : (qty = 1);
+    qty;
+    createProduct(productData, qty);
+  }));
 
-  qtyBtnProductPage.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.parentNode.dataset;
-      let qty = document.querySelector("#qtyInput-product-page").value;
+  qtyBtnProductPage.forEach(btn => btn.addEventListener("click", e => {
+    const productData = e.target.parentNode.parentNode.dataset;
+    let qty = document.querySelector("#qtyInput-product-page").value;
 
-      createProduct(productData, qty);
-    })
-  );
+    createProduct(productData, qty);
+  }));
 
-  qtyBtns.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.parentNode.dataset;
-      let id = productData.id;
-      let qty = document.querySelector("#qtyInput-" + id).value;
+  qtyBtns.forEach(btn => btn.addEventListener("click", e => {
+    const productData = e.target.parentNode.parentNode.dataset;
+    let id = productData.id;
+    let qty = document.querySelector("#qtyInput-" + id).value;
 
-      createProduct(productData, qty);
-    })
-  );
+    createProduct(productData, qty);
+  }));
 
   // qtyBtnProductPage.addEventListener("click", (e) => {
   //   console.log("yaee");
@@ -49,9 +49,9 @@
   //   cartCount.classList.remove("hidden");
   //   const productData = e.target.parentNode.dataset;
   //   let qty = document.querySelector("#qtyInput").value;
-  //   // document.querySelector("#qtyInput")
-  //   //   ? (qty = document.querySelector("#qtyInput").value)
-  //   //   : (qty = 1);
+  //    document.querySelector("#qtyInput")
+  //      ? (qty = document.querySelector("#qtyInput").value)
+  //      : (qty = 1);
 
   //   createProduct(productData, qty);
   // });
@@ -94,10 +94,12 @@
       ? (cart[product].quantity = qty)
       : alert("update stock no more in stock");
   };
-  const checkStock = (product) => {
+  const checkStock = product => {
     const q = parseInt(cart[product].quantity);
     const s = cart[product].stock;
-    q < s ? cart[product].quantity++ : alert("check stock no more in stock");
+    q < s
+      ? cart[product].quantity++
+      : alert("check stock no more in stock");
   };
 
   const calcTotal = () => {
@@ -136,25 +138,17 @@
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;
-      productWrapper.innerHTML += Object.keys(cart)
-        .map((product) => {
-          priceDisplay = "";
-          if (cart[product].discount === 1) {
-            // console.log(cart[product].discount)
-            priceDisplay = `<p class='price'> ${
-              cart[product].quantity * cart[product].price
-            } SEK</p>`;
-          } else {
-            // console.log("discount")
-            priceDisplay = `<p class='price__line-through'> ${
-              cart[product].quantity * cart[product].price
-            } SEK</p>
-                            <p class='price__discount'> ${Math.ceil(
-                              cart[product].quantity *
-                                (cart[product].price * cart[product].discount)
-                            )} SEK</p>`;
-          }
-          return `
+      productWrapper.innerHTML += Object.keys(cart).map(product => {
+        priceDisplay = "";
+        if (cart[product].discount === 1) {
+          // console.log(cart[product].discount)
+          priceDisplay = `<p class='price'> ${cart[product].quantity * cart[product].price} SEK</p>`;
+        } else {
+          // console.log("discount")
+          priceDisplay = `<p class='price__line-through'> ${cart[product].quantity * cart[product].price} SEK</p>
+                            <p class='price__discount'> ${Math.ceil(cart[product].quantity * (cart[product].price * cart[product].discount))} SEK</p>`;
+        }
+        return `
       <div class="cart__product" data-name='${cart[product].name}' data-id='${cart[product].id}'>
       <div class="cart__product__image-wrapper">
         <img class="cart__product__image-wrapper__img" src="./media/product_images/${cart[product].img}"></img>
@@ -191,7 +185,7 @@
   // anything with class changeQty
   // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
   const changeQty = () => {
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
       let input = document.getElementById("qtyInput-product-page");
 
@@ -210,7 +204,9 @@
         let id = e.target.parentNode.parentNode.parentNode.dataset.id;
         let qtyInput = document.getElementById("qtyInput-" + id);
 
-        cart[productId].quantity == 1 ? null : cart[productId].quantity--;
+        cart[productId].quantity == 1
+          ? null
+          : cart[productId].quantity--;
 
         // checkStock(productId);
         if (qtyInput) {
@@ -221,24 +217,16 @@
 
         checkStock(productId);
 
-        if (
-          document.querySelector(".product-section__rigth__info__name") &&
-          productId ==
-            document.querySelector(".product-section__rigth__info__name")
-              .innerHTML
-        ) {
+        if (document.querySelector(".product-section__rigth__info__name") && productId == document.querySelector(".product-section__rigth__info__name").innerHTML) {
           input.value = cart[productId].quantity;
         }
       } else if (e.target.dataset.id == "qty-") {
         let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-        cart[productId].quantity == 1 ? null : cart[productId].quantity--;
+        cart[productId].quantity == 1
+          ? null
+          : cart[productId].quantity--;
 
-        if (
-          document.querySelector(".product-section__rigth__info__name") &&
-          productId ==
-            document.querySelector(".product-section__rigth__info__name")
-              .innerHTML
-        ) {
+        if (document.querySelector(".product-section__rigth__info__name") && productId == document.querySelector(".product-section__rigth__info__name").innerHTML) {
           input.value = cart[productId].quantity;
         }
       }
@@ -253,7 +241,7 @@
     });
   };
   const deleteProduct = () => {
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
       if (e.target.dataset.id == "delete-product") {
@@ -266,7 +254,6 @@
         if (document.querySelector("#pTable-section")) {
           renderOrderSummary();
           calcTotalWithShipping();
-
         }
       }
     });
@@ -318,12 +305,10 @@
       }
     });
   };
-
   changeQty();
   deleteProduct();
   clearCart();
   closeCart();
-  checkScroll();
 })();
 
 // ;(() => {
