@@ -193,7 +193,7 @@ foreach ($results as $product):
 
     $stmtCheck = $product;
     $id = htmlspecialchars($product['ProductId']);
-    $name = htmlspecialchars_decode($product['ProductName']);
+    $name = htmlspecialchars($product['ProductName']);
     $description = htmlspecialchars($product['ProductDescription']);
     $stock_qty = htmlspecialchars($product['ProductQty']);
     $price = htmlspecialchars($product['ProductPrice']);
