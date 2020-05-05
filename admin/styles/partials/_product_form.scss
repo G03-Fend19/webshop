@@ -104,8 +104,8 @@
   position: absolute;
   right: calc(50vw - 205px);
   top: calc(50vh - 125px);
-  display: grid;
-  grid-template: auto 1fr 1fr / 1fr 1fr 1fr;
+  /*   display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr; */
   /* set these so Chrome doesn't return 'auto' from getComputedStyle */
   width: 335px;
   height: 250px;
@@ -139,6 +139,8 @@
   .upload-btn {
     @extend %boxShadowSection;
     @extend %buttonStyles;
+    margin-top: 1em;
+    margin: 3em auto;
     // margin: auto;
 
     &:hover {
