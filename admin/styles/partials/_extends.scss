@@ -18,3 +18,20 @@
   background: rgb(242, 242, 242);
   padding: 0.5em 1em;
 }
+
+%buttonStyles {
+  display: flex;
+  align-items: center;
+  min-width: 120px;
+  max-width: 170px;
+  max-height: 40px;
+  height: 100%;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  background: $secondary-color;
+  cursor: pointer;
+  font-size: 0.8em;
+  justify-content: space-evenly;
+  margin-left: 1em;
+  border: none;
+}

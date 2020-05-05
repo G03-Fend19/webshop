@@ -5,9 +5,19 @@
             ws_active_orders.total_cost AS OrderCost,
             ws_customers.first_name     AS CustomerFirstName,
             ws_customers.last_name      AS CustomerLastName,
+            ws_delivery_address.street   AS DeliveryStreet,
+            ws_delivery_address.postal_code    AS DeliveryPostal,
             ws_delivery_address.city    AS DeliveryCity,
             ws_order_status.status      AS OrderStatus,
-            ws_order_status.id          AS OrderStatusId
+            ws_order_status.id          AS OrderStatusId,
+            ws_orders_products.product_qty AS OrderProductQty,
+            ws_orders_products.product_id AS OrderProductId,
+            ws_products.name            AS ProductName,
+            ws_products.price           AS ProductPrice,
+            ws_products.description      AS ProductDesc,
+            ws_products.id              AS ProductId
+
+           
           FROM 
             ws_active_orders
           LEFT JOIN
@@ -22,7 +32,17 @@
             ws_order_status
           ON
             ws_active_orders.status_id = ws_order_status.id
-            ";
+          LEFT JOIN
+            ws_orders_products
+          ON
+            ws_active_orders.id = ws_orders_products.order_id 
+          LEFT JOIN    
+            ws_products
+          ON 
+            ws_products.id = ws_orders_products.product_id  
+          WHERE
+            ws_orders_products.product_qty > 0
+          ";
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
@@ -31,48 +51,73 @@
   // echo "<pre>";
   // print_r($activeOrdersResults);
   // echo "</pre>";
-
-  foreach($activeOrdersResults as $key => $row) {
+  foreach($activeOrdersResults as $currentOrderNumber => $row) {
     // The order id for this row
     $orderType = "active";
-
-    $activeOrdersGrouped[$key] = [
-      "OrderType" => $orderType,
-      "OrderNumber" => $row['OrderNumber'],
-      "OrderDate" => $row['OrderDate'],
-      "OrderCost" => $row["OrderCost"],
-      "CustomerFirstName" => $row["CustomerFirstName"],
-      "CustomerLastName" => $row["CustomerLastName"],
-      "DeliveryCity" => $row["DeliveryCity"],
-      "OrderStatus" => $row["OrderStatus"],
-      "OrderStatusId" => $row["OrderStatusId"],
-    ];
+    $currentOrderNumber = $row['OrderNumber'];
+    if(isset($activeOrdersGrouped[$currentOrderNumber])) {
+      $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+        "ProductName" => $row["ProductName"],
+        "ProductPrice" => $row["ProductPrice"],
+        "ProductDesc" => $row["ProductDesc"],
+        "ProductId" => $row["ProductId"],
+        "ProductQty" => $row["OrderProductQty"],
+      ];
+    } else {
+      $activeOrdersGrouped[$currentOrderNumber] = [
+        "Products" => [],
+        "OrderType" => $orderType,
+        "OrderNumber" => $row['OrderNumber'],
+        "OrderDate" => $row['OrderDate'],
+        "OrderCost" => $row["OrderCost"],
+        "CustomerFirstName" => $row["CustomerFirstName"],
+        "CustomerLastName" => $row["CustomerLastName"],
+        "DeliveryCity" => $row["DeliveryCity"],
+        "DeliveryStreet" => $row["DeliveryStreet"],
+        "DeliveryPostal" => $row["DeliveryPostal"],
+        "OrderStatus" => $row["OrderStatus"],
+        "OrderStatusId" => $row["OrderStatusId"],
+      ];
+      if ($row['OrderProductId']) {
+        $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+          "ProductName" => $row["ProductName"],
+          "ProductPrice" => $row["ProductPrice"],
+          "ProductDesc" => $row["ProductDesc"],
+          "ProductId" => $row["ProductId"],
+          "ProductQty" => $row["OrderProductQty"],
+        ];
+      }
+    }
   }
 
+  // echo "<pre>";
+  // print_r($activeOrdersGrouped);
+  // echo "</pre>";
 
+echo "<section class='active-orders'>";
 if (empty($activeOrdersResults)) {
     echo "<h2>No active orders</h2>";
 } else {
-    echo "<h2>Active orders</h2>";
+    // echo "<h2 class='headline__php'>Active orders</h2>";
 }
-echo "<h2>Filter orders</h2>
-      <label for='activeStatusFilter'>Filter by status</label>
-      <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
-        <option value='all' selected>All</option>
-        <option value='1'>Pending</option>
-        <option value='2'>In progress</option>
-      </select>
-      <label for='activeTextFilter'>Filter by city</label>
-      <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)'>
-      <table>
+echo "<div class='active-orders__filter'>
+        <h3>Filter orders</h3>
+        <select name='activeStatusFilter' id='activeStatusFilter' onchange='filterOrders(activeOrdersFromPHP)'>
+          <option value='all' selected>All</option>
+          <option value='1'>Pending</option>
+          <option value='2'>In progress</option>
+        </select>
+        <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)' placeholder='Filter by city'>
+      </div>
+      <table id='activetable'>
         <thead>
           <tr>
-            <th>Order number</th>
+            <th>Order number </th>
             <th>Customer</th>
             <th>City</th>
-            <th>Order date</>
-            <th>Total Amount</th>
-            <th>Status</th>
+            <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></th>
+            <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
+            <th onclick='sortTableStatus(5)'>Status <i class='fas fa-sort'></th>
             <th> </th>
           </tr>
         </thead>
@@ -84,17 +129,44 @@ foreach($activeOrdersGrouped as $key => $order):
   $customerLastName = htmlspecialchars($order['CustomerLastName']);
   $fullName = $customerFirstName . " " . $customerLastName;
   $city = htmlspecialchars($order['DeliveryCity']);
+  $street = htmlspecialchars($order['DeliveryStreet']);
+  $postal = htmlspecialchars($order['DeliveryPostal']);
   $orderDate = htmlspecialchars($order['OrderDate']);
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
+  $productsArr = $order['Products'];
+  $productsTr = "";
+  foreach ($productsArr as $key => $product) {
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+      $productName = substr($productName, 0, 20) . "...";
+  }
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $productDesc = htmlspecialchars($product['ProductDesc']);
+    if (strlen($productDesc) > 20) {
+      $productDesc = substr($productDesc, 0, 20) . "...";
+  }
+    $productId = htmlspecialchars($product['ProductId']);
+    $productQty = htmlspecialchars($product['ProductQty']);
+
+    $productsTr .= "<tr>
+                    <td>$productName</td>
+                    <td>$productDesc</td>
+                    <td>$productPrice</td>
+                    <td>$productQty</td>
+                  </tr>
+                    ";
+    
+  }
+  
 
   $rows.= "<tr>
           <td>#$orderNumber</td>
           <td>$fullName</td>
           <td>$city</td>
           <td>$orderDate</td>
-          <td>$totalSum SEK</td>
+          <td>$totalSum</td>
           <td>
           <form id='shouldUpdate$orderNumber' action='./assets/update_order_status.php' method='POST'>
            <select name='statusSelect$orderNumber' id='statusSelect$orderNumber' onchange='updateStatus($orderNumber)'>
@@ -115,17 +187,80 @@ foreach($activeOrdersGrouped as $key => $order):
            </form>
           </td>
           <td>
-					  <form action='' method='POST'>
-					    <button type='submit'><i class='far fa-eye'></i></button>
-					    <input type='hidden' name='o_id' value='$orderNumber'>
-					  </form>
+            <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
+
+            <div id='myModal' data-id='$id' class='modal'>
+            <div class='modal__content'>
+              <div class='modal__content__header'>
+                <span class='close'>&times;</span>
+                <h2>Order overview</h2> 
+              </div>
+              <div class='modal__content__body'>
+              <p>#$orderNumber</p>
+              <p>$fullName</p>
+              <p>$street</p>
+              <p>$postal</p>
+              <p>$city</>
+              <p>$orderDate</p>
+              <table>
+                <thead>
+                  <tr>
+                    <td>Product</td>
+                    <td>Description</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                  </tr>
+                </thead>
+                <tbody>
+                    $productsTr
+                </tbody>
+              </table>
+              <p>Total price:</p>
+              <p>$totalSum SEK</p>
+
+              </div>
+              <div class='modal__content__footer'>
+              <button id='cancel' class='cancel-btn'>Cancel</button>  
+             
+              </div>
+            </div>
+          
+          </div>
 					</td>
-        </tr>";
+        </>";
 endforeach;
 echo $rows;
-echo '</tbody></table>';
+echo '</tbody></table></section>';
 ?>
-
 <script>
-  let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped); ?> ;
+let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
+ <script> 
+  const modal = document.getElementById("myModal");
+  const span = document.getElementsByClassName("close")[0];
+  const cancelBtn = document.getElementById("cancel");
+
+  document.querySelectorAll('.open-modal').forEach(item => {
+  item.addEventListener('click', event => {
+    let currentModal = event.currentTarget.nextElementSibling;
+    let currentSpan = event.currentTarget.nextElementSibling;
+
+    currentModal.style.display = "block";
+        //close the modal
+        currentSpan.onclick = function() {
+          currentModal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            currentModal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            currentModal.style.display = "none";
+          }
+        });
+  });
+});
+  </script>

@@ -1,15 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap");
+@import "./partials/variables";
 @import "./partials/reset";
 @import "./partials/extends";
 @import "./partials/head";
 @import "./partials/asidemenu-admin";
-@import "./partials/product-table";
+@import "./partials/admin-tables";
 @import "./partials/product_form";
 @import "./partials/dashboard";
 @import "./partials/category-table";
 @import "./partials/foot";
-
-// * {
-//   margin: 0;
-//   box-sizing: border-box;
-// }
+@import "./partials/modal";

@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
         }
         // check if file exists
         if (file_exists('../media/product_images/' . $filename)) {
-            $failedUploads[$filename][] = " file already exists.";
+            $failedUploads[$filename][] = " file already exists. Change file name or upload another image.";
             $uploadOk = 0;
         }
 
@@ -51,9 +51,9 @@ if (isset($_POST['submit'])) {
             $imageArray[] = $filename;
             move_uploaded_file($_FILES['file']['tmp_name'][$i], '../media/product_images/' . $filename);
 
-        } else {
+        } /* else {
             count($failedUploads) !== 0 ? print_r($failedUploads) : null;
-        }
+        } */
     }
 
 }
@@ -63,32 +63,37 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-/* let imagesFromPHP = <?php echo json_encode($imageArray); ?> ;
 
+        // get images from php
+        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; 
+      // get images from localstorage
+        let imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
 
-        let imagesFromPHP = <?php echo json_encode($imageArray); ?> ; */
+        // if there are no images yet uploaded, do nothing
+        if(imagesFromPHP.length  === 0 ){
+        
+       
+        } else {
+             if(!imagesFromLocalStorage) {
+                imagesFromLocalStorage = []
+             } else {
 
+             }
+             imagesFromPHP.forEach(image => {
+               if(imagesFromLocalStorage.length < 5){
+              
+                   imagesFromLocalStorage.push({
+                        img: image,
+                        feature:  0
+                    });            
+               }
+               else {
+                   console.log('to many')
+               }
+             });
+             localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
+        }
+     
+    
 
-//     const uploadBtn = document.querySelector('.upload-btn');
-
-
-
-//   imagesLS = JSON.parse(localStorage.getItem("images"));
-//   if(imagesLS){
-//       imagesLS.forEach(image => {
-//           imagesFromPHP.push(image)
-//       })
-//   }
-//   localStorage.setItem("images", JSON.stringify(imagesFromPHP))
-
-//   localStorage.clear();
-
-//   imagesLS = JSON.parse(localStorage.getItem("images"));
-//   console.log('heloo')
-
-// images = JSON.parse(localStorage.getItem("images"));
-// uploadBtn.addEventListener('click', () => {
-//   images = JSON.parse(localStorage.getItem("images"));
-
-// })
 </script>

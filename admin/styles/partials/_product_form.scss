@@ -1,5 +1,5 @@
 .new__product__section {
-  margin-top: 80px;
+  margin: 80px 2em 2em 2em;
   padding: 2em;
 
   h1 {
@@ -20,11 +20,12 @@
 
 .form {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
 
   &__group {
     display: flex;
-    width: 80%;
+    padding: 3em;
+    //width: 80%;
     // min-height: 300px;
     border-radius: 10px;
     // margin: auto;
@@ -61,7 +62,6 @@
 
   // }
 
-
   &__input {
     display: block;
     @extend %inputStyles;
@@ -70,7 +70,7 @@
   &__image-section {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    //width: 80%;
     border-radius: 10px;
     @extend %boxShadowSection;
 
@@ -84,18 +84,8 @@
     }
 
     button {
-      width: 140px;
-      // margin: auto;
-      padding: 1em;
-      display: flex;
-      font-size: 14px;
-      font-weight: 900;
-      color: white;
-      // height: 60px;
-      border: none;
-      border-radius: 10px;
-      background: rgb(103, 136, 103);
-      box-shadow: 1px 1px 3px rgb(96, 96, 96);
+      @extend %boxShadowSection;
+      @extend %buttonStyles;
       cursor: pointer;
 
       i {
@@ -114,8 +104,8 @@
   position: absolute;
   right: calc(50vw - 205px);
   top: calc(50vh - 125px);
-  display: grid;
-  grid-template: auto 1fr 1fr / 1fr 1fr 1fr;
+  /*   display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr; */
   /* set these so Chrome doesn't return 'auto' from getComputedStyle */
   width: 335px;
   height: 250px;
@@ -147,15 +137,10 @@
   }
 
   .upload-btn {
+    @extend %boxShadowSection;
+    @extend %buttonStyles;
     margin-top: 1em;
-    padding: 0.5em;
-    grid-row: 3;
-    width: 300px;
-    background: rgb(81, 142, 81);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 900;
+    margin: 3em auto;
     // margin: auto;
 
     &:hover {
@@ -174,32 +159,19 @@ input[type="checkbox"] {
   opacity: 0;
 }
 
-input[type="checkbox"]+img {
+input[type="checkbox"] + img {
   cursor: pointer;
   height: 150px;
   width: 150px;
 }
 
 /* CHECKED STYLES */
-input[type="checkbox"]:checked+img {
-  outline: 5px solid rgba(11, 108, 235, 0.728);
-}
 
 .add-product-btn {
   grid-row: 3;
-  place-self: end;
-  align-self: start;
-  margin-right: 15em;
-  border: none;
-  font-weight: 900;
-  color: white;
-  border-radius: 10px;
-  background: rgb(103, 136, 103);
-  cursor: pointer;
-  padding: 0.5em 1em;
-  margin-top: 1em;
-  box-shadow: 1px 1px 3px rgb(96, 96, 96);
-
+  @extend %buttonStyles;
+  justify-self: flex-end;
+  margin: 2em;
   &:hover {
     transition: ease-in 250ms;
     transform: scale(1.025);
@@ -212,4 +184,34 @@ input[type="checkbox"]:checked+img {
   &__image {
     margin-bottom: 2em;
   }
+}
+
+.images-max {
+  color: red;
+}
+
+.hide-images-max {
+  display: none;
+}
+.product-img {
+  margin-right: 20px;
+}
+
+label.form__image-section__selection > div > button {
+  background-color: rgb(179, 54, 54);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+  padding: 0;
+}
+
+.featured-image {
+  transform: scale(1.1);
+  box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
+}
+
+select {
+  max-height: 35px;
+  align-self: flex-end;
 }
