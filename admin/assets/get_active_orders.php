@@ -5,15 +5,17 @@
             ws_active_orders.total_cost AS OrderCost,
             ws_customers.first_name     AS CustomerFirstName,
             ws_customers.last_name      AS CustomerLastName,
+            ws_delivery_address.street   AS DeliveryStreet,
+            ws_delivery_address.postal_code    AS DeliveryPostal,
             ws_delivery_address.city    AS DeliveryCity,
             ws_order_status.status      AS OrderStatus,
             ws_order_status.id          AS OrderStatusId,
             ws_orders_products.product_qty AS OrderProductQty,
+            ws_orders_products.product_id AS OrderProductId,
             ws_products.name            AS ProductName,
             ws_products.price           AS ProductPrice,
             ws_products.description      AS ProductDesc,
-            ws_products_images.img_id    AS ProductsImgId
-
+            ws_products.id              AS ProductId
 
            
           FROM 
@@ -38,10 +40,8 @@
             ws_products
           ON 
             ws_products.id = ws_orders_products.product_id  
-          LEFT JOIN    
-            ws_products_images
-          ON
-            ws_products_images.product_id = ws_products.id
+          WHERE
+            ws_orders_products.product_qty > 0
           ";
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -51,29 +51,48 @@
   // echo "<pre>";
   // print_r($activeOrdersResults);
   // echo "</pre>";
-
-  foreach($activeOrdersResults as $key => $row) {
+  foreach($activeOrdersResults as $currentOrderNumber => $row) {
     // The order id for this row
     $orderType = "active";
-
-    $activeOrdersGrouped[$key] = [
-      "OrderType" => $orderType,
-      "OrderNumber" => $row['OrderNumber'],
-      "OrderDate" => $row['OrderDate'],
-      "OrderCost" => $row["OrderCost"],
-      "CustomerFirstName" => $row["CustomerFirstName"],
-      "CustomerLastName" => $row["CustomerLastName"],
-      "DeliveryCity" => $row["DeliveryCity"],
-      "OrderStatus" => $row["OrderStatus"],
-      "OrderStatusId" => $row["OrderStatusId"],
-      "OrderProductQty" => $row["OrderProductQty"],
-      "ProductName" => $row["ProductName"],
-      "ProductPrice" => $row["ProductPrice"],
-      "ProductDesc" => $row["ProductDesc"],
-      "ProductsImgId" => $row["ProductsImgId"],
-
-    ];
+    $currentOrderNumber = $row['OrderNumber'];
+    if(isset($activeOrdersGrouped[$currentOrderNumber])) {
+      $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+        "ProductName" => $row["ProductName"],
+        "ProductPrice" => $row["ProductPrice"],
+        "ProductDesc" => $row["ProductDesc"],
+        "ProductId" => $row["ProductId"],
+        "ProductQty" => $row["OrderProductQty"],
+      ];
+    } else {
+      $activeOrdersGrouped[$currentOrderNumber] = [
+        "Products" => [],
+        "OrderType" => $orderType,
+        "OrderNumber" => $row['OrderNumber'],
+        "OrderDate" => $row['OrderDate'],
+        "OrderCost" => $row["OrderCost"],
+        "CustomerFirstName" => $row["CustomerFirstName"],
+        "CustomerLastName" => $row["CustomerLastName"],
+        "DeliveryCity" => $row["DeliveryCity"],
+        "DeliveryStreet" => $row["DeliveryStreet"],
+        "DeliveryPostal" => $row["DeliveryPostal"],
+        "OrderStatus" => $row["OrderStatus"],
+        "OrderStatusId" => $row["OrderStatusId"],
+      ];
+      if ($row['OrderProductId']) {
+        $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+          "ProductName" => $row["ProductName"],
+          "ProductPrice" => $row["ProductPrice"],
+          "ProductDesc" => $row["ProductDesc"],
+          "ProductId" => $row["ProductId"],
+          "ProductQty" => $row["OrderProductQty"],
+        ];
+      }
+    }
   }
+
+  // echo "<pre>";
+  // print_r($activeOrdersGrouped);
+  // echo "</pre>";
 
 echo "<section class='active-orders'>";
 if (empty($activeOrdersResults)) {
@@ -110,15 +129,36 @@ foreach($activeOrdersGrouped as $key => $order):
   $customerLastName = htmlspecialchars($order['CustomerLastName']);
   $fullName = $customerFirstName . " " . $customerLastName;
   $city = htmlspecialchars($order['DeliveryCity']);
+  $street = htmlspecialchars($order['DeliveryStreet']);
+  $postal = htmlspecialchars($order['DeliveryPostal']);
   $orderDate = htmlspecialchars($order['OrderDate']);
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
-  $orderProductQty = htmlspecialchars($order['OrderProductQty']);
-  $productName = htmlspecialchars($order['ProductName']);
-  $productPrice = htmlspecialchars($order['ProductPrice']);
-  $productDesc = htmlspecialchars($order['ProductDesc']);
-  $productDesc = htmlspecialchars($order['ProductsImgId']);
+  $productsArr = $order['Products'];
+  $productsTr = "";
+  foreach ($productsArr as $key => $product) {
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+      $productName = substr($productName, 0, 20) . "...";
+  }
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $productDesc = htmlspecialchars($product['ProductDesc']);
+    if (strlen($productDesc) > 20) {
+      $productDesc = substr($productDesc, 0, 20) . "...";
+  }
+    $productId = htmlspecialchars($product['ProductId']);
+    $productQty = htmlspecialchars($product['ProductQty']);
+
+    $productsTr .= "<tr>
+                    <td>$productName</td>
+                    <td>$productDesc</td>
+                    <td>$productPrice</td>
+                    <td>$productQty</td>
+                  </tr>
+                    ";
+    
+  }
   
 
   $rows.= "<tr>
@@ -158,13 +198,26 @@ foreach($activeOrdersGrouped as $key => $order):
               <div class='modal__content__body'>
               <p>#$orderNumber</p>
               <p>$fullName</p>
-              <p>$city</p>
+              <p>$street</p>
+              <p>$postal</p>
+              <p>$city</>
               <p>$orderDate</p>
-              <p>$orderProductQty</p>
-              <p>$productPrice</p>
-              <p>$totalSum</p>
-              <p>$productName</p>
-              <p>$productDesc</p>
+              <table>
+                <thead>
+                  <tr>
+                    <td>Product</td>
+                    <td>Description</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                  </tr>
+                </thead>
+                <tbody>
+                    $productsTr
+                </tbody>
+              </table>
+              <p>Total price:</p>
+              <p>$totalSum SEK</p>
+
               </div>
               <div class='modal__content__footer'>
               <button id='cancel' class='cancel-btn'>Cancel</button>  
@@ -174,7 +227,7 @@ foreach($activeOrdersGrouped as $key => $order):
           
           </div>
 					</td>
-        </tr>";
+        </>";
 endforeach;
 echo $rows;
 echo '</tbody></table></section>';

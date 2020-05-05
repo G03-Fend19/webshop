@@ -1,44 +1,50 @@
 <?php
 
 
-  $sql = "SELECT 
-            ws_completed_orders.id         AS OrderNumber,
-            ws_completed_orders.order_date AS OrderDate,
-            ws_completed_orders.total_cost AS OrderCost,
-            ws_customers.first_name     AS CustomerFirstName,
-            ws_customers.last_name      AS CustomerLastName,
-            ws_delivery_address.city    AS DeliveryCity,
-            ws_order_status.status      AS OrderStatus,
-            ws_order_status.id          AS OrderStatusId
-          FROM 
-            ws_completed_orders
-          LEFT JOIN
-            ws_customers
-          ON
-            ws_completed_orders.customer_id = ws_customers.id
-          LEFT JOIN
-            ws_delivery_address
-          ON
-            ws_completed_orders.delivery_address_id = ws_delivery_address.id
-          LEFT JOIN
-            ws_order_status
-          ON
-            ws_completed_orders.status_id = ws_order_status.id
+$sql = "SELECT 
+ws_completed_orders.id         AS OrderNumber,
+ws_completed_orders.order_date AS OrderDate,
+ws_completed_orders.total_cost AS OrderCost,
+ws_customers.first_name     AS CustomerFirstName,
+ws_customers.last_name      AS CustomerLastName,
+ws_delivery_address.street   AS DeliveryStreet,
+ws_delivery_address.postal_code    AS DeliveryPostal,
+ws_delivery_address.city    AS DeliveryCity,
+ws_order_status.status      AS OrderStatus,
+ws_order_status.id          AS OrderStatusId,
+ws_orders_products.product_qty AS OrderProductQty,
+ws_orders_products.product_id AS OrderProductId,
+ws_products.name            AS ProductName,
+ws_products.price           AS ProductPrice,
+ws_products.description      AS ProductDesc,
+ws_products.id              AS ProductId
 
-          LEFT JOIN
-          
-            ws_orders_products
-          ON
-            ws_completed_orders.id = ws_orders_products.order_id 
-          LEFT JOIN    
-            ws_products
-          ON 
-            ws_products.id = ws_orders_products.product_id  
-          LEFT JOIN    
-            ws_products_images
-          ON
-            ws_products_images.product_id = ws_products.id
-          ";
+
+FROM 
+ws_completed_orders
+LEFT JOIN
+ws_customers
+ON
+ws_completed_orders.customer_id = ws_customers.id
+LEFT JOIN
+ws_delivery_address
+ON
+ws_completed_orders.delivery_address_id = ws_delivery_address.id
+LEFT JOIN
+ws_order_status
+ON
+ws_completed_orders.status_id = ws_order_status.id
+LEFT JOIN
+ws_orders_products
+ON
+ws_completed_orders.id = ws_orders_products.order_id 
+LEFT JOIN    
+ws_products
+ON 
+ws_products.id = ws_orders_products.product_id  
+WHERE
+ws_orders_products.product_qty > 0
+";
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
@@ -48,28 +54,43 @@
   // print_r($completedOrdersResults);
   // echo "</pre>";
 
-  foreach($completedOrdersResults as $key => $row) {
+  foreach($completedOrdersResults as $currentOrderNumber => $row) {
     // The order id for this row
-    $currentOrderId = $row['OrderNumber'];
-    $orderType = "completed";
-
-    $completedOrdersGrouped[$key] = [
-      "OrderType" => $orderType,
-      "OrderNumber" => $row['OrderNumber'],
-      "OrderDate" => $row['OrderDate'],
-      "OrderCost" => $row["OrderCost"],
-      "CustomerFirstName" => $row["CustomerFirstName"],
-      "CustomerLastName" => $row["CustomerLastName"],
-      "DeliveryCity" => $row["DeliveryCity"],
-      "OrderStatus" => $row["OrderStatus"],
-      "OrderStatusId" => $row["OrderStatusId"],
-      "OrderProductQty" => $row["OrderProductQty"],
-      "ProductName" => $row["ProductName"],
-      "ProductPrice" => $row["ProductPrice"],
-      "ProductDesc" => $row["ProductDesc"],
-      "ProductsImgId" => $row["ProductsImgId"],
-
-    ];
+    $orderType = "active";
+    $currentOrderNumber = $row['OrderNumber'];
+    if(isset($completedOrdersGrouped[$currentOrderNumber])) {
+      $completedOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+        "ProductName" => $row["ProductName"],
+        "ProductPrice" => $row["ProductPrice"],
+        "ProductDesc" => $row["ProductDesc"],
+        "ProductId" => $row["ProductId"],
+        "ProductQty" => $row["OrderProductQty"],
+      ];
+    } else {
+      $completedOrdersGrouped[$currentOrderNumber] = [
+        "Products" => [],
+        "OrderType" => $orderType,
+        "OrderNumber" => $row['OrderNumber'],
+        "OrderDate" => $row['OrderDate'],
+        "OrderCost" => $row["OrderCost"],
+        "CustomerFirstName" => $row["CustomerFirstName"],
+        "CustomerLastName" => $row["CustomerLastName"],
+        "DeliveryCity" => $row["DeliveryCity"],
+        "DeliveryStreet" => $row["DeliveryStreet"],
+        "DeliveryPostal" => $row["DeliveryPostal"],
+        "OrderStatus" => $row["OrderStatus"],
+        "OrderStatusId" => $row["OrderStatusId"],
+      ];
+      if ($row['OrderProductId']) {
+        $completedOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+          "ProductName" => $row["ProductName"],
+          "ProductPrice" => $row["ProductPrice"],
+          "ProductDesc" => $row["ProductDesc"],
+          "ProductId" => $row["ProductId"],
+          "ProductQty" => $row["OrderProductQty"],
+        ];
+      }
+    }
   }
 echo "<section class='completed-orders'>";
 if (empty($completedOrdersResults)) {
@@ -102,14 +123,36 @@ foreach($completedOrdersGrouped as $key => $order):
   $customerLastName = htmlspecialchars($order['CustomerLastName']);
   $fullName = $customerFirstName . " " . $customerLastName;
   $city = htmlspecialchars($order['DeliveryCity']);
+  $street = htmlspecialchars($order['DeliveryStreet']);
+  $postal = htmlspecialchars($order['DeliveryPostal']);
   $orderDate = htmlspecialchars($order['OrderDate']);
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
-  $orderProductQty = htmlspecialchars($order['OrderProductQty']);
-  $productName = htmlspecialchars($order['ProductName']);
-  $productPrice = htmlspecialchars($order['ProductPrice']);
-  $productDesc = htmlspecialchars($order['ProductDesc']);
+  $productsArr = $order['Products'];
+  $productsTr = "";
+  foreach ($productsArr as $key => $product) {
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+      $productName = substr($productName, 0, 20) . "...";
+  }
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $productDesc = htmlspecialchars($product['ProductDesc']);
+    if (strlen($productDesc) > 20) {
+      $productDesc = substr($productDesc, 0, 20) . "...";
+  }
+    $productId = htmlspecialchars($product['ProductId']);
+    $productQty = htmlspecialchars($product['ProductQty']);
+
+    $productsTr .= "<tr>
+                    <td>$productName</td>
+                    <td>$productDesc</td>
+                    <td>$productPrice</td>
+                    <td>$productQty</td>
+                  </tr>
+                    ";
+    
+  }
 
   $rows.= "<tr>
           <td id='foo'>#$orderNumber</td>
@@ -131,16 +174,30 @@ foreach($completedOrdersGrouped as $key => $order):
               <div class='modal__content__body'>
               <p>#$orderNumber</p>
               <p>$fullName</p>
-              <p>$city</p>
+              <p>$street</p>
+              <p>$postal</p>
+              <p>$city</>
               <p>$orderDate</p>
-              <p>$totalSum</p>
-              <p>$orderProductQty</p>
-              <p>$productName</p>
-              <p>$productPrice</p>
-              <p>$productDesc</p>
-            
+              <table>
+                <thead>
+                  <tr>
+                    <td>Product</td>
+                    <td>Description</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                  </tr>
+                </thead>
+                <tbody>
+                    $productsTr
+                </tbody>
+              </table>
+              <p>Total price:</p>
+              <p>$totalSum SEK</p>
+
               </div>
-              <div class='modal__content__footer'>             
+              <div class='modal__content__footer'>
+              <button id='cancel' class='cancel-btn'>Cancel</button>  
+             
               </div>
             </div>
           
