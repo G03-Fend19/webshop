@@ -77,13 +77,13 @@
   &__shipping {
     display: grid;
     // justify-content: space-between;
-grid-template: 1fr / 1fr 1fr;
+    grid-template: 1fr / 1fr 1fr;
     padding: 1em;
     width: 100%;
 
     @media (max-width: 500px) {
       // flex-direction: column;
-grid-template: 1fr 1fr / 1fr;
+      grid-template: 1fr 1fr / 1fr;
       align-items: center;
       text-align: center;
       padding: 0;
@@ -178,4 +178,12 @@ grid-template: 1fr 1fr / 1fr;
       text-align: left;
     }
   }
+}
+
+.price__discount {
+  color: red;
+}
+
+.price__line-through {
+  text-decoration: line-through;
 }

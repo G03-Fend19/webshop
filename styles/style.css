@@ -2368,6 +2368,14 @@ footer {
   text-align: left;
 }
 
+.price__discount {
+  color: red;
+}
+
+.price__line-through {
+  text-decoration: line-through;
+}
+
 .img-wrapper {
   position: relative;
   height: 100%;
