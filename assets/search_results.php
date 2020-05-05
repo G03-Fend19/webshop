@@ -14,6 +14,8 @@ $lastChanceLimitDate = $lastChanceLimitDT->format('Y-m-d H:i:s');
 if (isset($_GET['search']) && $_GET['search'] !== "") {
     require_once "./db.php";
     $search = htmlspecialchars($_GET['search']);
+    $search = str_replace('"', "", $search);
+    $search = str_replace("'", "", $search);
 
     $sql = "SELECT
             ws_products.name          AS ProductName,
