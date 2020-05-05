@@ -61,7 +61,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             ws_order_status
           ON
             ws_active_orders.status_id = ws_order_status.id
-            ORDER BY OrderDate
+            ORDER BY OrderDate DESC
             LIMIT 5";
   $stmt = $db->prepare($sql);
   $stmt->execute();

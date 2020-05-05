@@ -1,4 +1,6 @@
 <?php
+
+
   $sql = "SELECT 
             ws_completed_orders.id         AS OrderNumber,
             ws_completed_orders.order_date AS OrderDate,
@@ -22,7 +24,21 @@
             ws_order_status
           ON
             ws_completed_orders.status_id = ws_order_status.id
-            ";
+
+          LEFT JOIN
+          
+            ws_orders_products
+          ON
+            ws_completed_orders.id = ws_orders_products.order_id 
+          LEFT JOIN    
+            ws_products
+          ON 
+            ws_products.id = ws_orders_products.product_id  
+          LEFT JOIN    
+            ws_products_images
+          ON
+            ws_products_images.product_id = ws_products.id
+          ";
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
@@ -47,6 +63,12 @@
       "DeliveryCity" => $row["DeliveryCity"],
       "OrderStatus" => $row["OrderStatus"],
       "OrderStatusId" => $row["OrderStatusId"],
+      "OrderProductQty" => $row["OrderProductQty"],
+      "ProductName" => $row["ProductName"],
+      "ProductPrice" => $row["ProductPrice"],
+      "ProductDesc" => $row["ProductDesc"],
+      "ProductsImgId" => $row["ProductsImgId"],
+
     ];
   }
 echo "<section class='completed-orders'>";
@@ -65,9 +87,9 @@ echo "<div class='completed-orders__filter'>
       <th>Order number</th>
       <th>Customer</th>
       <th>City</th>
-      <th onclick='sortTableDate(3)'>Order date</th>
-      <th onclick='sortTable(4)'>Total Amount</th>
-      <th onclick='sortTableStatus(5)'>Status</th>
+      <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></i></th>
+      <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
+      <th onclick='sortTableStatus(5)'>Status <i class='fas fa-sort'></th>
       <th> </th>
       </tr>
       </thead>
@@ -84,19 +106,45 @@ foreach($completedOrdersGrouped as $key => $order):
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
+  $orderProductQty = htmlspecialchars($order['OrderProductQty']);
+  $productName = htmlspecialchars($order['ProductName']);
+  $productPrice = htmlspecialchars($order['ProductPrice']);
+  $productDesc = htmlspecialchars($order['ProductDesc']);
 
   $rows.= "<tr>
-          <td>#$orderNumber</td>
+          <td id='foo'>#$orderNumber</td>
           <td>$fullName</td>
           <td>$city</td>
           <td>$orderDate</td>
           <td>$totalSum SEK</td>
-          <td>$orderStatus</td>
+          <td>$orderStatus</td>     
           <td>
-					  <form action='' method='POST'>
-					    <button type='submit'><i class='far fa-eye'></i></button>
-					    <input type='hidden' name='p_id' value='$id'>
-					  </form>
+					 
+            <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
+
+            <div id='myModal' data-id='$id' class='modal'>
+            <div class='modal__content'>
+              <div class='modal__content__header'>
+                <span class='close'>&times;</span>
+                <h2>Order overview</h2> 
+              </div>
+              <div class='modal__content__body'>
+              <p>#$orderNumber</p>
+              <p>$fullName</p>
+              <p>$city</p>
+              <p>$orderDate</p>
+              <p>$totalSum</p>
+              <p>$orderProductQty</p>
+              <p>$productName</p>
+              <p>$productPrice</p>
+              <p>$productDesc</p>
+            
+              </div>
+              <div class='modal__content__footer'>             
+              </div>
+            </div>
+          
+          </div>
 					</td>
         </tr>";
 endforeach;
@@ -105,5 +153,33 @@ echo '</tbody></table></section>';
 ?>
 
 <script>
-let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped);?> ;
+let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
+ <script> 
+  const modal = document.getElementById("myModal");
+  const span = document.getElementsByClassName("close")[0];
+
+  document.querySelectorAll('.open-modal').forEach(item => {
+  item.addEventListener('click', event => {
+    let currentModal = event.currentTarget.nextElementSibling;
+    let currentSpan = event.currentTarget.nextElementSibling;
+
+    currentModal.style.display = "block";
+        //close the modal
+        currentSpan.onclick = function() {
+          currentModal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            currentModal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            currentModal.style.display = "none";
+          }
+        });
+  });
+});
+  </script>

@@ -6,13 +6,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
-  <title>G03 - Contact</title>
+  <title>Clothera - Contact</title>
 </head>
 
 <body>
   <header class="contact">
     <nav class="fixed">
-      <div class="contact__logo"><a href="index.php"> <img src="./media/images/logo.png" width="40" height="40" /> </a>
+      <div class="contact__logo"><a href="index.php"> <img src="./media/images/logo_white.png" width="40" height="40" />
+        </a>
       </div>
 
       <ul class="contact__nav">
