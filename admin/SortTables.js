@@ -30,12 +30,8 @@ function sortTable(n) {
       y = rows[i + 1].getElementsByTagName("td")[n];
 
       if (dir == "asc") {
-        console.log("asc");
-        console.log(x);
-        console.log(y);
         if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
           shouldSwitch = true;
-          console.log("x > y");
           break;
         }
       } else if (dir == "desc") {
@@ -87,10 +83,6 @@ function sortTableDate(n) {
 
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
-
-      console.log("date asc");
-      console.log(x);
-      console.log(y);
 
       if (dir == "asc") {
         if (Date.parse(x.innerHTML) < Date.parse(y.innerHTML)) {
@@ -150,15 +142,16 @@ function sortTableStatus(n) {
       xForm = x.children[0][0];
       yForm = y.children[0][0];
 
+      // console.log(parseInt(xForm.value))
+      // console.log(parseInt(xForm.value))
+
       if (dir == "asc") {
         if (parseInt(xForm.value) > parseInt(yForm.value)) {
-          console.log("x > y");
           shouldSwitch = true;
           break;
         }
       } else if (dir == "desc") {
         if (parseInt(xForm.value) < parseInt(yForm.value)) {
-          console.log("x < y");
           shouldSwitch = true;
           break;
         }

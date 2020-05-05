@@ -210,7 +210,7 @@ echo '</tbody></table></section>';
 ?>
 
 <script>
-let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
+let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped);?> ;
 </script>
  <script> 
   const modal = document.getElementById("myModal");

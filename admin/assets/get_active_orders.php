@@ -93,6 +93,7 @@
   // echo "<pre>";
   // print_r($activeOrdersGrouped);
   // echo "</pre>";
+  // echo "Halloj";
 
 echo "<section class='active-orders'>";
 if (empty($activeOrdersResults)) {

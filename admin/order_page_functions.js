@@ -1,4 +1,10 @@
 function filterOrders(orders) {
+  // console.log(orders)
+  let orderType;
+  Object.keys(orders).forEach(function (order) {
+    console.log(order); // key
+    orderType = orders[order].OrderType; // value
+  });
   //Active orders filter select/input element
   const activeStatusFilter = document.querySelector("#activeStatusFilter");
   const activeTextFilter = document.querySelector("#activeTextFilter");
@@ -15,7 +21,7 @@ function filterOrders(orders) {
   let filterStatus;
 
   //Checks if list of orders is active orders
-  if (orders[1].OrderType == "active") {
+  if (orderType == "active") {
     activeOrdersTable.innerHTML = "";
     //Sets filter values of select/input
     filterText = activeTextFilter.value;
@@ -29,7 +35,7 @@ function filterOrders(orders) {
   //If input in any text filter
   if (filterText) {
     //filter ordersToDraw if input matches orders.city
-    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
       return order["DeliveryCity"]
         .toLowerCase()
         .includes(filterText.toLowerCase());
@@ -39,7 +45,7 @@ function filterOrders(orders) {
   //If filterStatus is not 'all'
   if (filterStatus && filterStatus !== "all") {
     //filter ordersToDraw if chosen status matches order['OrderStatusId']
-    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
       return order["OrderStatusId"].includes(filterStatus);
     });
   }
@@ -138,7 +144,7 @@ function filterOrders(orders) {
     tr.appendChild(tdDate);
     tr.appendChild(tdSum);
     tr.appendChild(tdStatus);
-    orders[1].OrderType == "active"
+    orderType == "active"
       ? activeOrdersTable.appendChild(tr)
       : completedOrdersTable.appendChild(tr);
     tr.appendChild(tdOpen);
@@ -161,12 +167,12 @@ function updateStatus(orderToUpdate) {
   if (newStatusId == "3") {
     modal.style.display = "block";
     //close the modal
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
       filterOrders(activeOrdersFromPHP);
     };
     //clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
       if (event.target == modal) {
         modal.style.display = "none";
         filterOrders(activeOrdersFromPHP);
