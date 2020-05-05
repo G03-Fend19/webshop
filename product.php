@@ -7,6 +7,8 @@ $productMsg = "";
 $priceMsg = "";
 $qtyMsg = "";
 $imgList;
+$productImg; 
+$name;
 
 $currentDateTime = date('Y-m-d H:i:s');
 $currentDateTimeDT = new DateTime($currentDateTime);
@@ -136,7 +138,10 @@ if (isset($_GET['product_id'])) {
                           </div>";
     }
     $id = htmlspecialchars($product['ProductId']);
-    $name = htmlspecialchars_decode($product['ProductName']);
+    $name = htmlspecialchars($product['ProductName']);
+    if (strlen($name) > 20) {
+        $name = substr($name, 0, 20) . "...";
+    }
     $description = htmlspecialchars($product['ProductDescription']);
     $stock_qty = htmlspecialchars($product['ProductQty']);
     if ($stock_qty > 9) {
@@ -269,7 +274,7 @@ function getCartQty() {
   getCart();
 
   let input = document.getElementById('qtyInput-product-page');
-  let name = "<?php echo "$name" ?>";
+  let name = "<?php echo $name; ?>";
   if (cart[name]) {
     input.value = cart[name].quantity;
   }
@@ -347,7 +352,7 @@ function checkLocalStorage() {
 
 
 // deleteSingleProduct.addEventlistener("click", function() {
-//   let name = "<?php echo "$name" ?>";
+//   let name = "";
 //   cart = JSON.parse(localStorage['cart']);
 //   console.log(cart[name]);
 
@@ -366,7 +371,7 @@ addBtn.addEventListener("click", function() {
 //When deleting a spesific product from cart
 document.addEventListener("click", (e) => {
   // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-  const input = document.getElementById('qtyInput');
+  const input = document.getElementById('qtyInput-product-page');
 
   if (e.target.dataset.id == "delete-product") {
     const name = "<?php echo "$name" ?>";
@@ -384,7 +389,7 @@ document.addEventListener("click", (e) => {
 
 //When clearing cart
 document.addEventListener("click", (e) => {
-  const input = document.getElementById('qtyInput');
+  const input = document.getElementById('qtyInput-product-page');
   if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
     qtyBtns.classList.add("hidden");
     addToCartBtn.classList.remove("hidden");
