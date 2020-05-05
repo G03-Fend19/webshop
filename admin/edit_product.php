@@ -279,6 +279,7 @@ require_once './assets/aside-navigation.php';
             // get deletedImages from localstorage
             deletedImages = JSON.parse(localStorage.getItem("deleted"))
             !deletedImages ? deletedImages = [] : null
+            imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"))
             // push deleted image to localstorage
             deletedImages.push(e.target.dataset.name)
             localStorage.setItem("deleted", JSON.stringify(deletedImages));
@@ -286,12 +287,12 @@ require_once './assets/aside-navigation.php';
             images = imagesFromLocalStorage.filter((el)=> {
               return el.img !== e.target.dataset.name
             })
-            console.log(images)
+      
          
             localStorage.setItem("images", JSON.stringify(images));
 
           }
-            setImagesToLocalStorage()
+            // setImagesToLocalStorage()
             renderImagesToDOM();
         });
       }
