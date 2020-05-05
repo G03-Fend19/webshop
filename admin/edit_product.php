@@ -160,7 +160,7 @@ require_once './assets/aside-navigation.php';
 
       <label for="qty" class="form__label">
         feature
-        <input type="text" name="feature" id="feature" value="" class="form__input">
+        <input type="hidden" name="feature" id="feature" value=""  class="form__input">
       </label>
       <div id="update-product-images" class="form__image-section__images">
         <?php
@@ -188,7 +188,7 @@ require_once './assets/aside-navigation.php';
           // 2. Grab all images from localStorage, create array if null
           imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
           !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null;
-
+          showMaxImgMessage(imagesFromLocalStorage)
           // 3. check deleted
            deletedImages = JSON.parse(localStorage.getItem('deleted'));
           !deletedImages ? deletedImages = [] : null; 
@@ -233,16 +233,16 @@ require_once './assets/aside-navigation.php';
             
             updateImageSection.innerHTML = ''
             imagesFromLocalStorage.map(imgObj => {
-
+              console.log(imgObj['feature'] == 1)
               if (!deletedImages.includes(imgObj['img'])) {
 
               updateImageSection.innerHTML += `
                       <label class='form__image-section__selection' for='image${counter}'>
-                      <div product-img>
+                      <div class="product-img">
                           <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}'
                               checked value='${imgObj['img']}'>
-                          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}'
-                              data-imgname='${imgObj['img']}' class='thumbnails'>
+                          <img class='form__image-section__selection__image thumbnails ${imgObj.feature == 1 ? 'featured-image' : ''}' src='../media/product_images/${imgObj['img']}'
+                              data-imgname='${imgObj['img']}' class='thumbnails '>
 
                       </label>
                       <button data-name='${imgObj['img']}' type="button"class="remove-image">x</button>
@@ -300,13 +300,15 @@ require_once './assets/aside-navigation.php';
 
 
       document.addEventListener('click', e => {
+        const feature = document.getElementById('feature');
         if(e.target.classList.contains('form__image-section__selection__image')) {
+ 
 
     
           imagesFromLocalStorage.forEach(imgObj => {
-
             if (imgObj['img'] == e.target.dataset.imgname) {
               imgObj['feature'] = 1;
+              
             }
             else {
               imgObj['feature'] = 0;
@@ -316,7 +318,11 @@ require_once './assets/aside-navigation.php';
           localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
 
         }
+
         renderImagesToDOM()
+
+
+      
       });
 
       document.addEventListener("click", (e) => {

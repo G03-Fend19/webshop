@@ -75,7 +75,7 @@ require_once './assets/aside-navigation.php';
 
       <label for="qty" class="form__label">
         Click to choose feature image
-        <input type="text" name="feature" id="feature" value="" class="form__input">
+        <input type="hidden" name="feature" id="feature" value="" class="form__input">
       </label>
       <div class="form__image-section__images">
         

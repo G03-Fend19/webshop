@@ -207,7 +207,8 @@ label.form__image-section__selection > div > button {
 }
 
 .featured-image {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
 }
 
 select {
