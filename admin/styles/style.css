@@ -384,6 +384,7 @@ a {
   width: 50px;
   -o-object-fit: cover;
      object-fit: cover;
+  max-width: unset;
 }
 
 .admin__tables .active-orders {
@@ -526,11 +527,8 @@ a {
   position: absolute;
   right: calc(50vw - 205px);
   top: calc(50vh - 125px);
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: auto 1fr 1fr;
-  -ms-grid-columns: 1fr 1fr 1fr;
-      grid-template: auto 1fr 1fr / 1fr 1fr 1fr;
+  /*   display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr; */
   /* set these so Chrome doesn't return 'auto' from getComputedStyle */
   width: 335px;
   height: 250px;
@@ -560,6 +558,11 @@ a {
   -webkit-box-shadow: 1px 1px 2px #bfbfbf;
           box-shadow: 1px 1px 2px #bfbfbf;
   margin-bottom: 1em;
+}
+
+.upload-form .upload-btn {
+  margin-top: 1em;
+  margin: 3em auto;
 }
 
 .upload-form .upload-btn:hover {
@@ -635,8 +638,15 @@ label.form__image-section__selection > div > button {
 }
 
 .featured-image {
+<<<<<<< Updated upstream
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
+          box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
+=======
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+>>>>>>> Stashed changes
 }
 
 select {
