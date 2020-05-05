@@ -138,7 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $sql_delete = "DELETE
                             FROM ws_products_images
                             WHERE img_id = :img_id
-                            AND product_id = :product_id";
+                            AND product_id = :product_id;
+                            DELETE 
+                            FROM ws_images
+                            WHERE id = :img_id";
 
                 $stmt_delete = $db->prepare($sql_delete);
                 $stmt_delete->bindParam(':img_id', $img_id);
