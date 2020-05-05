@@ -1373,7 +1373,7 @@ footer {
 
 .display-products .out-of-stock__msg {
   position: absolute;
-  top: 0.5em;
+  top: 1em;
   right: 0;
   font-size: 15px;
   max-width: 8em;
@@ -1384,12 +1384,6 @@ footer {
   border: 0.5px white;
   padding: 0.5em 1em;
   text-shadow: unset;
-}
-
-@media (min-width: 1013px) {
-  .display-products .out-of-stock__msg {
-    top: 1em;
-  }
 }
 
 .display-products .new-in {
@@ -2415,7 +2409,6 @@ footer {
 }
 
 .out-of-stock {
-  background: #4133335d;
   position: absolute;
   height: 100%;
   top: 0;
@@ -2436,17 +2429,17 @@ footer {
 
 .out-of-stock__msg {
   position: absolute;
-  top: 0.5em;
+  top: 1em;
   right: 0;
   font-size: 15px;
   max-width: 8em;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.596);
-  color: #747474;
-  font-weight: 500;
+  background: rgba(250, 59, 59, 0.735);
+  color: white;
+  font-weight: 700;
   border: 0.5px white;
   padding: 0.5em 1em;
-  text-shadow: 1px 1px 1px #bebdbd;
+  text-shadow: unset;
 }
 
 @media (min-width: 1013px) {
@@ -2741,8 +2734,17 @@ footer {
   cursor: pointer;
 }
 
-.product-section__rigth__actions__amount__qty-container__qtyBtn i {
-  font-size: 30px;
+.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page .fa-minus-circle:hover {
+  color: #fa5454;
+}
+
+.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page .fa-plus-circle:hover {
+  color: #168816;
+}
+
+.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page i {
+  cursor: pointer;
+  font-size: 20px;
   padding: 0;
   color: #54626a;
 }

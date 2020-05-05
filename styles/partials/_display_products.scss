@@ -253,7 +253,7 @@
 
     &__msg {
       position: absolute;
-      top: 0.5em;
+      top: 1em;
       right: 0;
       font-size: 15px;
       max-width: 8em;
@@ -264,20 +264,6 @@
       border: 0.5px white;
       padding: 0.5em 1em;
       text-shadow: unset;
-      // border-radius: 10px 0 0 10px;
-
-      // @media (min-width: 500px) {
-      //   font-size: 15px;
-      // }
-
-      // @media (min-width: 920px) {
-      //   font-size: 2.5vw;
-      // }
-
-      @media (min-width: 1013px) {
-        top: 1em;
-        // font-size: 15px;
-      }
     }
   }
   .new-in {

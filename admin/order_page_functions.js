@@ -20,6 +20,8 @@ function filterOrders(orders) {
   let filterText;
   let filterStatus;
 
+  console.log(orders);
+
   //Checks if list of orders is active orders
   if (orderType == "active") {
     activeOrdersTable.innerHTML = "";
@@ -51,7 +53,7 @@ function filterOrders(orders) {
   }
 
   Object.values(ordersToDraw).forEach(function (order, i) {
-    const tr = document.createElement('tr');
+    const tr = document.createElement("tr");
 
     const tdId = document.createElement("td");
     tdId.innerHTML = "#" + order["OrderNumber"];
@@ -178,13 +180,13 @@ function updateStatus(orderToUpdate) {
         filterOrders(activeOrdersFromPHP);
       }
     };
-    cancelBtn.addEventListener("click", e => {
+    cancelBtn.addEventListener("click", (e) => {
       modal.style.display = "none";
       shouldUpdate == false;
       filterOrders(activeOrdersFromPHP);
     });
 
-    changeStatusBtn.addEventListener("click", e => {
+    changeStatusBtn.addEventListener("click", (e) => {
       modal.style.display = "none";
       shouldUpdate == true;
       updateStatusForm.submit();
