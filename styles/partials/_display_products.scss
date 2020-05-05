@@ -128,6 +128,12 @@
           font-size: 14px;
         }
       }
+
+      .product-section__rigth__actions__amount__qty-container {
+        input {
+          max-width: 25px;
+        }
+      }
     }
     &__text {
       display: flex;
