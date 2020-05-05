@@ -21,13 +21,16 @@ ws_products.id            AS ProductId,
 ws_products.stock_qty     AS ProductQty,
 ws_products.added_date    AS AddedDate,
 ws_images.img             AS ImageName,
-ws_products_images.img_id AS ProductImageImageId
+ws_products_images.img_id AS ProductImageImageId,
+ws_products_images.feature  AS FeatureImg
 FROM
 ws_products
 LEFT JOIN
 ws_products_images
 ON
 ws_products.id = ws_products_images.product_id
+AND
+  ws_products_images.feature = 1
 LEFT JOIN
 ws_images
 ON
@@ -64,38 +67,39 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //   ]
 // ]
-$grouped = [];
+// $grouped = [];
 
-foreach ($results as $row) {
-    // The product id for this row
-    $currentProductId = $row["ProductId"];
+// foreach ($results as $row) {
+//     // The product id for this row
+//     $currentProductId = $row["ProductId"];
 
-    // If we've already added this product
-    if (isset($grouped[$currentProductId])) {
+//     // If we've already added this product
+//     if (isset($grouped[$currentProductId])) {
 
-        // Just add the additional image name to the imgIds array
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    } else {
-        // If we haven't added the product yet
-        $grouped[$currentProductId] = [
-            "imgNames" => [], // Start with empty
-            "ProductId" => $row["ProductId"],
-            "ProductName" => $row["ProductName"],
-            "ProductPrice" => $row["ProductPrice"],
-            "ProductQty" => $row["ProductQty"],
-            "AddedDate" => $row['AddedDate'],
-        ];
-    }
-    // If there is an image for this row, add it
-    if ($row["ProductImageImageId"]) {
-        $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
-    }
-}
+//         // Just add the additional image name to the imgIds array
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     } else {
+//         // If we haven't added the product yet
+//         $grouped[$currentProductId] = [
+//             "imgNames" => [], // Start with empty
+//             "ProductId" => $row["ProductId"],
+//             "ProductName" => $row["ProductName"],
+//             "ProductPrice" => $row["ProductPrice"],
+//             "ProductQty" => $row["ProductQty"],
+//             "AddedDate" => $row['AddedDate'],
+//         ];
+//     }
+//     // If there is an image for this row, add it
+//     if ($row["ProductImageImageId"]) {
+//         $grouped[$currentProductId]["imgNames"][] = $row["ImageName"];
+//     }
+// }
 // echo "<pre>";
 // print_r($grouped);
 // echo "</pre>";
 
-foreach ($grouped as $productId => $product):
+foreach ($results as $productId => $product):
+    $productId = $product['ProductId'];
     $productMsg = "";
     $priceMsg = "";
     $qtyMsg = "";
@@ -118,7 +122,7 @@ $discount = 1;
 if ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $discount = 0.9;
     $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
-    $priceMsg = "<div><span class='original-price'>$productPrice SEK</span>
+    $priceMsg = "<div class='price_display'><span class='original-price'>$productPrice SEK</span>
                     <span class='discount'>$discountProductPrice SEK</span></div>";
 } else {
     $priceMsg = "<span>$productPrice SEK</span>";
@@ -143,13 +147,13 @@ if (empty($product['imgNames'])) {
 }
 
 $productCards .= "<article class='product-card'>
-                        <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-                          <div class='image-wrapper'>
-                          <div class='out-of-stock'>
-                            <span class='out-of-stock__msg'>
-                              10% off
-                            </span>
-                          </div>
+                    <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+                      <div class='image-wrapper'>
+                        <div class='out-of-stock'>
+                          <span class='out-of-stock__msg'>
+                            10% off
+                          </span>
+                        </div>
                             <img class='product-thumb' src=./media/product_images/$productImg alt=''>
                           </div>
                         </a>
@@ -166,7 +170,7 @@ $productCards .= "<article class='product-card'>
                           data-price=$productPrice
                           data-img='$productImg'
                           data-stock=$productQty
-                        data-discount=$discount 
+                          data-discount=$discount 
                           class='add-to-cart-btn' id='addToCartBtn-$productId'>";
 $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
 $productCards .= "</button>
@@ -209,7 +213,7 @@ echo $productsContainer;
 <script>
 
 
-let grouped = <?php echo json_encode($grouped) ?>;
+let grouped = <?php echo json_encode($results) ?>;
 
 checkCartProducts(grouped);
 

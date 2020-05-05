@@ -93,12 +93,12 @@ echo "<div class='active-orders__filter'>
       <table id='activetable'>
         <thead>
           <tr>
-            <th>Order number</th>
+            <th>Order number </th>
             <th>Customer</th>
             <th>City</th>
-            <th onclick='sortTableDate(3)'>Order date</th>
-            <th onclick='sortTable(4)'>Total Amount</th>
-            <th onclick='sortTableStatus(5)'>Status</th>
+            <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></th>
+            <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
+            <th onclick='sortTableStatus(5)'>Status <i class='fas fa-sort'></th>
             <th> </th>
           </tr>
         </thead>
