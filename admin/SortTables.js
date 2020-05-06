@@ -138,6 +138,7 @@ function sortTableStatus(n) {
 
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
+      // console.log(x)
 
       xForm = x.children[0][0];
       yForm = y.children[0][0];

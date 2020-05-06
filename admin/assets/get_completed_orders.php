@@ -110,7 +110,7 @@ echo "<div class='completed-orders__filter'>
       <th>City</th>
       <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></i></th>
       <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
-      <th onclick='sortTableStatus(5)'>Status <i class='fas fa-sort'></th>
+      <th>Status <i class='fas fa-sort'></th>
       <th> </th>
       </tr>
       </thead>
