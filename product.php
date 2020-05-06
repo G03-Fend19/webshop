@@ -139,9 +139,6 @@ if (isset($_GET['product_id'])) {
     }
     $id = htmlspecialchars($product['ProductId']);
     $name = htmlspecialchars($product['ProductName']);
-    if (strlen($name) > 20) {
-        $name = substr($name, 0, 20) . "...";
-    }
     $description = htmlspecialchars($product['ProductDescription']);
     $stock_qty = htmlspecialchars($product['ProductQty']);
     if ($stock_qty > 9) {
