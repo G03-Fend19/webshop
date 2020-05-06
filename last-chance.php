@@ -174,9 +174,9 @@ $productCards .= "<article class='product-card'>
                           class='add-to-cart-btn' id='addToCartBtn-$productId'>";
 $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
 $productCards .= "</button>
-<div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
-<input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-<div
+<div class='amount hidden' id='productQty-$productId'>
+<input class='amount__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+<div class='amount__btns'
   data-id=$productId
   data-name='$productName'
   data-price=$productPrice
@@ -185,8 +185,8 @@ $productCards .= "</button>
 data-discount=$discount 
   >
 
-  <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-  <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
+  <button class='amount__btns-minus' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
+  <button class='amount__btns-plus' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
 </div>
 
 </div>
