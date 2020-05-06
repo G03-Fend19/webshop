@@ -138,8 +138,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //                 "ProductQty" => $row["ProductQty"],
 //             ];
 //         }
-  //              "AddedDate" => $row['AddedDate'],
-   //             "AddedDate" => $row['AddedDate'],
+//              "AddedDate" => $row['AddedDate'],
+//             "AddedDate" => $row['AddedDate'],
 
 //         // If there is an image for this row, add it
 //         if ($row["ProductImageImageId"]) {
@@ -159,55 +159,53 @@ foreach ($results as $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-								                        <span class='new-in__msg'>
-								                        New In
-								                        </span>
-								                      </div>";
+													                        <span class='new-in__msg'>
+													                        New In
+													                        </span>
+													                      </div>";
     } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
                             10% off
                           </span>
                         </div>";
-    }
+}
 
-    $productPrice = htmlspecialchars($product['ProductPrice']);
+$productPrice = htmlspecialchars($product['ProductPrice']);
 
-    $discount = 1;
-    if($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
-      $discount = 0.9;
-      $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
-      $priceMsg = "<div class='price_display'><span class='original-price'>$productPrice SEK</span>
+$discount = 1;
+if ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
+    $discount = 0.9;
+    $discountProductPrice = ceil($productPrice - ($productPrice * 0.1));
+    $priceMsg = "<div class='price_display'><span class='original-price'>$productPrice SEK</span>
                     <span class='discount'>$discountProductPrice SEK</span></div>";
-    } else {
-      $priceMsg = "<span>$productPrice SEK</span>";
-    }
-    $productName = htmlspecialchars($product['ProductName']);
-    if (strlen($productName) > 20) {
-        $productName = substr($productName, 0, 20) . "...";
-    }
+} else {
+    $priceMsg = "<span>$productPrice SEK</span>";
+}
+$productName = htmlspecialchars($product['ProductName']);
+if (strlen($productName) > 20) {
+    $productName = substr($productName, 0, 20) . "...";
+}
 
-
-    $productQty = htmlspecialchars($product['ProductQty']);
-    if ($productQty > 9) {
-      $qtyMsg = "<span class='in-store'> $productQty in store</span>";
-    } else {
-      $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
-    }
-    // $productImg = htmlspecialchars($product['ImageName']); // TODO
-    if ($product['ImageName'] == NULL) {
-        $productImg = "placeholder.jpg";
-    } else {
-        $productImg = htmlspecialchars($product['ImageName']);
-    }
+$productQty = htmlspecialchars($product['ProductQty']);
+if ($productQty > 9) {
+    $qtyMsg = "<span class='in-store'> $productQty in store</span>";
+} else {
+    $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
+}
+// $productImg = htmlspecialchars($product['ImageName']); // TODO
+if ($product['ImageName'] == null) {
+    $productImg = "placeholder.jpg";
+} else {
+    $productImg = htmlspecialchars($product['ImageName']);
+}
 
 if (isset($_GET['category_id'])) {
     $categoryName = htmlspecialchars($product['CategoryName']);
 }
 
-
-    /*******************************************************************/
-    $productCards .= "<article class='product-card'>
+/*******************************************************************/
+$productCards .= "<article class='product-card'>
     <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
       <div class='image-wrapper'>
       $productMsg";
@@ -247,7 +245,7 @@ $productCards .= "<img class='product-thumb' src=./media/product_images/$product
   <button class='amount__btns-minus' onclick='lowerQty($productId)'><i
       class='fas fa-minus-circle'></i></button>
   <button class='amount__btns-plus' id='higherBtn'
-    onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
+    onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle open-modal'></i></button>
 </div>
 
 </div>
@@ -259,11 +257,11 @@ $productsContainer .= "</div>";
 
 function getHeader($categoryName)
 {
-if ($categoryName == "") {
-echo "All products";
-} else {
-echo $categoryName;
-}
+    if ($categoryName == "") {
+        echo "All products";
+    } else {
+        echo $categoryName;
+    }
 }
 ?>
 
@@ -303,7 +301,7 @@ function checkLocalStorage(name, id) {
   cart = JSON.parse(localStorage['cart']);
   if (name in cart) {
     console.log('name in cart');
-    
+
     qtyBtns.classList.remove("hidden");
     addToCartBtn.classList.add("hidden");
     qtyInput.value = cart[name].quantity;
@@ -356,6 +354,32 @@ function higherQty(qty, id) {
   let input = document.getElementById('qtyInput-' + id);
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
+  } else {
+    const modal = document.getElementById("noMoreInStockModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    document.addEventListener("click", (e) => {
+
+      if (e.target.className == "fas fa-plus-circle open-modal") {
+
+        modal.style.display = "block";
+        //close the modal
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", (e) => {
+          if (e.target.className == "cancel-btn") {
+            modal.style.display = "none";
+          }
+        });
+      }
+    });
   }
   // else{
   //   alert('no more in stock')

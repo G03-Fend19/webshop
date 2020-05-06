@@ -2374,6 +2374,7 @@ footer {
 
 .price__line-through {
   text-decoration: line-through;
+  font-size: 12px;
 }
 
 .img-wrapper {
@@ -2865,6 +2866,10 @@ footer {
       -ms-flex-align: center;
           align-items: center;
   margin-left: 20px;
+}
+
+.contact__logo img {
+  width: unset;
 }
 
 .contact__nav {

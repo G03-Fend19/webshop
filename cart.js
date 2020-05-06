@@ -88,16 +88,60 @@
   // check stock takes current Product
   // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
   const updateStock = (product, qty) => {
+    const modal = document.getElementById("noMoreInStockModal");
+    const span = document.getElementsByClassName("close")[0];
     const q = parseInt(cart[product].quantity);
     const s = cart[product].stock;
     q <= s
       ? (cart[product].quantity = qty)
-      : alert("update stock no more in stock");
+      : document.addEventListener("click", (e) => {
+          if (e.target.className == "changeQty fas fa-plus-circle open-modal") {
+            modal.style.display = "block";
+            //close the modal
+            span.onclick = function () {
+              modal.style.display = "none";
+            };
+            // clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            };
+            document.addEventListener("click", (e) => {
+              if (e.target.className == "cancel-btn") {
+                modal.style.display = "none";
+              }
+            });
+          }
+        });
   };
   const checkStock = (product) => {
+    const modal = document.getElementById("noMoreInStockModal");
+    const span = document.getElementsByClassName("close")[0];
     const q = parseInt(cart[product].quantity);
     const s = cart[product].stock;
-    q < s ? cart[product].quantity++ : alert("check stock no more in stock");
+    q < s
+      ? cart[product].quantity++
+      : document.addEventListener("click", (e) => {
+          if (e.target.className == "changeQty fas fa-plus-circle open-modal") {
+            modal.style.display = "block";
+            //close the modal
+            span.onclick = function () {
+              modal.style.display = "none";
+            };
+            // clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            };
+            document.addEventListener("click", (e) => {
+              if (e.target.className == "cancel-btn") {
+                modal.style.display = "none";
+              }
+            });
+          }
+        });
   };
   const calcTotal = () => {
     total = Object.keys(cart).reduce((acc, cur) => {
@@ -167,7 +211,7 @@
       value="${cart[product].quantity}">
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
-      <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
+      <i data-id="qty+" class="changeQty fas fa-plus-circle open-modal"></i>
       <i data-id="delete-product"class="delete-product fas fa-trash"></i>
       </div>
       <div class='cart__product__info__price'>
