@@ -197,7 +197,7 @@ if (!isset($_GET['formerror'])) {
 
 ?>
     </div>
-    <button class="button add-product-btn" type="submit">Add Product</button>
+    <button class="button add-product-btn" id="addBtn" type="submit">Add Product</button>
   </form>
 </section>
 <script src="functions.js"></script>
@@ -250,6 +250,17 @@ if (JSON.parse(localStorage.getItem('product_form'))) {
 
   localStorage.removeItem('product_form');
 }
+
+window.onbeforeunload = function(event){
+ event.preventDefault = true; 
+  
+  if (document.activeElement.id != "addBtn") {
+     localStorage.removeItem('images');
+      localStorage.removeItem('deleted');
+  }
+};
+
+
 </script>
 <?php
 require_once './assets/foot.php';

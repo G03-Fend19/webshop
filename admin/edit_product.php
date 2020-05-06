@@ -359,7 +359,7 @@ if (!isset($_GET['formerror'])) {
 
 ?>
       </div>
-      <button type="submit">Save</button>
+      <button id="saveBtn" type="submit">Save</button>
   </form>
 </main>
 <script src="functions.js"></script>
@@ -412,6 +412,17 @@ if (JSON.parse(localStorage.getItem('product_form'))) {
 
   localStorage.removeItem('product_form');
 }
+
+
+window.onbeforeunload = function(event){
+ event.preventDefault = true; 
+  
+  if (document.activeElement.id != "saveBtn") {
+     localStorage.removeItem('images');
+      localStorage.removeItem('deleted');
+  }
+};
+
 
 
 
