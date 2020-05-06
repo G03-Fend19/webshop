@@ -212,26 +212,26 @@ if (isset($imgList) && !empty($imgList)) {
       <h2 class='product-section__rigth__info__price'><?php echo $priceMsg ?></h2>
       <?php echo $qtyMsg ?>
     </div>
-    <div class='product-section__rigth__actions'>
-      <div class='product-section__rigth__actions__amount hidden'>
-        <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
-        <div class='product-section__rigth__actions__amount__qty-container'>
-          <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-product-page' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
-          <div
-            data-id=<?php echo $id ?>
-            data-name='<?php echo $name ?>'
-            data-price=<?php echo $price ?>
-            data-img='<?php echo $productImg ?>'
-            data-stock=<?php echo $stock_qty ?>
-            data-discount=<?php echo $discount ?>
-            >
+    <div class='product-section__rigth__actions__amount hidden'>
+      <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
+      <div class='product-section__rigth__actions__amount__qty-container'>
+        <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-product-page' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
+        <div
+          data-id=<?php echo $id ?>
+          data-name='<?php echo $name ?>'
+          data-price=<?php echo $price ?>
+          data-img='<?php echo $productImg ?>'
+          data-stock=<?php echo $stock_qty ?>
+          data-discount=<?php echo $discount ?>
+          >
 
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle open-modal"></i></button>
-          </div>
-
+          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
+          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle open-modal"></i></button>
         </div>
+
       </div>
+    </div>
+    <div class='product-section__rigth__actions'>
 
       <!-- <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button> -->
       <div
@@ -385,6 +385,13 @@ function checkLocalStorage() {
 
 const addBtn = document.querySelector(".add-to-cart-btn");
 addBtn.addEventListener("click", function() {
+  addBtn.classList.add("elementToFadeInAndOut");
+  // Wait until the animation is over and then remove the class, so that
+  // the next click can re-add it.
+  setTimeout(function () {
+    addBtn.classList.remove("elementToFadeInAndOut");
+  }, 4000);
+
 
   setTimeout(function(){
     checkLocalStorage();

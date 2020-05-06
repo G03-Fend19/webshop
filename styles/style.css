@@ -2606,8 +2606,8 @@ footer {
   .product-section__images__small-container__img-container .img-wrapper {
     /*  width: 5vw;
             height: 10vh; */
-    height: 6.5vw;
-    width: 6.5vw;
+    height: 5vw;
+    width: 5vw;
   }
 }
 
@@ -2656,6 +2656,8 @@ footer {
 
 .product-section__rigth__info .in-store {
   font-size: 15px;
+  color: green;
+  font-weight: 900;
 }
 
 .product-section__rigth__info .few-in-store {
@@ -2701,6 +2703,12 @@ footer {
   display: block;
 }
 
+@media (max-width: 700px) {
+  .product-section__rigth__actions__amount__lable {
+    padding-top: 0.5em;
+  }
+}
+
 .product-section__rigth__actions__amount__qty-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2708,19 +2716,34 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 100%;
+}
+
+.product-section__rigth__actions__amount__qty-container div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.product-section__rigth__actions__amount__qty-container div:nth-child(2) {
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 0.5em;
 }
 
 .product-section__rigth__actions__amount__qty-container__input {
   -moz-appearance: textfield;
-  width: 30px;
-  height: 30px;
+  width: 120px;
+  height: 35px;
   border-radius: 6px;
   border: 1px solid #a0a0a0;
   padding-left: 0.5em;
   font-size: 14px;
   margin-top: auto;
   margin-bottom: 3px;
-  margin-right: 0.3em;
+  margin-right: 0.5em;
   -webkit-box-shadow: 1px 1px 3px #606060;
           box-shadow: 1px 1px 3px #606060;
 }
@@ -2737,14 +2760,24 @@ footer {
   margin: 1px;
   border: none;
   background: none;
+  cursor: pointer;
 }
 
-.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page :hover {
+.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page div:nth-child(1) {
+  margin-right: 0.5em;
+}
+
+.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page .fa-minus-circle {
+  margin-right: 0.3em;
   cursor: pointer;
 }
 
 .product-section__rigth__actions__amount__qty-container__qtyBtn-product-page .fa-minus-circle:hover {
   color: #fa5454;
+}
+
+.product-section__rigth__actions__amount__qty-container__qtyBtn-product-page .fa-plus-circle {
+  cursor: pointer;
 }
 
 .product-section__rigth__actions__amount__qty-container__qtyBtn-product-page .fa-plus-circle:hover {
@@ -2753,12 +2786,13 @@ footer {
 
 .product-section__rigth__actions__amount__qty-container__qtyBtn-product-page i {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 30px;
   padding: 0;
   color: #54626a;
 }
 
 .product-section__rigth__actions .add-to-cart-btn {
+  max-width: 250px;
   width: 100%;
   padding: 1em;
   display: -webkit-box;
@@ -2779,17 +2813,25 @@ footer {
   -webkit-box-shadow: 1px 1px 3px #606060;
           box-shadow: 1px 1px 3px #606060;
   cursor: pointer;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (min-width: 750px) {
+  .product-section__rigth__actions .add-to-cart-btn {
+    margin-bottom: 150px;
+  }
 }
 
 @media (min-width: 1013px) {
   .product-section__rigth__actions .add-to-cart-btn {
-    margin-bottom: 100px;
+    margin-bottom: 130px;
   }
 }
 
 .product-section__rigth__actions .add-to-cart-btn .fa-cart-plus {
   font-size: 20px;
-  margin-top: 3px;
   margin-left: 0.5em;
 }
 
@@ -2802,6 +2844,8 @@ footer {
 
 .product-section__description {
   color: #32393e;
+  padding-top: 2em;
+  border-top: 0.2px solid #c6c6c6;
 }
 
 @media (min-width: 750px) {
@@ -2826,6 +2870,29 @@ footer {
 
 .product-section .hidden {
   display: none;
+}
+
+.elementToFadeInAndOut {
+  -webkit-animation: fadeInOut 250ms linear forwards;
+          animation: fadeInOut 250ms linear forwards;
+}
+
+@-webkit-keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .contact {
@@ -3771,5 +3838,6 @@ footer {
 .far {
   font-family: "FontAwesome" !important;
   font-style: unset !important;
+  font-weight: 400 !important;
 }
 /*# sourceMappingURL=style.css.map */
