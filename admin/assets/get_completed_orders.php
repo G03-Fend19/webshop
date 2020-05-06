@@ -56,7 +56,7 @@ ws_orders_products.product_qty > 0
 
   foreach($completedOrdersResults as $currentOrderNumber => $row) {
     // The order id for this row
-    $orderType = "active";
+    $orderType = "completed";
     $currentOrderNumber = $row['OrderNumber'];
     if(isset($completedOrdersGrouped[$currentOrderNumber])) {
       $completedOrdersGrouped[$currentOrderNumber]["Products"][] =  [
