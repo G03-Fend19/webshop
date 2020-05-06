@@ -252,7 +252,7 @@ endforeach;
 echo '</tbody></table>';
 echo '</main>';
 ?>
-  <script src="active_pages.js"></script>
+  <!-- <script src="active_pages.js"></script> -->
   <!-- <script src="active_pages.js"></script> -->
   <script> 
   localStorage.removeItem('images');

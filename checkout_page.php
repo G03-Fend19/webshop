@@ -197,13 +197,14 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__payment__invoice">
             <p>Invoice: </p>
 
-            <label for="email-invoice"><input name="email-invoice" class="customer-info" type="checkbox"
-                id="email-invoice" name="email-invoice" value="checkbox">Email
+            <label for="emailInvoice"><input name="emailInvoice" class="customer-info" type="checkbox"
+                id="emailInvoice" name="emailInvoice" value="checkbox" checked>Email
             </label>
 
-            <label for="adress-invoice"><input name="adress-invoice" class="customer-info" type="checkbox"
-                id="adress-invoice" name="adress-invoice" value="checkbox"> Address
+            <label for="adressInvoice"><input name="adressInvoice" class="customer-info" type="checkbox"
+                id="adressInvoice" name="adressInvoice" value="checkbox"> Address
             </label>
+            
           </div>
           <input id="cart-input" type="hidden" name="cart">
           <input id="total-input" type="hidden" name="total">

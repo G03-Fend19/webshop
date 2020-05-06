@@ -31,7 +31,7 @@
   }
 }
 .out-of-stock {
-  background: #4133335d;
+  // background: #4133335d;
   // z-index: 2;
   position: absolute;
   height: 100%;
@@ -46,17 +46,17 @@
 
   &__msg {
     position: absolute;
-    top: 0.5em;
+    top: 1em;
     right: 0;
     font-size: 15px;
     max-width: 8em;
     font-weight: bold;
-    background: rgba(255, 255, 255, 0.596);
-    color: rgb(116, 116, 116);
-    font-weight: 500;
+    background: rgba(250, 59, 59, 0.735);
+    color: white;
+    font-weight: 700;
     border: 0.5px white;
     padding: 0.5em 1em;
-    text-shadow: 1px 1px 1px rgb(190, 189, 189);
+    text-shadow: unset;
     // border-radius: 10px 0 0 10px;
 
     // @media (min-width: 500px) {

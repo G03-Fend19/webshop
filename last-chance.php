@@ -140,10 +140,10 @@ if ($productQty > 9) {
     $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
 }
 
-if (empty($product['imgNames'])) {
+if (empty($product['ImageName'])) {
     $productImg = "placeholder.jpg";
 } else {
-    $productImg = htmlspecialchars($product['imgNames'][0]);
+    $productImg = htmlspecialchars($product['ImageName']);
 }
 
 $productCards .= "<article class='product-card'>
