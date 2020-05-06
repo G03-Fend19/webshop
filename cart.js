@@ -4,9 +4,7 @@
   const qtyBtnProductPage = document.querySelectorAll(
     ".product-section__rigth__actions__amount__qty-container__qtyBtn-product-page"
   );
-  const qtyBtns = document.querySelectorAll(
-    ".product-section__rigth__actions__amount__qty-container__qtyBtn"
-  );
+  const qtyBtns = document.querySelectorAll(".amount__btns");
   const cartDisplay = document.querySelector(".cart");
   const productWrapper = document.querySelector(".cart__product-wrapper");
   const totalCheckout = document.querySelector(".cart__total-checkout");
@@ -19,16 +17,18 @@
   // eventlistener for add-to-cart-btn
   // each button has data-information about their specific product. we send that information
   // to the createProduct function
-  addBtn.forEach(btn => btn.addEventListener("click", (e) => {
-    cartCount.classList.remove("hidden");
-    const productData = e.target.parentNode.dataset;
-    let qty;
-    document.querySelector("#qtyInput-product-page")
-      ? (qty = document.querySelector("#qtyInput-product-page").value)
-      : (qty = 1);
-    qty;
-    createProduct(productData, qty);
-  }));
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      cartCount.classList.remove("hidden");
+      const productData = e.target.parentNode.dataset;
+      let qty;
+      document.querySelector("#qtyInput-product-page")
+        ? (qty = document.querySelector("#qtyInput-product-page").value)
+        : (qty = 1);
+      qty;
+      createProduct(productData, qty);
+    })
+  );
 
   qtyBtnProductPage.forEach((btn) =>
     btn.addEventListener("click", (e) => {
@@ -63,7 +63,6 @@
   // quantity.
   // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
   const createProduct = (productData, qty) => {
-
     if (productData.name !== undefined) {
       if (cart[productData.name]) {
         updateStock(productData.name, qty);
@@ -77,16 +76,14 @@
             price: productData.price,
             discount: parseFloat(productData.discount),
             quantity: qty,
-            stock: productData.stock
-          }
+            stock: productData.stock,
+          },
         };
       }
       localStorage.setItem("cart", JSON.stringify(cart));
 
       renderCart();
     }
-
-
   };
   // check stock takes current Product
   // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
@@ -292,7 +289,10 @@
     });
 
     document.addEventListener("click", (e) => {
-      if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+      if (
+        e.target.className == "clear-cart" &&
+        !Object.entries(cart).length == 0
+      ) {
         cart = {};
         modal.style.display = "none";
         localStorage.setItem("cart", JSON.stringify(cart));
