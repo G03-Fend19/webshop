@@ -2867,6 +2867,10 @@ footer {
   margin-left: 20px;
 }
 
+.contact__logo img {
+  width: unset;
+}
+
 .contact__nav {
   list-style-type: none;
   margin-right: 20px;
