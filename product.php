@@ -126,10 +126,10 @@ if (isset($_GET['product_id'])) {
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
-																																																																	                            <span class='new-in__msg'>
-																																																																	                            New In
-																																																																	                            </span>
-																																																																	                          </div>";
+						                <span class='new-in__msg'>
+							                New In
+								            </span>
+							            </div>";
         } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>

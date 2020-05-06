@@ -51,8 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
     $stmt_categories = $db->prepare($sql_categories);
     $stmt_categories->execute();
 
-  
-
     while ($productRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $p_id = htmlspecialchars($productRow['ProductId']);
         $pName = htmlspecialchars($productRow['ProductName']);
@@ -86,10 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_GET['formerror'])) {
     while ($imagesRows = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
         $imagesDb[] = [
             'img' => $imagesRows['imgName'],
-            'feature' => $imagesRows['featureImg'], ];
+            'feature' => $imagesRows['featureImg']];
     }
-   
-
 
 } elseif (!isset($_GET['formerror']) && $_SERVER['REQUEST_METHOD'] != 'POST') {
     header('Location:products_page.php');
@@ -105,30 +101,30 @@ require_once './assets/aside-navigation.php';
   <form id="dragme" class="upload-form hidden" method='post' action='' enctype='multipart/form-data' draggable="true">
     <div class="upload-form__border"> <button class="cancel-upload" type="button">X</button> </div>
     <input type="file" name="file[]" id="file" multiple>
-    <input type="hidden" name="p_id" value="<?=$productId; ?>">
+    <input type="hidden" name="p_id" value="<?=$productId;?>">
     <input class="upload-btn" type='submit' name='submit' value='Upload'>
   </form>
 
 
   <h1 class='headline__php'>Editing: Product <?="#$p_id"?></h1>
 
-  <!--   <?php print_r($imagesDb); ?> -->
+  <!--   <?php print_r($imagesDb);?> -->
 
   <form class="form" id="addProductForm" name="addProductForm" action="./assets/process_product_edit.php"
     onsubmit="return validateProductForm()" method="POST">
     <div class="form__group">
       <label for="title" class="form__label">
         Product name
-        <input type="text" name="title" id="title" value="<?=$pName; ?>" minlength="2" maxlength="50" required
+        <input type="text" name="title" id="title" value="<?=$pName;?>" minlength="2" maxlength="50" required
           class="form__input">
       </label>
       <label for="description" class="form__label descrip">
         Description
         <textarea name="description" id="description" maxlength="800" required
-          class="form__input"><?=$descrip; ?></textarea>
+          class="form__input"><?=$descrip;?></textarea>
       </label>
       <select name="category" id="category">
-        <?=$options; ?>
+        <?=$options;?>
       </select>
       <label for="price" class="form__label">
         Price
@@ -137,16 +133,14 @@ require_once './assets/aside-navigation.php';
       </label>
       <label for="qty" class="form__label">
         Qty
-        <input type="number" name="qty" id="qty" value="<?=$qty; ?>" min="0" required class="form__input">
+        <input type="number" name="qty" id="qty" value="<?=$qty;?>" min="0" required class="form__input">
       </label>
 
     </div>
 
-    <input type="hidden" name="product_id" value="<?=$p_id; ?>">
+    <input type="hidden" name="product_id" value="<?=$p_id;?>">
 
 <?php
-
-  
 
 ?>
 
@@ -165,8 +159,6 @@ require_once './assets/aside-navigation.php';
       <div id="update-product-images" class="form__image-section__images">
         <?php
 
-
-
 ?>
         <script>
 
@@ -177,7 +169,7 @@ require_once './assets/aside-navigation.php';
             } else {
               imageMaxMessage.classList.add("hide-images-max");
             }
-          };  
+          };
 
 
        const setImagesToLocalStorage = () => {
@@ -186,20 +178,20 @@ require_once './assets/aside-navigation.php';
           let imagesFromDb = <?php echo json_encode($imagesDb); ?> ;
 
           // 2. Grab all images from localStorage, create array if null
-          imagesFromLocalStorage = JSON.parse(localStorage.getItem("images")); 
+          imagesFromLocalStorage = JSON.parse(localStorage.getItem("images"));
           !imagesFromLocalStorage ? imagesFromLocalStorage = [] : null;
           showMaxImgMessage(imagesFromLocalStorage)
           // 3. check deleted
            deletedImages = JSON.parse(localStorage.getItem('deleted'));
-          !deletedImages ? deletedImages = [] : null; 
-          
+          !deletedImages ? deletedImages = [] : null;
+
 
           // 3. Push all images from db to localStorage
           if (imagesFromLocalStorage.length > 0) {
             imagesFromDb.forEach((imgObj, index) => {
               if(!deletedImages.includes(imgObj.img)){
-                Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj); 
-              } 
+                Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj);
+              }
 
             });
 
@@ -208,7 +200,7 @@ require_once './assets/aside-navigation.php';
 
             imagesFromDb.forEach((imgObj, index) => {
               if(!deletedImages.includes(imgObj.img)){
-                
+
                 imagesFromLocalStorage.push(imgObj);
               }
             });
@@ -218,19 +210,19 @@ require_once './assets/aside-navigation.php';
 
             showMaxImgMessage(imagesFromLocalStorage)
 
-        }    
+        }
         setImagesToLocalStorage()
 
         const renderImagesToDOM = () => {
           const updateImageSection = document.getElementById('update-product-images')
 
           deletedImages = JSON.parse(localStorage.getItem('deleted'));
-          !deletedImages ? deletedImages = [] : null; 
+          !deletedImages ? deletedImages = [] : null;
           updateImageSection.innerHTML = "";
 
           let counter = 0
           if (imagesFromLocalStorage.length > 0) {
-            
+
             updateImageSection.innerHTML = ''
             imagesFromLocalStorage.map(imgObj => {
               console.log(imgObj['feature'] == 1)
@@ -249,8 +241,8 @@ require_once './assets/aside-navigation.php';
                       </div>`
                       ;
               counter++
-            
-            
+
+
               }
             });
 
@@ -261,7 +253,7 @@ require_once './assets/aside-navigation.php';
               if (imgObj['feature'] == 1) {
                 feature.value = imgObj['img']
               }
-              
+
             });
           }
 
@@ -273,9 +265,9 @@ require_once './assets/aside-navigation.php';
          document.addEventListener("click", (e) => {
 
           if (e.target.className == "remove-image") {
-           
-   
-                       
+
+
+
             // get deletedImages from localstorage
             deletedImages = JSON.parse(localStorage.getItem("deleted"))
             !deletedImages ? deletedImages = [] : null
@@ -287,8 +279,8 @@ require_once './assets/aside-navigation.php';
             images = imagesFromLocalStorage.filter((el)=> {
               return el.img !== e.target.dataset.name
             })
-      
-         
+
+
             localStorage.setItem("images", JSON.stringify(images));
 
           }
@@ -303,18 +295,18 @@ require_once './assets/aside-navigation.php';
       document.addEventListener('click', e => {
         const feature = document.getElementById('feature');
         if(e.target.classList.contains('form__image-section__selection__image')) {
- 
 
-    
+
+
           imagesFromLocalStorage.forEach(imgObj => {
             if (imgObj['img'] == e.target.dataset.imgname) {
               imgObj['feature'] = 1;
-              
+
             }
             else {
               imgObj['feature'] = 0;
             }
-            
+
           });
           localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));
 
@@ -323,7 +315,7 @@ require_once './assets/aside-navigation.php';
         renderImagesToDOM()
 
 
-      
+
       });
 
       document.addEventListener("click", (e) => {
@@ -340,43 +332,42 @@ require_once './assets/aside-navigation.php';
         renderImagesToDOM()
         });
 
-      
+
         </script>
       </div>
 
-      <button type="submit">Save</button>
+      </div>
       <div id="errorDiv">
         <?php
 
-          if (count($failedUploads) !== 0) {
-            foreach ($failedUploads as $file_name => $errorArray) {
-              foreach ($errorArray as $error) {
-                echo "<p class='errormsg'><strong>$file_name:</strong> $error</p>";
-              }
-            
-            }
+if (count($failedUploads) !== 0) {
+    foreach ($failedUploads as $file_name => $errorArray) {
+        foreach ($errorArray as $error) {
+            echo "<p class='errormsg'><strong>$file_name:</strong> $error</p>";
+        }
 
-          }
+    }
 
+}
 
-          if (!isset($_GET['formerror'])) {
-          } else {
-              $errorCheck = $_GET['formerror'];
-              if ($errorCheck == 'duplicate') {
-                  echo "<p class='errormsg'>You already have a product called <strong>$pName</strong>.</p>";
-              } elseif ($errorCheck == 'empty') {
-                  echo "<p class='errormsg'>Please fill in all fields.</p>";
-              } elseif ($errorCheck == 'nocategory') {
-                  echo "<p class='errormsg'>Please select a category for the product.</p>";
-              } elseif ($errorCheck == 'negative') {
-                  echo "<p class='errormsg'>The product price and quantity can't be less than 0.</p>";
-              }
-          }
+if (!isset($_GET['formerror'])) {
+} else {
+    $errorCheck = $_GET['formerror'];
+    if ($errorCheck == 'duplicate') {
+        echo "<p class='errormsg'>You already have a product called <strong>$pName</strong>.</p>";
+    } elseif ($errorCheck == 'empty') {
+        echo "<p class='errormsg'>Please fill in all fields.</p>";
+    } elseif ($errorCheck == 'nocategory') {
+        echo "<p class='errormsg'>Please select a category for the product.</p>";
+    } elseif ($errorCheck == 'negative') {
+        echo "<p class='errormsg'>The product price and quantity can't be less than 0.</p>";
+    }
+}
 
-        ?>
+?>
       </div>
+      <button type="submit">Save</button>
   </form>
-
 </main>
 <script src="functions.js"></script>
 <script>
