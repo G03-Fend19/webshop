@@ -83,19 +83,38 @@
       display: flex;
     }
 
-    button {
-      @extend %boxShadowSection;
-      @extend %buttonStyles;
-      cursor: pointer;
+    // button {
+    //   @extend %boxShadowSection;
+    //   @extend %buttonStyles;
+    //   cursor: pointer;
 
-      i {
-        margin-left: 0.5em;
-      }
+    //   i {
+    //     margin-left: 0.5em;
+    //   }
 
-      &:hover {
-        transition: ease-in 250ms;
-        transform: scale(1.025);
-      }
+    //   &:hover {
+    //     transition: ease-in 250ms;
+    //     transform: scale(1.025);
+    //   }
+    // }
+  }
+
+  button {
+    @extend %boxShadowSection;
+    @extend %buttonStyles;
+    cursor: pointer;
+    align-self: center;
+    justify-self: right;
+    margin-right: 10px;
+    margin-top: 2em;
+
+    i {
+      margin-left: 0.5em;
+    }
+
+    &:hover {
+      transition: ease-in 250ms;
+      transform: scale(1.025);
     }
   }
 }
