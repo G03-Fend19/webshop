@@ -3764,4 +3764,12 @@ footer {
   width: 400px;
   margin-top: 40px;
 }
+
+.fa,
+.fas,
+.fab,
+.far {
+  font-family: "FontAwesome" !important;
+  font-style: unset !important;
+}
 /*# sourceMappingURL=style.css.map */

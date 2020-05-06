@@ -139,27 +139,20 @@ require_once './assets/aside-navigation.php';
     </div>
 
     <input type="hidden" name="product_id" value="<?=$p_id;?>">
-
-<?php
-
-?>
-
     <div class="form__image-section">
-      <label for="img" class="form__label">Images</label>
       <div class="form__image-section__create">
-         <p class="images-max hide-images-max">You can only upload 5 images</p>
-        <button class="add-img button" type="button">Add Images</button>
+        <p>Upload images</p>
+        <p class="images-max hide-images-max">You can only upload 5 images</p>
+        <button class="add-img button" type="button">Add images <i class="fas fa-images"></i></button>
 
       </div>
 
       <label for="qty" class="form__label">
-        feature
+      Click to choose feature image
         <input type="hidden" name="feature" id="feature" value=""  class="form__input">
       </label>
-      <div id="update-product-images" class="form__image-section__images">
-        <?php
+        <div id="update-product-images" class="form__image-section__images">
 
-?>
         <script>
 
           const showMaxImgMessage = (arr) => {

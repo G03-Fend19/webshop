@@ -510,9 +510,6 @@ a {
 
 .form button {
   cursor: pointer;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
   -ms-grid-column-align: right;
       justify-self: right;
   margin-right: 10px;
@@ -1092,5 +1089,13 @@ footer p {
     top: 0;
     opacity: 1;
   }
+}
+
+.fa,
+.fas,
+.fab,
+.far {
+  font-family: "FontAwesome" !important;
+  font-style: unset !important;
 }
 /*# sourceMappingURL=style.css.map */

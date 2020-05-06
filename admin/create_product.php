@@ -170,9 +170,6 @@ require_once './assets/aside-navigation.php';
 
 
     </script>
-    <?php
-
-?>
       </div>
     </div>
     <div id="errorDiv">
