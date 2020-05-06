@@ -1,9 +1,7 @@
 function filterOrders(orders) {
-  // console.log(orders)
   let orderType;
   Object.keys(orders).forEach(function (order) {
-    console.log(order); // key
-    orderType = orders[order].OrderType; // value
+    orderType = orders[order].OrderType;
   });
   //Active orders filter select/input element
   const activeStatusFilter = document.querySelector("#activeStatusFilter");
@@ -20,7 +18,6 @@ function filterOrders(orders) {
   let filterText;
   let filterStatus;
 
-  console.log(orders);
 
   //Checks if list of orders is active orders
   if (orderType == "active") {
@@ -159,7 +156,6 @@ function updateStatus(orderToUpdate) {
   const updateStatusForm = document.getElementById(
     "shouldUpdate" + orderToUpdate
   );
-  console.log(newStatusId);
   const modal = document.getElementById("myModal");
   const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");
