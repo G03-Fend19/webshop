@@ -286,6 +286,13 @@ function checkCartProducts(grouped) {
   let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
+      btn.classList.add("elementToFadeInAndOut");
+  // Wait until the animation is over and then remove the class, so that
+  // the next click can re-add it.
+  setTimeout(function () {
+    btn.classList.remove("elementToFadeInAndOut");
+  }, 4000);
+
       setTimeout(function(){
       checkLocalStorage(name, id);
     }, 100);
