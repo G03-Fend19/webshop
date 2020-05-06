@@ -15,8 +15,10 @@
             ws_products.name            AS ProductName,
             ws_products.price           AS ProductPrice,
             ws_products.description      AS ProductDesc,
-            ws_products.id              AS ProductId
-
+            ws_products.id              AS ProductId,
+            ws_products.stock_qty       AS Stock, 
+            ws_products.added_date      AS ProductDate
+ 
            
           FROM 
             ws_active_orders
@@ -62,6 +64,7 @@
         "ProductDesc" => $row["ProductDesc"],
         "ProductId" => $row["ProductId"],
         "ProductQty" => $row["OrderProductQty"],
+        "ProductDate" => $row["ProductDate"],
       ];
     } else {
       $activeOrdersGrouped[$currentOrderNumber] = [
@@ -85,6 +88,7 @@
           "ProductDesc" => $row["ProductDesc"],
           "ProductId" => $row["ProductId"],
           "ProductQty" => $row["OrderProductQty"],
+          "Stock" => $row["Stock"]
         ];
       }
     }
@@ -145,17 +149,26 @@ foreach($activeOrdersGrouped as $key => $order):
   }
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productDesc = htmlspecialchars($product['ProductDesc']);
+    $stock = htmlspecialchars($product['stock']);
+    $ProductDate = htmlspecialchars($product['ProductDate']);
     if (strlen($productDesc) > 20) {
       $productDesc = substr($productDesc, 0, 20) . "...";
   }
     $productId = htmlspecialchars($product['ProductId']);
     $productQty = htmlspecialchars($product['ProductQty']);
+    if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
+    
+     $sale = "yes";
+     }else{
+     $sale = "no";
+     };            
 
     $productsTr .= "<tr>
                     <td>$productName</td>
                     <td>$productDesc</td>
                     <td>$productPrice</td>
                     <td>$productQty</td>
+                    <td>$sale<td/>
                   </tr>
                     ";
     
@@ -202,7 +215,9 @@ foreach($activeOrdersGrouped as $key => $order):
               <p>$street</p>
               <p>$postal</p>
               <p>$city</>
-              <p>$orderDate</p>
+              
+            
+              
               <table>
                 <thead>
                   <tr>
@@ -210,6 +225,8 @@ foreach($activeOrdersGrouped as $key => $order):
                     <td>Description</td>
                     <td>Price</td>
                     <td>Quantity</td>
+                    <td>On Sale</td>
+           
                   </tr>
                 </thead>
                 <tbody>

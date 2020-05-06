@@ -18,6 +18,8 @@ ws_products.name            AS ProductName,
 ws_products.price           AS ProductPrice,
 ws_products.description      AS ProductDesc,
 ws_products.id              AS ProductId
+ws_products.stock_qty       AS Stock, 
+ws_products.added_date      AS ProductDate
 
 
 FROM 
@@ -65,6 +67,7 @@ ws_orders_products.product_qty > 0
         "ProductDesc" => $row["ProductDesc"],
         "ProductId" => $row["ProductId"],
         "ProductQty" => $row["OrderProductQty"],
+        
       ];
     } else {
       $completedOrdersGrouped[$currentOrderNumber] = [
@@ -88,6 +91,7 @@ ws_orders_products.product_qty > 0
           "ProductDesc" => $row["ProductDesc"],
           "ProductId" => $row["ProductId"],
           "ProductQty" => $row["OrderProductQty"],
+          "Stock" => $row["Stock"],
         ];
       }
     }
@@ -143,12 +147,19 @@ foreach($completedOrdersGrouped as $key => $order):
   }
     $productId = htmlspecialchars($product['ProductId']);
     $productQty = htmlspecialchars($product['ProductQty']);
-
+    if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
+    
+      $sale = "yes";
+      }else{
+      $sale = "no";
+      };            
+ 
     $productsTr .= "<tr>
                     <td>$productName</td>
                     <td>$productDesc</td>
                     <td>$productPrice</td>
                     <td>$productQty</td>
+                    <td>$sale<td/>
                   </tr>
                     ";
     
@@ -185,6 +196,7 @@ foreach($completedOrdersGrouped as $key => $order):
                     <td>Description</td>
                     <td>Price</td>
                     <td>Quantity</td>
+                    <td>On Sale</td>
                   </tr>
                 </thead>
                 <tbody>
