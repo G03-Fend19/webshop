@@ -7,7 +7,7 @@ $productMsg = "";
 $priceMsg = "";
 $qtyMsg = "";
 $imgList;
-$productImg; 
+$productImg;
 $name;
 
 $currentDateTime = date('Y-m-d H:i:s');
@@ -77,9 +77,9 @@ if (isset($_GET['product_id'])) {
         // If we've already added this product
         if (isset($grouped[$currentProductId])) {
             // Just add the additional image name to the imgIds array
-            $grouped[$currentProductId]["imgs"][] =  [
-              "ImageName" => $row['ImageName'],
-              "FeatureImg" => $row['FeatureImg'],
+            $grouped[$currentProductId]["imgs"][] = [
+                "ImageName" => $row['ImageName'],
+                "FeatureImg" => $row['FeatureImg'],
             ];
         } else {
             // If we haven't added the product yet
@@ -95,10 +95,10 @@ if (isset($_GET['product_id'])) {
             ];
             // If there is an image for this row, add it
             if ($row["ProductImageImageId"]) {
-              $grouped[$currentProductId]["imgs"][] =  [
-                "ImageName" => $row['ImageName'],
-                "FeatureImg" => $row['FeatureImg'],
-              ];
+                $grouped[$currentProductId]["imgs"][] = [
+                    "ImageName" => $row['ImageName'],
+                    "FeatureImg" => $row['FeatureImg'],
+                ];
             }
         }
     }
@@ -120,16 +120,16 @@ if (isset($_GET['product_id'])) {
     }
 
     foreach ($grouped as $productId => $product):
-      // echo "<pre>";
-      // print_r($product['imgs']);
-      // echo "</pre>";
+        // echo "<pre>";
+        // print_r($product['imgs']);
+        // echo "</pre>";
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
-																																			                            <span class='new-in__msg'>
-																																			                            New In
-																																			                            </span>
-																																			                          </div>";
+																																																																	                            <span class='new-in__msg'>
+																																																																	                            New In
+																																																																	                            </span>
+																																																																	                          </div>";
         } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
@@ -153,22 +153,22 @@ if (isset($_GET['product_id'])) {
         $discountProductPrice = ceil($price - ($price * 0.1));
         $priceMsg = "<div><span class='original-price'>$price SEK</span>
                         <span class='discount'>$discountProductPrice SEK</span></div>";
-        } else {
-          $priceMsg = "<span>$price SEK</span>";
-        }
-        $category = htmlspecialchars($product['CategoryName']);
-        $descriptionShort = substr($description, 0, 20);
-        if (empty($product['imgs'])) {
-            $productImg = "placeholder.jpg";
-        } else {
-            $imgArray = $product['imgs'];
-            foreach ($imgArray as $key => $img) {
-              if ($img['FeatureImg'] == 1) {
+    } else {
+        $priceMsg = "<span>$price SEK</span>";
+    }
+    $category = htmlspecialchars($product['CategoryName']);
+    $descriptionShort = substr($description, 0, 20);
+    if (empty($product['imgs'])) {
+        $productImg = "placeholder.jpg";
+    } else {
+        $imgArray = $product['imgs'];
+        foreach ($imgArray as $key => $img) {
+            if ($img['FeatureImg'] == 1) {
                 $productImg = $img['ImageName'];
-              }
             }
-            $imgList = $imgArray;
         }
+        $imgList = $imgArray;
+    }
     endforeach;
 }
 // echo $stock_qty;
@@ -194,7 +194,7 @@ if (isset($_GET['product_id'])) {
       <?php
 if (isset($imgList) && !empty($imgList)) {
     foreach ($imgList as $img) {
-      $imageName = $img['ImageName'];
+        $imageName = $img['ImageName'];
         echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt='product image'></div>";
     }
 }
@@ -227,7 +227,7 @@ if (isset($imgList) && !empty($imgList)) {
             >
 
             <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
+            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle open-modal"></i></button>
           </div>
 
         </div>
@@ -290,18 +290,45 @@ function higherQty(qty) {
 
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
+  } else {
+
+    const modal = document.getElementById("noMoreInStockModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    document.addEventListener("click", (e) => {
+
+      if (e.target.className == "fas fa-plus-circle open-modal") {
+
+        modal.style.display = "block";
+        //close the modal
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", (e) => {
+          if (e.target.className == "cancel-btn") {
+            modal.style.display = "none";
+          }
+        });
+      }
+    });
   }
   // else{
   //   alert('no more in stock')
   // }
 }
 
-const imgList = <?php if(isset($imgList) && !empty($imgList)) {
-                        echo json_encode($imgList);
-                        } else {
-                          $imgList = [];
-                          echo json_encode($imgList);
-                        } ?>
+const imgList = <?php if (isset($imgList) && !empty($imgList)) {
+    echo json_encode($imgList);
+} else {
+    $imgList = [];
+    echo json_encode($imgList);
+}?>
 
 const selectedImg = imgList == undefined ? "placeholder.jpg" : imgList[0];
 let selectedIndex = 0;
@@ -309,7 +336,7 @@ let selectedIndex = 0;
 function changeImg(img) {
   const bigImg = document.querySelector('.product-section__images__big');
   bigImg.src = './media/product_images/' + img;
-  selectedIndex = imgList.findIndex(listImg => listImg === img);
+  selectedIndex = imgList.findIndex(listImg => listImg.ImageName === img);
 }
 
 function nextImg() {
@@ -317,7 +344,7 @@ function nextImg() {
 
   if (selectedIndex < imgList.length - 1) {
     selectedIndex++;
-    bigImg.src = './media/product_images/' + imgList[selectedIndex];
+    bigImg.src = './media/product_images/' + imgList[selectedIndex].ImageName;
   }
 
 }
@@ -327,7 +354,7 @@ function prevImg() {
 
   if (selectedIndex > 0 ) {
     selectedIndex--;
-    bigImg.src = './media/product_images/' + imgList[selectedIndex];
+    bigImg.src = './media/product_images/' + imgList[selectedIndex].ImageName;
   }
 }
 
