@@ -10,32 +10,33 @@
 </head>
 
 <body>
-  <header class="contact">
+<header class="header">
     <nav class="fixed">
-      <div class="contact__logo"><a href="index.php"> <img src="./media/images/logo_white.png" width="40" height="40" />
+      <div class="header__logo"><a href="index.php"> <img src="./media/images/logo_white.png" width="40" height="40" />
         </a>
       </div>
 
-      <ul class="contact__nav">
-        <div class="contact__nav__container">
-          <li class="contact__nav__item"><a class="contact__nav__item__a contact__nav__item__home"
+      <ul class="header__nav">
+        <div class="header__nav__container">
+          <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__home"
               href="index.php">Home</a>
           </li>
 
-          <li class="contact__nav__item"><a id="contact-desktop"
-              class="contact__nav__item__a contact__nav__item__contact2" href="">Contact</a></li>
+          <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
+              href="contact.php">Contact</a></li>
         </div>
 
-        <li class="contact__nav__item"><a class="contact__nav__item__a contact__nav__item__cart"><i
-              class="fas fa-shopping-cart"></i></a></li>
+        <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
+              class="fas fa-shopping-cart"></i>
+            <span class="cart_qty_show"></span>
+          </a></li>
       </ul>
 
-      <div class="contact__burger">
+      <div class="header__burger">
         <i class="fas fa-bars"></i>
       </div>
     </nav>
-    <section class="contact__hero"
-      style="background-image: url(./media/images/contact-background.jpeg); background-size:cover;">
+    <section class="header__hero">
       <form class="searchform" name="search_form" action="search.php#main" onsubmit="return validateSearchForm()"
         method="GET">
         <input class="searchform__searchbar " placeholder="Search..." type="text" name="search">
@@ -48,7 +49,7 @@
               href="index.php">Home</a>
           </li>
           <li class="toggle_menu__item"><a id="contact-desktop" class="toggle_menu__item__a toggle_menu__item__contact2"
-              href="">Contact</a></li>
+              href="contact.php">Contact</a></li>
         </div>
 
       </ul>
@@ -56,10 +57,48 @@
         <div class="cart__menu"></div>
         <section class="cart__product-wrapper"></section>
         <div class="cart__total-checkout"></div>
+
       </section>
-      <h1>Meet the team</h1>
-      <p>What can we do for you?</p>
+      <div class="header__hero__text">
+        <h1>Spring vibes</h1>
+        <p class="desc__hero__text">More new amazing products in stock...</p>
+      </div>
+
+      <div id="myModal" class="modal">
+        <div class="modal__content">
+          <div class="modal__content__header">
+            <span class="close">&times;</span>
+            <h2>Confirmation</h2>
+          </div>
+          <div class="modal__content__body">
+            <p>Are you sure you would like to remove all items from the shopping cart?</p>
+          </div>
+          <div class="modal__content__footer">
+            <button class="cancel-btn">Cancel</button> <button class="clear-cart">
+              Clear Cart
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="noMoreInStockModal" class="modal">
+        <div class="modal__content">
+          <div class="modal__content__header">
+            <span class="close">&times;</span>
+            <h2>Alert</h2>
+          </div>
+          <div class="modal__content__body">
+            <p>No more in stock</p>
+          </div>
+          <div class="modal__content__footer">
+            <button class="cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
     </section>
+
   </header>
   <main class="contact__wrapper">
     <section class="meetTheTeam">
@@ -124,7 +163,7 @@
 
   <script>
   //Toggle menu
-  const burger = document.querySelector('.contact__burger i');
+  const burger = document.querySelector('.header__burger i');
   const nav = document.querySelector('.toggle_menu__container');
 
   function toggleNav() {
