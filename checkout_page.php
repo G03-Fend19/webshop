@@ -10,10 +10,12 @@ alert('Email already registered on a different name. Please check spelling or us
 <html lang="en">
 
 <head>
-  <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
   <title>Clothera - Checkout page</title>
 </head>
 

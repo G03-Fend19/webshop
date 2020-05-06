@@ -27,10 +27,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                           <p  class='main__category-table__tr__td__p' id='category-$id'><i class='far fa-star'></i>$name</p>
                         </td>
                         <td class='main__category-table__tr__td smallerBtn'>
-                          <button type='button' id='editBtn-$id' class='main__category-table__tr__td__edit-btn' onclick=\"toggleEditCategory('$id', '$name')\"><i class='fas fa-pen'></i></button>
+                          <button type='button' id='editBtn-$id' class='main__category-table__tr__td__edit-btn' onclick=\"toggleEditCategory('$id', '$name')\"><i class='fa fa-pencil'></i></button>
                           <button type='button' id='abortBtn-$id' class='hidden main__category-table__tr__td__cancle-btn' onclick='toggleEditCategory($id)'><i class='fas fa-times'></i></button>
                           <form action='./assets/delete-category.php' method='POST' class='main__category-table__tr__td__delete-form'>
-                            <button type='submit' class='main__category-table__tr__td__delete-form__delete-Btn'><i class='far fa-trash-alt'></i></button>
+                            <button type='submit' class='main__category-table__tr__td__delete-form__delete-Btn'><i class='fas fa-trash'></i></button>
                             <input type='hidden' name='id' value='$id'>
                           </form>
                         </td>
