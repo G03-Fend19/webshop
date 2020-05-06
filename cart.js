@@ -131,7 +131,7 @@
       cartMenu.innerHTML += `
        <button class="open-modal" id="myBtn">
        Clear Cart 
-       <i id="delete-product"class="fas fa-trash-alt"></i></button>
+       <i id="delete-product"class="fas fa-trash"></i></button>
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;
@@ -168,7 +168,7 @@
       </input>
       <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" class="changeQty fas fa-plus-circle "></i>
-      <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
+      <i data-id="delete-product"class="delete-product fas fa-trash"></i>
       </div>
       <div class='cart__product__info__price'>
       ${priceDisplay}
