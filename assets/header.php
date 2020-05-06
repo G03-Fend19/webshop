@@ -82,6 +82,21 @@
 
       </div>
 
+      <div id="noMoreInStockModal" class="modal">
+        <div class="modal__content">
+          <div class="modal__content__header">
+            <span class="close">&times;</span>
+            <h2>Alert</h2>
+          </div>
+          <div class="modal__content__body">
+            <p>No more in stock</p>
+          </div>
+          <div class="modal__content__footer">
+            <button class="cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </header>

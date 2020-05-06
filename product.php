@@ -126,10 +126,10 @@ if (isset($_GET['product_id'])) {
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
-																																																															                            <span class='new-in__msg'>
-																																																															                            New In
-																																																															                            </span>
-																																																															                          </div>";
+																																																																	                            <span class='new-in__msg'>
+																																																																	                            New In
+																																																																	                            </span>
+																																																																	                          </div>";
         } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
@@ -183,21 +183,6 @@ if (isset($_GET['product_id'])) {
 // print_r($grouped);
 
 ?>
-
-<div id="noMoreInStockModal" class="modal">
-  <div class="modal__content">
-    <div class="modal__content__header">
-      <span class="close">&times;</span>
-      <h2>Alert</h2>
-    </div>
-    <div class="modal__content__body">
-      <p>No more in stock</p>
-    </div>
-    <div class="modal__content__footer">
-      <button class="cancel-btn">Cancel</button>
-    </div>
-  </div>
-</div>
 
 <section id='product-section' class='product-section'>
   <div class='product-section__images'>
@@ -309,8 +294,6 @@ function higherQty(qty) {
   if (input.value < qty) {
     input.value = parseInt(input.value) + 1;
   } else {
-
-    console.log('out of stck');
 
     const modal = document.getElementById("noMoreInStockModal");
     const span = document.getElementsByClassName("close")[0];
