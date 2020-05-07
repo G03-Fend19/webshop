@@ -197,7 +197,7 @@
       </input>
       <i data-id="qty-" data-productId='${cart[product].id}' data-value="-1" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" data-productId='${cart[product].id}' data-value="1" class="changeQty fas fa-plus-circle open-modal"></i>
-      <i data-id="delete-product"class="delete-product fas fa-trash-alt"></i>
+      <i data-id="delete-product"class="delete-product fas fa-trash-alt">X</i>
       </div>
       <div class='cart__product__info__price'>
       ${priceDisplay}
@@ -214,8 +214,14 @@
     }
     hideAndShowCartBtns();
     setQuantityInputs();
-    // calcTotalWithShipping();
-    // renderOrderSummary();
+
+    if (
+      window.location.href ==
+      "http://localhost:8888/checkout_page.php#main-checkout"
+    ) {
+      calcTotalWithShipping();
+      renderOrderSummary();
+    }
   };
   renderCart();
 
@@ -261,10 +267,9 @@
 
     // adding Qty To input-value field
     document.addEventListener("input", (e) => {
-      const productId = e.target.dataset.productid;
-      const stock = getStock(productId);
-
       if (e.target.classList.contains("qty-input")) {
+        const productId = e.target.dataset.productid;
+        const stock = getStock(productId);
         const inputNumber = parseInt(e.target.value);
 
         if (inputNumber < stock) {

@@ -5,7 +5,6 @@ const cityInput = document.getElementById("city");
 let fee;
 
 const calcTotalCheckout = () => {
-  console.log("running calc total");
   let order = JSON.parse(localStorage.cart);
   total = Object.keys(order).reduce((acc, cur) => {
     return (
@@ -61,7 +60,7 @@ const renderOrderSummary = () => {
     productTable += Object.keys(order)
       .map((product) => {
         priceDisplay = "";
-        if (order[product].discount === 1) {
+        if (order[product].discount === 0.9) {
           priceDisplay = `<p class='price'> ${
             order[product].quantity * order[product].price
           } SEK</p>`;
@@ -73,6 +72,10 @@ const renderOrderSummary = () => {
                               order[product].quantity *
                                 (order[product].price * order[product].discount)
                             )} SEK</p>`;
+        } else {
+          priceDisplay = `<p class='price'> ${
+            order[product].quantity * order[product].price
+          } SEK</p>`;
         }
         return `
           <tr data-name="${order[product].name}">
