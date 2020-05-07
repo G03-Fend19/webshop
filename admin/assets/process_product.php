@@ -26,20 +26,23 @@ AND active = 1";
     $stmt = $db->prepare($duplicateCheck);
     $stmt->bindParam(':title', $title);
     $stmt->execute();
+
+    $descrip_error=urlencode($description);
+
     if (empty($title) || empty($description) || $price == "" || $price == null || $qty == "" || $qty == null) {
-        header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=empty&title=$title&descrip=$descrip_error&price=$price&qty=$qty");
         exit();
     } elseif ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        header("Location: ../create_product.php?formerror=duplicate&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=duplicate&title=$title&descrip=$descrip_error&price=$price&qty=$qty");
         exit();
     } elseif ($category == "category" || empty($category)) {
-        header("Location: ../create_product.php?formerror=nocategory&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=nocategory&title=$title&descrip=$descrip_error&price=$price&qty=$qty");
         exit();
     } elseif ($price < 0 || $qty < 0) {
-        header("Location: ../create_product.php?formerror=negative&title=$title&descrip=$description&price=$price&qty=$qty");
+        header("Location: ../create_product.php?formerror=negative&title=$title&descrip=$descrip_error&price=$price&qty=$qty");
         exit();
     }
-    ;
+    
 
 
 
