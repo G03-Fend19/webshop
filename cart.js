@@ -22,6 +22,18 @@
       cartCount.classList.remove("hidden");
       const productData = e.target.parentNode.dataset;
       let qty;
+      document.querySelector("#qtyInput")
+        ? (qty = document.querySelector("#qtyInput").value)
+        : (qty = 1);
+      qty;
+      createProduct(productData, qty);
+    })
+  );
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      cartCount.classList.remove("hidden");
+      const productData = e.target.parentNode.dataset;
+      let qty;
       document.querySelector("#qtyInput-product-page")
         ? (qty = document.querySelector("#qtyInput-product-page").value)
         : (qty = 1);
