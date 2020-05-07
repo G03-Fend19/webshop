@@ -282,6 +282,11 @@
             margin-bottom: 3px;
             margin-right: 0.5em;
             box-shadow: 1px 1px 3px rgb(96, 96, 96);
+
+            @media (min-width: 1000px) {
+              margin-top: unset;
+              margin-bottom: unset;
+            }
           }
 
           input[type="number"]::-webkit-inner-spin-button,

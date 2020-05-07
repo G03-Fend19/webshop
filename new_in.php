@@ -132,11 +132,14 @@ $productCards .= "<article class='product-card'>
 					              <img class='product-thumb' src=./media/product_images/$productImg alt=''>
 										  </div>
 										</a>
-										<div class='product-card__content'>
+                    <div class='product-card__content'>
+                    <div class='product-card__text'>
 											<a href='product.php?product_id=$productId#main' class='product-card__product-link'>
 												$productName
 											</a>
-											$priceMsg
+                      $priceMsg
+                      $qtyMsg
+                      </div>
 											<button
 												data-id=$productId
 												data-name='$productName'
@@ -162,7 +165,6 @@ $productCards .= "<article class='product-card'>
                           <button class='amount__btns-plus' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
                         </div>
                       </div>
-                      $qtyMsg
 									  </div>
 									</article>";
 endforeach;

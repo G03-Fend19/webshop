@@ -163,6 +163,7 @@ $productCards .= "<article class='product-card'>
                             $productName
                           </a>
                           $priceMsg
+                          $qtyMsg
                           </div>
                           <button
                           data-id=$productId
@@ -190,8 +191,6 @@ data-discount=$discount
 </div>
 
 </div>
-                     
-                          $qtyMsg
                           </div>
                       </article>";
 endforeach;

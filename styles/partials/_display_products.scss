@@ -153,12 +153,6 @@
           font-size: 14px;
         }
       }
-
-      .product-section__rigth__actions__amount__qty-container {
-        input {
-          max-width: 25px;
-        }
-      }
     }
     &__text {
       display: flex;
@@ -224,6 +218,11 @@
       @media (max-width: 450px) {
         width: 90%;
       }
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
     &__btns {
       display: flex;
