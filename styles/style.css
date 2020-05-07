@@ -2374,6 +2374,7 @@ footer {
 
 .price__line-through {
   text-decoration: line-through;
+  font-size: 12px;
 }
 
 .img-wrapper {

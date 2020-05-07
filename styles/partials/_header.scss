@@ -50,24 +50,23 @@
         font-weight: 900;
         @media (min-width: 800px) {
           display: inline;
-          
+
           &:hover {
             @keyframes changeColor {
               0% {
                 color: #d9d7d1;
               }
-  
+
               100% {
                 color: #353535;
                 text-shadow: 1px 1px 2px rgb(206, 206, 206);
               }
             }
-  
+
             animation: changeColor 500ms;
             animation-fill-mode: forwards;
           }
         }
-
       }
 
       &__cart {
@@ -142,7 +141,7 @@
         }
       }
 
-      @media (max-width: 750px){
+      @media (max-width: 750px) {
         font-size: 10vw;
         text-align: center;
         align-items: center;
@@ -162,7 +161,7 @@
       font-size: 1vw;
       text-align: center;
 
-      @media (max-width: 750px){
+      @media (max-width: 750px) {
         font-size: 3vw;
         text-align: left;
       }

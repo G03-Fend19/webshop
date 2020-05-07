@@ -85,7 +85,7 @@
       <div id="noMoreInStockModal" class="modal">
         <div class="modal__content">
           <div class="modal__content__header">
-            <span class="close">&times;</span>
+            <span class="cancel-btn  close">&times;</span>
             <h2>Alert</h2>
           </div>
           <div class="modal__content__body">

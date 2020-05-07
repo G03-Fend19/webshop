@@ -167,31 +167,25 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         </a>
         $priceMsg
         </div>
-        <button
-          data-id=$productId
-          data-name='$productName'
-          data-price=$productPrice
-          data-img='$productImg'
-          data-stock=$productQty
-          data-discount=$discount
-          class='add-to-cart-btn'
-          id='addToCartBtn-$productId'>
-        <i class='fas fa-cart-plus'></i>
-        </button>
-        <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
-  <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-  <div
-  data-id=$productId
-  data-name='$productName'
-  data-price=$productPrice
-  data-img='$productImg'
-  data-stock=$productQty
-  data-discount=$discount
-  >
-  
-  <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-  <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
-  </div>
+      <button
+        data-id=$productId
+        class='add-to-cart-btn'
+        id='addToCartBtn-$productId'>
+      <i class='fas fa-cart-plus'></i>
+      </button>
+        <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
+    
+      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input' value>
+<div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice data-img='$productImg' data-stock=$productQty
+  data-discount=$discount>
+
+  <button class='amount__btns-minus'>
+  <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
+  </button>
+  <button class='amount__btns-plus' id='higherBtn'>
+  <i data-id='qty+' data-productId=$productId data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+  </button>
+</div>
   
   </div>
           $qtyMsg
@@ -224,7 +218,7 @@ function getSearchHeader($search)
 if ($search !== "") {echo $productsContainer;}
 ?>
 </section>
-
+<!-- 
 <script>
 
 
@@ -349,4 +343,4 @@ function higherQty(qty, id) {
   // }
 }
 
-</script>
+</script> -->

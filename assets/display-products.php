@@ -206,16 +206,15 @@ if (isset($_GET['category_id'])) {
 
 /*******************************************************************/
 $productCards .= "<article class='product-card'>
-    <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-      <div class='image-wrapper'>
+  <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+    <div class='image-wrapper'>
       $productMsg";
 
-$productQty < 1 ? $productCards .= "<div class='out-of-stock'>
+      $productQty < 1 ? $productCards .="<div class='out-of-stock'>
                                         <span class='out-of-stock__msg'>
                                         Currently out of stock
                                         </span>
-                                      </div>" : null;
-$productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
+                                      </div>" : null; $productCards .="<img class='product-thumb' src=./media/product_images/$productImg alt=''>
       </div>
     </a>
     <div class='product-card__content'>
@@ -228,29 +227,27 @@ $productCards .= "<img class='product-thumb' src=./media/product_images/$product
       </div>
       <button
         data-id=$productId
-        data-name='$productName'
-        data-price=$productPrice
-        data-img='$productImg'
-        data-stock=$productQty
-        data-discount=$discount
         class='add-to-cart-btn'
         id='addToCartBtn-$productId'>
       <i class='fas fa-cart-plus'></i>
       </button>
-      <div class='amount hidden' id='productQty-$productId'>
-<input class='amount__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+      <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
+    
+      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input' value>
 <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice data-img='$productImg' data-stock=$productQty
   data-discount=$discount>
 
-  <button class='amount__btns-minus' onclick='lowerQty($productId)'><i
-      class='fas fa-minus-circle'></i></button>
-  <button class='amount__btns-plus' id='higherBtn'
-    onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle open-modal'></i></button>
+  <button class='amount__btns-minus'>
+  <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
+  </button>
+  <button class='amount__btns-plus' id='higherBtn'>
+  <i data-id='qty+' data-productId=$productId data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+  </button>
 </div>
 
 </div>
 </div>
-</article>";
+</article>" ;
 endforeach;
 $productsContainer .= $productCards;
 $productsContainer .= "</div>";
@@ -276,67 +273,68 @@ echo $productsContainer;
 </section>
 
 <script>
-let grouped = <?php echo json_encode($results) ?>;
-checkCartProducts(grouped);
-function checkCartProducts(grouped) {
-  for (let product of Object.values(grouped)) {
-  let name = product['ProductName'];
-  let id = product['ProductId'];
-  console.log(product['ProductId'])
-  let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
-  addBtn.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      setTimeout(function(){
-      checkLocalStorage(name, id);
-    }, 100);
-    })
-  );
-  checkLocalStorage(name, id);
-  }
-}
-function checkLocalStorage(name, id) {
-  let addToCartBtn = document.querySelector('#addToCartBtn-' + id);
-  let qtyBtns = document.querySelector('#productQty-' + id);
-  let qtyInput = document.querySelector('#qtyInput-' + id);
-  cart = JSON.parse(localStorage['cart']);
-  if (name in cart) {
-    console.log('name in cart');
+// let grouped = <?php echo json_encode($results) ?>;
 
-    qtyBtns.classList.remove("hidden");
-    addToCartBtn.classList.add("hidden");
-    qtyInput.value = cart[name].quantity;
-  } else {
-    qtyBtns.classList.add("hidden");
-    addToCartBtn.classList.remove("hidden");
-  }
-}
+// checkCartProducts(grouped);
+// function checkCartProducts(grouped) {
+//   for (let product of Object.values(grouped)) {
+
+//   let id = product.id;
+//   console.log(id)
+//   let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
+//   addBtn.forEach((btn) =>
+//     btn.addEventListener("click", (e) => {
+//       setTimeout(function(){
+//       checkLocalStorage(name, id);
+//     }, 100);
+//     })
+//   );
+//   checkLocalStorage(name, id);
+//   }
+// }
+// function checkLocalStorage(name, id) {
+//   let addToCartBtn = document.querySelector('#addToCartBtn-' + id);
+//   let qtyBtns = document.querySelector('#productQty-' + id);
+//   let qtyInput = document.querySelector('#qtyInput-' + id);
+//   cart = JSON.parse(localStorage['cart']);
+//   if (name in cart) {
+//     console.log('name in cart');
+
+//     qtyBtns.classList.remove("hidden");
+//     addToCartBtn.classList.add("hidden");
+//     qtyInput.value = cart[name].quantity;
+//   } else {
+//     qtyBtns.classList.add("hidden");
+//     addToCartBtn.classList.remove("hidden");
+//   }
+// }
 //When deleting a spesific product from cart
-document.addEventListener("click", (e) => {
-  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-  const input = document.getElementById('qtyInput');
-  if (e.target.dataset.id == "delete-product") {
-    for (let product of Object.values(grouped)) {
-      let name = product['ProductName'];
-      let id = product['ProductId'];
-      setTimeout(function(){
-      checkLocalStorage(name, id);
-      }, 100);
-    }
-  }
-});
+// document.addEventListener("click", (e) => {
+//   // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//   const input = document.getElementById('qtyInput');
+//   if (e.target.dataset.id == "delete-product") {
+//     for (let product of Object.values(grouped)) {
+//       let name = product['ProductName'];
+//       let id = product['ProductId'];
+//       setTimeout(function(){
+//       checkLocalStorage(name, id);
+//       }, 100);
+//     }
+//   }
+// });
 //When clearing cart
-document.addEventListener("click", (e) => {
-  const input = document.getElementById('qtyInput');
-  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
-    for (let product of Object.values(grouped)) {
-      let name = product['ProductName'];
-      let id = product['ProductId'];
-      setTimeout(function(){
-      checkLocalStorage(name, id);
-      }, 100);
-    }
-  }
-});
+// document.addEventListener("click", (e) => {
+//   const input = document.getElementById('qtyInput');
+//   if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+//     for (let product of Object.values(grouped)) {
+//       let name = product['ProductName'];
+//       let id = product['ProductId'];
+//       setTimeout(function(){
+//       checkLocalStorage(name, id);
+//       }, 100);
+//     }
+//   }
+// });
 // document.addEventListener("click", (e) => {
 //   const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 //   if (e.target.dataset.id == "qty+") {
@@ -345,47 +343,45 @@ document.addEventListener("click", (e) => {
 //     setTimeout(getCartQty(), 1000);
 //   }
 // });
-function lowerQty(id) {
-  let input = document.getElementById('qtyInput-' + id);
-  if (input.value > 1)
-  input.value = parseInt(input.value) - 1;
-}
-function higherQty(qty, id) {
-  let input = document.getElementById('qtyInput-' + id);
-  if (input.value < qty) {
-    input.value = parseInt(input.value) + 1;
-  } else {
-    const modal = document.getElementById("noMoreInStockModal");
-    const span = document.getElementsByClassName("close")[0];
+// function lowerQty(id) {
+//   let input = document.getElementById('qtyInput-' + id);
+//   if (input.value > 1)
+//   input.value = parseInt(input.value) - 1;
+// }
+// function higherQty(qty, id) {
+//   let input = document.getElementById('qtyInput-' + id);
+//   if (input.value < qty) {
+//     input.value = parseInt(input.value) + 1;
+//   } else {
+//     const modal = document.getElementById("noMoreInStockModal");
+//     const span = document.getElementsByClassName("close")[0];
 
-    document.addEventListener("click", (e) => {
+//     document.addEventListener("click", (e) => {
 
-      if (e.target.className == "fas fa-plus-circle open-modal") {
+//       if (e.target.className == "fas fa-plus-circle open-modal") {
 
-        modal.style.display = "block";
-        //close the modal
-        span.onclick = function () {
-          modal.style.display = "none";
-        };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        };
-        document.addEventListener("click", (e) => {
-          if (e.target.className == "cancel-btn") {
-            modal.style.display = "none";
-          }
-        });
-      }
-    });
-  }
-  // else{
-  //   alert('no more in stock')
-  // }
-}
-  // function checkLocalStorage(pruductName) {
-  //   console.log(productName);
-  // }
+//         modal.style.display = "block";
+//         //close the modal
+//         span.onclick = function () {
+//           modal.style.display = "none";
+//         };
+//         // clicks anywhere outside of the modal, close it
+//         window.onclick = function (event) {
+//           if (event.target == modal) {
+//             modal.style.display = "none";
+//           }
+//         };
+//         document.addEventListener("click", (e) => {
+//           if (e.target.className == "cancel-btn") {
+//             modal.style.display = "none";
+//           }
+//         });
+//       }
+//     });
+//   }
+//   // else{
+//   //   alert('no more in stock')
+//   // }
+// }
+
 </script>
