@@ -349,6 +349,7 @@
     document.addEventListener("click", (e) => {
       if (e.target.className == "close-cart") {
         cartDisplay.classList.toggle("hidden");
+        body.classList.toggle("noScroll");
       }
     });
   };
