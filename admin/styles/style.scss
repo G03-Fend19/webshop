@@ -10,3 +10,11 @@
 @import "./partials/category-table";
 @import "./partials/foot";
 @import "./partials/modal";
+
+.fa,
+.fas,
+.fab,
+.far {
+  font-family: "FontAwesome" !important;
+  font-style: unset !important;
+}

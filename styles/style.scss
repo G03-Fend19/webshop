@@ -14,3 +14,12 @@
 @import "./partials/ie_styles";
 @import "./partials/modal";
 @import "./partials/not_found";
+
+.fa,
+.fas,
+.fab,
+.far {
+  font-family: "FontAwesome" !important;
+  font-style: unset !important;
+  font-weight: 400 !important;
+}

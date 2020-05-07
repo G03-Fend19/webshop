@@ -214,13 +214,13 @@ foreach ($results as $product):
 													            <td>$price SEK</td>
 										                  <td>
 										                    <form action='./edit_product.php' method='POST'>
-										                      <button type='submit'><i class='fas fa-pen'></i></button>
+										                      <button type='submit'><i class='fa fa-pencil'></i></button>
 										                      <input type='hidden' name='p_id' value='$id'>
 										                    </form>
 										                  </td>
 													            <td>
 													                
-													              <button id='openModal' class='open-modal'><i class='far fa-trash-alt'></i></button>
+													              <button id='openModal' class='open-modal'><i class='fas fa-trash'></i></button>
 													             
                                         <div id='myModal' data-id='$id' class='modal'>
                                          <div class='modal__content'>

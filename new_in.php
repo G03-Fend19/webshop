@@ -132,11 +132,14 @@ $productCards .= "<article class='product-card'>
 					              <img class='product-thumb' src=./media/product_images/$productImg alt=''>
 										  </div>
 										</a>
-										<div class='product-card__content'>
+                    <div class='product-card__content'>
+                    <div class='product-card__text'>
 											<a href='product.php?product_id=$productId#main' class='product-card__product-link'>
 												$productName
 											</a>
-											$priceMsg
+                      $priceMsg
+                      $qtyMsg
+                      </div>
 											<button
 												data-id=$productId
 												data-name='$productName'
@@ -148,9 +151,9 @@ $productCards .= "<article class='product-card'>
                         id='addToCartBtn-$productId'>
                         <i class='fas fa-cart-plus'></i>
                       </button>
-                      <div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
-                        <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-                        <div
+                      <div class='amount hidden' id='productQty-$productId'>
+                        <input class='amount__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
+                        <div class='amount__btns'
                           data-id=$productId
                           data-name='$productName'
                           data-price=$productPrice
@@ -158,11 +161,10 @@ $productCards .= "<article class='product-card'>
                           data-stock=$productQty
                           data-discount=$discount 
                           >
-                          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-                          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
+                          <button class='amount__btns-minus' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
+                          <button class='amount__btns-plus' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
                         </div>
                       </div>
-                      $qtyMsg
 									  </div>
 									</article>";
 endforeach;

@@ -167,8 +167,8 @@
           @media (min-width: 1013px) {
             /*  width: 5vw;
             height: 10vh; */
-            height: 6.5vw;
-            width: 6.5vw;
+            height: 5vw;
+            width: 5vw;
           }
 
           :hover {
@@ -207,6 +207,8 @@
       line-height: 1;
       .in-store {
         font-size: 15px;
+        color: green;
+        font-weight: 900;
       }
       .few-in-store {
         font-size: 15px;
@@ -247,24 +249,44 @@
       &__amount {
         &__lable {
           display: block;
+
+          @media (max-width: 700px) {
+            padding-top: 0.5em;
+          }
         }
 
         &__qty-container {
           display: flex;
           align-items: center;
+          height: 100%;
+
+          div {
+            display: flex;
+          }
+
+          div:nth-child(2) {
+            height: 100%;
+            align-items: center;
+            margin-left: 0.5em;
+          }
 
           &__input {
             -moz-appearance: textfield;
-            width: 30px;
-            height: 30px;
+            width: 120px;
+            height: 35px;
             border-radius: 6px;
             border: 1px solid rgb(160, 160, 160);
             padding-left: 0.5em;
             font-size: 14px;
             margin-top: auto;
             margin-bottom: 3px;
-            margin-right: 0.3em;
+            margin-right: 0.5em;
             box-shadow: 1px 1px 3px rgb(96, 96, 96);
+
+            @media (min-width: 1000px) {
+              margin-top: unset;
+              margin-bottom: unset;
+            }
           }
 
           input[type="number"]::-webkit-inner-spin-button,
@@ -279,17 +301,21 @@
             margin: 1px;
             border: none;
             background: none;
+            cursor: pointer;
 
-            :hover {
-              cursor: pointer;
+            div:nth-child(1) {
+              margin-right: 0.5em;
             }
 
             .fa-minus-circle {
+              margin-right: 0.3em;
+              cursor: pointer;
               &:hover {
                 color: rgb(250, 84, 84);
               }
             }
             .fa-plus-circle {
+              cursor: pointer;
               &:hover {
                 color: rgb(22, 136, 22);
               }
@@ -297,7 +323,7 @@
 
             i {
               cursor: pointer;
-              font-size: 20px;
+              font-size: 30px;
               padding: 0;
               color: #54626a;
               // margin: 1px;
@@ -307,6 +333,7 @@
       }
 
       .add-to-cart-btn {
+        max-width: 250px;
         width: 100%;
         padding: 1em;
         display: flex;
@@ -322,16 +349,19 @@
         background: rgb(103, 136, 103);
         box-shadow: 1px 1px 3px rgb(96, 96, 96);
         cursor: pointer;
+        align-items: center;
 
         @media (min-width: 750px) {
+          margin-bottom: 150px;
         }
         @media (min-width: 1013px) {
-          margin-bottom: 100px;
+          // width: 50%;
+          margin-bottom: 140px;
         }
 
         .fa-cart-plus {
           font-size: 20px;
-          margin-top: 3px;
+          // margin-top: 3px;
           margin-left: 0.5em;
         }
 
@@ -345,6 +375,8 @@
 
   &__description {
     color: #32393e;
+    padding-top: 2em;
+    border-top: 0.2px solid #c6c6c6;
     @media (min-width: 750px) {
       grid-area: 2 / 1 / 3 / 3;
     }
@@ -359,5 +391,18 @@
 
   .hidden {
     display: none;
+  }
+}
+
+.elementToFadeInAndOut {
+  animation: fadeInOut 250ms linear forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

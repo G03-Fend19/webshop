@@ -71,7 +71,7 @@ $allProductsArr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </footer>
 <script>let allProductsFromPHP = <?php echo json_encode($allProductsArr);?>; </script>
 <script src="./cart.js"></script>
-<script src="https://kit.fontawesome.com/06088ec039.js" crossorigin="anonymous"></script>
+<!-- <script src="https://kit.fontawesome.com/06088ec039.js" crossorigin="anonymous"></script> -->
 <script src="./search_validation.js"></script>
 <script src="./toggle_menu.js"></script>
 </body>

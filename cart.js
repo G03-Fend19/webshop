@@ -40,6 +40,18 @@
       console.log(productData);
 
       let qty;
+      document.querySelector("#qtyInput")
+        ? (qty = document.querySelector("#qtyInput").value)
+        : (qty = 1);
+      qty;
+      createProduct(productData, qty);
+    })
+  );
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      cartCount.classList.remove("hidden");
+      const productData = e.target.parentNode.dataset;
+      let qty;
       document.querySelector("#qtyInput-product-page")
         ? (qty = document.querySelector("#qtyInput-product-page").value)
         : (qty = 1);
@@ -151,7 +163,7 @@
       cartMenu.innerHTML += `
        <button class="open-modal" id="myBtn">
        Clear Cart 
-       <i id="delete-product"class="fas fa-trash-alt"></i></button>
+       <i id="delete-product"class="fas fa-trash"></i></button>
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;

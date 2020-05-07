@@ -185,6 +185,7 @@ $productCards .= "<article class='product-card'>
                      
                           $qtyMsg
                           </div>
+                          </div>
                       </article>";
 endforeach;
 $productsContainer .= $productCards;

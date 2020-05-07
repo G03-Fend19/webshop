@@ -100,7 +100,7 @@ select {
   }
 }
 
-.admin__header nav, .aside, .admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .form__image-section button, .upload-form, .upload-form .upload-btn, .main__admin__dashboard .dashboard__box, .main__admin .main__category-table {
+.admin__header nav, .aside, .admin__tables__text button, .admin__tables table, .form__group, .form__image-section, .form button, .upload-form, .upload-form .upload-btn, .main__admin__dashboard .dashboard__box, .main__admin .main__category-table {
   background: white;
   padding: 1em;
   -webkit-box-shadow: 4px 4px 5px rgba(226, 226, 226, 0.233);
@@ -127,7 +127,7 @@ select {
   padding: 0.5em 1em;
 }
 
-.admin__tables__text button, .form__image-section button, .upload-form .upload-btn, .add-product-btn, .main__admin__addCategory {
+.admin__tables__text button, .form button, .upload-form .upload-btn, .add-product-btn, .main__admin__addCategory {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -508,15 +508,19 @@ a {
   display: flex;
 }
 
-.form__image-section button {
+.form button {
   cursor: pointer;
+  -ms-grid-column-align: right;
+      justify-self: right;
+  margin-right: 10px;
+  margin-top: 2em;
 }
 
-.form__image-section button i {
+.form button i {
   margin-left: 0.5em;
 }
 
-.form__image-section button:hover {
+.form button:hover {
   -webkit-transition: ease-in 250ms;
   transition: ease-in 250ms;
   -webkit-transform: scale(1.025);
@@ -638,10 +642,18 @@ label.form__image-section__selection > div > button {
 }
 
 .featured-image {
+<<<<<<< Updated upstream
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   -webkit-box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
           box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
+=======
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 }
 
 select {
@@ -1085,5 +1097,13 @@ footer p {
     top: 0;
     opacity: 1;
   }
+}
+
+.fa,
+.fas,
+.fab,
+.far {
+  font-family: "FontAwesome" !important;
+  font-style: unset !important;
 }
 /*# sourceMappingURL=style.css.map */

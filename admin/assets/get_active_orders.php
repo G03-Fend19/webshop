@@ -110,7 +110,7 @@ echo "<div class='active-orders__filter'>
         </select>
         <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)' placeholder='Filter by city'>
       </div>
-      <table id='activetable'>
+      <table id='activetable' class='ordertable'>
         <thead>
           <tr>
             <th>Order number </th>
@@ -137,6 +137,7 @@ foreach($activeOrdersGrouped as $key => $order):
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
   $productsArr = $order['Products'];
+  $returnUrl = $_SERVER['REQUEST_URI'];
   $productsTr = "";
   foreach ($productsArr as $key => $product) {
     $productName = htmlspecialchars($product['ProductName']);
@@ -185,6 +186,7 @@ foreach($activeOrdersGrouped as $key => $order):
             </option>
            </select>
            <input type='hidden' name='o_id' value='$orderNumber'>
+           <input type='hidden' name='returnUrl' value='$returnUrl'>
            </form>
           </td>
           <td>
