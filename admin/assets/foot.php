@@ -6,6 +6,8 @@
 </footer>
 <script src="active_pages.js">
 </script>
+<script src="order_page_functions.js">
+</script>
 </body>
 
 </html>
