@@ -510,9 +510,6 @@ a {
 
 .form button {
   cursor: pointer;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
   -ms-grid-column-align: right;
       justify-self: right;
   margin-right: 10px;
@@ -645,10 +642,15 @@ label.form__image-section__selection > div > button {
 }
 
 .featured-image {
+<<<<<<< Updated upstream
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   -webkit-box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
           box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
+=======
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+>>>>>>> Stashed changes
 }
 
 select {
@@ -1092,5 +1094,13 @@ footer p {
     top: 0;
     opacity: 1;
   }
+}
+
+.fa,
+.fas,
+.fab,
+.far {
+  font-family: "FontAwesome" !important;
+  font-style: unset !important;
 }
 /*# sourceMappingURL=style.css.map */
