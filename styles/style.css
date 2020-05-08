@@ -1295,7 +1295,6 @@ footer {
 }
 
 .display-products .product-card__text .price_display {
-  max-width: 70px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2512,6 +2511,12 @@ footer {
   position: relative;
   height: 100%;
   width: 100%;
+}
+
+@media (max-width: 450px) {
+  .img-wrapper {
+    height: 250px;
+  }
 }
 
 .new-in {

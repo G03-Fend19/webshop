@@ -60,8 +60,8 @@
 
       </section>
       <div class="header__hero__text">
-        <h1>Spring vibes</h1>
-        <p class="desc__hero__text">More new amazing products in stock...</p>
+        <h1>Meet the team</h1>
+        <p class="desc__hero__text">How can we help you?</p>
       </div>
 
       <div id="myModal" class="modal">
