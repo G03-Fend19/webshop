@@ -156,7 +156,7 @@ a {
   -ms-grid-rows: auto 1fr;
   -ms-grid-columns: 1fr;
       grid-template: auto 1fr / 1fr;
-  width: 100vw;
+  /*   width: 100vw; */
 }
 
 .header nav {
@@ -166,7 +166,9 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100vw;
+  /* width: 100vw; */
+  left: 0;
+  right: 0;
   height: 70px;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -433,6 +435,8 @@ a {
 }
 
 .searchform__searchBtn {
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
   width: 40px;
   padding: 8.3px;
   margin: 0;
@@ -915,8 +919,9 @@ footer {
 .footer__foot {
   background: #828a8e;
   color: #d8d8d8;
-  width: 100vw;
+  /* width: 100vw; */
   left: 0;
+  right: 0;
   padding: 1em;
   margin-top: 20px;
   position: absolute;
@@ -1396,6 +1401,8 @@ footer {
 }
 
 .display-products .amount__btns-minus {
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
   padding: 0;
   color: #54626a;
   margin: 1px;
@@ -1408,6 +1415,8 @@ footer {
 }
 
 .display-products .amount__btns-plus {
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
   padding: 0;
   color: #54626a;
   margin: 1px;
@@ -1852,6 +1861,8 @@ footer {
 }
 
 .cart__product__info__btns {
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2822,6 +2833,27 @@ footer {
   color: red;
 }
 
+.product-section__rigth__actions__amount {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (min-width: 750px) {
+  .product-section__rigth__actions__amount {
+    margin-bottom: 150px;
+  }
+}
+
+@media (min-width: 1013px) {
+  .product-section__rigth__actions__amount {
+    margin-bottom: 140px;
+  }
+}
+
 .product-section__rigth__actions__amount__lable {
   display: block;
 }
@@ -2922,7 +2954,7 @@ footer {
 }
 
 .product-section__rigth__actions .add-to-cart-btn {
-  max-width: 250px;
+  max-width: 200px;
   width: 100%;
   padding: 1em;
   display: -webkit-box;
@@ -2934,7 +2966,7 @@ footer {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 60px;
+  height: 35px;
   margin-bottom: 20px;
   margin-top: 20px;
   border: none;
@@ -3362,7 +3394,7 @@ footer {
 }
 
 .contact__wrapper {
-  width: 100vw;
+  /*  width: 100vw; */
   background: #828a8e5a;
   padding: 2em;
 }
