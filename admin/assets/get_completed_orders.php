@@ -15,7 +15,7 @@ ws_orders_products.product_id AS OrderProductId,
 ws_products.name            AS ProductName,
 ws_products.price           AS ProductPrice,
 ws_products.description      AS ProductDesc,
-ws_products.id              AS ProductId
+ws_products.id              AS ProductId,
 ws_products.stock_qty       AS Stock, 
 ws_products.added_date      AS ProductDate
 
@@ -65,6 +65,8 @@ ws_orders_products.product_qty > 0
         "ProductDesc" => $row["ProductDesc"],
         "ProductId" => $row["ProductId"],
         "ProductQty" => $row["OrderProductQty"],
+        "ProductDate" => $row["ProductDate"],
+        "Stock" => $row["Stock"],
         
       ];
     } else {
@@ -89,6 +91,7 @@ ws_orders_products.product_qty > 0
           "ProductDesc" => $row["ProductDesc"],
           "ProductId" => $row["ProductId"],
           "ProductQty" => $row["OrderProductQty"],
+          "ProductDate" => $row["ProductDate"],
           "Stock" => $row["Stock"],
         ];
       }

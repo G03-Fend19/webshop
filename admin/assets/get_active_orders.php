@@ -43,7 +43,7 @@
           ON 
             ws_products.id = ws_orders_products.product_id  
           WHERE
-            ws_orders_products.product_qty > 0
+            ws_orders_products.product_qty >= 0
           ";
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -65,6 +65,7 @@
         "ProductId" => $row["ProductId"],
         "ProductQty" => $row["OrderProductQty"],
         "ProductDate" => $row["ProductDate"],
+        "Stock" => $row["Stock"],
       ];
     } else {
       $activeOrdersGrouped[$currentOrderNumber] = [
@@ -88,7 +89,8 @@
           "ProductDesc" => $row["ProductDesc"],
           "ProductId" => $row["ProductId"],
           "ProductQty" => $row["OrderProductQty"],
-          "Stock" => $row["Stock"]
+          "ProductDate" => $row["ProductDate"],
+          "Stock" => $row["Stock"],
         ];
       }
     }
@@ -150,7 +152,7 @@ foreach($activeOrdersGrouped as $key => $order):
   }
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productDesc = htmlspecialchars($product['ProductDesc']);
-    $stock = htmlspecialchars($product['stock']);
+    $stock = htmlspecialchars($product['Stock']);
     $ProductDate = htmlspecialchars($product['ProductDate']);
     if (strlen($productDesc) > 20) {
       $productDesc = substr($productDesc, 0, 20) . "...";
