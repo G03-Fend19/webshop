@@ -37,7 +37,6 @@
       const [productData] = allProductsFromPHP.filter((product) => {
         return product.ProductId === e.target.dataset.id;
       });
-      console.log(productData);
 
       let qty;
       document.querySelector("#qtyInput")
@@ -177,9 +176,9 @@
         .map((product) => {
           priceDisplay = "";
           if (cart[product].discount === 1) {
-            priceDisplay = `<p class='price'> ${
+            priceDisplay = `<p class='price'> ${Math.ceil(
               cart[product].quantity * cart[product].price
-            } SEK</p>`;
+            )} SEK</p>`;
           } else {
             priceDisplay = `<p class='price__line-through'> ${
               cart[product].quantity * cart[product].price
@@ -199,8 +198,8 @@
            ${cart[product].name}
       </p>
       <div class="cart__product__info__btns">
-      <input type="number" min="1" max="100" data-productId='${cart[product].id}' class="cart__product__info__btns__qty qty-input" value="${cart[product].quantity}">
-      </input>
+      <input type="number" min="1"  data-productId='${cart[product].id}' class="cart__product__info__btns__qty qty-input" value="${cart[product].quantity}">
+
       <i data-id="qty-" data-productId='${cart[product].id}' data-value="-1" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" data-productId='${cart[product].id}' data-value="1" class="changeQty fas fa-plus-circle open-modal"></i>
       <i data-id="delete-product"class="delete-product fas fa-trash"></i>
