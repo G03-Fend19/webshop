@@ -211,6 +211,8 @@
   }
 
   &__searchBtn {
+    
+    touch-action: manipulation;
     width: 40px;
     padding: 8.3px;
     margin: 0;

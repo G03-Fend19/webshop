@@ -189,6 +189,9 @@
       gap: 10px;
       margin: auto;
       &__btns {
+        
+      
+        touch-action: manipulation;
         display: flex;
         justify-content: space-evenly;
         width: 80%;
