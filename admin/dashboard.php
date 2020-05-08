@@ -175,6 +175,7 @@ foreach($activeOrdersGrouped as $key => $order):
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
   $productsArr = $order['Products'];
   $productsTr = "";
+  $returnUrl = $_SERVER['REQUEST_URI'];
 
 
   foreach ($productsArr as $key => $product) {
@@ -223,6 +224,7 @@ foreach($activeOrdersGrouped as $key => $order):
               </option>
             </select>
             <input type='hidden' name='o_id' value='$orderNumber'>
+            <input type='hidden' name='returnUrl' value='$returnUrl'>
             </form>
             </td>
             <td>

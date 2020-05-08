@@ -1,6 +1,4 @@
 <?php
-
-
 $sql = "SELECT 
 ws_completed_orders.id         AS OrderNumber,
 ws_completed_orders.order_date AS OrderDate,
@@ -106,7 +104,7 @@ echo "<div class='completed-orders__filter'>
         <h3>Filter orders</h3>
         <input type='text' id='completedTextFilter' oninput='filterOrders(completedOrdersFromPHP)' placeholder='Filter by city'>
       </div>
-      <table id='completedtable'>
+      <table id='completedtable' class='ordertable'>
       <thead>
       <tr>
       <th>Order number</th>

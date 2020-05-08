@@ -1,3 +1,20 @@
+let position = parseFloat(localStorage.getItem('page_position'));
+if (position) {
+  console.log(position)
+  document.documentElement.scrollTop = document.body.scrollTop = position + 200
+  window.scrollTo(0, position)
+  localStorage.removeItem('page_position');
+}
+// let rowId = localStorage.getItem('row');
+// if (rowId) {
+//   let row = document.getElementById(`${rowId}`)
+//   let rowPosition = row.getBoundingClientRect().top
+//   window.scrollTo(0, rowPosition - 90)
+//   console.log(row)
+//   localStorage.removeItem('row');
+// }
+
+
 function filterOrders(orders) {
   let orderType;
   Object.keys(orders).forEach(function (order) {
@@ -108,12 +125,19 @@ function filterOrders(orders) {
       hiddenStatusSelectInput.setAttribute("type", "hidden");
       hiddenStatusSelectInput.setAttribute("name", "o_id");
       hiddenStatusSelectInput.setAttribute("value", order["OrderNumber"]);
+      const hiddenReturnURLInput = document.createElement("input");
+      hiddenReturnURLInput.setAttribute("type", "hidden");
+      hiddenReturnURLInput.setAttribute("name", "returnUrl");
+      let returnUrl = window.location.href
+      console.log(returnUrl)
+      hiddenReturnURLInput.setAttribute("value", returnUrl);
 
       statusSelect.appendChild(statusOPending);
       statusSelect.appendChild(statusOInProgress);
       statusSelect.appendChild(statusOCompleted);
       statusForm.appendChild(statusSelect);
       statusForm.appendChild(hiddenStatusSelectInput);
+      statusForm.appendChild(hiddenReturnURLInput);
       tdStatus.appendChild(statusForm);
     } else {
       tdStatus.innerHTML = order["OrderStatus"];
@@ -183,11 +207,18 @@ function updateStatus(orderToUpdate) {
     });
 
     changeStatusBtn.addEventListener("click", (e) => {
+      let pagePosition = window.pageYOffset
+      localStorage.setItem("page_position", pagePosition);
       modal.style.display = "none";
       shouldUpdate == true;
       updateStatusForm.submit();
     });
   } else {
+    // let thisRowId = this.event["target"].id;
+    // localStorage.setItem("row", thisRowId);
+    // let pagePosition = thisRow.getBoundingClientRect().top
+    // localStorage.setItem("page_position", pagePosition);
+    localStorage.setItem("page_position", window.pageYOffset)
     updateStatusForm.submit();
   }
 }

@@ -212,8 +212,8 @@ if (isset($imgList) && !empty($imgList)) {
       <h2 class='product-section__rigth__info__price'><?php echo $priceMsg ?></h2>
       <?php echo $qtyMsg ?>
     </div>
-    <div class='product-section__rigth__actions'>
-      <div class='product-section__rigth__actions__amount hidden'>
+    <div class='product-section__rigth__actions' data-id=<?php echo $id ?>>
+      <!-- <div class='product-section__rigth__actions__amount amount hidden'>
         <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
         <div class='product-section__rigth__actions__amount__qty-container'>
           <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-product-page' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
@@ -226,15 +226,15 @@ if (isset($imgList) && !empty($imgList)) {
             data-discount=<?php echo $discount ?>
             >
 
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle open-modal"></i></button>
-          </div>
+          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
+          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle open-modal"></i></button>
+        </div>
 
         </div>
-      </div>
+      </div> -->
 
       <!-- <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button> -->
-      <div
+      <!-- <div
           data-id=<?php echo $id ?>
           data-name='<?php echo $name ?>'
           data-price=<?php echo $price ?>
@@ -244,7 +244,23 @@ if (isset($imgList) && !empty($imgList)) {
           data-quantity=
           >
         <button class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>
-      </div>
+      </div> -->
+
+<button data-id=<?php echo $id ?> class='add-to-cart-btn' id='addToCartBtn-<?php echo $id ?>'>
+  <i class='fas fa-cart-plus'></i>
+</button>
+<div class='amount hidden' id='productQty<?php echo $id ?>' data-id=<?php echo $id ?>>
+
+  <input type='number' min='1' data-productId=<?php echo $id ?> class='cart__product__info__btns__qty qty-input' value>
+  <div class='amount__btns' data-id=<?php echo $id ?>>
+
+    <button class='amount__btns-minus'>
+      <i data-id='qty-' data-productId=<?php echo $id ?> data-value='-1' class='changeQty fas fa-minus-circle'></i>
+    </button>
+    <button class='amount__btns-plus' >
+      <i data-id='qty+' data-productId=<?php echo $id ?> data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+    </button>
+
 
     </div>
   </div>
@@ -259,69 +275,67 @@ if (isset($imgList) && !empty($imgList)) {
 
 
 
-getCartQty();
+// getCartQty();
 
-checkLocalStorage();
+// checkLocalStorage();
 
-function getCartQty() {
-  const getCart = () => {
-    cart = JSON.parse(localStorage.getItem("cart"));
-    !cart ? (cart = {}) : null;
-  };
-  getCart();
+// function getCartQty() {
+//   const getCart = () => {
+//     cart = JSON.parse(localStorage.getItem("cart"));
+//     !cart ? (cart = {}) : null;
+//   };
+//   getCart();
 
-  let input = document.getElementById('qtyInput-product-page');
-  let name = "<?php echo $name; ?>";
-  if (cart[name]) {
-    input.value = cart[name].quantity;
-  }
-}
+//   let input = document.getElementById('qtyInput-product-page');
+//   let name = "<?php echo $name; ?>";
+//   if (cart[name]) {
+//     input.value = cart[name].quantity;
+//   }
+// }
 
-function lowerQty() {
-  let input = document.getElementById('qtyInput-product-page');
+// function lowerQty() {
+//   let input = document.getElementById('qtyInput-product-page');
 
-  if (input.value > 1)
-  input.value = parseInt(input.value) - 1;
-}
+//   if (input.value > 1)
+//   input.value = parseInt(input.value) - 1;
+// }
 
-function higherQty(qty) {
-  let input = document.getElementById('qtyInput-product-page');
-  // let button = document.getElementById('higherBtn');
+// function higherQty(qty) {
+//   let input = document.getElementById('qtyInput-product-page');
+//   // let button = document.getElementById('higherBtn');
 
-  if (input.value < qty) {
-    input.value = parseInt(input.value) + 1;
-  } else {
+//   if (input.value < qty) {
+//     input.value = parseInt(input.value) + 1;
+//   } else {
 
-    const modal = document.getElementById("noMoreInStockModal");
-    const span = document.getElementsByClassName("close")[0];
+//     const modal = document.getElementById("noMoreInStockModal");
+//     const span = document.getElementsByClassName("close")[0];
 
-    document.addEventListener("click", (e) => {
+//     document.addEventListener("click", (e) => {
 
-      if (e.target.className == "fas fa-plus-circle open-modal") {
+//       if (e.target.className == "fas fa-plus-circle open-modal") {
 
-        modal.style.display = "block";
-        //close the modal
-        span.onclick = function () {
-          modal.style.display = "none";
-        };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        };
-        document.addEventListener("click", (e) => {
-          if (e.target.className == "cancel-btn") {
-            modal.style.display = "none";
-          }
-        });
-      }
-    });
-  }
-  // else{
-  //   alert('no more in stock')
-  // }
-}
+//         modal.style.display = "block";
+//         //close the modal
+//         span.onclick = function () {
+//           modal.style.display = "none";
+//         };
+//         // clicks anywhere outside of the modal, close it
+//         window.onclick = function (event) {
+//           if (event.target == modal) {
+//             modal.style.display = "none";
+//           }
+//         };
+//         document.addEventListener("click", (e) => {
+//           if (e.target.className == "cancel-btn") {
+//             modal.style.display = "none";
+//           }
+//         });
+//       }
+//     });
+//   }
+
+// }
 
 const imgList = <?php if (isset($imgList) && !empty($imgList)) {
     echo json_encode($imgList);
@@ -358,17 +372,17 @@ function prevImg() {
   }
 }
 
-function checkLocalStorage() {
-  addToCartBtn = document.querySelector('.add-to-cart-btn');
-  qtyBtns = document.querySelector('.product-section__rigth__actions__amount');
-  let name = "<?php echo "$name" ?>";
-  cart = JSON.parse(localStorage['cart']);
+// function checkLocalStorage() {
+//   addToCartBtn = document.querySelector('.add-to-cart-btn');
+//   qtyBtns = document.querySelector('.product-section__rigth__actions__amount');
+//   let name = "<?php echo "$name" ?>";
+//   cart = JSON.parse(localStorage['cart']);
 
-  if (cart[name]) {
-    qtyBtns.classList.remove("hidden");
-    addToCartBtn.classList.add("hidden");
-  }
-}
+//   if (cart[name]) {
+//     qtyBtns.classList.remove("hidden");
+//     addToCartBtn.classList.add("hidden");
+//   }
+// }
 
 
 // const deleteSingleProduct = document.getElementById("deleteSingleProduct");
@@ -383,54 +397,54 @@ function checkLocalStorage() {
 // })
 
 
-const addBtn = document.querySelector(".add-to-cart-btn");
-addBtn.addEventListener("click", function() {
+// const addBtn = document.querySelector(".add-to-cart-btn");
+// addBtn.addEventListener("click", function() {
 
-  setTimeout(function(){
-    checkLocalStorage();
-  }, 300);
-});
+//   setTimeout(function(){
+//     checkLocalStorage();
+//   }, 300);
+// });
 
 
 //When deleting a spesific product from cart
-document.addEventListener("click", (e) => {
-  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-  const input = document.getElementById('qtyInput-product-page');
+// document.addEventListener("click", (e) => {
+//   // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//   const input = document.getElementById('qtyInput-product-page');
 
-  if (e.target.dataset.id == "delete-product") {
-    const name = "<?php echo "$name" ?>";
-    const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-    cart = JSON.parse(localStorage['cart']);
+//   if (e.target.dataset.id == "delete-product") {
+//     const name = "<?php echo "$name" ?>";
+//     const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//     cart = JSON.parse(localStorage['cart']);
 
-    if (cart[name] == cart[productId]) {
-      qtyBtns.classList.add("hidden");
-      addToCartBtn.classList.remove("hidden");
-      input.value = 1;
-    }
-  }
-});
+//     if (cart[name] == cart[productId]) {
+//       qtyBtns.classList.add("hidden");
+//       addToCartBtn.classList.remove("hidden");
+//       input.value = 1;
+//     }
+//   }
+// });
 
 
 //When clearing cart
-document.addEventListener("click", (e) => {
-  const input = document.getElementById('qtyInput-product-page');
-  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
-    qtyBtns.classList.add("hidden");
-    addToCartBtn.classList.remove("hidden");
-    input.value = 1;
-  }
-});
+// document.addEventListener("click", (e) => {
+//   const input = document.getElementById('qtyInput-product-page');
+//   if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+//     qtyBtns.classList.add("hidden");
+//     addToCartBtn.classList.remove("hidden");
+//     input.value = 1;
+//   }
+// });
 
-document.addEventListener("click", (e) => {
-  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+// document.addEventListener("click", (e) => {
+//   const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
-  if (e.target.dataset.id == "qty+") {
-    setTimeout(getCartQty(), 1000);
+//   if (e.target.dataset.id == "qty+") {
+//     setTimeout(getCartQty(), 1000);
 
-  } else if (e.target.dataset.id == "qty-") {
-    setTimeout(getCartQty(), 1000);
-  }
-});
+//   } else if (e.target.dataset.id == "qty-") {
+//     setTimeout(getCartQty(), 1000);
+//   }
+// });
 
 
 

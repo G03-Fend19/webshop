@@ -1,4 +1,40 @@
-function sortTable(n) {
+let presetSortMethod = localStorage.getItem("sort_method");
+let comparedTd = localStorage.getItem("table_data");
+let tableId = localStorage.getItem("table_id");
+const tables = document.getElementsByClassName('ordertable')
+let tableExistOnPage = false;
+
+
+
+
+if (presetSortMethod) {
+  for (let i = 0; i < tables.length; i++) {
+    if (tables[i].id == tableId) {
+      tableExistOnPage = true;
+      break;
+    }
+  }
+}
+
+if (tableExistOnPage) {
+  switch (presetSortMethod) {
+    case "price":
+      console.log("price")
+      sortTable(comparedTd, tableId);
+      break;
+    case "date":
+      console.log("date")
+      sortTableDate(comparedTd, tableId);
+      break;
+    default:
+      console.log("status")
+      sortTableStatus(comparedTd, tableId);
+      break;
+  }
+}
+
+
+function sortTable(n, clickedTableId) {
   var table,
     rows,
     switching,
@@ -9,8 +45,9 @@ function sortTable(n) {
     dir,
     switchcount = 0,
     reverse;
-
-  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  if (!clickedTableId) {
+    clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  }
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -52,9 +89,12 @@ function sortTable(n) {
       }
     }
   }
+  localStorage.setItem("table_data", n)
+  localStorage.setItem("sort_method", "price")
+  localStorage.setItem("table_id", clickedTableId)
 }
 
-function sortTableDate(n) {
+function sortTableDate(n, clickedTableId) {
   var table,
     rows,
     switching,
@@ -65,7 +105,9 @@ function sortTableDate(n) {
     dir,
     switchcount = 0,
     reverse;
-  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  if (!clickedTableId) {
+    clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  }
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -107,9 +149,12 @@ function sortTableDate(n) {
       }
     }
   }
+  localStorage.setItem("table_data", n)
+  localStorage.setItem("sort_method", "date")
+  localStorage.setItem("table_id", clickedTableId)
 }
 
-function sortTableStatus(n) {
+function sortTableStatus(n, clickedTableId) {
   var table,
     rows,
     switching,
@@ -120,7 +165,9 @@ function sortTableStatus(n) {
     dir,
     switchcount = 0,
     reverse;
-  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  if (!clickedTableId) {
+    clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  }
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -169,4 +216,7 @@ function sortTableStatus(n) {
       }
     }
   }
+  localStorage.setItem("table_data", n)
+  localStorage.setItem("sort_method", "status")
+  localStorage.setItem("table_id", clickedTableId)
 }

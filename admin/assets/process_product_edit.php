@@ -39,20 +39,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "</pre>"; */
 
     $stringImages = serialize($images);
-
-    if (empty($title) || empty($description) || empty($category_id) || $price == "" || $price == null || $qty == "" || $qty == null) {
-        header("Location: ../edit_product.php?formerror=empty&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty&images=$stringImages");
+    $descrip_error=urlencode($description);
+     if (empty($title) || empty($description) || empty($category_id) || $price == "" || $price == null || $qty == "" || $qty == null) {
+        header("Location:../edit_product.php?formerror=empty&id=$p_id&title=$title&descrip=$descrip_error&category=$category_id&price=$price&qty=$qty&images=$stringImages");  
         exit();
     } elseif ($stmt_duplicate->fetch(PDO::FETCH_ASSOC)) {
-        header("Location: ../edit_product.php?formerror=duplicate&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty&images=$stringImages");
+        header("Location:../edit_product.php?formerror=duplicate&id=$p_id&title=$title&descrip=$descrip_error&category=$category_id&price=$price&qty=$qty&images=$stringImages");   
         exit();
     } elseif ($price < 0 || $qty < 0) {
-        header("Location: ../edit_product.php?formerror=negative&id=$p_id&title=$title&descrip=$description&category=$category_id&price=$price&qty=$qty&images=$stringImages");
+        header("Location:../edit_product.php?formerror=negative&id=$p_id&title=$title&descrip=$descrip_error&category=$category_id&price=$price&qty=$qty&images=$stringImages");  
         exit();
     }
-    ;
+    
+/*     header("Location:../edit_product.php?formerror=duplicate&id=$p_id&title=$title&descrip=$descrip_error");
+ */
 
-//Updating the product and category-relationship
+    //Updating the product and category-relationship
     // $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, 1);
 
     $sql = "UPDATE ws_products

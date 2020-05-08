@@ -182,9 +182,9 @@ require_once './assets/aside-navigation.php';
           // 3. Push all images from db to localStorage
           if (imagesFromLocalStorage.length > 0) {
             imagesFromDb.forEach((imgObj, index) => {
-              if(!deletedImages.includes(imgObj.img)){
-                Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj);
-              }
+              if(!deletedImages.includes(imgObj.img) || !imagesFromLocalStorage.includes(imgObj)){
+                Object.values(imagesFromLocalStorage[index]).indexOf(imgObj.img) > -1 ? null : imagesFromLocalStorage.push(imgObj); 
+              } 
 
             });
 
@@ -192,8 +192,7 @@ require_once './assets/aside-navigation.php';
           else {
 
             imagesFromDb.forEach((imgObj, index) => {
-              if(!deletedImages.includes(imgObj.img)){
-
+              if(!deletedImages.includes(imgObj.img) || !imagesFromLocalStorage.includes(imgObj)){                
                 imagesFromLocalStorage.push(imgObj);
               }
             });
@@ -218,7 +217,7 @@ require_once './assets/aside-navigation.php';
 
             updateImageSection.innerHTML = ''
             imagesFromLocalStorage.map(imgObj => {
-              console.log(imgObj['feature'] == 1)
+           
               if (!deletedImages.includes(imgObj['img'])) {
 
               updateImageSection.innerHTML += `
@@ -359,7 +358,7 @@ if (!isset($_GET['formerror'])) {
 
 ?>
       </div>
-      <button type="submit">Save</button>
+      <button id="saveBtn" type="submit">Save</button>
   </form>
 </main>
 <script src="functions.js"></script>
@@ -412,6 +411,17 @@ if (JSON.parse(localStorage.getItem('product_form'))) {
 
   localStorage.removeItem('product_form');
 }
+
+
+window.onbeforeunload = function(event){
+ event.preventDefault = true; 
+  
+  if (document.activeElement.id != "saveBtn") {
+     localStorage.removeItem('images');
+      localStorage.removeItem('deleted');
+  }
+};
+
 
 
 

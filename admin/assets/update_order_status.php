@@ -4,6 +4,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   require_once "../../db.php";
   $orderId = $_POST['o_id'];
   $newStatusId = $_POST['statusSelect' . $orderId];
+  $returnUrl = $_POST['returnUrl'];
 
   if ($newStatusId !== "3") {
     $sql = "UPDATE ws_active_orders
@@ -49,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $deleteActiveOrderStmt->execute();
   }
 }
-header("Location: ../orders_page.php");
+header("Location:" . $returnUrl);
 
 // if(isset($_GET['order_id']))
 // $sql = "UPDATE ws_active_orders SET "
