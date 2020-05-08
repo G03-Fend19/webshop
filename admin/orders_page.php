@@ -34,7 +34,7 @@ $headline = $_GET['orders'] . " orders";
 ?>
 
   <script src="./SortTables.js"></script>
-  <script src="order_page_functions.js"></script>
+  <!-- <script src="order_page_functions.js"></script> -->
   <?php
 echo '</main>';
 require_once "assets/foot.php"
