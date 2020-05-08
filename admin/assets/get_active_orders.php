@@ -59,38 +59,38 @@
     $currentOrderNumber = $row['OrderNumber'];
     if(isset($activeOrdersGrouped[$currentOrderNumber])) {
       $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
-        "ProductName" => $row["ProductName"],
-        "ProductPrice" => $row["ProductPrice"],
-        "ProductDesc" => $row["ProductDesc"],
-        "ProductId" => $row["ProductId"],
-        "ProductQty" => $row["OrderProductQty"],
-        "ProductDate" => $row["ProductDate"],
-        "Stock" => $row["Stock"],
+        "ProductName" => htmlspecialchars($row["ProductName"]),
+        "ProductPrice" => htmlspecialchars($row["ProductPrice"]),
+        "ProductDesc" => htmlspecialchars($row["ProductDesc"]),
+        "ProductId" => htmlspecialchars($row["ProductId"]),
+        "ProductQty" => htmlspecialchars($row["OrderProductQty"]),
+        "ProductDate" => htmlspecialchars($row["ProductDate"]),
+        "Stock" => htmlspecialchars($row["Stock"]),
       ];
     } else {
       $activeOrdersGrouped[$currentOrderNumber] = [
         "Products" => [],
-        "OrderType" => $orderType,
-        "OrderNumber" => $row['OrderNumber'],
-        "OrderDate" => $row['OrderDate'],
-        "OrderCost" => $row["OrderCost"],
-        "CustomerFirstName" => $row["CustomerFirstName"],
-        "CustomerLastName" => $row["CustomerLastName"],
-        "DeliveryCity" => $row["DeliveryCity"],
-        "DeliveryStreet" => $row["DeliveryStreet"],
-        "DeliveryPostal" => $row["DeliveryPostal"],
-        "OrderStatus" => $row["OrderStatus"],
-        "OrderStatusId" => $row["OrderStatusId"],
+        "OrderType" => htmlspecialchars($orderType),
+        "OrderNumber" => htmlspecialchars($row['OrderNumber']),
+        "OrderDate" => htmlspecialchars($row['OrderDate']),
+        "OrderCost" => htmlspecialchars($row["OrderCost"]),
+        "CustomerFirstName" => htmlspecialchars($row["CustomerFirstName"]),
+        "CustomerLastName" => htmlspecialchars($row["CustomerLastName"]),
+        "DeliveryCity" => htmlspecialchars($row["DeliveryCity"]),
+        "DeliveryStreet" => htmlspecialchars($row["DeliveryStreet"]),
+        "DeliveryPostal" => htmlspecialchars($row["DeliveryPostal"]),
+        "OrderStatus" => htmlspecialchars($row["OrderStatus"]),
+        "OrderStatusId" => htmlspecialchars($row["OrderStatusId"]),
       ];
       if ($row['OrderProductId']) {
         $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
-          "ProductName" => $row["ProductName"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductDesc" => $row["ProductDesc"],
-          "ProductId" => $row["ProductId"],
-          "ProductQty" => $row["OrderProductQty"],
-          "ProductDate" => $row["ProductDate"],
-          "Stock" => $row["Stock"],
+          "ProductName" => htmlspecialchars($row["ProductName"]),
+          "ProductPrice" => htmlspecialchars($row["ProductPrice"]),
+          "ProductDesc" => htmlspecialchars($row["ProductDesc"]),
+          "ProductId" => htmlspecialchars($row["ProductId"]),
+          "ProductQty" => htmlspecialchars($row["OrderProductQty"]),
+          "ProductDate" => htmlspecialchars($row["ProductDate"]),
+          "Stock" => htmlspecialchars($row["Stock"]),
         ];
       }
     }
