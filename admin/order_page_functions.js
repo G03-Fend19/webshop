@@ -175,7 +175,6 @@ function filterOrders(orders) {
 }
 
 function updateStatus(orderToUpdate) {
-  console.log(orderToUpdate)
   const statusSelect = document.getElementById("statusSelect" + orderToUpdate);
   const newStatusId = statusSelect.options[statusSelect.selectedIndex].value;
   const updateStatusForm = document.getElementById(
@@ -220,6 +219,6 @@ function updateStatus(orderToUpdate) {
     // let pagePosition = thisRow.getBoundingClientRect().top
     // localStorage.setItem("page_position", pagePosition);
     localStorage.setItem("page_position", window.pageYOffset)
-    // updateStatusForm.submit();
+    updateStatusForm.submit();
   }
 }
