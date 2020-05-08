@@ -227,9 +227,9 @@ $productCards .= "<article class='product-card'>
       </div>
       <button
         data-id=$productId
-        class='add-to-cart-btn'
+        class='add-to-cart-btn hejsanhoppsan'
         id='addToCartBtn-$productId'>
-      <i class='fas fa-cart-plus'></i>
+      <i data-id=$productId class='fas fa-cart-plus'></i>
       </button>
       <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
     

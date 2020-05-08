@@ -247,7 +247,7 @@ if (isset($imgList) && !empty($imgList)) {
       </div> -->
 
 <button data-id=<?php echo $id ?> class='add-to-cart-btn' id='addToCartBtn-<?php echo $id ?>'>
-  <i class='fas fa-cart-plus'></i>
+  <i class='fas fa-cart-plus' data-id=<?php echo $id ?>></i>
 </button>
 <div class='amount hidden' id='productQty<?php echo $id ?>' data-id=<?php echo $id ?>>
 
