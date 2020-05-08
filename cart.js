@@ -210,7 +210,7 @@
         .join("");
       totalCheckout.innerHTML +=
         calcTotal() +
-        `<button class="cart__checkout"><a href="checkout_page.php#main-checkout" >Go To Checkout</a></button>`;
+        `<a href="checkout_page.php#main-checkout"><button class="cart__checkout">Go To Checkout</button></a>`;
       productsInCart();
     }
     hideAndShowCartBtns();
