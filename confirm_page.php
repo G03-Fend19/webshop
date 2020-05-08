@@ -25,7 +25,7 @@
           </li>
 
           <li class="header__nav__item"><a id="contact-desktop" class="header__nav__item__a header__nav__item__contact2"
-              href="">Contact</a></li>
+              href="contact.php">Contact</a></li>
         </div>
 
         <li class="header__nav__item"><a class="header__nav__item__a header__nav__item__cart"><i
@@ -49,7 +49,7 @@
               href="index.php">Home</a>
           </li>
           <li class="toggle_menu__item"><a id="contact-desktop" class="toggle_menu__item__a toggle_menu__item__contact2"
-              href="">Contact</a></li>
+              href="contact.php">Contact</a></li>
         </div>
 
       </ul>
