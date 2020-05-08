@@ -1,7 +1,7 @@
 (() => {
   const cartCount = document.querySelector(".cart_qty_show");
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
-
+  const body = document.querySelector("body");
   const cartDisplay = document.querySelector(".cart");
   const productWrapper = document.querySelector(".cart__product-wrapper");
   const totalCheckout = document.querySelector(".cart__total-checkout");
@@ -343,11 +343,13 @@
   const cartBtn = document.querySelector(".fa-shopping-cart");
   cartBtn.addEventListener("click", () => {
     cartDisplay.classList.toggle("hidden");
+    body.classList.toggle("noScroll");
   });
   const closeCart = () => {
     document.addEventListener("click", (e) => {
       if (e.target.className == "close-cart") {
         cartDisplay.classList.toggle("hidden");
+        body.classList.toggle("noScroll");
       }
     });
   };

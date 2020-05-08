@@ -1739,13 +1739,16 @@ footer {
   transition: ease-in 250ms;
   -webkit-transform: scale(1.025);
           transform: scale(1.025);
-  font-weight: bold;
 }
 
 @media (min-width: 420px) {
   .cart__menu button {
     font-size: 1.5vh;
   }
+}
+
+.cart__menu button:nth-child(1) {
+  background: #ff4343;
 }
 
 .cart__total {
@@ -1904,6 +1907,14 @@ footer {
 
 .delete-product {
   cursor: pointer;
+}
+
+@media (max-width: 450px) {
+  .noScroll {
+    overflow-y: hidden;
+    height: 100vh;
+    padding-right: 15px;
+  }
 }
 
 .main-checkout {
@@ -2945,7 +2956,7 @@ footer {
 
 @media (min-width: 1013px) {
   .product-section__rigth__actions .add-to-cart-btn {
-    margin-bottom: 130px;
+    margin-bottom: 140px;
   }
 }
 
@@ -3957,9 +3968,6 @@ footer {
 .far {
   font-family: "FontAwesome" !important;
   font-style: unset !important;
-<<<<<<< Updated upstream
   font-weight: 400 !important;
-=======
->>>>>>> Stashed changes
 }
 /*# sourceMappingURL=style.css.map */
