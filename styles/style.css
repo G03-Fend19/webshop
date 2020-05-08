@@ -2514,6 +2514,12 @@ footer {
   width: 100%;
 }
 
+@media (max-width: 450px) {
+  .img-wrapper {
+    height: 250px;
+  }
+}
+
 .new-in {
   position: absolute;
   height: 100%;
