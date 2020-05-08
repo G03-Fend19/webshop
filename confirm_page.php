@@ -211,20 +211,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $updateQtyStmt->bindParam(":new_stock", $newStock);
         $updateQtyStmt->bindParam(":product_id", $productId);
         $updateQtyStmt->execute();
-
-        ?>
-  <script src="confirm_page.js"></script>
-  <script>
-  localStorage.clear()
-  </script>
-  <?php
-        // echo "<pre>";
-        // print_r($decodedCartJSON[$key]);
-        // echo "</pre>";
-        // echo $product['name'];
-        // echo "<br>";
-        // echo $product[''];
-        // echo "<br>";
       }
     }
 }
@@ -347,6 +333,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     </div>
   </main>
+  <script src="confirm_page.js"></script>
+  <script>
+  localStorage.clear()
+  </script>
 
   <?php
 
