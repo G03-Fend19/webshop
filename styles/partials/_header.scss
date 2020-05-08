@@ -3,13 +3,15 @@
   justify-content: space-around;
   align-items: center;
   grid-template: auto 1fr / 1fr;
-  width: 100vw;
+  /*   width: 100vw; */
   nav {
     position: fixed;
     top: 0;
     z-index: 10;
     display: flex;
-    width: 100vw;
+    /* width: 100vw; */
+    left: 0;
+    right: 0;
     height: 70px;
     align-items: center;
     background-color: #54626a;
