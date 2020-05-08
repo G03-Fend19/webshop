@@ -49,6 +49,12 @@
   );
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
+      // Btn animation
+      btn.classList.add("elementToFadeInAndOut");
+      setTimeout(function () {
+        btn.classList.remove("elementToFadeInAndOut");
+      }, 4000);
+
       cartCount.classList.remove("hidden");
       const productData = e.target.dataset;
       let qty;

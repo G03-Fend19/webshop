@@ -208,35 +208,18 @@ foreach($activeOrdersGrouped as $key => $order):
             <td>$orderDate</td>
             <td>$totalSum</td>
             <td>
-            <form id='shouldUpdate$orderNumber' action='./assets/update_order_status.php' method='POST'>
-            <select name='statusSelect$orderNumber' id='statusSelect$orderNumber' onchange='updateStatus($orderNumber)'>
-              <option value='1'";
-                $orderStatusId == 1 ? $rows.= ' selected':null; $rows.= ">
-                Pending
-              </option>
-              <option value='2'";
-                $orderStatusId == 2 ? $rows.= ' selected':null; $rows.= ">
-                In progress
-              </option>
-              <option value='3'";
-                $orderStatusId == 3 ? $rows.= ' selected':null; $rows.= ">
-                Completed
-              </option>
-            </select>
-            <input type='hidden' name='o_id' value='$orderNumber'>
-            <input type='hidden' name='returnUrl' value='$returnUrl'>
-            </form>
+          $orderStatus
             </td>
             <td>
               <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
 
-              <div id='myModal' data-id='$id' class='modal'>
-              <div class='modal__content'>
-                <div class='modal__content__header'>
+              <div id='activeOrderOverview' data-id='$id' class='order_overview'>
+              <div class='order_overview__content'>
+                <div class='order_overview__content__header'>
                   <span class='close'>&times;</span>
                   <h2>Order overview</h2> 
                 </div>
-                <div class='modal__content__body'>
+                <div class='order_overview__content__body'>
                 <p>#$orderNumber</p>
                 <p>$fullName</p>
                 <p>$street</p>
@@ -260,8 +243,8 @@ foreach($activeOrdersGrouped as $key => $order):
                 <p>$totalSum SEK</p>
 
                 </div>
-                <div class='modal__content__footer'>
-                <button id='cancel' class='cancel-btn'>Cancel</button>  
+                <div class='order_overview__content__footer'>
+                <button id='cancel' class='cancel-btn'>Close</button>  
               
                 </div>
               </div>
@@ -280,26 +263,28 @@ echo '</tbody></table></section>';
 let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
  <script> 
-  const modal = document.getElementById("myModal");
+  const modal = document.getElementById("activeOrderOverview");
   const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");
 
   document.querySelectorAll('.open-modal').forEach(item => {
   item.addEventListener('click', event => {
     let currentModal = event.currentTarget.nextElementSibling;
-    let currentSpan = event.currentTarget.nextElementSibling;
 
     currentModal.style.display = "block";
-        //close the modal
-        currentSpan.onclick = function() {
-          currentModal.style.display = "none";
-        };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
+
+    window.onclick = function(event) {
+          if (event.target == currentModal) {
             currentModal.style.display = "none";
           }
         };
+
+    document.addEventListener("click", e => {
+          if (e.target.className == "close") {
+            currentModal.style.display = "none";
+          }
+        });
+    
         document.addEventListener("click", e => {
           if (e.target.className == "cancel-btn") {
             currentModal.style.display = "none";
@@ -307,5 +292,6 @@ let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
         });
   });
 });
+
   </script>
 

@@ -134,6 +134,7 @@ foreach($completedOrdersGrouped as $key => $order):
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
+
   $productsArr = $order['Products'];
   $productsTr = "";
   foreach ($productsArr as $key => $product) {
@@ -148,6 +149,8 @@ foreach($completedOrdersGrouped as $key => $order):
   }
     $productId = htmlspecialchars($product['ProductId']);
     $productQty = htmlspecialchars($product['ProductQty']);
+    $stock = htmlspecialchars($product['Stock']);
+    $ProductDate = htmlspecialchars($product['ProductDate']);
     if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
     
       $sale = "yes";
@@ -177,13 +180,13 @@ foreach($completedOrdersGrouped as $key => $order):
 					 
             <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
 
-            <div id='myModal' data-id='$id' class='modal'>
-            <div class='modal__content'>
-              <div class='modal__content__header'>
+            <div id='completedOrdersModal' data-id='$id' class='order_overview'>
+            <div class='order_overview__content'>
+              <div class='order_overview__content__header'>
                 <span class='close'>&times;</span>
                 <h2>Order overview</h2> 
               </div>
-              <div class='modal__content__body'>
+              <div class='order_overview__content__body'>
               <p>#$orderNumber</p>
               <p>$fullName</p>
               <p>$street</p>
@@ -208,8 +211,8 @@ foreach($completedOrdersGrouped as $key => $order):
               <p>$totalSum SEK</p>
 
               </div>
-              <div class='modal__content__footer'>
-              <button id='cancel' class='cancel-btn'>Cancel</button>  
+              <div class='order_overview__content__footer'>
+              <button id='cancel' class='cancel-btn'>Close</button>  
              
               </div>
             </div>
@@ -226,25 +229,28 @@ echo '</tbody></table></section>';
 let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped);?> ;
 </script>
  <script> 
-  const modal = document.getElementById("myModal");
-  const span = document.getElementsByClassName("close")[0];
+  const completedOrdersModal = document.getElementById("completedOrdersModal");
+  //const span = document.getElementsByClassName("close")[0];
+  const completedcancelBtn = document.getElementById("cancel");
 
   document.querySelectorAll('.open-modal').forEach(item => {
   item.addEventListener('click', event => {
     let currentModal = event.currentTarget.nextElementSibling;
-    let currentSpan = event.currentTarget.nextElementSibling;
 
     currentModal.style.display = "block";
-        //close the modal
-        currentSpan.onclick = function() {
-          currentModal.style.display = "none";
-        };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
+
+    window.onclick = function(event) {
+          if (event.target == currentModal) {
             currentModal.style.display = "none";
           }
         };
+
+    document.addEventListener("click", e => {
+          if (e.target.className == "close") {
+            currentModal.style.display = "none";
+          }
+        });
+    
         document.addEventListener("click", e => {
           if (e.target.className == "cancel-btn") {
             currentModal.style.display = "none";
@@ -252,4 +258,5 @@ let completedOrdersFromPHP = <?php echo json_encode($completedOrdersGrouped);?> 
         });
   });
 });
+
   </script>

@@ -319,7 +319,7 @@
             }
 
             .fa-minus-circle {
-              margin-right: 0.3em;
+              margin-right: 0.1em;
               cursor: pointer;
               &:hover {
                 color: rgb(250, 84, 84);
@@ -352,7 +352,7 @@
         font-weight: 900;
         color: white;
         justify-content: center;
-        height: 35px;
+        height: 40px;
         margin-bottom: 20px;
         margin-top: 20px;
         border: none;
@@ -374,6 +374,10 @@
           font-size: 20px;
           // margin-top: 3px;
           margin-left: 0.5em;
+
+          @media (min-width: 700px) {
+            margin-left: unset;
+          }
         }
 
         &:hover {

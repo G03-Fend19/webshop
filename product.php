@@ -249,7 +249,7 @@ if (isset($_GET['product_id'])) {
 <button data-id=<?php echo $id ?> class='add-to-cart-btn' id='addToCartBtn-<?php echo $id ?>'>
   <i class='fas fa-cart-plus' data-id=<?php echo $id ?>></i>
 </button>
-<div class='amount hidden' id='productQty<?php echo $id ?>' data-id=<?php echo $id ?>>
+<div class='amount hidden product-section__rigth__actions__amount' id='productQty<?php echo $id ?>' data-id=<?php echo $id ?>>
 
         <input type='number' min='1' data-productId=<?php echo $id ?> class='cart__product__info__btns__qty qty-input product-section__rigth__actions__amount__qty-container__input' value>
         <div class='amount__btns product-section__rigth__actions__amount__qty-container' data-id=<?php echo $id ?>>
