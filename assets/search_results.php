@@ -171,7 +171,7 @@ if (isset($_GET['search']) && $_GET['search'] !== "") {
         data-id=$productId
         class='add-to-cart-btn'
         id='addToCartBtn-$productId'>
-      <i class='fas fa-cart-plus'></i>
+      <i class='fas fa-cart-plus' data-id=$productId></i>
       </button>
         <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
     

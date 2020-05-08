@@ -15,8 +15,10 @@
             ws_products.name            AS ProductName,
             ws_products.price           AS ProductPrice,
             ws_products.description      AS ProductDesc,
-            ws_products.id              AS ProductId
-
+            ws_products.id              AS ProductId,
+            ws_products.stock_qty       AS Stock, 
+            ws_products.added_date      AS ProductDate
+ 
            
           FROM 
             ws_active_orders
@@ -41,7 +43,7 @@
           ON 
             ws_products.id = ws_orders_products.product_id  
           WHERE
-            ws_orders_products.product_qty > 0
+            ws_orders_products.product_qty >= 0
           ";
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -57,34 +59,38 @@
     $currentOrderNumber = $row['OrderNumber'];
     if(isset($activeOrdersGrouped[$currentOrderNumber])) {
       $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
-        "ProductName" => $row["ProductName"],
-        "ProductPrice" => $row["ProductPrice"],
-        "ProductDesc" => $row["ProductDesc"],
-        "ProductId" => $row["ProductId"],
-        "ProductQty" => $row["OrderProductQty"],
+        "ProductName" => htmlspecialchars($row["ProductName"]),
+        "ProductPrice" => htmlspecialchars($row["ProductPrice"]),
+        "ProductDesc" => htmlspecialchars($row["ProductDesc"]),
+        "ProductId" => htmlspecialchars($row["ProductId"]),
+        "ProductQty" => htmlspecialchars($row["OrderProductQty"]),
+        "ProductDate" => htmlspecialchars($row["ProductDate"]),
+        "Stock" => htmlspecialchars($row["Stock"]),
       ];
     } else {
       $activeOrdersGrouped[$currentOrderNumber] = [
         "Products" => [],
-        "OrderType" => $orderType,
-        "OrderNumber" => $row['OrderNumber'],
-        "OrderDate" => $row['OrderDate'],
-        "OrderCost" => $row["OrderCost"],
-        "CustomerFirstName" => $row["CustomerFirstName"],
-        "CustomerLastName" => $row["CustomerLastName"],
-        "DeliveryCity" => $row["DeliveryCity"],
-        "DeliveryStreet" => $row["DeliveryStreet"],
-        "DeliveryPostal" => $row["DeliveryPostal"],
-        "OrderStatus" => $row["OrderStatus"],
-        "OrderStatusId" => $row["OrderStatusId"],
+        "OrderType" => htmlspecialchars($orderType),
+        "OrderNumber" => htmlspecialchars($row['OrderNumber']),
+        "OrderDate" => htmlspecialchars($row['OrderDate']),
+        "OrderCost" => htmlspecialchars($row["OrderCost"]),
+        "CustomerFirstName" => htmlspecialchars($row["CustomerFirstName"]),
+        "CustomerLastName" => htmlspecialchars($row["CustomerLastName"]),
+        "DeliveryCity" => htmlspecialchars($row["DeliveryCity"]),
+        "DeliveryStreet" => htmlspecialchars($row["DeliveryStreet"]),
+        "DeliveryPostal" => htmlspecialchars($row["DeliveryPostal"]),
+        "OrderStatus" => htmlspecialchars($row["OrderStatus"]),
+        "OrderStatusId" => htmlspecialchars($row["OrderStatusId"]),
       ];
       if ($row['OrderProductId']) {
         $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
-          "ProductName" => $row["ProductName"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductDesc" => $row["ProductDesc"],
-          "ProductId" => $row["ProductId"],
-          "ProductQty" => $row["OrderProductQty"],
+          "ProductName" => htmlspecialchars($row["ProductName"]),
+          "ProductPrice" => htmlspecialchars($row["ProductPrice"]),
+          "ProductDesc" => htmlspecialchars($row["ProductDesc"]),
+          "ProductId" => htmlspecialchars($row["ProductId"]),
+          "ProductQty" => htmlspecialchars($row["OrderProductQty"]),
+          "ProductDate" => htmlspecialchars($row["ProductDate"]),
+          "Stock" => htmlspecialchars($row["Stock"]),
         ];
       }
     }
@@ -146,17 +152,26 @@ foreach($activeOrdersGrouped as $key => $order):
   }
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productDesc = htmlspecialchars($product['ProductDesc']);
+    $stock = htmlspecialchars($product['Stock']);
+    $ProductDate = htmlspecialchars($product['ProductDate']);
     if (strlen($productDesc) > 20) {
       $productDesc = substr($productDesc, 0, 20) . "...";
   }
     $productId = htmlspecialchars($product['ProductId']);
     $productQty = htmlspecialchars($product['ProductQty']);
+    if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
+    
+     $sale = "yes";
+     }else{
+     $sale = "no";
+     };            
 
     $productsTr .= "<tr>
                     <td>$productName</td>
                     <td>$productDesc</td>
                     <td>$productPrice</td>
                     <td>$productQty</td>
+                    <td>$sale<td/>
                   </tr>
                     ";
     
@@ -204,7 +219,9 @@ foreach($activeOrdersGrouped as $key => $order):
               <p>$street</p>
               <p>$postal</p>
               <p>$city</>
-              <p>$orderDate</p>
+              
+            
+              
               <table>
                 <thead>
                   <tr>
@@ -212,6 +229,8 @@ foreach($activeOrdersGrouped as $key => $order):
                     <td>Description</td>
                     <td>Price</td>
                     <td>Quantity</td>
+                    <td>On Sale</td>
+           
                   </tr>
                 </thead>
                 <tbody>

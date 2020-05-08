@@ -35,7 +35,7 @@
       cartCount.classList.remove("hidden");
 
       const [productData] = allProductsFromPHP.filter((product) => {
-        return product.ProductId === e.target.parentNode.dataset.id;
+        return product.ProductId === e.target.dataset.id;
       });
       console.log(productData);
 
@@ -50,7 +50,7 @@
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
       cartCount.classList.remove("hidden");
-      const productData = e.target.parentNode.dataset;
+      const productData = e.target.dataset;
       let qty;
       document.querySelector("#qtyInput-product-page")
         ? (qty = document.querySelector("#qtyInput-product-page").value)
@@ -197,7 +197,8 @@
       </input>
       <i data-id="qty-" data-productId='${cart[product].id}' data-value="-1" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" data-productId='${cart[product].id}' data-value="1" class="changeQty fas fa-plus-circle open-modal"></i>
-      <i data-id="delete-product"class="delete-product fas fa-trash-alt">X</i>
+      <i data-id="delete-product"class="delete-product fas fa-trash"></i>
+    
       </div>
       <div class='cart__product__info__price'>
       ${priceDisplay}

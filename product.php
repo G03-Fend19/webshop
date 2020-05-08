@@ -188,18 +188,18 @@ if (isset($_GET['product_id'])) {
       <img class='product-section__images__big' src="./media/product_images/<?php echo $productImg ?>" alt="">
     </div>
     <div class='product-section__images__small-container'>
-    <i class="fas fa-chevron-left" onclick="prevImg()"></i>
-      <div  class='product-section__images__small-container__img-container'>
+      <i class="fas fa-chevron-left" onclick="prevImg()"></i>
+        <div  class='product-section__images__small-container__img-container'>
 
-      <?php
-if (isset($imgList) && !empty($imgList)) {
-    foreach ($imgList as $img) {
-        $imageName = $img['ImageName'];
-        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt='product image'></div>";
-    }
-}
+          <?php
+          if (isset($imgList) && !empty($imgList)) {
+            foreach ($imgList as $img) {
+             $imageName = $img['ImageName'];
+             echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt='product image'></div>";
+            }
+          }
 
-?>
+          ?>
 
       </div>
       <i class="fas fa-chevron-right" onclick="nextImg()"></i>
@@ -247,21 +247,23 @@ if (isset($imgList) && !empty($imgList)) {
       </div> -->
 
 <button data-id=<?php echo $id ?> class='add-to-cart-btn' id='addToCartBtn-<?php echo $id ?>'>
-  <i class='fas fa-cart-plus'></i>
+  <i class='fas fa-cart-plus' data-id=<?php echo $id ?>></i>
 </button>
 <div class='amount hidden' id='productQty<?php echo $id ?>' data-id=<?php echo $id ?>>
 
-  <input type='number' min='1' data-productId=<?php echo $id ?> class='cart__product__info__btns__qty qty-input' value>
-  <div class='amount__btns' data-id=<?php echo $id ?>>
+        <input type='number' min='1' data-productId=<?php echo $id ?> class='cart__product__info__btns__qty qty-input product-section__rigth__actions__amount__qty-container__input' value>
+        <div class='amount__btns product-section__rigth__actions__amount__qty-container' data-id=<?php echo $id ?>>
 
-    <button class='amount__btns-minus'>
-      <i data-id='qty-' data-productId=<?php echo $id ?> data-value='-1' class='changeQty fas fa-minus-circle'></i>
-    </button>
-    <button class='amount__btns-plus' >
-      <i data-id='qty+' data-productId=<?php echo $id ?> data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
-    </button>
+          <button class='amount__btns-minus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page'>
+            <i data-id='qty-' data-productId=<?php echo $id ?> data-value='-1' class='changeQty fas fa-minus-circle'></i>
+          </button>
+          <button class='amount__btns-plus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' >
+            <i data-id='qty+' data-productId=<?php echo $id ?> data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+          </button>
 
 
+        </div>
+      </div>
     </div>
   </div>
   <div class='product-section__description'>
