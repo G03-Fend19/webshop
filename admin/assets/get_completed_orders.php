@@ -134,6 +134,7 @@ foreach($completedOrdersGrouped as $key => $order):
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
+
   $productsArr = $order['Products'];
   $productsTr = "";
   foreach ($productsArr as $key => $product) {
@@ -148,6 +149,8 @@ foreach($completedOrdersGrouped as $key => $order):
   }
     $productId = htmlspecialchars($product['ProductId']);
     $productQty = htmlspecialchars($product['ProductQty']);
+    $stock = htmlspecialchars($product['Stock']);
+    $ProductDate = htmlspecialchars($product['ProductDate']);
     if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
     
       $sale = "yes";
