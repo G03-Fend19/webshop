@@ -239,6 +239,9 @@
     }
 
     &__btns-minus {
+      
+      
+      touch-action: manipulation;
       padding: 0;
       color: #54626a;
       margin: 1px;
@@ -253,6 +256,8 @@
     }
 
     &__btns-plus {
+      
+      touch-action: manipulation;
       padding: 0;
       color: #54626a;
       margin: 1px;

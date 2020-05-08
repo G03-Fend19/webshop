@@ -1,17 +1,19 @@
 const productSection = document.querySelector("#pTable-section");
-const shippingP = document.getElementById('shipping_fee');
-const totalSumP = document.getElementById('total_sum');
-const cityInput = document.getElementById('city');
+const shippingP = document.getElementById("shipping_fee");
+const totalSumP = document.getElementById("total_sum");
+const cityInput = document.getElementById("city");
 let fee;
 
 const calcTotalCheckout = () => {
-  console.log("running calc total")
   let order = JSON.parse(localStorage.cart);
   total = Object.keys(order).reduce((acc, cur) => {
-    return acc + Math.ceil((order[cur].price * order[cur].discount) * order[cur].quantity);
+    return (
+      acc +
+      Math.ceil(order[cur].price * order[cur].discount * order[cur].quantity)
+    );
   }, 0);
   localStorage.setItem("total", JSON.stringify(total));
-  console.log(total)
+
   return `${total}`;
 };
 
@@ -29,16 +31,7 @@ const calcTotalWithShipping = () => {
   shippingP.innerHTML = `${fee} SEK`;
   totalSumP.innerHTML = `${totalSum + fee} SEK`;
   localStorage.setItem("shipping", JSON.stringify(fee));
-
-}
-
-// const calcTotal = () => {
-//   total = Object.keys(cart).reduce((acc, cur) => {
-//     return acc + Math.ceil((cart[cur].price * cart[cur].discount) * cart[cur].quantity);
-//   }, 0);
-//   localStorage.setItem("total", JSON.stringify(total));
-//   return `<div class="cart__total"><p>Total price</p> <p>${total} SEK</p></div>`;
-// };
+};
 
 const productsInCheckout = () => {
   let order = JSON.parse(localStorage.cart);
@@ -66,26 +59,31 @@ const renderOrderSummary = () => {
 
     productTable += Object.keys(order)
       .map((product) => {
-        priceDisplay = ""
-        if (order[product].discount === 1) {
-          console.log(order[product].discount)
-          priceDisplay = `<p class='price'> ${order[product].quantity * order[product].price} SEK</p>`
+        priceDisplay = "";
+        if (order[product].discount === 0.9) {
+          priceDisplay = `<p class='price'> ${
+            order[product].quantity * order[product].price
+          } SEK</p>`;
+
+          priceDisplay = `<p class='price__line-through'> ${
+            order[product].quantity * order[product].price
+          } SEK</p>
+                            <p class='price__discount'> ${Math.ceil(
+                              order[product].quantity *
+                                (order[product].price * order[product].discount)
+                            )} SEK</p>`;
         } else {
-          console.log("discount")
-          priceDisplay = `<p class='price__line-through'> ${order[product].quantity * order[product].price} SEK</p>
-                            <p class='price__discount'> ${Math.ceil(order[product].quantity * (order[product].price * order[product].discount))} SEK</p>`
+          priceDisplay = `<p class='price'> ${
+            order[product].quantity * order[product].price
+          } SEK</p>`;
         }
         return `
           <tr data-name="${order[product].name}">
             <td>
-              <img class="order-summary__table__img" src="./media/product_images/${
-          order[product].img
-          }" alt="Product image">
+              <img class="order-summary__table__img" src="./media/product_images/${order[product].img}" alt="Product image">
             </td>
             <td>${order[product].name}</td>
-            <td class="order-summary__table__qty">${
-          order[product].quantity
-          } st</td>
+            <td class="order-summary__table__qty">${order[product].quantity} st</td>
             <td class="order-summary__table__price">${priceDisplay}</td>
           </tr>
     `;
@@ -105,7 +103,6 @@ const renderOrderSummary = () => {
 
     productSection.append(totalDiv);
 
-
     //${productsInCheckout()} st
   } else {
     productSection.innerHTML = "<h3>Your cart is empty.</h3>";
@@ -117,25 +114,4 @@ calcTotalWithShipping();
 
 cityInput.addEventListener("input", function () {
   calcTotalWithShipping();
-})
-
-// old table
-/*<tr data-name="${order[product].name}">
-<td><button class="order-summary__table__btn"><i class="fas fa-trash-alt" data-id="delete-product"></i></button></td>
-<td>
-  <img class="order-summary__table__img" src="./media/product_images/${
-    order[product].img
-  }" alt="Product image">
-</td>
-<td>${order[product].name}</td>
-<td class="order-summary__table__qty">
-  <input class="order-summary__table__qty-input" type="number" min="0" value="${
-    order[product].quantity
-  }">st
-  <button class="order-summary__table__btn"><i class="fas fa-minus-circle" data-id="qty-"></i></button>
-  <button class="order-summary__table__btn"><i class="fas fa-plus-circle" data-id="qty+"></i></button>
-</td>
-<td class="order-summary__table__price">${
-  order[product].quantity * order[product].price
-} SEK</td>
-</tr>*/
+});

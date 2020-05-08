@@ -285,8 +285,9 @@ footer {
 .footer__foot {
   background: #828a8e;
   color: rgb(216, 216, 216);
-  width: 100vw;
+  /* width: 100vw; */
   left: 0;
+  right: 0;
   padding: 1em;
   margin-top: 20px;
   position: absolute;

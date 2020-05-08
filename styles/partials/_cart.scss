@@ -100,12 +100,15 @@
 
         transition: ease-in 250ms;
         transform: scale(1.025);
-        font-weight: bold;
+        // font-weight: bold;
       }
 
       @media (min-width: 420px) {
         font-size: 1.5vh;
       }
+    }
+    button:nth-child(1) {
+      background: #ff4343;
     }
   }
   &__total {
@@ -118,7 +121,7 @@
     width: 95%;
   }
   &__checkout {
-     margin: auto;
+    margin: auto;
     // display: flex;
     // justify-content: center;
     // align-items: center;
@@ -186,6 +189,9 @@
       gap: 10px;
       margin: auto;
       &__btns {
+        
+      
+        touch-action: manipulation;
         display: flex;
         justify-content: space-evenly;
         width: 80%;
@@ -233,4 +239,12 @@
 }
 .delete-product {
   cursor: pointer;
+}
+
+.noScroll {
+  @media (max-width: 450px) {
+    overflow-y: hidden;
+    height: 100vh;
+    padding-right: 15px;
+  }
 }

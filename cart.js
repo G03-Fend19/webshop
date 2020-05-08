@@ -1,10 +1,7 @@
 (() => {
   const cartCount = document.querySelector(".cart_qty_show");
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
-  const qtyBtnProductPage = document.querySelectorAll(
-    ".product-section__rigth__actions__amount__qty-container__qtyBtn-product-page"
-  );
-  const qtyBtns = document.querySelectorAll(".amount__btns");
+  const body = document.querySelector("body");
   const cartDisplay = document.querySelector(".cart");
   const productWrapper = document.querySelector(".cart__product-wrapper");
   const totalCheckout = document.querySelector(".cart__total-checkout");
@@ -14,13 +11,34 @@
     !cart ? (cart = {}) : null;
   };
   getCart();
+
+  const addDiscountToProducts = () => {
+    const lastDate = new Date();
+    lastDate.setFullYear(lastDate.getFullYear() - 1);
+
+    allProductsFromPHP.forEach((product) => {
+      const productDate = new Date(product.AddedDate);
+
+      discount = 1;
+      if (parseInt(product.ProductQty) < 10) {
+        discount = 0.9;
+      }
+      product.discount = discount;
+    });
+  };
+  addDiscountToProducts();
   // eventlistener for add-to-cart-btn
-  // each button has data-information about their specific product. we send that information
-  // to the createProduct function
+  // each button has a ID matching one product from the database
+
   addBtn.forEach((btn) =>
     btn.addEventListener("click", (e) => {
       cartCount.classList.remove("hidden");
-      const productData = e.target.parentNode.dataset;
+
+      const [productData] = allProductsFromPHP.filter((product) => {
+        return product.ProductId === e.target.parentNode.dataset.id;
+      });
+      console.log(productData);
+
       let qty;
       document.querySelector("#qtyInput")
         ? (qty = document.querySelector("#qtyInput").value)
@@ -37,124 +55,44 @@
       document.querySelector("#qtyInput-product-page")
         ? (qty = document.querySelector("#qtyInput-product-page").value)
         : (qty = 1);
-      qty;
-      createProduct(productData, qty);
-    })
-  );
-
-  qtyBtnProductPage.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.parentNode.dataset;
-      let qty = document.querySelector("#qtyInput-product-page").value;
+      qty === NaN ? (qty = 1) : (qty = qty);
 
       createProduct(productData, qty);
     })
   );
 
-  qtyBtns.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const productData = e.target.parentNode.parentNode.dataset;
-      let id = productData.id;
-      let qty = document.querySelector("#qtyInput-" + id).value;
-
-      createProduct(productData, qty);
-    })
-  );
-
-  // qtyBtnProductPage.addEventListener("click", (e) => {
-  //   console.log("yaee");
-  //   cartCount.classList.remove("hidden");
-  //   const productData = e.target.parentNode.dataset;
-  //   let qty = document.querySelector("#qtyInput").value;
-  //    document.querySelector("#qtyInput")
-  //      ? (qty = document.querySelector("#qtyInput").value)
-  //      : (qty = 1);
-  //   createProduct(productData, qty);
-  // });
-  // we check the cart object if the product we want to add already exists, if so pressing  add-product only increases
-  // quantity.
-  // if item is new to cart, we create a new cart variable, spread everything else back in, with the new product
   const createProduct = (productData, qty) => {
-    if (productData.name !== undefined) {
-      if (cart[productData.name]) {
-        updateStock(productData.name, qty);
+    if (productData.ProductId !== undefined) {
+      if (cart[productData.ProductId]) {
       } else {
         cart = {
           ...cart,
-          [productData.name]: {
-            id: productData.id,
-            img: productData.img,
-            name: productData.name,
-            price: productData.price,
+          [productData.ProductId]: {
+            id: productData.ProductId,
+            img: productData.ImageName,
+            name: productData.ProductName,
+            price: productData.ProductPrice,
             discount: parseFloat(productData.discount),
             quantity: qty,
-            stock: productData.stock,
+            stock: productData.ProductQty,
           },
         };
       }
       localStorage.setItem("cart", JSON.stringify(cart));
 
       renderCart();
+      hideAndShowCartBtns();
     }
   };
-  // check stock takes current Product
-  // as long as quantity is lower than stock,  user is allowed to put more of that product in the cart.
-  const updateStock = (product, qty) => {
-    const modal = document.getElementById("noMoreInStockModal");
-    const span = document.getElementsByClassName("close")[0];
-    const q = parseInt(cart[product].quantity);
-    const s = cart[product].stock;
-    q <= s
-      ? (cart[product].quantity = qty)
-      : document.addEventListener("click", (e) => {
-          if (e.target.className == "changeQty fas fa-plus-circle open-modal") {
-            modal.style.display = "block";
-            //close the modal
-            span.onclick = function () {
-              modal.style.display = "none";
-            };
-            // clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-              if (event.target == modal) {
-                modal.style.display = "none";
-              }
-            };
-            document.addEventListener("click", (e) => {
-              if (e.target.className == "cancel-btn") {
-                modal.style.display = "none";
-              }
-            });
-          }
-        });
+  const getStock = (id) => {
+    let [product] = allProductsFromPHP.filter((product) => {
+      return product.ProductId === id;
+    });
+
+    stock = product.ProductQty;
+    return stock;
   };
-  const checkStock = (product) => {
-    const modal = document.getElementById("noMoreInStockModal");
-    const span = document.getElementsByClassName("close")[0];
-    const q = parseInt(cart[product].quantity);
-    const s = cart[product].stock;
-    q < s
-      ? cart[product].quantity++
-      : document.addEventListener("click", (e) => {
-          if (e.target.className == "changeQty fas fa-plus-circle open-modal") {
-            modal.style.display = "block";
-            //close the modal
-            span.onclick = function () {
-              modal.style.display = "none";
-            };
-            // clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-              if (event.target == modal) {
-                modal.style.display = "none";
-              }
-            };
-            document.addEventListener("click", (e) => {
-              if (e.target.className == "cancel-btn") {
-                modal.style.display = "none";
-              }
-            });
-          }
-        });
-  };
+
   const calcTotal = () => {
     total = Object.keys(cart).reduce((acc, cur) => {
       return (
@@ -173,6 +111,44 @@
       cartCount.textContent = total;
     });
   };
+  const hideAndShowCartBtns = () => {
+    const qtyInformation = document.querySelectorAll(".amount");
+    const cartKeys = Object.keys(cart);
+
+    // hide addToCartBtn
+    const hideAddToCartBtn = () => {
+      addBtn.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          btn.classList.add("hidden");
+        });
+        cartKeys.includes(btn.dataset.id)
+          ? btn.classList.add("hidden")
+          : btn.classList.remove("hidden");
+      });
+      showQtyInformation = () => {
+        qtyInformation.forEach((field) => {
+          cartKeys.includes(field.dataset.id)
+            ? field.classList.remove("hidden")
+            : field.classList.add("hidden");
+        });
+      };
+      showQtyInformation();
+    };
+
+    hideAddToCartBtn();
+  };
+  hideAndShowCartBtns();
+
+  const setQuantityInputs = () => {
+    const quantityInputs = document.querySelectorAll(".qty-input");
+
+    quantityInputs.forEach((input) => {
+      if (cart[input.dataset.productid]) {
+        input.value = cart[input.dataset.productid].quantity;
+      }
+    });
+  };
+
   const renderCart = () => {
     if (Object.entries(cart).length === 0) {
       productWrapper.innerHTML = "No products in cart";
@@ -195,12 +171,10 @@
         .map((product) => {
           priceDisplay = "";
           if (cart[product].discount === 1) {
-            // console.log(cart[product].discount)
             priceDisplay = `<p class='price'> ${
               cart[product].quantity * cart[product].price
             } SEK</p>`;
           } else {
-            // console.log("discount")
             priceDisplay = `<p class='price__line-through'> ${
               cart[product].quantity * cart[product].price
             } SEK</p>
@@ -219,12 +193,12 @@
            ${cart[product].name}
       </p>
       <div class="cart__product__info__btns">
-      <input type=number id="quantity-input" min="1" max="${cart[product].stock}" class="cart__product__info__btns__qty" 
-      value="${cart[product].quantity}">
+      <input type="number" min="1" max="100" data-productId='${cart[product].id}' class="cart__product__info__btns__qty qty-input" value="${cart[product].quantity}">
       </input>
-      <i data-id="qty-" class="changeQty fas fa-minus-circle "></i>
-      <i data-id="qty+" class="changeQty fas fa-plus-circle open-modal"></i>
+      <i data-id="qty-" data-productId='${cart[product].id}' data-value="-1" class="changeQty fas fa-minus-circle "></i>
+      <i data-id="qty+" data-productId='${cart[product].id}' data-value="1" class="changeQty fas fa-plus-circle open-modal"></i>
       <i data-id="delete-product"class="delete-product fas fa-trash"></i>
+    
       </div>
       <div class='cart__product__info__price'>
       ${priceDisplay}
@@ -239,77 +213,87 @@
         `<button class="cart__checkout"><a href="checkout_page.php#main-checkout" >Go To Checkout</a></button>`;
       productsInCart();
     }
-    // cartDisplay.innerHTML += `<button class="cart__checkout">Go to Checkout</button></div>`;
+    hideAndShowCartBtns();
+    setQuantityInputs();
+
+    if (
+      window.location.href ==
+      "http://localhost:8888/checkout_page.php#main-checkout"
+    ) {
+      calcTotalWithShipping();
+      renderOrderSummary();
+    }
   };
   renderCart();
-  // a clicklistener on entire document. fires when user presses
-  // anything with class changeQty
-  // if the target id = + or -, we add or subtract 1 to corresponding products quantity in cart
+
   const changeQty = () => {
     document.addEventListener("click", (e) => {
-      // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-      let input = document.getElementById("qtyInput-product-page");
-      if (e.target.dataset.id == "qty+" && !input) {
-        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-        let id = e.target.parentNode.parentNode.parentNode.dataset.id;
-        let qtyInput = document.getElementById("qtyInput-" + id);
-        checkStock(productId);
-        if (qtyInput) {
-          qtyInput.value = cart[productId].quantity;
-        }
-      } else if (e.target.dataset.id == "qty-" && !input) {
-        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-        let id = e.target.parentNode.parentNode.parentNode.dataset.id;
-        let qtyInput = document.getElementById("qtyInput-" + id);
+      if (e.target.classList.contains("changeQty")) {
+        const productId = e.target.dataset.productid;
+        const stock = getStock(productId);
 
-        cart[productId].quantity == 1 ? null : cart[productId].quantity--;
+        if (cart[productId].quantity < stock) {
+          cart[productId].quantity += parseFloat(e.target.dataset.value);
+        } else if (e.target.dataset.value == -1) {
+          cart[productId].quantity += parseFloat(e.target.dataset.value);
+        } else {
+          // do the modal
+          const modal = document.getElementById("noMoreInStockModal");
+          const span = document.getElementsByClassName("close")[0];
+          modal.style.display = "block";
 
-        // checkStock(productId);
-        if (qtyInput) {
-          qtyInput.value = cart[productId].quantity;
+          span.onclick = function () {
+            modal.style.display = "none";
+          };
+          window.onclick = function (event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          };
+          document.addEventListener("click", (e) => {
+            if (e.target.className.includes("cancel-btn")) {
+              modal.style.display = "none";
+            }
+          });
         }
-      } else if (e.target.dataset.id == "qty+") {
-        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-        checkStock(productId);
 
-        if (
-          document.querySelector(".product-section__rigth__info__name") &&
-          productId ==
-            document.querySelector(".product-section__rigth__info__name")
-              .innerHTML
-        ) {
-          input.value = cart[productId].quantity;
+        if (cart[productId].quantity <= 0) {
+          cart[productId].quantity = 1;
         }
-      } else if (e.target.dataset.id == "qty-") {
-        let productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-        cart[productId].quantity == 1 ? null : cart[productId].quantity--;
 
-        if (
-          document.querySelector(".product-section__rigth__info__name") &&
-          productId ==
-            document.querySelector(".product-section__rigth__info__name")
-              .innerHTML
-        ) {
-          input.value = cart[productId].quantity;
-        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
-      renderCart();
-      if (document.querySelector("#pTable-section")) {
-        renderOrderSummary();
-        calcTotalWithShipping();
+    });
+
+    // adding Qty To input-value field
+    document.addEventListener("input", (e) => {
+      if (e.target.classList.contains("qty-input")) {
+        const productId = e.target.dataset.productid;
+        const stock = getStock(productId);
+        const inputNumber = parseInt(e.target.value);
+
+        if (inputNumber < stock) {
+          cart[productId].quantity = inputNumber;
+        }
+        if (inputNumber <= 0) {
+          cart[productId].quantity = 1;
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
       }
     });
   };
+
   const deleteProduct = () => {
     document.addEventListener("click", (e) => {
       // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
       if (e.target.dataset.id == "delete-product") {
-        const productId =
-          e.target.parentNode.parentNode.parentNode.dataset.name;
+        const productId = e.target.parentNode.parentNode.parentNode.dataset.id;
         delete cart[productId];
-        // console.log(cart);
+
         localStorage.setItem("cart", JSON.stringify(cart));
         renderCart();
         if (document.querySelector("#pTable-section")) {
@@ -360,11 +344,13 @@
   const cartBtn = document.querySelector(".fa-shopping-cart");
   cartBtn.addEventListener("click", () => {
     cartDisplay.classList.toggle("hidden");
+    body.classList.toggle("noScroll");
   });
   const closeCart = () => {
     document.addEventListener("click", (e) => {
       if (e.target.className == "close-cart") {
         cartDisplay.classList.toggle("hidden");
+        body.classList.toggle("noScroll");
       }
     });
   };

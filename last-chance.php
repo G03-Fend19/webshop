@@ -145,52 +145,45 @@ if (empty($product['ImageName'])) {
 } else {
     $productImg = htmlspecialchars($product['ImageName']);
 }
-
 $productCards .= "<article class='product-card'>
-                    <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-                      <div class='image-wrapper'>
-                        <div class='out-of-stock'>
-                          <span class='out-of-stock__msg'>
-                            10% off
-                          </span>
-                        </div>
-                            <img class='product-thumb' src=./media/product_images/$productImg alt=''>
-                          </div>
-                        </a>
-                        <div class='product-card__content'>
-                        <div class='product-card__text'>
-                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
-                            $productName
-                          </a>
-                          $priceMsg
+  <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+    <div class='image-wrapper'>
+      <div class='out-of-stock'>
+        <span class='out-of-stock__msg'>
+          10% off
+        </span>
+      </div>
+      <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+    </div>
+  </a>
+  <div class='product-card__content'>
+    <div class='product-card__text'>
+      <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
+        $productName
+      </a>
+      $priceMsg
+    </div>
+    <button data-id=$productId class='add-to-cart-btn' id='addToCartBtn-$productId'>
+      <i class='fas fa-cart-plus'></i>
+    </button>
+    <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
+
+      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input' value>
+      <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice
+        data-img='$productImg' data-stock=$productQty data-discount=$discount>
+
+        <button class='amount__btns-minus'>
+          <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
+        </button>
+        <button class='amount__btns-plus' id='higherBtn'>
+          <i data-id='qty+' data-productId=$productId data-value='1'
+            class='changeQty fas fa-plus-circle open-modal'></i>
+        </button>
+      </div>
+
+</div>
+                     
                           $qtyMsg
-                          </div>
-                          <button
-                          data-id=$productId
-                          data-name='$productName'
-                          data-price=$productPrice
-                          data-img='$productImg'
-                          data-stock=$productQty
-                          data-discount=$discount 
-                          class='add-to-cart-btn' id='addToCartBtn-$productId'>";
-                          $productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
-                          $productCards .= "</button>
-                
-                          <div class='amount hidden' id='productQty-$productId'>
-                            <input class='amount__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-                            <div class='amount__btns'
-                              data-id=$productId
-                              data-name='$productName'
-                              data-price=$productPrice
-                              data-img='$productImg'
-                              data-stock=$productQty
-                              data-discount=$discount 
-                              >
-
-                              <button class='amount__btns-minus' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-                              <button class='amount__btns-plus' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
-                            </div>
-
                           </div>
                           </div>
                       </article>";
@@ -210,7 +203,7 @@ echo $productsContainer;
 ?>
 </section>
 
-<script>
+<!-- <script>
 
 
 let grouped = <?php echo json_encode($results) ?>;
@@ -305,36 +298,11 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("click", (e) => {
-  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
-  if (e.target.dataset.id == "qty+") {
-    setTimeout(getCartQty(), 1000);
 
-  } else if (e.target.dataset.id == "qty-") {
-    setTimeout(getCartQty(), 1000);
-  }
-});
 
-function lowerQty(id) {
-  let input = document.getElementById('qtyInput-' + id);
 
-  if (input.value > 1)
-  input.value = parseInt(input.value) - 1;
-}
-
-function higherQty(qty, id) {
-  let input = document.getElementById('qtyInput-' + id);
-
-  if (input.value < qty) {
-    input.value = parseInt(input.value) + 1;
-  }
-  // else{
-  //   alert('no more in stock')
-  // }
-}
-
-</script>
+</script> -->
 
 
 <?php require_once "./assets/foot.php";?>

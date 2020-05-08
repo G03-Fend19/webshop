@@ -3,13 +3,15 @@
   justify-content: space-around;
   align-items: center;
   grid-template: auto 1fr / 1fr;
-  width: 100vw;
+  /*   width: 100vw; */
   nav {
     position: fixed;
     top: 0;
     z-index: 10;
     display: flex;
-    width: 100vw;
+    /* width: 100vw; */
+    left: 0;
+    right: 0;
     height: 70px;
     align-items: center;
     background-color: #54626a;
@@ -50,24 +52,23 @@
         font-weight: 900;
         @media (min-width: 800px) {
           display: inline;
-          
+
           &:hover {
             @keyframes changeColor {
               0% {
                 color: #d9d7d1;
               }
-  
+
               100% {
                 color: #353535;
                 text-shadow: 1px 1px 2px rgb(206, 206, 206);
               }
             }
-  
+
             animation: changeColor 500ms;
             animation-fill-mode: forwards;
           }
         }
-
       }
 
       &__cart {
@@ -142,7 +143,7 @@
         }
       }
 
-      @media (max-width: 750px){
+      @media (max-width: 750px) {
         font-size: 10vw;
         text-align: center;
         align-items: center;
@@ -162,7 +163,7 @@
       font-size: 1vw;
       text-align: center;
 
-      @media (max-width: 750px){
+      @media (max-width: 750px) {
         font-size: 3vw;
         text-align: left;
       }
@@ -212,6 +213,8 @@
   }
 
   &__searchBtn {
+    
+    touch-action: manipulation;
     width: 40px;
     padding: 8.3px;
     margin: 0;
