@@ -212,7 +212,7 @@ foreach($completedOrdersGrouped as $key => $order):
 
               </div>
               <div class='order_overview__content__footer'>
-              <button id='cancel' class='cancel-btn'>Cancel</button>  
+              <button id='cancel' class='cancel-btn'>Close</button>  
              
               </div>
             </div>

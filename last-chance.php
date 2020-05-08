@@ -145,7 +145,8 @@ if (empty($product['ImageName'])) {
 } else {
     $productImg = htmlspecialchars($product['ImageName']);
 }
-$productCards .= "<article class='product-card'>
+$productCards .= "
+<article class='product-card'>
   <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
     <div class='image-wrapper'>
       <div class='out-of-stock'>
@@ -183,7 +184,7 @@ $productCards .= "<article class='product-card'>
       </div>
 
 </div>
-                          </div>
+                          
                           </div>
                       </article>";
 endforeach;

@@ -169,7 +169,7 @@
       }
 
       .price_display {
-        max-width: 70px;
+        // max-width: 70px;
         display: flex;
         flex-direction: column-reverse;
 
@@ -192,7 +192,6 @@
 
   .amount {
     display: flex;
-    align-items: center;
 
     @media (max-width: 450px) {
       display: grid;
@@ -239,8 +238,6 @@
     }
 
     &__btns-minus {
-      
-      
       touch-action: manipulation;
       padding: 0;
       color: #54626a;
@@ -256,7 +253,6 @@
     }
 
     &__btns-plus {
-      
       touch-action: manipulation;
       padding: 0;
       color: #54626a;
