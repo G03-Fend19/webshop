@@ -140,33 +140,29 @@ $productCards .= "<article class='product-card'>
                       $priceMsg
                       $qtyMsg
                       </div>
-											<button
-												data-id=$productId
-												data-name='$productName'
-												data-price=$productPrice
-												data-img='$productImg'
-												data-stock=$productQty
-                        data-discount=$discount 
-                        class='add-to-cart-btn'
-                        id='addToCartBtn-$productId'>
-                        <i class='fas fa-cart-plus'></i>
-                      </button>
-                      <div class='amount hidden' id='productQty-$productId'>
-                        <input class='amount__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-                        <div class='amount__btns'
-                          data-id=$productId
-                          data-name='$productName'
-                          data-price=$productPrice
-                          data-img='$productImg'
-                          data-stock=$productQty
-                          data-discount=$discount 
-                          >
-                          <button class='amount__btns-minus' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-                          <button class='amount__btns-plus' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
-                        </div>
-                      </div>
-									  </div>
-									</article>";
+      <button
+        data-id=$productId
+        class='add-to-cart-btn hejsanhoppsan'
+        id='addToCartBtn-$productId'>
+      <i data-id=$productId class='fas fa-cart-plus'></i>
+      </button>
+      <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
+    
+      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input' value>
+<div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice data-img='$productImg' data-stock=$productQty
+  data-discount=$discount>
+
+  <button class='amount__btns-minus'>
+  <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
+  </button>
+  <button class='amount__btns-plus' id='higherBtn'>
+  <i data-id='qty+' data-productId=$productId data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+  </button>
+</div>
+
+</div>
+</div>
+</article>" ;
 endforeach;
 $productsContainer .= $productCards;
 $productsContainer .= "</div>";
@@ -183,129 +179,129 @@ echo $productsContainer;
 </section>
 
 <script>
-  let grouped = <?php echo json_encode($results) ?>;
+//   let grouped = <?php echo json_encode($results) ?>;
 
-checkCartProducts(grouped);
+// checkCartProducts(grouped);
 
-function checkCartProducts(grouped) {
+// function checkCartProducts(grouped) {
 
-  for (let product of Object.values(grouped)) {
-  let name = product['ProductName'];
-  let id = product['ProductId'];
-  // let id = <?php echo $productId ?>;
-  let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
+//   for (let product of Object.values(grouped)) {
+//   let name = product['ProductName'];
+//   let id = product['ProductId'];
+//   // let id = <?php echo $productId ?>;
+//   let addBtn = document.querySelectorAll('#addToCartBtn-' + id);
 
-  console.log(id);
-  console.log(name);
-
-
-
-  addBtn.forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-
-      setTimeout(function(){
-      checkLocalStorage(name, id);
-    }, 100);
-    })
-  );
-
-  checkLocalStorage(name, id);
-  }
-}
-
-
-function checkLocalStorage(name, id) {
-
-  let addToCartBtn = document.querySelector('#addToCartBtn-' + id);
-  let qtyBtns = document.querySelector('#productQty-' + id);
-  let qtyInput = document.querySelector('#qtyInput-' + id);
-  cart = JSON.parse(localStorage['cart']);
+//   console.log(id);
+//   console.log(name);
 
 
 
+//   addBtn.forEach((btn) =>
+//     btn.addEventListener("click", (e) => {
 
-  if (name in cart) {
+//       setTimeout(function(){
+//       checkLocalStorage(name, id);
+//     }, 100);
+//     })
+//   );
 
-    qtyBtns.classList.remove("hidden");
-    addToCartBtn.classList.add("hidden");
+//   checkLocalStorage(name, id);
+//   }
+// }
 
 
-    qtyInput.value = cart[name].quantity;
+// function checkLocalStorage(name, id) {
 
-  } else {
-
-    qtyBtns.classList.add("hidden");
-    addToCartBtn.classList.remove("hidden");
-  }
-}
-
-//When deleting a spesific product from cart
-document.addEventListener("click", (e) => {
-  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-  const input = document.getElementById('qtyInput');
-
-  if (e.target.dataset.id == "delete-product") {
-
-    for (let product of Object.values(grouped)) {
-      let name = product['ProductName'];
-      let id = product['ProductId'];
+//   let addToCartBtn = document.querySelector('#addToCartBtn-' + id);
+//   let qtyBtns = document.querySelector('#productQty-' + id);
+//   let qtyInput = document.querySelector('#qtyInput-' + id);
+//   cart = JSON.parse(localStorage['cart']);
 
 
 
-      setTimeout(function(){
-      checkLocalStorage(name, id);
-      }, 100);
 
-    }
-  }
-});
+//   if (name in cart) {
 
-//When clearing cart
-document.addEventListener("click", (e) => {
-  const input = document.getElementById('qtyInput');
-  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
-    for (let product of Object.values(grouped)) {
-      let name = product['ProductName'];
-      let id = product['ProductId'];
+//     qtyBtns.classList.remove("hidden");
+//     addToCartBtn.classList.add("hidden");
 
-      setTimeout(function(){
-      checkLocalStorage(name, id);
-      }, 100);
 
-    }
-  }
-});
+//     qtyInput.value = cart[name].quantity;
 
-document.addEventListener("click", (e) => {
-  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//   } else {
 
-  if (e.target.dataset.id == "qty+") {
-    setTimeout(getCartQty(), 1000);
+//     qtyBtns.classList.add("hidden");
+//     addToCartBtn.classList.remove("hidden");
+//   }
+// }
 
-  } else if (e.target.dataset.id == "qty-") {
-    setTimeout(getCartQty(), 1000);
-  }
-});
+// //When deleting a spesific product from cart
+// document.addEventListener("click", (e) => {
+//   // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//   const input = document.getElementById('qtyInput');
 
-function lowerQty(id) {
-  let input = document.getElementById('qtyInput-' + id);
+//   if (e.target.dataset.id == "delete-product") {
 
-  if (input.value > 1)
-  input.value = parseInt(input.value) - 1;
-}
+//     for (let product of Object.values(grouped)) {
+//       let name = product['ProductName'];
+//       let id = product['ProductId'];
 
-function higherQty(qty, id) {
-  let input = document.getElementById('qtyInput-' + id);
 
-  if (input.value < qty) {
-    input.value = parseInt(input.value) + 1;
-  }
-  // else{
-  //   alert('no more in stock')
-  // }
-}
 
-</script>
+//       setTimeout(function(){
+//       checkLocalStorage(name, id);
+//       }, 100);
+
+//     }
+//   }
+// });
+
+// //When clearing cart
+// document.addEventListener("click", (e) => {
+//   const input = document.getElementById('qtyInput');
+//   if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+//     for (let product of Object.values(grouped)) {
+//       let name = product['ProductName'];
+//       let id = product['ProductId'];
+
+//       setTimeout(function(){
+//       checkLocalStorage(name, id);
+//       }, 100);
+
+//     }
+//   }
+// });
+
+// document.addEventListener("click", (e) => {
+//   const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+
+//   if (e.target.dataset.id == "qty+") {
+//     setTimeout(getCartQty(), 1000);
+
+//   } else if (e.target.dataset.id == "qty-") {
+//     setTimeout(getCartQty(), 1000);
+//   }
+// });
+
+// function lowerQty(id) {
+//   let input = document.getElementById('qtyInput-' + id);
+
+//   if (input.value > 1)
+//   input.value = parseInt(input.value) - 1;
+// }
+
+// function higherQty(qty, id) {
+//   let input = document.getElementById('qtyInput-' + id);
+
+//   if (input.value < qty) {
+//     input.value = parseInt(input.value) + 1;
+//   }
+//   // else{
+//   //   alert('no more in stock')
+//   // }
+// }
+
+// </script>
 
 <?php
 

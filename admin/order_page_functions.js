@@ -1,9 +1,9 @@
-let position = parseFloat(localStorage.getItem('page_position'));
+let position = parseFloat(localStorage.getItem("page_position"));
 if (position) {
-  console.log(position)
-  document.documentElement.scrollTop = document.body.scrollTop = position + 200
-  window.scrollTo(0, position)
-  localStorage.removeItem('page_position');
+  console.log(position);
+  document.documentElement.scrollTop = document.body.scrollTop = position + 200;
+  window.scrollTo(0, position);
+  localStorage.removeItem("page_position");
 }
 // let rowId = localStorage.getItem('row');
 // if (rowId) {
@@ -14,10 +14,9 @@ if (position) {
 //   localStorage.removeItem('row');
 // }
 
-
 function filterOrders(orders) {
   let orderType;
-  Object.keys(orders).forEach(function (order) {
+  Object.keys(orders).forEach(function(order) {
     orderType = orders[order].OrderType;
   });
   //Active orders filter select/input element
@@ -35,7 +34,6 @@ function filterOrders(orders) {
   let filterText;
   let filterStatus;
 
-
   //Checks if list of orders is active orders
   if (orderType == "active") {
     activeOrdersTable.innerHTML = "";
@@ -51,7 +49,7 @@ function filterOrders(orders) {
   //If input in any text filter
   if (filterText) {
     //filter ordersToDraw if input matches orders.city
-    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
       return order["DeliveryCity"]
         .toLowerCase()
         .includes(filterText.toLowerCase());
@@ -61,12 +59,12 @@ function filterOrders(orders) {
   //If filterStatus is not 'all'
   if (filterStatus && filterStatus !== "all") {
     //filter ordersToDraw if chosen status matches order['OrderStatusId']
-    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
       return order["OrderStatusId"].includes(filterStatus);
     });
   }
 
-  Object.values(ordersToDraw).forEach(function (order, i) {
+  Object.values(ordersToDraw).forEach(function(order, i) {
     const tr = document.createElement("tr");
 
     const tdId = document.createElement("td");
@@ -128,8 +126,8 @@ function filterOrders(orders) {
       const hiddenReturnURLInput = document.createElement("input");
       hiddenReturnURLInput.setAttribute("type", "hidden");
       hiddenReturnURLInput.setAttribute("name", "returnUrl");
-      let returnUrl = window.location.href
-      console.log(returnUrl)
+      let returnUrl = window.location.href;
+      console.log(returnUrl);
       hiddenReturnURLInput.setAttribute("value", returnUrl);
 
       statusSelect.appendChild(statusOPending);
@@ -180,36 +178,36 @@ function updateStatus(orderToUpdate) {
   const updateStatusForm = document.getElementById(
     "shouldUpdate" + orderToUpdate
   );
-  const modal = document.getElementById("myModal");
+  const changeStatusModal = document.getElementById("changeStatusModal");
   const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");
   const changeStatusBtn = document.getElementById("changeStatus");
 
   let shouldUpdate;
   if (newStatusId == "3") {
-    modal.style.display = "block";
-    //close the modal
-    span.onclick = function () {
-      modal.style.display = "none";
+    changeStatusModal.style.display = "block";
+    //close the changeStatusModal
+    span.onclick = function() {
+      changeStatusModal.style.display = "none";
       filterOrders(activeOrdersFromPHP);
     };
-    //clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
+    //clicks anywhere outside of the changeStatusModal, close it
+    window.onclick = function(event) {
+      if (event.target == changeStatusModal) {
+        changeStatusModal.style.display = "none";
         filterOrders(activeOrdersFromPHP);
       }
     };
-    cancelBtn.addEventListener("click", (e) => {
-      modal.style.display = "none";
+    cancelBtn.addEventListener("click", e => {
+      changeStatusModal.style.display = "none";
       shouldUpdate == false;
       filterOrders(activeOrdersFromPHP);
     });
 
-    changeStatusBtn.addEventListener("click", (e) => {
-      let pagePosition = window.pageYOffset
+    changeStatusBtn.addEventListener("click", e => {
+      let pagePosition = window.pageYOffset;
       localStorage.setItem("page_position", pagePosition);
-      modal.style.display = "none";
+      changeStatusModal.style.display = "none";
       shouldUpdate == true;
       updateStatusForm.submit();
     });
@@ -218,7 +216,7 @@ function updateStatus(orderToUpdate) {
     // localStorage.setItem("row", thisRowId);
     // let pagePosition = thisRow.getBoundingClientRect().top
     // localStorage.setItem("page_position", pagePosition);
-    localStorage.setItem("page_position", window.pageYOffset)
+    localStorage.setItem("page_position", window.pageYOffset);
     updateStatusForm.submit();
   }
 }

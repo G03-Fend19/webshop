@@ -2,7 +2,7 @@
 require_once "../db.php";
 require_once "assets/head.php";
 require_once "assets/aside-navigation.php";
-require_once "assets/order_modal.php";
+require_once "assets/change_status_modal.php";
 
 $headline = "Orders";
 if(isset($_GET['orders'])) {
