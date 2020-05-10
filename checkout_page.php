@@ -262,10 +262,12 @@ alert('Email already registered on a different name. Please check spelling or us
 
       if (!validLength(mobile, 30)) {
         alert('Your number has to be between 2 and 30 numbers.');
+        event.preventDefault();
       };
 
       if (!validLength(postal, 30)) {
         alert('Your number has to be between 2 and 30 numbers.');
+        event.preventDefault();
       };
 
 
@@ -289,6 +291,7 @@ alert('Email already registered on a different name. Please check spelling or us
 
       if (!validLength(value, maxLength)) {
         alert('The ' + fieldName + 'field has to be between 2 and ' + maxLength + ' characters.');
+        event.preventDefault();
       };
     }
 
