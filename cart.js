@@ -359,6 +359,14 @@
         localStorage.setItem("cart", JSON.stringify(cart));
         cartMenu.innerHTML = "";
         renderCart();
+        if (document.querySelector("#pTable-section")) {
+          renderOrderSummary();
+          calcTotalWithShipping();
+          const confirmForm = document.getElementById("confirm-order");
+          const productSection = document.querySelector("#pTable-section");
+          confirmForm.classList.add("hidden");
+          productSection.innerHTML = "<h3>Your cart is empty.</h3>";
+        }
       }
     });
   };

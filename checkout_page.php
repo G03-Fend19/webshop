@@ -5,6 +5,16 @@ if (isset($_GET['error']) && $_GET['error'] == "mail") {
 alert('Email already registered on a different name. Please check spelling or use different mail')
 </script><?php
 }
+if (isset($_GET['error']) && $_GET['error'] == "empty") {
+    ?><script>
+alert('No products in cart')
+</script><?php
+}
+if (isset($_GET['error']) && $_GET['error'] == "out_of_stock") {
+    ?><script>
+alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>" is out of stock!`)
+</script><?php
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +187,7 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__information__cityPost">
             <div class="label-input postalcode">
               <label for="postal">Postal:</label>
-              <input name="postal" class="customer-info" id="postal" type="text"  maxlength="30" required>
+              <input name="postal" class="customer-info" id="postal" type="text"  maxlength="5" required>
             </div>
             <div class="label-input city">
               <label for="city">City:</label>
@@ -222,6 +232,14 @@ alert('Email already registered on a different name. Please check spelling or us
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
+    let carten = JSON.parse(localStorage.getItem('cart'));
+    !carten ? carten = {} : null;
+
+    if (Object.keys(carten).length === 0) {
+      const confirmForm = document.getElementById('confirm-order');
+      confirmForm.classList.add('hidden');
+    }
+
     if (customerFromLocalStorage == null || customerInformationFields == null) {} else {
       const customerInformationArray = Array.prototype.slice.call(
         customerInformationFields
@@ -262,10 +280,12 @@ alert('Email already registered on a different name. Please check spelling or us
 
       if (!validLength(mobile, 30)) {
         alert('Your number has to be between 2 and 30 numbers.');
+        event.preventDefault();
       };
 
-      if (!validLength(postal, 30)) {
-        alert('Your number has to be between 2 and 30 numbers.');
+      if (!validLength(postal, 5)) {
+        alert('Your number has to be between 2 and 5 numbers.');
+        event.preventDefault();
       };
 
 
@@ -289,6 +309,7 @@ alert('Email already registered on a different name. Please check spelling or us
 
       if (!validLength(value, maxLength)) {
         alert('The ' + fieldName + 'field has to be between 2 and ' + maxLength + ' characters.');
+        event.preventDefault();
       };
     }
 
