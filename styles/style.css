@@ -1939,8 +1939,10 @@ footer {
 
 @media (max-width: 450px) {
   .noScroll {
+    position: fixed;
     overflow-y: hidden;
     height: 100vh;
+    width: 100%;
     padding-right: 15px;
   }
 }
@@ -3936,6 +3938,14 @@ button > * {
   display: -ms-flexbox;
   display: flex;
   font-size: 1em;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.modal__content__body ul {
+  margin: 1em 0;
 }
 
 .modal__content__footer {
