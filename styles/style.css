@@ -1799,14 +1799,8 @@ footer {
 .cart__checkout a {
   font-size: 15px;
   /* text-align: center;
-<<<<<<< Updated upstream
       margin: auto;*/
   color: white;
-=======
-      margin: auto;
-
-      color: white; */
->>>>>>> Stashed changes
 }
 
 .cart__product {
@@ -2964,7 +2958,6 @@ footer {
 .product-section__rigth__actions .add-to-cart-btn {
   max-width: 200px;
   width: 100%;
-  padding: 1em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3002,7 +2995,6 @@ footer {
 
 .product-section__rigth__actions .add-to-cart-btn .fa-cart-plus {
   font-size: 20px;
-  margin-left: 0.5em;
 }
 
 @media (min-width: 700px) {
