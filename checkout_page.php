@@ -222,6 +222,13 @@ alert('Email already registered on a different name. Please check spelling or us
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
+    const cart = JSON.parse(localStorage.getItem('cart'));
+
+    if (Object.keys(cart).length === 0 && cart.constructor === Object) {
+      const confirmForm = document.getElementById('confirm-order');
+      confirmForm.classList.add('hidden');
+    }
+
     if (customerFromLocalStorage == null || customerInformationFields == null) {} else {
       const customerInformationArray = Array.prototype.slice.call(
         customerInformationFields
