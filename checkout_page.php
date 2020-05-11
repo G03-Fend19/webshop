@@ -288,6 +288,9 @@ alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>"
         event.preventDefault();
       };
 
+// To send the latest from localStorage to confirm-page
+      document.getElementById('cart-input').value = localStorage.getItem('cart');
+    document.getElementById('total-input').value = localStorage.getItem('total');
 
     })
 
