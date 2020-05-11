@@ -355,6 +355,12 @@
         localStorage.setItem("cart", JSON.stringify(cart));
         cartMenu.innerHTML = "";
         renderCart();
+        if (document.querySelector("#pTable-section")) {
+          renderOrderSummary();
+          calcTotalWithShipping();
+          const confirmForm = document.getElementById("confirm-order");
+          confirmForm.classList.add("hidden");
+        }
       }
     });
   };
