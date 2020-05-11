@@ -5,7 +5,6 @@
       (typeof window.performance != "undefined" &&
         window.performance.navigation.type === 2);
     if (historyTraversal) {
-      // Handle page restore.
       window.location.reload();
     }
   });
@@ -104,6 +103,8 @@
     let [product] = allProductsFromPHP.filter((product) => {
       return product.ProductId === id;
     });
+    console.log(product);
+    console.log(id);
 
     stock = product.ProductQty;
     return stock;
@@ -180,12 +181,17 @@
       cartMenu.innerHTML += `
        <button class="open-modal" id="myBtn">
        Clear Cart 
-       <i id="delete-product"class="fas fa-trash"></i></button>
+       <i id="delete-product" class="fas fa-trash"></i></button>
         <button class="close-cart">
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;
       productWrapper.innerHTML += Object.keys(cart)
         .map((product) => {
+          let image;
+          !cart[product].img
+            ? (image = "placeholder.jpg")
+            : (image = cart[product].img);
+          console.log(image);
           priceDisplay = "";
           if (cart[product].discount === 1) {
             priceDisplay = `<p class='price'> ${Math.ceil(
@@ -203,7 +209,7 @@
           return `
       <div class="cart__product" data-name='${cart[product].name}' data-id='${cart[product].id}'>
       <div class="cart__product__image-wrapper">
-        <img class="cart__product__image-wrapper__img" src="./media/product_images/${cart[product].img}"></img>
+        <img class="cart__product__image-wrapper__img" src="./media/product_images/${image}"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
@@ -247,6 +253,7 @@
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("changeQty")) {
         const productId = e.target.dataset.productid;
+
         const stock = getStock(productId);
 
         if (cart[productId].quantity < stock) {
@@ -316,6 +323,12 @@
         if (document.querySelector("#pTable-section")) {
           renderOrderSummary();
           calcTotalWithShipping();
+          if (Object.entries(cart).length == 0) {
+            const confirmForm = document.getElementById("confirm-order");
+            const productSection = document.querySelector("#pTable-section");
+            confirmForm.classList.add("hidden");
+            productSection.innerHTML = "<h3>Your cart is empty.</h3>";
+          }
         }
       }
     });
@@ -323,6 +336,7 @@
   const clearCart = () => {
     const modal = document.getElementById("myModal");
     const span = document.getElementsByClassName("close")[0];
+    const deleteIcon = document.getElementById("delete-product");
 
     document.addEventListener("click", (e) => {
       if (e.target.className == "open-modal") {
@@ -359,7 +373,9 @@
           renderOrderSummary();
           calcTotalWithShipping();
           const confirmForm = document.getElementById("confirm-order");
+          const productSection = document.querySelector("#pTable-section");
           confirmForm.classList.add("hidden");
+          productSection.innerHTML = "<h3>Your cart is empty.</h3>";
         }
       }
     });

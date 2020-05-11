@@ -152,10 +152,10 @@ $productCards .= "<article class='product-card'>
 <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice data-img='$productImg' data-stock=$productQty
   data-discount=$discount>
 
-  <button class='amount__btns-minus'>
+  <button class='amount__btns-minus changeQty' data-productId=$productId data-value='-1'>
   <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
   </button>
-  <button class='amount__btns-plus' id='higherBtn'>
+  <button class='amount__btns-plus changeQty' id='higherBtn' data-productId=$productId data-value='1'>
   <i data-id='qty+' data-productId=$productId data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
   </button>
 </div>

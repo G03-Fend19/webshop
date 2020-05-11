@@ -46,16 +46,16 @@ function showConfirmationTable(productsObj) {
       // console.log(products[i].discount);
       priceDisplay = `<p class='price'> ${
         products[i].quantity * products[i].price
-        } SEK</p>`;
+      } SEK</p>`;
     } else {
       // console.log("discount");
       priceDisplay = `<p class='price__line-through'> ${
         products[i].quantity * products[i].price
-        } SEK</p>
+      } SEK</p>
                             <p class='price__discount'> ${Math.ceil(
-          products[i].quantity *
-          (products[i].price * products[i].discount)
-        )} SEK</p>`;
+                              products[i].quantity *
+                                (products[i].price * products[i].discount)
+                            )} SEK</p>`;
     }
     productTable += `<tr><td class="confirmtable__tbody__productname">${products[i].name}</td><td>${products[i].quantity}</td><td>${priceDisplay}</td></tr>`;
   }
@@ -79,8 +79,10 @@ function showConfirmationTable(productsObj) {
 // }
 
 function shippingFeeCheck(totalPrice, customerInfo) {
-  let shippingFee =
-    totalPrice > 500 || customerInfo.city == "Stockholm" ? 0 : 29;
+  let cityInfo = customerInfo.city.toLowerCase();
+  console.log(cityInfo);
+
+  let shippingFee = totalPrice > 500 || cityInfo == "stockholm" ? 0 : 29;
 
   return shippingFee;
 }
@@ -88,7 +90,9 @@ function shippingFeeCheck(totalPrice, customerInfo) {
 function customer(customerInfo) {
   localStorage.clear();
   return `<p>${customerInfo.firstname} ${customerInfo.lastname}</p>
-  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${customerInfo.city}</p>
+  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${
+    customerInfo.city.charAt(0).toUpperCase() + customerInfo.city.slice(1)
+  }</p>
   <br><p>${customerInfo.mobile}</p><p>${customerInfo.email}</p>`;
 }
 

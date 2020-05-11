@@ -1,7 +1,7 @@
 .cart {
   max-height: calc(100vh - 70px);
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100vw;
   position: fixed;
   display: flex;
@@ -20,7 +20,7 @@
   @media (min-width: 420px) {
     min-height: unset;
     overflow-x: hidden;
-    width: 300px;
+    width: 350px;
     max-height: calc(100vh - 70px);
     height: fit-content;
     // padding-bottom: 2em;
@@ -248,4 +248,8 @@
     height: 100vh;
     padding-right: 15px;
   }
+}
+
+button > * {
+  pointer-events: none;
 }

@@ -350,7 +350,7 @@
       .add-to-cart-btn {
         max-width: 200px;
         width: 100%;
-        padding: 1em;
+        // padding: 1em;
         display: flex;
         font-size: 18px;
         font-weight: 900;
@@ -377,7 +377,7 @@
         .fa-cart-plus {
           font-size: 20px;
           // margin-top: 3px;
-          margin-left: 0.5em;
+          // margin-left: 0.5em;
 
           @media (min-width: 700px) {
             margin-left: unset;

@@ -159,10 +159,10 @@ foreach ($results as $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-													                        <span class='new-in__msg'>
-													                        New In
-													                        </span>
-													                      </div>";
+																					                        <span class='new-in__msg'>
+																					                        New In
+																					                        </span>
+																					                      </div>";
     } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
@@ -210,11 +210,12 @@ $productCards .= "<article class='product-card'>
     <div class='image-wrapper'>
       $productMsg";
 
-      $productQty < 1 ? $productCards .="<div class='out-of-stock'>
+$productQty < 1 ? $productCards .= "<div class='out-of-stock'>
                                         <span class='out-of-stock__msg'>
                                         Currently out of stock
                                         </span>
-                                      </div>" : null; $productCards .="<img class='product-thumb' src=./media/product_images/$productImg alt=''>
+                                      </div>" : null;
+$productCards .= "<img class='product-thumb' src=./media/product_images/$productImg alt=''>
       </div>
     </a>
     <div class='product-card__content'>
@@ -232,22 +233,22 @@ $productCards .= "<article class='product-card'>
       <i data-id=$productId class='fas fa-cart-plus'></i>
       </button>
       <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
-    
+
       <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input amount__input' value>
 <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice data-img='$productImg' data-stock=$productQty
   data-discount=$discount>
 
-  <button class='amount__btns-minus'>
+  <button class='amount__btns-minus changeQty' data-value='-1' data-productId=$productId>
   <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
   </button>
-  <button class='amount__btns-plus' id='higherBtn'>
+  <button class='amount__btns-plus changeQty' id='higherBtn' data-value='1' data-productId=$productId>
   <i data-id='qty+' data-productId=$productId data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
   </button>
 </div>
 
 </div>
 </div>
-</article>" ;
+</article>";
 endforeach;
 $productsContainer .= $productCards;
 $productsContainer .= "</div>";

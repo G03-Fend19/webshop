@@ -254,10 +254,10 @@ if (isset($_GET['product_id'])) {
         <input type='number' min='1' data-productId=<?php echo $id ?> class='cart__product__info__btns__qty qty-input product-section__rigth__actions__amount__qty-container__input' value>
         <div class='amount__btns product-section__rigth__actions__amount__qty-container' data-id=<?php echo $id ?>>
 
-          <button class='amount__btns-minus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page'>
+          <button class='amount__btns-minus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page changeQty'data-productId=<?php echo $id ?> data-value='-1'>
             <i data-id='qty-' data-productId=<?php echo $id ?> data-value='-1' class='changeQty fas fa-minus-circle'></i>
           </button>
-          <button class='amount__btns-plus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' >
+          <button class='amount__btns-plus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page changeQty' data-productId=<?php echo $id ?> data-value='1'>
             <i data-id='qty+' data-productId=<?php echo $id ?> data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
           </button>
 

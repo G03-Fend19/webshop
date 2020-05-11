@@ -222,7 +222,7 @@ foreach($activeOrdersGrouped as $key => $order):
               
             
               
-              <table>
+              <table class='overview-table'>
                 <thead>
                   <tr>
                     <td>Product</td>
@@ -258,6 +258,7 @@ echo '</tbody></table></section>';
 let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
  <script> 
+
 
   const activeOrdersModal = document.getElementById("activeOrdersModal");
   //const span = document.getElementsByClassName("close")[0];

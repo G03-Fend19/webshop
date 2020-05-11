@@ -5,7 +5,9 @@ const cityInput = document.getElementById("city");
 let fee;
 
 const calcTotalCheckout = () => {
-  let order = JSON.parse(localStorage.cart);
+  let order = JSON.parse(localStorage.getItem("cart"));
+
+  !order ? (order = {}) : null;
   total = Object.keys(order).reduce((acc, cur) => {
     return (
       acc +
@@ -43,7 +45,9 @@ const productsInCheckout = () => {
 };
 
 const renderOrderSummary = () => {
-  let order = JSON.parse(localStorage.cart);
+  let order = JSON.parse(localStorage.getItem("cart"));
+
+  !order ? (order = {}) : null;
 
   if (Object.keys(order).length != 0 && order.constructor === Object) {
     let productTable = `<table class="order-summary__table">

@@ -58,7 +58,8 @@ if(isset($_GET['error'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+  <link href="./media/images/logo.png" rel="icon" type="image/x-icon"/>
+  <link rel="apple-touch-icon" sizes="152x152" href="./media/images/logo.png">
   <title>Clothera - Checkout page</title>
 </head>
 
@@ -221,7 +222,7 @@ if(isset($_GET['error'])) {
           <div class="customer__form__information__cityPost">
             <div class="label-input postalcode">
               <label for="postal">Postal:</label>
-              <input name="postal" class="customer-info" id="postal" type="text"  maxlength="30" required>
+              <input name="postal" class="customer-info" id="postal" type="text"  maxlength="5" required>
             </div>
             <div class="label-input city">
               <label for="city">City:</label>
@@ -266,9 +267,10 @@ if(isset($_GET['error'])) {
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
-    const carten = JSON.parse(localStorage.getItem('cart'));
+    let carten = JSON.parse(localStorage.getItem('cart'));
+    !carten ? carten = {} : null;
 
-    if (Object.keys(carten).length === 0 && carten.constructor === Object) {
+    if (Object.keys(carten).length === 0) {
       const confirmForm = document.getElementById('confirm-order');
       confirmForm.classList.add('hidden');
     }
@@ -316,11 +318,14 @@ if(isset($_GET['error'])) {
         event.preventDefault();
       };
 
-      if (!validLength(postal, 30)) {
-        alert('Your number has to be between 2 and 30 numbers.');
+      if (!validLength(postal, 5)) {
+        alert('Your number has to be between 2 and 5 numbers.');
         event.preventDefault();
       };
 
+// To send the latest from localStorage to confirm-page
+      document.getElementById('cart-input').value = localStorage.getItem('cart');
+    document.getElementById('total-input').value = localStorage.getItem('total');
 
     })
 
