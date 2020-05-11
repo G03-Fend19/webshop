@@ -32,6 +32,8 @@
     margin-right: 20px;
     display: flex;
     @media (min-width: 800px) {
+      display: flex;
+      align-items: center;
     }
     &__container {
       display: flex;
@@ -74,6 +76,12 @@
       &__cart {
         margin-right: 1.5em;
         cursor: pointer;
+
+        i {
+          @media (min-width: 1000px) {
+            font-size: 25px;
+          }
+        }
       }
     }
   }
