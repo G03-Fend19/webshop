@@ -1799,8 +1799,14 @@ footer {
 .cart__checkout a {
   font-size: 15px;
   /* text-align: center;
+<<<<<<< Updated upstream
       margin: auto;*/
   color: white;
+=======
+      margin: auto;
+
+      color: white; */
+>>>>>>> Stashed changes
 }
 
 .cart__product {
