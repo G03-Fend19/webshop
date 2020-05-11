@@ -46,7 +46,7 @@ function validateProductForm() {
 }
 
 function showErrormsg(messages) {
-  console.log(messages);
+  // console.log(messages);
 
   let errorDiv = document.getElementById("errorDiv");
   errorDiv.innerHTML = "";
@@ -93,7 +93,7 @@ document.body.addEventListener("drop", drop, false);
     uploadForm.classList.toggle("hidden");
   });
   addImgBtn.addEventListener("click", () => {
-    console.log("test");
+    // console.log("test");
 
     uploadForm.classList.toggle("hidden");
   });

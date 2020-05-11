@@ -1,11 +1,8 @@
 let presetSortMethod = localStorage.getItem("sort_method");
 let comparedTd = localStorage.getItem("table_data");
 let tableId = localStorage.getItem("table_id");
-const tables = document.getElementsByClassName('ordertable')
+const tables = document.getElementsByClassName("ordertable");
 let tableExistOnPage = false;
-
-
-
 
 if (presetSortMethod) {
   for (let i = 0; i < tables.length; i++) {
@@ -19,20 +16,19 @@ if (presetSortMethod) {
 if (tableExistOnPage) {
   switch (presetSortMethod) {
     case "price":
-      console.log("price")
+      // console.log("price")
       sortTable(comparedTd, tableId);
       break;
     case "date":
-      console.log("date")
+      // console.log("date")
       sortTableDate(comparedTd, tableId);
       break;
     default:
-      console.log("status")
+      // console.log("status")
       sortTableStatus(comparedTd, tableId);
       break;
   }
 }
-
 
 function sortTable(n, clickedTableId) {
   var table,
@@ -89,9 +85,9 @@ function sortTable(n, clickedTableId) {
       }
     }
   }
-  localStorage.setItem("table_data", n)
-  localStorage.setItem("sort_method", "price")
-  localStorage.setItem("table_id", clickedTableId)
+  localStorage.setItem("table_data", n);
+  localStorage.setItem("sort_method", "price");
+  localStorage.setItem("table_id", clickedTableId);
 }
 
 function sortTableDate(n, clickedTableId) {
@@ -149,9 +145,9 @@ function sortTableDate(n, clickedTableId) {
       }
     }
   }
-  localStorage.setItem("table_data", n)
-  localStorage.setItem("sort_method", "date")
-  localStorage.setItem("table_id", clickedTableId)
+  localStorage.setItem("table_data", n);
+  localStorage.setItem("sort_method", "date");
+  localStorage.setItem("table_id", clickedTableId);
 }
 
 function sortTableStatus(n, clickedTableId) {
@@ -216,7 +212,7 @@ function sortTableStatus(n, clickedTableId) {
       }
     }
   }
-  localStorage.setItem("table_data", n)
-  localStorage.setItem("sort_method", "status")
-  localStorage.setItem("table_id", clickedTableId)
+  localStorage.setItem("table_data", n);
+  localStorage.setItem("sort_method", "status");
+  localStorage.setItem("table_id", clickedTableId);
 }

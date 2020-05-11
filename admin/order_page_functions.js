@@ -1,6 +1,6 @@
 let position = parseFloat(localStorage.getItem("page_position"));
 if (position) {
-  console.log(position);
+  // console.log(position);
   document.documentElement.scrollTop = document.body.scrollTop = position + 200;
   window.scrollTo(0, position);
   localStorage.removeItem("page_position");
@@ -127,7 +127,7 @@ function filterOrders(orders) {
       hiddenReturnURLInput.setAttribute("type", "hidden");
       hiddenReturnURLInput.setAttribute("name", "returnUrl");
       let returnUrl = window.location.href;
-      console.log(returnUrl);
+      // console.log(returnUrl);
       hiddenReturnURLInput.setAttribute("value", returnUrl);
 
       statusSelect.appendChild(statusOPending);
@@ -200,13 +200,13 @@ function updateStatus(orderToUpdate) {
         filterOrders(activeOrdersFromPHP);
       }
     };
-    cancelBtn.addEventListener("click", e => {
+    cancelBtn.addEventListener("click", (e) => {
       changeStatusModal.style.display = "none";
       shouldUpdate == false;
       filterOrders(activeOrdersFromPHP);
     });
 
-    changeStatusBtn.addEventListener("click", e => {
+    changeStatusBtn.addEventListener("click", (e) => {
       let pagePosition = window.pageYOffset;
       localStorage.setItem("page_position", pagePosition);
       changeStatusModal.style.display = "none";

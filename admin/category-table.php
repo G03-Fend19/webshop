@@ -97,8 +97,8 @@ if (isset($_GET['addingerror'])) {
     const categoryP = document.querySelector('#category-' + id);
     categoryP.classList.toggle('hidden');
 
-    console.log(id);
-    console.log(name);
+    // console.log(id);
+    // console.log(name);
 
     const input = document.querySelector('#input-' + id);
     input.classList.toggle('hidden');
