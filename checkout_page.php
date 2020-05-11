@@ -5,6 +5,16 @@ if (isset($_GET['error']) && $_GET['error'] == "mail") {
 alert('Email already registered on a different name. Please check spelling or use different mail')
 </script><?php
 }
+if (isset($_GET['error']) && $_GET['error'] == "empty") {
+    ?><script>
+alert('No products in cart')
+</script><?php
+}
+if (isset($_GET['error']) && $_GET['error'] == "out_of_stock") {
+    ?><script>
+alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>" is out of stock!`)
+</script><?php
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,27 +157,27 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__information__name">
             <div class="label-input">
               <label for="firstname">First name:</label>
-              <input name="firstname" class="customer-info" id="firstname" type="text" required>
+              <input name="firstname" class="customer-info" id="firstname" type="text" maxlength="50" required>
             </div>
             <div class="label-input">
               <label for="lastname">Last name:</label>
-              <input name="lastname" class="customer-info" id="lastname" type="text" required>
+              <input name="lastname" class="customer-info" id="lastname" type="text" maxlength="100" required>
             </div>
           </div>
           <div class="customer__form__information__mailbile">
             <div class="label-input">
               <label for="email">Email:</label>
-              <input name="email" class="customer-info" id="email" type="email" required>
+              <input name="email" class="customer-info" id="email" type="email" maxlength="50" required>
             </div>
             <div class="label-input">
               <label for="mobile">Mobile:</label>
-              <input name="mobile" class="customer-info" id="mobile" type="text" required>
+              <input name="mobile" class="customer-info" id="mobile" type="text" maxlength="30" required>
             </div>
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
               <label for="street">Street:</label>
-              <input name="street" class="customer-info" id="street" type="text" required>
+              <input name="street" class="customer-info" id="street" type="text" maxlength="50" required>
             </div>
           </div>
           <div>
@@ -177,11 +187,11 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__information__cityPost">
             <div class="label-input postalcode">
               <label for="postal">Postal:</label>
-              <input name="postal" class="customer-info" id="postal" type="text" required>
+              <input name="postal" class="customer-info" id="postal" type="text"  maxlength="5" required>
             </div>
             <div class="label-input city">
               <label for="city">City:</label>
-              <input name="city" class="customer-info" id="city" type="text" required>
+              <input name="city" class="customer-info" id="city" type="text"  maxlength="50" required>
             </div>
 
           </div>
@@ -206,7 +216,7 @@ alert('Email already registered on a different name. Please check spelling or us
             <label for="adressInvoice"><input name="adressInvoice" class="customer-info" type="checkbox"
                 id="adressInvoice" name="adressInvoice" value="checkbox"> Address
             </label>
-            
+
           </div>
           <input id="cart-input" type="hidden" name="cart">
           <input id="total-input" type="hidden" name="total">
@@ -217,9 +227,19 @@ alert('Email already registered on a different name. Please check spelling or us
         </div>
       </form>
     </section>
+
+
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
+    let carten = JSON.parse(localStorage.getItem('cart'));
+    !carten ? carten = {} : null;
+
+    if (Object.keys(carten).length === 0) {
+      const confirmForm = document.getElementById('confirm-order');
+      confirmForm.classList.add('hidden');
+    }
+
     if (customerFromLocalStorage == null || customerInformationFields == null) {} else {
       const customerInformationArray = Array.prototype.slice.call(
         customerInformationFields
@@ -234,6 +254,123 @@ alert('Email already registered on a different name. Please check spelling or us
         })
       }
     }
+
+    const confirmOrderBtn = document.getElementById('order-confirmation-submit');
+
+    confirmOrderBtn.addEventListener('click', function(e) {
+
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const mobile = document.getElementById('mobile').value;
+      const street = document.getElementById('street').value;
+      const postal = document.getElementById('postal').value;
+      const city = document.getElementById('city').value;
+
+      validateField(firstname, 'firstname', e, 50);
+      validateField(lastname, 'lastname', e, 100);
+      validateField(city, 'city', e, 50);
+
+      validateEmail(email);
+
+      validatePostalMobile(mobile, 'mobile', event);
+      validatePostalMobile(postal, 'postal', event);
+
+      validateStreet(street);
+
+      if (!validLength(mobile, 30)) {
+        alert('Your number has to be between 2 and 30 numbers.');
+        event.preventDefault();
+      };
+
+      if (!validLength(postal, 5)) {
+        alert('Your number has to be between 2 and 5 numbers.');
+        event.preventDefault();
+      };
+
+
+    })
+
+    function validLength(value, maxLength){
+
+    if (value.length >= 2 && value.length <= maxLength) {
+        return true;
+    } else {
+        return false;
+    }
+
+    }
+
+    function validateField(value, fieldName, event, maxLength) {
+      if (!onlyValidCharacters(value)) {
+        alert('You have unvalid chars in your ' + fieldName + '.');
+        event.preventDefault();
+      }
+
+      if (!validLength(value, maxLength)) {
+        alert('The ' + fieldName + 'field has to be between 2 and ' + maxLength + ' characters.');
+        event.preventDefault();
+      };
+    }
+
+    function onlyValidCharacters(inputtxt) {
+
+      const validLetters = /^[a-zA-ZäöåÄÖÅ\s-é]+$/;
+
+      if(inputtxt.match(validLetters)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+
+    function validateEmail(email) {
+      const validFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if(!email.match(validFormat)) {
+        alert('This is not a valid email-address.');
+        event.preventDefault();
+      }
+
+      if (!validLength(email, 50)) {
+        alert('Your email has to be between 2 and 50 letters.');
+        event.preventDefault();
+      }
+    }
+
+    function validatePostalMobile(value, fieldName, event) {
+      if (!onlyValidNumbers(value)) {
+        alert('You have unvalid characters in your ' + fieldName + '.');
+        event.preventDefault();
+      }
+    }
+
+    function onlyValidNumbers(inputnum) {
+      const validNumbers = /^[0-9\s-]+$/;
+
+      if(inputnum.match(validNumbers)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function validateStreet(street) {
+
+      const validChars = /^[0-9a-zA-ZäöåÄÖÅ\s-é.]+$/;
+
+      if(!street.match(validChars)) {
+        alert('This is not a valid street name.');
+        event.preventDefault();
+      }
+
+      if (!validLength(street, 50)) {
+        alert('Your street address has to be between 2 and 50 letters.');
+        event.preventDefault();
+      }
+    }
+
     </script>
 
     <script>

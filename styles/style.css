@@ -1731,7 +1731,7 @@ footer {
   border: none;
   border-radius: 5px;
   background-color: #54626a;
-  font-size: 2vh;
+  font-size: 9px;
   padding: 0.5em 1em;
   margin-left: 10px;
   margin-right: 10px;
@@ -1748,7 +1748,7 @@ footer {
 
 @media (min-width: 420px) {
   .cart__menu button {
-    font-size: 1.5vh;
+    font-size: 12px;
   }
 }
 
@@ -1775,16 +1775,17 @@ footer {
 .cart__checkout {
   margin: auto;
   width: 80%;
+  padding: 1em 0;
+  font-size: 15px;
   background: #678867;
   border-radius: 10px;
   font-weight: bolder;
   border: none;
   -webkit-box-shadow: 0px 2px 5px black;
           box-shadow: 0px 2px 5px black;
+  color: white;
   cursor: pointer;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  /* display: flex; */
 }
 
 .cart__checkout:hover {
@@ -1797,10 +1798,15 @@ footer {
 
 .cart__checkout a {
   font-size: 15px;
-  text-align: center;
-  margin: auto;
-  padding: 1em 0;
+  /* text-align: center;
+<<<<<<< Updated upstream
+      margin: auto;*/
   color: white;
+=======
+      margin: auto;
+
+      color: white; */
+>>>>>>> Stashed changes
 }
 
 .cart__product {

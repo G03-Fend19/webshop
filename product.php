@@ -277,68 +277,6 @@ if (isset($_GET['product_id'])) {
 
 
 
-// getCartQty();
-
-// checkLocalStorage();
-
-// function getCartQty() {
-//   const getCart = () => {
-//     cart = JSON.parse(localStorage.getItem("cart"));
-//     !cart ? (cart = {}) : null;
-//   };
-//   getCart();
-
-//   let input = document.getElementById('qtyInput-product-page');
-//   let name = "<?php echo $name; ?>";
-//   if (cart[name]) {
-//     input.value = cart[name].quantity;
-//   }
-// }
-
-// function lowerQty() {
-//   let input = document.getElementById('qtyInput-product-page');
-
-//   if (input.value > 1)
-//   input.value = parseInt(input.value) - 1;
-// }
-
-// function higherQty(qty) {
-//   let input = document.getElementById('qtyInput-product-page');
-//   // let button = document.getElementById('higherBtn');
-
-//   if (input.value < qty) {
-//     input.value = parseInt(input.value) + 1;
-//   } else {
-
-//     const modal = document.getElementById("noMoreInStockModal");
-//     const span = document.getElementsByClassName("close")[0];
-
-//     document.addEventListener("click", (e) => {
-
-//       if (e.target.className == "fas fa-plus-circle open-modal") {
-
-//         modal.style.display = "block";
-//         //close the modal
-//         span.onclick = function () {
-//           modal.style.display = "none";
-//         };
-//         // clicks anywhere outside of the modal, close it
-//         window.onclick = function (event) {
-//           if (event.target == modal) {
-//             modal.style.display = "none";
-//           }
-//         };
-//         document.addEventListener("click", (e) => {
-//           if (e.target.className == "cancel-btn") {
-//             modal.style.display = "none";
-//           }
-//         });
-//       }
-//     });
-//   }
-
-// }
-
 const imgList = <?php if (isset($imgList) && !empty($imgList)) {
     echo json_encode($imgList);
 } else {

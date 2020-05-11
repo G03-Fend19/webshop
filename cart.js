@@ -1,5 +1,15 @@
 (() => {
-  const cartCount = document.querySelector(".cart_qty_show");
+  window.addEventListener("pageshow", function (event) {
+    var historyTraversal =
+      event.persisted ||
+      (typeof window.performance != "undefined" &&
+        window.performance.navigation.type === 2);
+    if (historyTraversal) {
+      window.location.reload();
+    }
+  });
+  let cartCount = document.querySelector(".cart_qty_show");
+
   const addBtn = document.querySelectorAll(".add-to-cart-btn");
   const body = document.querySelector("body");
   const cartDisplay = document.querySelector(".cart");
@@ -37,7 +47,6 @@
       const [productData] = allProductsFromPHP.filter(product => {
         return product.ProductId === e.target.dataset.id;
       });
-      console.log(productData);
 
       let qty;
       document.querySelector("#qtyInput")
@@ -159,6 +168,7 @@
     if (Object.entries(cart).length === 0) {
       productWrapper.innerHTML = "No products in cart";
       totalCheckout.innerHTML = "";
+
       cartCount.textContent = "";
       cartCount.classList.add("hidden");
     } else {
@@ -174,11 +184,17 @@
         Close Cart <i class="far fa-times-circle"></i>
         </button>`;
       productWrapper.innerHTML += Object.keys(cart)
-        .map(product => {
+        .map((product) => {
+          let image;
+          !cart[product].img
+            ? (image = "placeholder.jpg")
+            : (image = cart[product].img);
+          console.log(image);
           priceDisplay = "";
           if (cart[product].discount === 1) {
-            priceDisplay = `<p class='price'> ${cart[product].quantity *
-              cart[product].price} SEK</p>`;
+            priceDisplay = `<p class='price'> ${Math.ceil(
+              cart[product].quantity * cart[product].price
+            )} SEK</p>`;
           } else {
             priceDisplay = `<p class='price__line-through'> ${cart[product]
               .quantity * cart[product].price} SEK</p>
@@ -190,15 +206,15 @@
           return `
       <div class="cart__product" data-name='${cart[product].name}' data-id='${cart[product].id}'>
       <div class="cart__product__image-wrapper">
-        <img class="cart__product__image-wrapper__img" src="./media/product_images/${cart[product].img}"></img>
+        <img class="cart__product__image-wrapper__img" src="./media/product_images/${image}"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
            ${cart[product].name}
       </p>
       <div class="cart__product__info__btns">
-      <input type="number" min="1" max="100" data-productId='${cart[product].id}' class="cart__product__info__btns__qty qty-input" value="${cart[product].quantity}">
-      </input>
+      <input type="number" min="1"  data-productId='${cart[product].id}' class="cart__product__info__btns__qty qty-input" value="${cart[product].quantity}">
+
       <i data-id="qty-" data-productId='${cart[product].id}' data-value="-1" class="changeQty fas fa-minus-circle "></i>
       <i data-id="qty+" data-productId='${cart[product].id}' data-value="1" class="changeQty fas fa-plus-circle open-modal"></i>
       <i data-id="delete-product"class="delete-product fas fa-trash"></i>
@@ -214,7 +230,7 @@
         .join("");
       totalCheckout.innerHTML +=
         calcTotal() +
-        `<button class="cart__checkout"><a href="checkout_page.php#main-checkout" >Go To Checkout</a></button>`;
+        `<a href="checkout_page.php#main-checkout"><button class="cart__checkout">Go To Checkout</button></a>`;
       productsInCart();
     }
     hideAndShowCartBtns();
@@ -285,8 +301,8 @@
         }
 
         localStorage.setItem("cart", JSON.stringify(cart));
-        renderCart();
       }
+      renderCart();
     });
   };
 
@@ -343,6 +359,14 @@
         localStorage.setItem("cart", JSON.stringify(cart));
         cartMenu.innerHTML = "";
         renderCart();
+        if (document.querySelector("#pTable-section")) {
+          renderOrderSummary();
+          calcTotalWithShipping();
+          const confirmForm = document.getElementById("confirm-order");
+          const productSection = document.querySelector("#pTable-section");
+          confirmForm.classList.add("hidden");
+          productSection.innerHTML = "<h3>Your cart is empty.</h3>";
+        }
       }
     });
   };
