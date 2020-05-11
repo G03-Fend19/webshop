@@ -1701,7 +1701,7 @@ footer {
   width: auto;
   height: auto;
   background: #54626a;
-  padding: 0.5em 1em 4em 1em;
+  padding: 0.5em 1em 6em 1em;
   margin: -10px;
   border-top: 0.5px solid #bfbfbf;
 }
@@ -1939,10 +1939,8 @@ footer {
 
 @media (max-width: 450px) {
   .noScroll {
-    position: fixed;
     overflow-y: hidden;
     height: 100vh;
-    width: 100%;
     padding-right: 15px;
   }
 }
@@ -2438,7 +2436,7 @@ button > * {
 
 .confirmpage__shipping__payment {
   text-align: left;
-  margin-right: 2em;
+  margin: 0 2em;
 }
 
 @media (max-width: 500px) {
