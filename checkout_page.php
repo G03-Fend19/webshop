@@ -5,6 +5,16 @@ if (isset($_GET['error']) && $_GET['error'] == "mail") {
 alert('Email already registered on a different name. Please check spelling or use different mail')
 </script><?php
 }
+if (isset($_GET['error']) && $_GET['error'] == "empty") {
+    ?><script>
+alert('No products in cart')
+</script><?php
+}
+if (isset($_GET['error']) && $_GET['error'] == "out_of_stock") {
+    ?><script>
+alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product']?>" is out of stock!`)
+</script><?php
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

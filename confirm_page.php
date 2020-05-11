@@ -1,7 +1,33 @@
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-  
   require_once "./db.php";
+
+  $cartJSON = $_POST['cart'];
+  $decodedCartJSON = json_decode($cartJSON, true);
+  if ($decodedCartJSON == null) {
+    header("Location: ./checkout_page.php?error=empty");
+  }
+  
+  foreach ($decodedCartJSON as $key => $product) {
+    $productId = $product['id'];
+    $getCurrentStockSQL = "SELECT ws_products.stock_qty AS CurrentProductQty,
+                                  ws_products.name AS ProductName
+                            FROM ws_products
+                            WHERE ws_products.id = :product_id";
+      $getCurrentStockStmt = $db->prepare($getCurrentStockSQL);
+      $getCurrentStockStmt->bindParam(":product_id", $productId);
+      $getCurrentStockStmt->execute();
+
+      $currentStockResults = $getCurrentStockStmt->fetch(PDO::FETCH_ASSOC);
+      $currentStock = $currentStockResults['CurrentProductQty'];
+      $currentProduct = $currentStockResults['ProductName'];
+
+      if($currentStock <= 0) {
+        header("Location: ./checkout_page.php?error=out_of_stock&product=$currentProduct");
+      }
+  }
+  
+  
   $cart = $_POST['cart'];
   $firstName = $_POST['firstname'];
   $lastName = $_POST['lastname'];
@@ -213,6 +239,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $updateQtyStmt->execute();
       }
     }
+} else {
+  header("Location: ./index.php");
 }
 
 ?>
