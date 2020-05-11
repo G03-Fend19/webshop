@@ -105,10 +105,10 @@ foreach ($results as $productId => $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-								                        <span class='new-in__msg'>
-								                        New In
-								                        </span>
-								                      </div>";
+									                        <span class='new-in__msg'>
+									                        New In
+									                        </span>
+									                      </div>";
     } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
@@ -174,17 +174,17 @@ $productCards .= "
       <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice
         data-img='$productImg' data-stock=$productQty data-discount=$discount>
 
-        <button class='amount__btns-minus'>
+        <button class='amount__btns-minus changeQty' data-productId=$productId data-value='-1'>
           <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
         </button>
-        <button class='amount__btns-plus' id='higherBtn'>
+        <button class='amount__btns-plus changeQty' id='higherBtn' data-productId=$productId data-value='1>
           <i data-id='qty+' data-productId=$productId data-value='1'
             class='changeQty fas fa-plus-circle open-modal'></i>
         </button>
       </div>
 
 </div>
-                          
+
                           </div>
                       </article>";
 endforeach;

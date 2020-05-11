@@ -26,7 +26,7 @@
     const lastDate = new Date();
     lastDate.setFullYear(lastDate.getFullYear() - 1);
 
-    allProductsFromPHP.forEach(product => {
+    allProductsFromPHP.forEach((product) => {
       const productDate = new Date(product.AddedDate);
 
       discount = 1;
@@ -40,11 +40,11 @@
   // eventlistener for add-to-cart-btn
   // each button has a ID matching one product from the database
 
-  addBtn.forEach(btn =>
-    btn.addEventListener("click", e => {
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
       cartCount.classList.remove("hidden");
 
-      const [productData] = allProductsFromPHP.filter(product => {
+      const [productData] = allProductsFromPHP.filter((product) => {
         return product.ProductId === e.target.dataset.id;
       });
 
@@ -56,11 +56,11 @@
       createProduct(productData, qty);
     })
   );
-  addBtn.forEach(btn =>
-    btn.addEventListener("click", e => {
+  addBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
       // Btn animation
       btn.classList.add("elementToFadeInAndOut");
-      setTimeout(function() {
+      setTimeout(function () {
         btn.classList.remove("elementToFadeInAndOut");
       }, 4000);
 
@@ -89,8 +89,8 @@
             price: productData.ProductPrice,
             discount: parseFloat(productData.discount),
             quantity: qty,
-            stock: productData.ProductQty
-          }
+            stock: productData.ProductQty,
+          },
         };
       }
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -99,10 +99,12 @@
       hideAndShowCartBtns();
     }
   };
-  const getStock = id => {
-    let [product] = allProductsFromPHP.filter(product => {
+  const getStock = (id) => {
+    let [product] = allProductsFromPHP.filter((product) => {
       return product.ProductId === id;
     });
+    console.log(product);
+    console.log(id);
 
     stock = product.ProductQty;
     return stock;
@@ -121,7 +123,7 @@
   // for counting numbers of products in cart, currently not in use
   const productsInCart = () => {
     let total = 0;
-    Object.keys(cart).forEach(el => {
+    Object.keys(cart).forEach((el) => {
       total += parseInt(cart[el].quantity);
       cartCount.textContent = total;
     });
@@ -132,7 +134,7 @@
 
     // hide addToCartBtn
     const hideAddToCartBtn = () => {
-      addBtn.forEach(btn => {
+      addBtn.forEach((btn) => {
         btn.addEventListener("click", () => {
           btn.classList.add("hidden");
         });
@@ -141,7 +143,7 @@
           : btn.classList.remove("hidden");
       });
       showQtyInformation = () => {
-        qtyInformation.forEach(field => {
+        qtyInformation.forEach((field) => {
           cartKeys.includes(field.dataset.id)
             ? field.classList.remove("hidden")
             : field.classList.add("hidden");
@@ -157,7 +159,7 @@
   const setQuantityInputs = () => {
     const quantityInputs = document.querySelectorAll(".qty-input");
 
-    quantityInputs.forEach(input => {
+    quantityInputs.forEach((input) => {
       if (cart[input.dataset.productid]) {
         input.value = cart[input.dataset.productid].quantity;
       }
@@ -196,8 +198,9 @@
               cart[product].quantity * cart[product].price
             )} SEK</p>`;
           } else {
-            priceDisplay = `<p class='price__line-through'> ${cart[product]
-              .quantity * cart[product].price} SEK</p>
+            priceDisplay = `<p class='price__line-through'> ${
+              cart[product].quantity * cart[product].price
+            } SEK</p>
                             <p class='price__discount'> ${Math.ceil(
                               cart[product].quantity *
                                 (cart[product].price * cart[product].discount)
@@ -247,9 +250,10 @@
   renderCart();
 
   const changeQty = () => {
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (e.target.classList.contains("changeQty")) {
         const productId = e.target.dataset.productid;
+
         const stock = getStock(productId);
 
         if (cart[productId].quantity < stock) {
@@ -262,15 +266,15 @@
           const span = document.getElementsByClassName("close")[0];
           modal.style.display = "block";
 
-          span.onclick = function() {
+          span.onclick = function () {
             modal.style.display = "none";
           };
-          window.onclick = function(event) {
+          window.onclick = function (event) {
             if (event.target == modal) {
               modal.style.display = "none";
             }
           };
-          document.addEventListener("click", e => {
+          document.addEventListener("click", (e) => {
             if (e.target.className.includes("cancel-btn")) {
               modal.style.display = "none";
             }
@@ -287,7 +291,7 @@
     });
 
     // adding Qty To input-value field
-    document.addEventListener("input", e => {
+    document.addEventListener("input", (e) => {
       if (e.target.classList.contains("qty-input")) {
         const productId = e.target.dataset.productid;
         const stock = getStock(productId);
@@ -307,7 +311,7 @@
   };
 
   const deleteProduct = () => {
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
       if (e.target.dataset.id == "delete-product") {
@@ -334,20 +338,20 @@
     const span = document.getElementsByClassName("close")[0];
     const deleteIcon = document.getElementById("delete-product");
 
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (e.target.className == "open-modal") {
         modal.style.display = "block";
         //close the modal
-        span.onclick = function() {
+        span.onclick = function () {
           modal.style.display = "none";
         };
         // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
           if (event.target == modal) {
             modal.style.display = "none";
           }
         };
-        document.addEventListener("click", e => {
+        document.addEventListener("click", (e) => {
           if (e.target.className == "cancel-btn") {
             modal.style.display = "none";
           }
@@ -355,7 +359,7 @@
       }
     });
 
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (
         e.target.className == "clear-cart" &&
         !Object.entries(cart).length == 0
@@ -382,7 +386,7 @@
     body.classList.toggle("noScroll");
   });
   const closeCart = () => {
-    document.addEventListener("click", e => {
+    document.addEventListener("click", (e) => {
       if (e.target.className == "close-cart") {
         cartDisplay.classList.toggle("hidden");
         body.classList.toggle("noScroll");
