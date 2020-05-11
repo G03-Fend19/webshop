@@ -1615,7 +1615,7 @@ footer {
 .cart {
   max-height: calc(100vh - 70px);
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100vw;
   position: fixed;
   display: -webkit-box;
@@ -1644,7 +1644,7 @@ footer {
   .cart {
     min-height: unset;
     overflow-x: hidden;
-    width: 300px;
+    width: 350px;
     max-height: calc(100vh - 70px);
     height: -webkit-fit-content;
     height: -moz-fit-content;
