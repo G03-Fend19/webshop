@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
   <link href="./media/images/logo.png" rel="icon" type="image/x-icon"/>
+  <link rel="apple-touch-icon" sizes="152x152" href="./media/images/logo.png">
   <title>Clothera - Contact</title>
 </head>
 

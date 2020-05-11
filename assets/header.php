@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./styles/style.css">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link href="./media/images/logo.png" rel="icon" type="image/x-icon"/>
+  <link rel="apple-touch-icon" sizes="152x152" href="./media/images/logo.png">
   <title>Clothera - Startpage</title>
 </head>
 
