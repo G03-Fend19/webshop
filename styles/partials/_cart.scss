@@ -249,3 +249,7 @@
     padding-right: 15px;
   }
 }
+
+button > * {
+  pointer-events: none;
+}

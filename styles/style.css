@@ -1924,6 +1924,10 @@ footer {
   }
 }
 
+button > * {
+  pointer-events: none;
+}
+
 .main-checkout {
   width: 100vw;
   background: #f8f8f8;
