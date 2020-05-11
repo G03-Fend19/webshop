@@ -5,7 +5,6 @@
       (typeof window.performance != "undefined" &&
         window.performance.navigation.type === 2);
     if (historyTraversal) {
-      // Handle page restore.
       window.location.reload();
     }
   });
@@ -186,6 +185,11 @@
         </button>`;
       productWrapper.innerHTML += Object.keys(cart)
         .map((product) => {
+          let image;
+          !cart[product].img
+            ? (image = "placeholder.jpg")
+            : (image = cart[product].img);
+          console.log(image);
           priceDisplay = "";
           if (cart[product].discount === 1) {
             priceDisplay = `<p class='price'> ${Math.ceil(
@@ -203,7 +207,7 @@
           return `
       <div class="cart__product" data-name='${cart[product].name}' data-id='${cart[product].id}'>
       <div class="cart__product__image-wrapper">
-        <img class="cart__product__image-wrapper__img" src="./media/product_images/${cart[product].img}"></img>
+        <img class="cart__product__image-wrapper__img" src="./media/product_images/${image}"></img>
       </div>
       <div class="cart__product__info"> 
       <p>
