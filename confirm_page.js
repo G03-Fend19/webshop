@@ -46,16 +46,16 @@ function showConfirmationTable(productsObj) {
       // console.log(products[i].discount);
       priceDisplay = `<p class='price'> ${
         products[i].quantity * products[i].price
-        } SEK</p>`;
+      } SEK</p>`;
     } else {
       // console.log("discount");
       priceDisplay = `<p class='price__line-through'> ${
         products[i].quantity * products[i].price
-        } SEK</p>
+      } SEK</p>
                             <p class='price__discount'> ${Math.ceil(
-          products[i].quantity *
-          (products[i].price * products[i].discount)
-        )} SEK</p>`;
+                              products[i].quantity *
+                                (products[i].price * products[i].discount)
+                            )} SEK</p>`;
     }
     productTable += `<tr><td class="confirmtable__tbody__productname">${products[i].name}</td><td>${products[i].quantity}</td><td>${priceDisplay}</td></tr>`;
   }
@@ -79,8 +79,8 @@ function showConfirmationTable(productsObj) {
 // }
 
 function shippingFeeCheck(totalPrice, customerInfo) {
-  let shippingFee =
-    totalPrice > 500 || customerInfo.city == "Stockholm" ? 0 : 29;
+  let cityInfo = customerInfo.city.toLowerCase();
+  let shippingFee = totalPrice > 500 || cityInfo.city == "stockholm" ? 0 : 29;
 
   return shippingFee;
 }
