@@ -16,7 +16,7 @@ if (position) {
 
 function filterOrders(orders) {
   let orderType;
-  Object.keys(orders).forEach(function(order) {
+  Object.keys(orders).forEach(function (order) {
     orderType = orders[order].OrderType;
   });
   //Active orders filter select/input element
@@ -49,7 +49,7 @@ function filterOrders(orders) {
   //If input in any text filter
   if (filterText) {
     //filter ordersToDraw if input matches orders.city
-    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
       return order["DeliveryCity"]
         .toLowerCase()
         .includes(filterText.toLowerCase());
@@ -59,12 +59,12 @@ function filterOrders(orders) {
   //If filterStatus is not 'all'
   if (filterStatus && filterStatus !== "all") {
     //filter ordersToDraw if chosen status matches order['OrderStatusId']
-    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
       return order["OrderStatusId"].includes(filterStatus);
     });
   }
 
-  Object.values(ordersToDraw).forEach(function(order, i) {
+  Object.values(ordersToDraw).forEach(function (order, i) {
     const tr = document.createElement("tr");
 
     const tdId = document.createElement("td");
@@ -147,7 +147,9 @@ function filterOrders(orders) {
     formLink.setAttribute("method", "POST");
 
     const openOrderBtn = document.createElement("button");
-    openOrderBtn.setAttribute("type", "submit");
+    openOrderBtn.setAttribute("id", "openModal");
+    openOrderBtn.classList.add("open-modal");
+
     openOrderBtn.innerHTML = "<i class='far fa-eye'></i>";
 
     const hiddenOpenOrderInput = document.createElement("input");
@@ -187,12 +189,12 @@ function updateStatus(orderToUpdate) {
   if (newStatusId == "3") {
     changeStatusModal.style.display = "block";
     //close the changeStatusModal
-    span.onclick = function() {
+    span.onclick = function () {
       changeStatusModal.style.display = "none";
       filterOrders(activeOrdersFromPHP);
     };
     //clicks anywhere outside of the changeStatusModal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
       if (event.target == changeStatusModal) {
         changeStatusModal.style.display = "none";
         filterOrders(activeOrdersFromPHP);
