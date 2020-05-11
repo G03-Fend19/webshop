@@ -80,7 +80,9 @@ function showConfirmationTable(productsObj) {
 
 function shippingFeeCheck(totalPrice, customerInfo) {
   let cityInfo = customerInfo.city.toLowerCase();
-  let shippingFee = totalPrice > 500 || cityInfo.city == "stockholm" ? 0 : 29;
+  console.log(cityInfo);
+
+  let shippingFee = totalPrice > 500 || cityInfo == "stockholm" ? 0 : 29;
 
   return shippingFee;
 }
@@ -88,7 +90,9 @@ function shippingFeeCheck(totalPrice, customerInfo) {
 function customer(customerInfo) {
   localStorage.clear();
   return `<p>${customerInfo.firstname} ${customerInfo.lastname}</p>
-  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${customerInfo.city}</p>
+  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${
+    customerInfo.city.charAt(0).toUpperCase() + customerInfo.city.slice(1)
+  }</p>
   <br><p>${customerInfo.mobile}</p><p>${customerInfo.email}</p>`;
 }
 
