@@ -12,7 +12,7 @@ alert('No products in cart')
 }
 if (isset($_GET['error']) && $_GET['error'] == "out_of_stock") {
     ?><script>
-alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product']?>" is out of stock!`)
+alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>" is out of stock!`)
 </script><?php
 }
 ?>
@@ -232,9 +232,10 @@ alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product']?>" 
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
-    const carten = JSON.parse(localStorage.getItem('cart'));
+    let carten = JSON.parse(localStorage.getItem('cart'));
+    !carten ? carten = {} : null;
 
-    if (Object.keys(carten).length === 0 && carten.constructor === Object) {
+    if (Object.keys(carten).length === 0) {
       const confirmForm = document.getElementById('confirm-order');
       confirmForm.classList.add('hidden');
     }
