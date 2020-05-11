@@ -52,6 +52,11 @@
       min-height: 100px;
       display: flex;
       font-size: 1em;
+      flex-direction: column;
+
+      ul {
+        margin: 1em 0;
+      }
     }
 
     &__footer {

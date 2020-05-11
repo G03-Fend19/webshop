@@ -1,19 +1,52 @@
 <?php
+session_start();
+$errorModal = "";
+$errorMsg = "";
+?>
+<script>let error = false;</script>
+<?php
+if(isset($_GET['error'])) {
+  $errorModal .= "<div id='checkoutErrorModal' class='modal'>
+  <div class='modal__content'>
+    <div class='modal__content__header'>
+      <span class='close'>&times;</span>
+      <h2>Error</h2> 
+    </div>
+    <div class='modal__content__body'>";
 
-if (isset($_GET['error']) && $_GET['error'] == "mail") {
-    ?><script>
-alert('Email already registered on a different name. Please check spelling or use different mail')
-</script><?php
-}
-if (isset($_GET['error']) && $_GET['error'] == "empty") {
-    ?><script>
-alert('No products in cart')
-</script><?php
-}
-if (isset($_GET['error']) && $_GET['error'] == "out_of_stock") {
-    ?><script>
-alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>" is out of stock!`)
-</script><?php
+    if ($_GET['error'] == "mail") {
+      ?><script>error = true</script><?php
+      $errorMsg .= "<p>Email already registered on a different name. Please check spelling or use different mail</p>";
+    }
+    if ($_GET['error'] == "empty") {
+      ?><script>error = true</script><?php
+      $errorMsg .= "<p>No products in cart</p>";
+    }
+    if ($_GET['error'] == "out_of_stock") {
+      ?><script>error = true</script><?php
+    $soldOutProducts = $_SESSION['sold_out_products'];
+    ?>
+    <script>let soldOutProductsFromPHP = <?php echo json_encode($soldOutProducts);?>;</script>
+    <?php
+    $errorMsg .="<p>Unfortunately these products sold out before you completed your order and will be removed:</p><ul>";
+    foreach ($soldOutProducts as $key => $product) {
+      $productName = $product['SoldOutProductName'];
+      $productId = $product['SoldOutProductId'];
+    
+      $errorMsg .= "<li>$productName</li>";
+    }
+    $errorMsg .= "</ul>";
+    unset($_SESSION['sold_out_products']);
+  }
+  $errorModal .= $errorMsg;
+  $errorModal .= "</div>
+  <div class='modal__content__footer'>
+  <button id='cancel' class='cancel-btn'>Close</button>  
+  
+  </div>
+  </div>
+  
+  </div>";
 }
 ?>
 <!DOCTYPE html>
@@ -102,6 +135,7 @@ alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>"
         </div>
 
       </div>
+      <?php echo $errorModal?>
 
     </section>
 
@@ -374,6 +408,27 @@ alert(`Sorry, somebody beat you to it! Product: "<?php echo $_GET['product'] ?>"
         event.preventDefault();
       }
     }
+    if (error == true) {
+      const modal = document.getElementById("checkoutErrorModal");
+      const span = document.getElementsByClassName("close")[0];
+      //const deleteIcon = document.getElementById("delete-product");
+       modal.style.display = "block";
+       //close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      };
+        // clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            modal.style.display = "none";
+          }
+        });
+      }
 
     </script>
 

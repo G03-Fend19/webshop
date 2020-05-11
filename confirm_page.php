@@ -1,13 +1,12 @@
 <?php
+session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
   require_once "./db.php";
 
   $cartJSON = $_POST['cart'];
   $decodedCartJSON = json_decode($cartJSON, true);
-  if ($decodedCartJSON == null) {
-    header("Location: ./checkout_page.php?error=empty");
-  }
   
+  $soldOutProducts = [];
   foreach ($decodedCartJSON as $key => $product) {
     $productId = $product['id'];
     $getCurrentStockSQL = "SELECT ws_products.stock_qty AS CurrentProductQty,
@@ -23,9 +22,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       $currentProduct = $currentStockResults['ProductName'];
 
       if($currentStock <= 0) {
-        header("Location: ./checkout_page.php?error=out_of_stock&product=$currentProduct");
+        $soldOutProducts[$key]= [
+          "SoldOutProductName" => $currentProduct,
+          "SoldOutProductId" => $productId,
+        ];
       }
   }
+  // echo "<pre>";
+  // print_r($soldOutProducts);
+  // echo "</pre>";
+  if(!empty($soldOutProducts)) {
+    
+    $_SESSION['sold_out_products'] = $soldOutProducts;
+    header("Location: ./checkout_page.php?error=out_of_stock");
+  } elseif ($decodedCartJSON == null) {
+    header("Location: ./checkout_page.php?error=empty");
+  } else {
   
   
   $cart = $_POST['cart'];
@@ -239,6 +251,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $updateQtyStmt->execute();
       }
     }
+  }
 } else {
   header("Location: ./index.php");
 }
@@ -403,8 +416,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
   </main>
   <script src="confirm_page.js"></script>
+
   <script>
-  localStorage.clear()
+  if(soldOutProductsFromPHP.length == 0) {
+    localStorage.clear()
+  }
   </script>
 
   <?php

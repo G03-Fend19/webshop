@@ -200,11 +200,11 @@
           } else {
             priceDisplay = `<p class='price__line-through'> ${
               cart[product].quantity * cart[product].price
-            } SEK</p>
+              } SEK</p>
                             <p class='price__discount'> ${Math.ceil(
-                              cart[product].quantity *
-                                (cart[product].price * cart[product].discount)
-                            )} SEK</p>`;
+                cart[product].quantity *
+                (cart[product].price * cart[product].discount)
+              )} SEK</p>`;
           }
           return `
       <div class="cart__product" data-name='${cart[product].name}' data-id='${cart[product].id}'>
@@ -393,8 +393,20 @@
       }
     });
   };
+  const removeSoldOutProducts = () => {
+    if (soldOutProductsFromPHP) {
+      Object.keys(soldOutProductsFromPHP).forEach((key) => {
+        delete cart[key]
+      })
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+      renderOrderSummary();
+      calcTotalWithShipping();
+    }
+  }
   changeQty();
   deleteProduct();
   clearCart();
   closeCart();
+  removeSoldOutProducts();
 })();
