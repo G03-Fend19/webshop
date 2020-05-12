@@ -171,7 +171,7 @@ foreach($activeOrdersGrouped as $key => $order):
                     <td>$productDesc</td>
                     <td>$productPrice</td>
                     <td>$productQty</td>
-                    <td>$sale<td/>
+                    <td>$sale</td>
                   </tr>
                     ";
     
