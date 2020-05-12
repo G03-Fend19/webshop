@@ -8,7 +8,11 @@ function setUp() {
     let customerInfo = JSON.parse(localStorage.customer);
     let shippingfee = shippingFeeCheck(totalPrice, customerInfo);
     let productsTable = showConfirmationTable(productsObj);
-    console.log(customerInfo);
+
+    // console.log(customerInfo);
+
+    // console.log(customerInfo.emailInvoice);
+
     // Fill elements (Price info)
     tbodyEl.innerHTML = productsTable;
     document.querySelector(".confirmpage__productprice").innerHTML =
@@ -26,7 +30,7 @@ function setUp() {
     // Fill element (Payment method)
     document.querySelector(
       ".confirmpage__shipping__payment"
-    ).innerHTML += `Your invoice will soon be<br> delivered to you, by your choosen invoice method`;
+    ).innerHTML += checkPayMethod(customerInfo);
   }
 }
 
@@ -37,14 +41,21 @@ function showConfirmationTable(productsObj) {
   let productTable = "";
 
   for (let i = 0; i < products.length; i++) {
-    priceDisplay = ""
+    priceDisplay = "";
     if (products[i].discount === 1) {
-      console.log(products[i].discount)
-      priceDisplay = `<p class='price'> ${products[i].quantity * products[i].price} SEK</p>`
+      // console.log(products[i].discount);
+      priceDisplay = `<p class='price'> ${
+        products[i].quantity * products[i].price
+      } SEK</p>`;
     } else {
-      console.log("discount")
-      priceDisplay = `<p class='price__line-through'> ${products[i].quantity * products[i].price} SEK</p>
-                            <p class='price__discount'> ${Math.ceil(products[i].quantity * (products[i].price * products[i].discount))} SEK</p>`
+      // console.log("discount");
+      priceDisplay = `<p class='price__line-through'> ${
+        products[i].quantity * products[i].price
+      } SEK</p>
+                            <p class='price__discount'> ${Math.ceil(
+                              products[i].quantity *
+                                (products[i].price * products[i].discount)
+                            )} SEK</p>`;
     }
     productTable += `<tr><td class="confirmtable__tbody__productname">${products[i].name}</td><td>${products[i].quantity}</td><td>${priceDisplay}</td></tr>`;
   }
@@ -68,21 +79,39 @@ function showConfirmationTable(productsObj) {
 // }
 
 function shippingFeeCheck(totalPrice, customerInfo) {
-  let shippingFee =
-    totalPrice > 500 || customerInfo.city == "Stockholm" ? 0 : 29;
+  let cityInfo = customerInfo.city.toLowerCase();
+  // console.log(cityInfo);
+
+  let shippingFee = totalPrice > 500 || cityInfo == "stockholm" ? 0 : 29;
 
   return shippingFee;
 }
 
 function customer(customerInfo) {
-  return `<p>${customerInfo.firstname} ${customerInfo.lastname}</p>
-  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${customerInfo.city}</p>
-  <br><p>${customerInfo.mobile}</p><p>${customerInfo.email}</p>`;
   localStorage.clear();
+  return `<p>${customerInfo.firstname} ${customerInfo.lastname}</p>
+  <p>${customerInfo.street}</p><p>${customerInfo.postal} ${
+    customerInfo.city.charAt(0).toUpperCase() + customerInfo.city.slice(1)
+  }</p>
+  <br><p>${customerInfo.mobile}</p><p>${customerInfo.email}</p>`;
 }
 
 function checkPayMethod(customerInfo) {
-  // return customerInfo.invoice == "Email" ? "email" : "doorstep";
+  let invoiceAnswer = "";
+
+  if (customerInfo.emailInvoice == true && customerInfo.adressInvoice == true) {
+    invoiceAnswer =
+      "Your invoice will soon be<br> delivered to you by email and letter";
+  } else if (customerInfo.emailInvoice == true) {
+    invoiceAnswer = "Your invoice will soon be<br> delivered to you by email";
+  } else if (customerInfo.adressInvoice == true) {
+    invoiceAnswer = "Your invoice will soon be<br> delivered to you by letter";
+  } else {
+    invoiceAnswer =
+      "You didn't choose invoice method so it will be delivered to your email shortly.";
+  }
+
+  return invoiceAnswer;
 }
 
 setUp();

@@ -214,15 +214,15 @@ foreach ($results as $product):
 													            <td>$price SEK</td>
 										                  <td>
 										                    <form action='./edit_product.php' method='POST'>
-										                      <button type='submit'><i class='fas fa-pen'></i></button>
+										                      <button type='submit'><i class='fa fa-pencil'></i></button>
 										                      <input type='hidden' name='p_id' value='$id'>
 										                    </form>
 										                  </td>
 													            <td>
 													                
-													              <button id='openModal' class='open-modal'><i class='far fa-trash-alt'></i></button>
+													              <button class='open-modal'><i class='fas fa-trash'></i></button>
 													             
-                                        <div id='myModal' data-id='$id' class='modal'>
+                                        <div id='deleteProductModal' data-id='$id' class='modal'>
                                          <div class='modal__content'>
                                            <div class='modal__content__header'>
                                              <span class='close'>&times;</span>
@@ -252,32 +252,45 @@ endforeach;
 echo '</tbody></table>';
 echo '</main>';
 ?>
-  <script src="active_pages.js"></script>
+  <!-- <script src="active_pages.js"></script> -->
   <!-- <script src="active_pages.js"></script> -->
   <script> 
   localStorage.removeItem('images');
   localStorage.removeItem('deleted');
 
-  const modal = document.getElementById("myModal");
+
+  const modal = document.getElementById("deleteProductModal");
   const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");
 
   document.querySelectorAll('.open-modal').forEach(item => {
   item.addEventListener('click', event => {
     let currentModal = event.currentTarget.nextElementSibling;
-    let currentSpan = event.currentTarget.nextElementSibling;
+   /* let currentSpan = event.currentTarget.nextElementSibling;
+ */
+// console.log(span);
 
     currentModal.style.display = "block";
-        //close the modal
-        currentSpan.onclick = function() {
-          currentModal.style.display = "none";
-        };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
+
+    window.onclick = function(event) {
+          if (event.target == currentModal) {
             currentModal.style.display = "none";
           }
         };
+
+    document.addEventListener("click", e => {
+          if (e.target.className == "close") {
+            currentModal.style.display = "none";
+          }
+        });
+      /*   //close the modal
+        span.onclick = function() {
+          currentModal.style.display = "none";
+        }; */
+
+        // clicks anywhere outside of the modal, close it
+       
+        
         document.addEventListener("click", e => {
           if (e.target.className == "cancel-btn") {
             currentModal.style.display = "none";
@@ -285,6 +298,8 @@ echo '</main>';
         });
   });
 });
+
+
   </script>
 
   <?php

@@ -34,46 +34,44 @@ function allActive() {
   const allOrders = document.querySelector(".orders__link-showAll");
   const activeOrders = document.querySelector(".orders__link-activeOrders");
   const complOrders = document.querySelector(".orders__link-completed");
+  const arrow = "<i class='fas fa-chevron-right'></i>";
 
   switch (headline.innerHTML) {
     case "All products":
       menu.classList.add("orders__link-active");
-      menu.parentElement.innerHTML += "<i class='fas fa-chevron-right'></i>";
+      menu.parentElement.innerHTML += arrow;
       break;
 
     case "Categories":
       manage.classList.add("orders__link-active");
-      manage.parentElement.innerHTML += "<i class='fas fa-chevron-right'></i>";
+      manage.parentElement.innerHTML += arrow;
       newCat.classList.add("orders__link-active");
-      newCat.parentElement.innerHTML += "<i class='fas fa-chevron-right'></i>";
+      newCat.parentElement.innerHTML += arrow;
       break;
 
     case "Dashboard":
       dash.classList.add("orders__link-active");
-      dash.parentElement.innerHTML += "<i class='fas fa-chevron-right'></i>";
+      dash.parentElement.innerHTML += arrow;
       break;
 
     case "Add new product":
       newProd.classList.add("orders__link-active");
-      newProd.parentElement.innerHTML += "<i class='fas fa-chevron-right'></i>";
+      newProd.parentElement.innerHTML += arrow;
       break;
 
     case "Orders":
       allOrders.classList.add("orders__link-active");
-      allOrders.parentElement.innerHTML +=
-        "<i class='fas fa-chevron-right'></i>";
+      allOrders.parentElement.innerHTML += arrow;
       break;
 
     case "Active orders":
       activeOrders.classList.add("orders__link-active");
-      activeOrders.parentElement.innerHTML +=
-        "<i class='fas fa-chevron-right'></i>";
+      activeOrders.parentElement.innerHTML += arrow;
       break;
 
     case "Completed orders":
       complOrders.classList.add("orders__link-active");
-      complOrders.parentElement.innerHTML +=
-        "<i class='fas fa-chevron-right'></i>";
+      complOrders.parentElement.innerHTML += arrow;
       break;
   }
 }

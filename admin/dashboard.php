@@ -39,54 +39,105 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
   <?php
   $sql = "SELECT 
-            ws_active_orders.id         AS OrderNumber,
-            ws_active_orders.order_date AS OrderDate,
-            ws_active_orders.total_cost AS OrderCost,
-            ws_customers.first_name     AS CustomerFirstName,
-            ws_customers.last_name      AS CustomerLastName,
-            ws_delivery_address.city    AS DeliveryCity,
-            ws_order_status.status      AS OrderStatus,
-            ws_order_status.id          AS OrderStatusId
-          FROM 
-            ws_active_orders
-          LEFT JOIN
-            ws_customers
-          ON
-            ws_active_orders.customer_id = ws_customers.id
-          LEFT JOIN
-            ws_delivery_address
-          ON
-            ws_active_orders.delivery_address_id = ws_delivery_address.id
-          LEFT JOIN
-            ws_order_status
-          ON
-            ws_active_orders.status_id = ws_order_status.id
-            ORDER BY OrderDate DESC
-            LIMIT 5";
+              ws_active_orders.id         AS OrderNumber,
+              ws_active_orders.order_date AS OrderDate,
+              ws_active_orders.total_cost AS OrderCost,
+              ws_customers.first_name     AS CustomerFirstName,
+              ws_customers.last_name      AS CustomerLastName,
+              ws_delivery_address.street   AS DeliveryStreet,
+              ws_delivery_address.postal_code    AS DeliveryPostal,
+              ws_delivery_address.city    AS DeliveryCity,
+              ws_order_status.status      AS OrderStatus,
+              ws_order_status.id          AS OrderStatusId,
+              ws_orders_products.product_qty AS OrderProductQty,
+              ws_orders_products.product_id AS OrderProductId,
+              ws_products.name            AS ProductName,
+              ws_products.price           AS ProductPrice,
+              ws_products.description      AS ProductDesc,
+              ws_products.id              AS ProductId,
+              ws_products.stock_qty       AS Stock, 
+             ws_products.added_date      AS ProductDate
+
+            
+            FROM 
+              ws_active_orders
+            LEFT JOIN
+              ws_customers
+            ON
+              ws_active_orders.customer_id = ws_customers.id
+            LEFT JOIN
+              ws_delivery_address
+            ON
+              ws_active_orders.delivery_address_id = ws_delivery_address.id
+            LEFT JOIN
+              ws_order_status
+            ON
+              ws_active_orders.status_id = ws_order_status.id
+            LEFT JOIN
+              ws_orders_products
+            ON
+              ws_active_orders.id = ws_orders_products.order_id 
+            LEFT JOIN    
+              ws_products
+            ON 
+              ws_products.id = ws_orders_products.product_id  
+            WHERE
+              ws_orders_products.product_qty > 0
+            ORDER BY OrderDate DESC";
   $stmt = $db->prepare($sql);
   $stmt->execute();
 
   $activeOrdersResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/*   echo '<pre>';
+  print_r($activeOrdersResults);
+  echo '</pre>'; */
   $activeOrdersGrouped = [];
   // echo "<pre>";
   // print_r($activeOrdersResults);
   // echo "</pre>";
 
-  foreach($activeOrdersResults as $key => $row) {
+  foreach($activeOrdersResults as $currentOrderNumber => $row) {
     // The order id for this row
     $orderType = "active";
-
-    $activeOrdersGrouped[$key] = [
-      "OrderType" => $orderType,
-      "OrderNumber" => $row['OrderNumber'],
-      "OrderDate" => $row['OrderDate'],
-      "OrderCost" => $row["OrderCost"],
-      "CustomerFirstName" => $row["CustomerFirstName"],
-      "CustomerLastName" => $row["CustomerLastName"],
-      "DeliveryCity" => $row["DeliveryCity"],
-      "OrderStatus" => $row["OrderStatus"],
-      "OrderStatusId" => $row["OrderStatusId"],
-    ];
+    $currentOrderNumber = $row['OrderNumber'];
+    if(isset($activeOrdersGrouped[$currentOrderNumber])) {
+      $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+        "ProductName" => $row["ProductName"],
+        "ProductPrice" => $row["ProductPrice"],
+        "ProductDesc" => $row["ProductDesc"],
+        "ProductId" => $row["ProductId"],
+        "ProductQty" => $row["OrderProductQty"],
+        "ProductDate" => htmlspecialchars($row["ProductDate"]),
+        "Stock" => htmlspecialchars($row["Stock"]),
+      ];
+    } else {
+      $activeOrdersGrouped[$currentOrderNumber] = [
+        "Products" => [],
+        "OrderType" => $orderType,
+        "OrderNumber" => $row['OrderNumber'],
+        "OrderDate" => $row['OrderDate'],
+        "OrderCost" => $row["OrderCost"],
+        "CustomerFirstName" => $row["CustomerFirstName"],
+        "CustomerLastName" => $row["CustomerLastName"],
+        "DeliveryCity" => $row["DeliveryCity"],
+        "DeliveryStreet" => $row["DeliveryStreet"],
+        "DeliveryPostal" => $row["DeliveryPostal"],
+        "OrderStatus" => $row["OrderStatus"],
+        "OrderStatusId" => $row["OrderStatusId"],
+      ];
+      if ($row['OrderProductId']) {
+        $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
+          "ProductName" => $row["ProductName"],
+          "ProductPrice" => $row["ProductPrice"],
+          "ProductDesc" => $row["ProductDesc"],
+          "ProductId" => $row["ProductId"],
+          "ProductQty" => $row["OrderProductQty"],
+          "ProductDate" => htmlspecialchars($row["ProductDate"]),
+          "Stock" => htmlspecialchars($row["Stock"]),
+        ];
+      }
+    }
   }
 
 echo "<section class='active-orders'>";
@@ -110,37 +161,153 @@ echo "<h4>New orders</h4>
         </thead>
       <tbody id='activeOrdersTable'>";
 $rows = "";
+$counter = 1;
 foreach($activeOrdersGrouped as $key => $order):
+
+  if ($counter > 5) {
+  break;    
+}
+
   $orderNumber = htmlspecialchars($order['OrderNumber']);
   $customerFirstName = htmlspecialchars($order['CustomerFirstName']);
   $customerLastName = htmlspecialchars($order['CustomerLastName']);
   $fullName = $customerFirstName . " " . $customerLastName;
   $city = htmlspecialchars($order['DeliveryCity']);
+  $street = htmlspecialchars($order['DeliveryStreet']);
+  $postal = htmlspecialchars($order['DeliveryPostal']);
   $orderDate = htmlspecialchars($order['OrderDate']);
   $totalSum = htmlspecialchars($order['OrderCost']);
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
+  $productsArr = $order['Products'];
+  $productsTr = "";
+  $returnUrl = $_SERVER['REQUEST_URI'];
+
+
+  foreach ($productsArr as $key => $product) {
+    $productName = htmlspecialchars($product['ProductName']);
+    if (strlen($productName) > 20) {
+      $productName = substr($productName, 0, 20) . "...";
+  }
+    $productPrice = htmlspecialchars($product['ProductPrice']);
+    $productDesc = htmlspecialchars($product['ProductDesc']);
+    if (strlen($productDesc) > 20) {
+      $productDesc = substr($productDesc, 0, 20) . "...";
+  }
+    $productId = htmlspecialchars($product['ProductId']);
+    $productQty = htmlspecialchars($product['ProductQty']);
+    $stock = htmlspecialchars($product['Stock']);
+    $ProductDate = htmlspecialchars($product['ProductDate']);
+    if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
+    
+      $sale = "yes";
+      }else{
+      $sale = "no";
+      };            
+ 
+     $productsTr .= "<tr>
+                     <td>$productName</td>
+                     <td>$productDesc</td>
+                     <td>$productPrice</td>
+                     <td>$productQty</td>
+                     <td>$sale</td>
+                   </tr>
+                     ";
+    
+  }
 
   $rows.= "<tr>
-          <td>#$orderNumber</td>
-          <td>$fullName</td>
-          <td>$city</td>
-          <td>$orderDate</td>
-          <td>$totalSum</td>
-          <td>
-              $orderStatus
-          </td>
-          <td>
-					  <form action='' method='POST'>
-					    <button type='submit'><i class='far fa-eye'></i></button>
-					    <input type='hidden' name='o_id' value='$orderNumber'>
-					  </form>
-					</td>
-        </tr>";
+            <td>#$orderNumber</td>
+            <td>$fullName</td>
+            <td>$city</td>
+            <td>$orderDate</td>
+            <td>$totalSum</td>
+            <td>
+          $orderStatus
+            </td>
+            <td>
+              <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
+
+              <div id='activeOrderOverview' data-id='$id' class='order_overview'>
+              <div class='order_overview__content'>
+                <div class='order_overview__content__header'>
+                  <span class='close'>&times;</span>
+                  <h2>Order overview</h2> 
+                </div>
+                <div class='order_overview__content__body'>
+                <p>#$orderNumber</p>
+                <p>$fullName</p>
+                <p>$street</p>
+                <p>$postal</p>
+                <p>$city</>
+                <p>$orderDate</p>
+                <table class='overview-table'>
+                  <thead>
+                    <tr>
+                      <td>Product</td>
+                      <td>Description</td>
+                      <td>Price</td>
+                      <td>Quantity</td>
+                      <td>On Sale</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      $productsTr
+                  </tbody>
+                </table>
+                <p>Total price:</p>
+                <p>$totalSum SEK</p>
+
+                </div>
+                <div class='order_overview__content__footer'>
+                <button id='cancel' class='cancel-btn'>Close</button>  
+              
+                </div>
+              </div>
+            
+            </div>
+            </td>
+          </tr>";
+        $counter++;
 endforeach;
 echo $rows;
 echo '</tbody></table></section>';
 ?>
 
 </main>
+<script>
+let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
+</script>
+ <script> 
+  const modal = document.getElementById("activeOrderOverview");
+  const span = document.getElementsByClassName("close")[0];
+  const cancelBtn = document.getElementById("cancel");
+
+  document.querySelectorAll('.open-modal').forEach(item => {
+  item.addEventListener('click', event => {
+    let currentModal = event.currentTarget.nextElementSibling;
+
+    currentModal.style.display = "block";
+
+    window.onclick = function(event) {
+          if (event.target == currentModal) {
+            currentModal.style.display = "none";
+          }
+        };
+
+    document.addEventListener("click", e => {
+          if (e.target.className == "close") {
+            currentModal.style.display = "none";
+          }
+        });
+    
+        document.addEventListener("click", e => {
+          if (e.target.className == "cancel-btn") {
+            currentModal.style.display = "none";
+          }
+        });
+  });
+});
+
+  </script>
 

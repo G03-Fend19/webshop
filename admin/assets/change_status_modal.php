@@ -1,4 +1,4 @@
-<div id="myModal" class="modal">
+<div id="changeStatusModal" class="modal">
   <div class="modal__content">
     <div class="modal__content__header">
       <span class="close">&times;</span>

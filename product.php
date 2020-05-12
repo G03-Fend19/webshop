@@ -7,7 +7,7 @@ $productMsg = "";
 $priceMsg = "";
 $qtyMsg = "";
 $imgList;
-$productImg; 
+$productImg;
 $name;
 
 $currentDateTime = date('Y-m-d H:i:s');
@@ -49,7 +49,9 @@ if (isset($_GET['product_id'])) {
           ON
             ws_products_categories.category_id = ws_categories.id
           WHERE
-            ws_products.id = :products_id";
+            ws_products.id = :products_id
+          AND
+            ws_products.active = 1";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":products_id", $productId);
     $stmt->execute();
@@ -77,9 +79,9 @@ if (isset($_GET['product_id'])) {
         // If we've already added this product
         if (isset($grouped[$currentProductId])) {
             // Just add the additional image name to the imgIds array
-            $grouped[$currentProductId]["imgs"][] =  [
-              "ImageName" => $row['ImageName'],
-              "FeatureImg" => $row['FeatureImg'],
+            $grouped[$currentProductId]["imgs"][] = [
+                "ImageName" => $row['ImageName'],
+                "FeatureImg" => $row['FeatureImg'],
             ];
         } else {
             // If we haven't added the product yet
@@ -95,10 +97,10 @@ if (isset($_GET['product_id'])) {
             ];
             // If there is an image for this row, add it
             if ($row["ProductImageImageId"]) {
-              $grouped[$currentProductId]["imgs"][] =  [
-                "ImageName" => $row['ImageName'],
-                "FeatureImg" => $row['FeatureImg'],
-              ];
+                $grouped[$currentProductId]["imgs"][] = [
+                    "ImageName" => $row['ImageName'],
+                    "FeatureImg" => $row['FeatureImg'],
+                ];
             }
         }
     }
@@ -120,16 +122,16 @@ if (isset($_GET['product_id'])) {
     }
 
     foreach ($grouped as $productId => $product):
-      // echo "<pre>";
-      // print_r($product['imgs']);
-      // echo "</pre>";
+        // echo "<pre>";
+        // print_r($product['imgs']);
+        // echo "</pre>";
         $stmtCheck = $product;
         if ($product['AddedDate'] >= $newInLimitDate) {
             $productMsg = "<div class='new-in'>
-																																			                            <span class='new-in__msg'>
-																																			                            New In
-																																			                            </span>
-																																			                          </div>";
+						                <span class='new-in__msg'>
+							                New In
+								            </span>
+							            </div>";
         } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
         $productMsg = "<div class='out-of-stock'>
                             <span class='out-of-stock__msg'>
@@ -139,9 +141,6 @@ if (isset($_GET['product_id'])) {
     }
     $id = htmlspecialchars($product['ProductId']);
     $name = htmlspecialchars($product['ProductName']);
-    if (strlen($name) > 20) {
-        $name = substr($name, 0, 20) . "...";
-    }
     $description = htmlspecialchars($product['ProductDescription']);
     $stock_qty = htmlspecialchars($product['ProductQty']);
     if ($stock_qty > 9) {
@@ -156,22 +155,22 @@ if (isset($_GET['product_id'])) {
         $discountProductPrice = ceil($price - ($price * 0.1));
         $priceMsg = "<div><span class='original-price'>$price SEK</span>
                         <span class='discount'>$discountProductPrice SEK</span></div>";
-        } else {
-          $priceMsg = "<span>$price SEK</span>";
-        }
-        $category = htmlspecialchars($product['CategoryName']);
-        $descriptionShort = substr($description, 0, 20);
-        if (empty($product['imgs'])) {
-            $productImg = "placeholder.jpg";
-        } else {
-            $imgArray = $product['imgs'];
-            foreach ($imgArray as $key => $img) {
-              if ($img['FeatureImg'] == 1) {
+    } else {
+        $priceMsg = "<span>$price SEK</span>";
+    }
+    $category = htmlspecialchars($product['CategoryName']);
+    $descriptionShort = substr($description, 0, 20);
+    if (empty($product['imgs'])) {
+        $productImg = "placeholder.jpg";
+    } else {
+        $imgArray = $product['imgs'];
+        foreach ($imgArray as $key => $img) {
+            if ($img['FeatureImg'] == 1) {
                 $productImg = $img['ImageName'];
-              }
             }
-            $imgList = $imgArray;
         }
+        $imgList = $imgArray;
+    }
     endforeach;
 }
 // echo $stock_qty;
@@ -191,18 +190,18 @@ if (isset($_GET['product_id'])) {
       <img class='product-section__images__big' src="./media/product_images/<?php echo $productImg ?>" alt="">
     </div>
     <div class='product-section__images__small-container'>
-    <i class="fas fa-chevron-left" onclick="prevImg()"></i>
-      <div  class='product-section__images__small-container__img-container'>
+      <i class="fas fa-chevron-left" onclick="prevImg()"></i>
+        <div  class='product-section__images__small-container__img-container'>
 
-      <?php
-if (isset($imgList) && !empty($imgList)) {
-    foreach ($imgList as $img) {
-      $imageName = $img['ImageName'];
-        echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt='product image'></div>";
-    }
-}
+          <?php
+          if (isset($imgList) && !empty($imgList)) {
+            foreach ($imgList as $img) {
+             $imageName = $img['ImageName'];
+             echo "<div class='img-wrapper' ><img class='product-section__images__small-container__img-container__img' onclick=\"changeImg('$imageName')\" src='./media/product_images/$imageName' alt='product image'></div>";
+            }
+          }
 
-?>
+          ?>
 
       </div>
       <i class="fas fa-chevron-right" onclick="nextImg()"></i>
@@ -215,8 +214,8 @@ if (isset($imgList) && !empty($imgList)) {
       <h2 class='product-section__rigth__info__price'><?php echo $priceMsg ?></h2>
       <?php echo $qtyMsg ?>
     </div>
-    <div class='product-section__rigth__actions'>
-      <div class='product-section__rigth__actions__amount hidden'>
+    <div class='product-section__rigth__actions' data-id=<?php echo $id ?>>
+      <!-- <div class='product-section__rigth__actions__amount amount hidden'>
         <label class='product-section__rigth__actions__amount__lable' for="">Amount</label>
         <div class='product-section__rigth__actions__amount__qty-container'>
           <input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-product-page' value="1" type="number" min='1' max='<?php echo $stock_qty ?>'>
@@ -229,15 +228,15 @@ if (isset($imgList) && !empty($imgList)) {
             data-discount=<?php echo $discount ?>
             >
 
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
-            <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle"></i></button>
-          </div>
+          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' onclick='lowerQty()'><i class="fas fa-minus-circle"></i></button>
+          <button class='product-section__rigth__actions__amount__qty-container__qtyBtn-product-page' id='higherBtn' onclick='higherQty(<?php echo $stock_qty ?>)'><i class="fas fa-plus-circle open-modal"></i></button>
+        </div>
 
         </div>
-      </div>
+      </div> -->
 
       <!-- <button type="submit" class="button add-to-cart-btn">Add to basket<i class='fas fa-cart-plus'></i></button> -->
-      <div
+      <!-- <div
           data-id=<?php echo $id ?>
           data-name='<?php echo $name ?>'
           data-price=<?php echo $price ?>
@@ -247,8 +246,26 @@ if (isset($imgList) && !empty($imgList)) {
           data-quantity=
           >
         <button class='button add-to-cart-btn'>Add to basket<i class='fas fa-cart-plus'></i></button>
-      </div>
+      </div> -->
 
+<button data-id=<?php echo $id ?> class='add-to-cart-btn' id='addToCartBtn-<?php echo $id ?>'>
+  <i class='fas fa-cart-plus' data-id=<?php echo $id ?>></i>
+</button>
+<div class='amount hidden product-section__rigth__actions__amount' id='productQty<?php echo $id ?>' data-id=<?php echo $id ?>>
+
+        <input type='number' min='1' data-productId=<?php echo $id ?> class='cart__product__info__btns__qty qty-input product-section__rigth__actions__amount__qty-container__input' value>
+        <div class='amount__btns product-section__rigth__actions__amount__qty-container' data-id=<?php echo $id ?>>
+
+          <button class='amount__btns-minus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page changeQty'data-productId=<?php echo $id ?> data-value='-1'>
+            <i data-id='qty-' data-productId=<?php echo $id ?> data-value='-1' class='changeQty fas fa-minus-circle'></i>
+          </button>
+          <button class='amount__btns-plus product-section__rigth__actions__amount__qty-container__qtyBtn-product-page changeQty' data-productId=<?php echo $id ?> data-value='1'>
+            <i data-id='qty+' data-productId=<?php echo $id ?> data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+          </button>
+
+
+        </div>
+      </div>
     </div>
   </div>
   <div class='product-section__description'>
@@ -262,49 +279,12 @@ if (isset($imgList) && !empty($imgList)) {
 
 
 
-getCartQty();
-
-checkLocalStorage();
-
-function getCartQty() {
-  const getCart = () => {
-    cart = JSON.parse(localStorage.getItem("cart"));
-    !cart ? (cart = {}) : null;
-  };
-  getCart();
-
-  let input = document.getElementById('qtyInput-product-page');
-  let name = "<?php echo $name; ?>";
-  if (cart[name]) {
-    input.value = cart[name].quantity;
-  }
-}
-
-function lowerQty() {
-  let input = document.getElementById('qtyInput-product-page');
-
-  if (input.value > 1)
-  input.value = parseInt(input.value) - 1;
-}
-
-function higherQty(qty) {
-  let input = document.getElementById('qtyInput-product-page');
-  // let button = document.getElementById('higherBtn');
-
-  if (input.value < qty) {
-    input.value = parseInt(input.value) + 1;
-  }
-  // else{
-  //   alert('no more in stock')
-  // }
-}
-
-const imgList = <?php if(isset($imgList) && !empty($imgList)) {
-                        echo json_encode($imgList);
-                        } else {
-                          $imgList = [];
-                          echo json_encode($imgList);
-                        } ?>
+const imgList = <?php if (isset($imgList) && !empty($imgList)) {
+    echo json_encode($imgList);
+} else {
+    $imgList = [];
+    echo json_encode($imgList);
+}?>
 
 const selectedImg = imgList == undefined ? "placeholder.jpg" : imgList[0];
 let selectedIndex = 0;
@@ -312,7 +292,7 @@ let selectedIndex = 0;
 function changeImg(img) {
   const bigImg = document.querySelector('.product-section__images__big');
   bigImg.src = './media/product_images/' + img;
-  selectedIndex = imgList.findIndex(listImg => listImg === img);
+  selectedIndex = imgList.findIndex(listImg => listImg.ImageName === img);
 }
 
 function nextImg() {
@@ -320,7 +300,7 @@ function nextImg() {
 
   if (selectedIndex < imgList.length - 1) {
     selectedIndex++;
-    bigImg.src = './media/product_images/' + imgList[selectedIndex];
+    bigImg.src = './media/product_images/' + imgList[selectedIndex].ImageName;
   }
 
 }
@@ -330,21 +310,21 @@ function prevImg() {
 
   if (selectedIndex > 0 ) {
     selectedIndex--;
-    bigImg.src = './media/product_images/' + imgList[selectedIndex];
+    bigImg.src = './media/product_images/' + imgList[selectedIndex].ImageName;
   }
 }
 
-function checkLocalStorage() {
-  addToCartBtn = document.querySelector('.add-to-cart-btn');
-  qtyBtns = document.querySelector('.product-section__rigth__actions__amount');
-  let name = "<?php echo "$name" ?>";
-  cart = JSON.parse(localStorage['cart']);
+// function checkLocalStorage() {
+//   addToCartBtn = document.querySelector('.add-to-cart-btn');
+//   qtyBtns = document.querySelector('.product-section__rigth__actions__amount');
+//   let name = "<?php echo "$name" ?>";
+//   cart = JSON.parse(localStorage['cart']);
 
-  if (cart[name]) {
-    qtyBtns.classList.remove("hidden");
-    addToCartBtn.classList.add("hidden");
-  }
-}
+//   if (cart[name]) {
+//     qtyBtns.classList.remove("hidden");
+//     addToCartBtn.classList.add("hidden");
+//   }
+// }
 
 
 // const deleteSingleProduct = document.getElementById("deleteSingleProduct");
@@ -359,54 +339,54 @@ function checkLocalStorage() {
 // })
 
 
-const addBtn = document.querySelector(".add-to-cart-btn");
-addBtn.addEventListener("click", function() {
+// const addBtn = document.querySelector(".add-to-cart-btn");
+// addBtn.addEventListener("click", function() {
 
-  setTimeout(function(){
-    checkLocalStorage();
-  }, 300);
-});
+//   setTimeout(function(){
+//     checkLocalStorage();
+//   }, 300);
+// });
 
 
 //When deleting a spesific product from cart
-document.addEventListener("click", (e) => {
-  // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-  const input = document.getElementById('qtyInput-product-page');
+// document.addEventListener("click", (e) => {
+//   // const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//   const input = document.getElementById('qtyInput-product-page');
 
-  if (e.target.dataset.id == "delete-product") {
-    const name = "<?php echo "$name" ?>";
-    const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
-    cart = JSON.parse(localStorage['cart']);
+//   if (e.target.dataset.id == "delete-product") {
+//     const name = "<?php echo "$name" ?>";
+//     const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+//     cart = JSON.parse(localStorage['cart']);
 
-    if (cart[name] == cart[productId]) {
-      qtyBtns.classList.add("hidden");
-      addToCartBtn.classList.remove("hidden");
-      input.value = 1;
-    }
-  }
-});
+//     if (cart[name] == cart[productId]) {
+//       qtyBtns.classList.add("hidden");
+//       addToCartBtn.classList.remove("hidden");
+//       input.value = 1;
+//     }
+//   }
+// });
 
 
 //When clearing cart
-document.addEventListener("click", (e) => {
-  const input = document.getElementById('qtyInput-product-page');
-  if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
-    qtyBtns.classList.add("hidden");
-    addToCartBtn.classList.remove("hidden");
-    input.value = 1;
-  }
-});
+// document.addEventListener("click", (e) => {
+//   const input = document.getElementById('qtyInput-product-page');
+//   if (e.target.className == "clear-cart" && !Object.entries(cart).length == 0) {
+//     qtyBtns.classList.add("hidden");
+//     addToCartBtn.classList.remove("hidden");
+//     input.value = 1;
+//   }
+// });
 
-document.addEventListener("click", (e) => {
-  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
+// document.addEventListener("click", (e) => {
+//   const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
-  if (e.target.dataset.id == "qty+") {
-    setTimeout(getCartQty(), 1000);
+//   if (e.target.dataset.id == "qty+") {
+//     setTimeout(getCartQty(), 1000);
 
-  } else if (e.target.dataset.id == "qty-") {
-    setTimeout(getCartQty(), 1000);
-  }
-});
+//   } else if (e.target.dataset.id == "qty-") {
+//     setTimeout(getCartQty(), 1000);
+//   }
+// });
 
 
 

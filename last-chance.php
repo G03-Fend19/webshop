@@ -105,10 +105,10 @@ foreach ($results as $productId => $product):
     $qtyMsg = "";
     if ($product['AddedDate'] >= $newInLimitDate) {
         $productMsg = "<div class='new-in'>
-								                        <span class='new-in__msg'>
-								                        New In
-								                        </span>
-								                      </div>";
+										                        <span class='new-in__msg'>
+										                        New In
+										                        </span>
+										                      </div>";
     } elseif ($product['ProductQty'] < 10 && $product['AddedDate'] <= $lastChanceLimitDate) {
     $productMsg = "<div class='out-of-stock'>
                           <span class='out-of-stock__msg'>
@@ -140,58 +140,51 @@ if ($productQty > 9) {
     $qtyMsg = "<span class='few-in-store'>Less than 10 in store</span>";
 }
 
-if (empty($product['imgNames'])) {
+if (empty($product['ImageName'])) {
     $productImg = "placeholder.jpg";
 } else {
-    $productImg = htmlspecialchars($product['imgNames'][0]);
+    $productImg = htmlspecialchars($product['ImageName']);
 }
+$productCards .= "
+<article class='product-card'>
+  <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
+    <div class='image-wrapper'>
+      <div class='out-of-stock'>
+        <span class='out-of-stock__msg'>
+          10% off
+        </span>
+      </div>
+      <img class='product-thumb' src=./media/product_images/$productImg alt=''>
+    </div>
+  </a>
+  <div class='product-card__content'>
+    <div class='product-card__text'>
+      <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
+        $productName
+      </a>
+      $priceMsg
+      $qtyMsg
+    </div>
+    <button data-id=$productId class='add-to-cart-btn' id='addToCartBtn-$productId'>
+      <i class='fas fa-cart-plus'data-id=$productId></i>
+    </button>
+    <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
 
-$productCards .= "<article class='product-card'>
-                    <a href='product.php?product_id=$productId#main' class='product-card__image-link'>
-                      <div class='image-wrapper'>
-                        <div class='out-of-stock'>
-                          <span class='out-of-stock__msg'>
-                            10% off
-                          </span>
-                        </div>
-                            <img class='product-thumb' src=./media/product_images/$productImg alt=''>
-                          </div>
-                        </a>
-                        <div class='product-card__content'>
-                        <div class='product-card__text'>
-                          <a href='product.php?product_id=$productId#main' class='product-card__product-link'>
-                            $productName
-                          </a>
-                          $priceMsg
-                          </div>
-                          <button
-                          data-id=$productId
-                          data-name='$productName'
-                          data-price=$productPrice
-                          data-img='$productImg'
-                          data-stock=$productQty
-                          data-discount=$discount 
-                          class='add-to-cart-btn' id='addToCartBtn-$productId'>";
-$productQty < 1 ? $productCards .= "<i class='far fa-times-circle'></i>" : $productCards .= "<i class='fas fa-cart-plus'></i>";
-$productCards .= "</button>
-<div class='product-section__rigth__actions__amount__qty-container hidden' id='productQty-$productId'>
-<input class='product-section__rigth__actions__amount__qty-container__input' id='qtyInput-$productId' value='1' type='number' min='1' max='<?php echo $$productQty ?>'>
-<div
-  data-id=$productId
-  data-name='$productName'
-  data-price=$productPrice
-  data-img='$productImg'
-  data-stock=$productQty
-data-discount=$discount 
-  >
+      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input amount__input' value>
+      <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice
+        data-img='$productImg' data-stock=$productQty data-discount=$discount>
 
-  <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' onclick='lowerQty($productId)'><i class='fas fa-minus-circle'></i></button>
-  <button class='product-section__rigth__actions__amount__qty-container__qtyBtn' id='higherBtn' onclick='higherQty($productQty, $productId)'><i class='fas fa-plus-circle'></i></button>
-</div>
+        <button class='amount__btns-minus changeQty' data-productId=$productId data-value='-1'>
+          <i data-id='qty-' data-productId=$productId data-value='-1' class='changeQty fas fa-minus-circle'></i>
+        </button>
+        <button class='amount__btns-plus changeQty' id='higherBtn' data-productId=$productId data-value='1'>
+          <i data-id='qty+' data-productId=$productId data-value='1' class='changeQty fas fa-plus-circle open-modal'></i>
+        </button>
+      </div>
+
 
 </div>
-                     
-                          $qtyMsg
+
                           </div>
                       </article>";
 endforeach;
@@ -210,7 +203,7 @@ echo $productsContainer;
 ?>
 </section>
 
-<script>
+<!-- <script>
 
 
 let grouped = <?php echo json_encode($results) ?>;
@@ -305,36 +298,11 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("click", (e) => {
-  const productId = e.target.parentNode.parentNode.parentNode.dataset.name;
 
-  if (e.target.dataset.id == "qty+") {
-    setTimeout(getCartQty(), 1000);
 
-  } else if (e.target.dataset.id == "qty-") {
-    setTimeout(getCartQty(), 1000);
-  }
-});
 
-function lowerQty(id) {
-  let input = document.getElementById('qtyInput-' + id);
 
-  if (input.value > 1)
-  input.value = parseInt(input.value) - 1;
-}
-
-function higherQty(qty, id) {
-  let input = document.getElementById('qtyInput-' + id);
-
-  if (input.value < qty) {
-    input.value = parseInt(input.value) + 1;
-  }
-  // else{
-  //   alert('no more in stock')
-  // }
-}
-
-</script>
+</script> -->
 
 
 <?php require_once "./assets/foot.php";?>

@@ -1,4 +1,36 @@
-function sortTable(n) {
+let presetSortMethod = localStorage.getItem("sort_method");
+let comparedTd = localStorage.getItem("table_data");
+let tableId = localStorage.getItem("table_id");
+const tables = document.getElementsByClassName("ordertable");
+let tableExistOnPage = false;
+
+if (presetSortMethod) {
+  for (let i = 0; i < tables.length; i++) {
+    if (tables[i].id == tableId) {
+      tableExistOnPage = true;
+      break;
+    }
+  }
+}
+
+if (tableExistOnPage) {
+  switch (presetSortMethod) {
+    case "price":
+      // console.log("price")
+      sortTable(comparedTd, tableId);
+      break;
+    case "date":
+      // console.log("date")
+      sortTableDate(comparedTd, tableId);
+      break;
+    default:
+      // console.log("status")
+      sortTableStatus(comparedTd, tableId);
+      break;
+  }
+}
+
+function sortTable(n, clickedTableId) {
   var table,
     rows,
     switching,
@@ -9,8 +41,9 @@ function sortTable(n) {
     dir,
     switchcount = 0,
     reverse;
-
-  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  if (!clickedTableId) {
+    clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  }
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -30,12 +63,8 @@ function sortTable(n) {
       y = rows[i + 1].getElementsByTagName("td")[n];
 
       if (dir == "asc") {
-        console.log("asc");
-        console.log(x);
-        console.log(y);
         if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
           shouldSwitch = true;
-          console.log("x > y");
           break;
         }
       } else if (dir == "desc") {
@@ -56,9 +85,12 @@ function sortTable(n) {
       }
     }
   }
+  localStorage.setItem("table_data", n);
+  localStorage.setItem("sort_method", "price");
+  localStorage.setItem("table_id", clickedTableId);
 }
 
-function sortTableDate(n) {
+function sortTableDate(n, clickedTableId) {
   var table,
     rows,
     switching,
@@ -69,7 +101,9 @@ function sortTableDate(n) {
     dir,
     switchcount = 0,
     reverse;
-  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  if (!clickedTableId) {
+    clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  }
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -87,10 +121,6 @@ function sortTableDate(n) {
 
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
-
-      console.log("date asc");
-      console.log(x);
-      console.log(y);
 
       if (dir == "asc") {
         if (Date.parse(x.innerHTML) < Date.parse(y.innerHTML)) {
@@ -115,9 +145,12 @@ function sortTableDate(n) {
       }
     }
   }
+  localStorage.setItem("table_data", n);
+  localStorage.setItem("sort_method", "date");
+  localStorage.setItem("table_id", clickedTableId);
 }
 
-function sortTableStatus(n) {
+function sortTableStatus(n, clickedTableId) {
   var table,
     rows,
     switching,
@@ -128,7 +161,9 @@ function sortTableStatus(n) {
     dir,
     switchcount = 0,
     reverse;
-  clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  if (!clickedTableId) {
+    clickedTableId = this.event["target"].parentNode.parentNode.parentNode.id;
+  }
   if (clickedTableId == "activetable") {
     table = document.getElementById("activetable");
   } else {
@@ -146,19 +181,21 @@ function sortTableStatus(n) {
 
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
+      // console.log(x)
 
       xForm = x.children[0][0];
       yForm = y.children[0][0];
 
+      // console.log(parseInt(xForm.value))
+      // console.log(parseInt(xForm.value))
+
       if (dir == "asc") {
         if (parseInt(xForm.value) > parseInt(yForm.value)) {
-          console.log("x > y");
           shouldSwitch = true;
           break;
         }
       } else if (dir == "desc") {
         if (parseInt(xForm.value) < parseInt(yForm.value)) {
-          console.log("x < y");
           shouldSwitch = true;
           break;
         }
@@ -175,4 +212,7 @@ function sortTableStatus(n) {
       }
     }
   }
+  localStorage.setItem("table_data", n);
+  localStorage.setItem("sort_method", "status");
+  localStorage.setItem("table_id", clickedTableId);
 }

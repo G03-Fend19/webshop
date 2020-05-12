@@ -1,7 +1,7 @@
 .cart {
-  max-height: calc(100vh - 70px);
-  height: 100%;
-  overflow: scroll;
+  height: calc(100vh - 70px);
+  height: calc(var(--vh, 1vh) * 100 - 70px);
+  overflow: hidden;
   width: 100vw;
   position: fixed;
   display: flex;
@@ -10,19 +10,26 @@
   background-color: rgb(247, 247, 247);
   top: 70px;
   right: 0;
+  left: 0;
+  bottom: 0;
   z-index: 3;
   padding: 10px;
   padding-bottom: 0;
   box-shadow: 1px 1px 2px rgb(184, 184, 184);
   border-radius: 0 0 0 10px;
-  min-height: calc(100vh - 70px);
+  // min-height: calc(100vh - 70px);
 
   @media (min-width: 420px) {
     min-height: unset;
+    overflow-y: scroll;
     overflow-x: hidden;
-    width: 300px;
+    width: 350px;
     max-height: calc(100vh - 70px);
     height: fit-content;
+    top: 70px;
+    right: 0;
+    bottom: unset;
+    left: unset;
     // padding-bottom: 2em;
   }
 
@@ -31,16 +38,15 @@
     flex-direction: column;
     padding-top: 1em;
     margin-bottom: 2em;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100vh;
     -webkit-overflow-scrolling: touch;
 
     @media (min-width: 450px) {
-      overflow-y: unset;
+      overflow-y: scroll;
       height: unset;
       -webkit-overflow-scrolling: unset;
       padding-bottom: 8em;
-      margin-bottom: unset;
     }
   }
   &__total-checkout {
@@ -77,9 +83,11 @@
     height: 50px;
     position: sticky;
     top: 0;
+    padding: 0.3em;
 
     @media (min-width: 420px) {
       justify-content: flex-end;
+      padding: unset;
     }
 
     button {
@@ -87,7 +95,7 @@
       border: none;
       border-radius: 5px;
       background-color: #54626a;
-      font-size: 2vh;
+      font-size: 10px;
       padding: 0.5em 1em;
       margin-left: 10px;
       margin-right: 10px;
@@ -100,12 +108,15 @@
 
         transition: ease-in 250ms;
         transform: scale(1.025);
-        font-weight: bold;
+        // font-weight: bold;
       }
 
       @media (min-width: 420px) {
-        font-size: 1.5vh;
+        font-size: 12px;
       }
+    }
+    button:nth-child(1) {
+      background: #ff4343;
     }
   }
   &__total {
@@ -118,18 +129,21 @@
     width: 95%;
   }
   &__checkout {
-     margin: auto;
+    margin: auto;
     // display: flex;
     // justify-content: center;
     // align-items: center;
     // margin-bottom: 20px;
     // height: 4em;
     width: 80%;
+    padding: 1em 0;
+    font-size: 15px;
     background: rgb(103, 136, 103);
     border-radius: 10px;
     font-weight: bolder;
     border: none;
     box-shadow: 0px 2px 5px rgb(0, 0, 0);
+    color: white;
     cursor: pointer;
     &:hover {
       transition: ease 250ms;
@@ -138,12 +152,12 @@
       // color: white;
       font-weight: bold;
     }
-    display: flex;
+    /* display: flex; */
     a {
       font-size: 15px;
-      text-align: center;
-      margin: auto;
-      padding: 1em 0;
+      /* text-align: center;
+      margin: auto;*/
+
       color: white;
       // height: 100%;
       // width: 100%;
@@ -186,6 +200,7 @@
       gap: 10px;
       margin: auto;
       &__btns {
+        touch-action: manipulation;
         display: flex;
         justify-content: space-evenly;
         width: 80%;
@@ -233,4 +248,21 @@
 }
 .delete-product {
   cursor: pointer;
+}
+
+.noScroll {
+  @media (max-width: 450px) {
+    overflow: hidden;
+  }
+}
+
+[aria-hidden="true"] {
+  display: none;
+}
+[aria-hidden="false"] {
+  display: block;
+}
+
+button > * {
+  pointer-events: none;
 }

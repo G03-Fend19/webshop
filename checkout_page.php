@@ -1,23 +1,121 @@
 <?php
+session_start();
+$errorModal = "";
+$modalModel = "<div id='checkoutErrorModal' class='modal'>
+                <div class='modal__content'>
+                <div class='modal__content__header'>
+                <span class='close'>&times</span>
+                <h2>Error</h2>
+                </div>
+                <div class='modal__content__body'>";
+$errorMsg = "";
+?>
+<?php
+if (isset($_GET['error'])) {
 
-if (isset($_GET['error']) && $_GET['error'] == "mail") {
-    ?><script>
-alert('Email already registered on a different name. Please check spelling or use different mail')
-</script><?php
+    if ($_GET['error'] == "mail" && isset($_SESSION['mail_error'])) {
+        $errorModal .= $modalModel;
+        $mailErrorMsg = $_SESSION['mail_error'];
+        $errorMsg .= "<p class='error-msg__header'>$mailErrorMsg</p>";
+        unset($_SESSION['mail_error']);
+        $errorModal .= $errorMsg;
+        $errorModal .= "</div>
+        <div class='modal__content__footer'>
+        <button id='cancel' class='cancel-btn'>Close</button>
+
+        </div>
+        </div>
+
+        </div>";
+    }
+    if ($_GET['error'] == "empty" && isset($_SESSION['cart_empty'])) {
+        $errorModal .= $modalModel;
+        $cartEmptyMsg = $_SESSION['cart_empty'];
+        $errorMsg .= "<p class='error-msg__header'>$cartEmptyMsg</p>";
+        unset($_SESSION['cart_empty']);
+        $errorModal .= $errorMsg;
+        $errorModal .= "</div>
+        <div class='modal__content__footer'>
+        <button id='cancel' class='cancel-btn'>Close</button>
+
+        </div>
+        </div>
+
+        </div>";
+    }
+    if ($_GET['error'] == "products") {
+        if (isset($_SESSION['sold_out_products']) || isset($_SESSION['products_to_reduce'])) {
+            $errorModal .= $modalModel;
+            if (isset($_SESSION['sold_out_products'])) {
+                $soldOutProducts = $_SESSION['sold_out_products'];
+                ?>
+          <script>let soldOutProductsFromPHP = <?php echo json_encode($soldOutProducts); ?>;</script>
+          <?php
+$errorMsg .= "<p class='error-msg__header'>Unfortunately these products sold out before you completed your order and will be removed:</p><ul class='error-msg__list'>";
+                foreach ($soldOutProducts as $key => $product) {
+                    $productName = $product['SoldOutProductName'];
+                    $productId = $product['SoldOutProductId'];
+
+                    $errorMsg .= "<li>$productName</li>";
+                }
+                $errorMsg .= "</ul>";
+            }
+            if (isset($_SESSION['products_to_reduce'])) {
+                $productsToReduce = $_SESSION['products_to_reduce'];
+                ?>
+        <script>let productsToReduceFromPHP = <?php echo json_encode($productsToReduce); ?>;</script>
+        <?php
+$errorMsg .= "<p class='error-msg__header'>Unfortunately our stock changed before you completed your order witch affected these products:</p><ul class='error-msg__list'>";
+                foreach ($productsToReduce as $key => $product) {
+                    $productName = $product['ProductsToReduceProductName'];
+                    $productId = $product['ProductsToReduceProductId'];
+
+                    $errorMsg .= "<li>$productName</li>";
+                }
+                $errorMsg .= "</ul>";
+            }
+            $errorModal .= $errorMsg;
+            $errorModal .= "</div>
+          <div class='modal__content__footer'>
+          <button id='cancel' class='cancel-btn'>Close</button>
+
+          </div>
+          </div>
+
+          </div>";
+        }
+        // print_r($soldOutProducts);
+        // print_r($productsToReduce);
+        unset($_SESSION['sold_out_products']);
+        unset($_SESSION['products_to_reduce']);
+    }
+    // $errorModal .= $errorMsg;
+    // $errorModal .= "</div>
+    // <div class='modal__content__footer'>
+    // <button id='cancel' class='cancel-btn'>Close</button>
+
+    // </div>
+    // </div>
+
+    // </div>";
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="./media/images/logo.png" rel="icon" type="image/x-icon"/>
+  <link rel="apple-touch-icon" sizes="152x152" href="./media/images/logo.png">
   <title>Clothera - Checkout page</title>
 </head>
 
 <body>
+
   <header class="header">
     <nav class="fixed">
       <div class="header__logo"><a href="index.php"> <img src="./media/images/logo_white.png" width="40" height="40" />
@@ -89,6 +187,7 @@ alert('Email already registered on a different name. Please check spelling or us
         </div>
 
       </div>
+      <?php echo $errorModal ?>
 
     </section>
 
@@ -145,27 +244,27 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__information__name">
             <div class="label-input">
               <label for="firstname">First name:</label>
-              <input name="firstname" class="customer-info" id="firstname" type="text" required>
+              <input name="firstname" class="customer-info" id="firstname" type="text" maxlength="50" required>
             </div>
             <div class="label-input">
               <label for="lastname">Last name:</label>
-              <input name="lastname" class="customer-info" id="lastname" type="text" required>
+              <input name="lastname" class="customer-info" id="lastname" type="text" maxlength="100" required>
             </div>
           </div>
           <div class="customer__form__information__mailbile">
             <div class="label-input">
               <label for="email">Email:</label>
-              <input name="email" class="customer-info" id="email" type="email" required>
+              <input name="email" class="customer-info" id="email" type="email" maxlength="50" required>
             </div>
             <div class="label-input">
               <label for="mobile">Mobile:</label>
-              <input name="mobile" class="customer-info" id="mobile" type="text" required>
+              <input name="mobile" class="customer-info" id="mobile" type="text" maxlength="30" required>
             </div>
           </div>
           <div class="customer__form__information__street">
             <div class="label-input">
               <label for="street">Street:</label>
-              <input name="street" class="customer-info" id="street" type="text" required>
+              <input name="street" class="customer-info" id="street" type="text" maxlength="50" required>
             </div>
           </div>
           <div>
@@ -175,11 +274,11 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__information__cityPost">
             <div class="label-input postalcode">
               <label for="postal">Postal:</label>
-              <input name="postal" class="customer-info" id="postal" type="text" required>
+              <input name="postal" class="customer-info" id="postal" type="text"  maxlength="5" required>
             </div>
             <div class="label-input city">
               <label for="city">City:</label>
-              <input name="city" class="customer-info" id="city" type="text" required>
+              <input name="city" class="customer-info" id="city" type="text"  maxlength="50" required>
             </div>
 
           </div>
@@ -197,13 +296,14 @@ alert('Email already registered on a different name. Please check spelling or us
           <div class="customer__form__payment__invoice">
             <p>Invoice: </p>
 
-            <label for="email-invoice"><input name="email-invoice" class="customer-info" type="checkbox"
-                id="email-invoice" name="email-invoice" value="checkbox">Email
+            <label for="emailInvoice"><input name="emailInvoice" class="customer-info" type="checkbox"
+                id="emailInvoice" name="emailInvoice" value="checkbox" checked>Email
             </label>
 
-            <label for="adress-invoice"><input name="adress-invoice" class="customer-info" type="checkbox"
-                id="adress-invoice" name="adress-invoice" value="checkbox"> Address
+            <label for="adressInvoice"><input name="adressInvoice" class="customer-info" type="checkbox"
+                id="adressInvoice" name="adressInvoice" value="checkbox"> Address
             </label>
+
           </div>
           <input id="cart-input" type="hidden" name="cart">
           <input id="total-input" type="hidden" name="total">
@@ -214,9 +314,19 @@ alert('Email already registered on a different name. Please check spelling or us
         </div>
       </form>
     </section>
+
+
     <script>
     const customerFromLocalStorage = JSON.parse(localStorage.getItem('customer'))
     const customerInformationFields = document.querySelectorAll(".customer-info");
+    let carten = JSON.parse(localStorage.getItem('cart'));
+    !carten ? carten = {} : null;
+
+    if (Object.keys(carten).length === 0) {
+      const confirmForm = document.getElementById('confirm-order');
+      confirmForm.classList.add('hidden');
+    }
+
     if (customerFromLocalStorage == null || customerInformationFields == null) {} else {
       const customerInformationArray = Array.prototype.slice.call(
         customerInformationFields
@@ -231,6 +341,148 @@ alert('Email already registered on a different name. Please check spelling or us
         })
       }
     }
+
+    const confirmOrderBtn = document.getElementById('order-confirmation-submit');
+
+    confirmOrderBtn.addEventListener('click', function(e) {
+
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const mobile = document.getElementById('mobile').value;
+      const street = document.getElementById('street').value;
+      const postal = document.getElementById('postal').value;
+      const city = document.getElementById('city').value;
+
+      validateField(firstname, 'first name', e, 50);
+      validateField(lastname, 'last name', e, 100);
+      validateField(city, 'city name', e, 50);
+
+      validateEmail(email);
+
+      validatePostalMobile(mobile, 'mobile number', event);
+      validatePostalMobile(postal, 'postal', event);
+
+      validateStreet(street);
+
+      if (!validLength(mobile, 30)) {
+        alert('Your mobile number has to be between 2 and 30 numbers.');
+        event.preventDefault();
+      };
+
+      if (!validLength(postal, 5)) {
+        alert('Your postal number has to be between 2 and 5 numbers.');
+        event.preventDefault();
+      };
+
+// To send the latest from localStorage to confirm-page
+    document.getElementById('cart-input').value = localStorage.getItem('cart');
+    document.getElementById('total-input').value = localStorage.getItem('total');
+
+    })
+
+    function validLength(value, maxLength){
+
+    if (value.length >= 2 && value.length <= maxLength) {
+        return true;
+    } else {
+        return false;
+    }
+
+    }
+
+    function validateField(value, fieldName, event, maxLength) {
+      if (!onlyValidCharacters(value) && value.length > 2) {
+        alert('You have unvalid chars in your ' + fieldName + '.');
+        event.preventDefault();
+      }
+
+      if (!validLength(value, maxLength)) {
+        alert('The ' + fieldName + ' field has to be between 2 and ' + maxLength + ' characters.');
+        event.preventDefault();
+      };
+    }
+
+    function onlyValidCharacters(inputtxt) {
+
+      const validLetters = /^[a-zA-ZäöåÄÖÅ\s-é]+$/;
+
+      if(inputtxt.match(validLetters)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+
+    function validateEmail(email) {
+      const validFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if(!email.match(validFormat) && email.length > 2) {
+        alert('This is not a valid email-address.');
+        event.preventDefault();
+      }
+
+      if (!validLength(email, 50)) {
+        alert('Your email has to be between 2 and 50 letters.');
+        event.preventDefault();
+      }
+    }
+
+    function validatePostalMobile(value, fieldName, event) {
+      if (!onlyValidNumbers(value) && value.length > 2) {
+        alert('You have unvalid characters in your ' + fieldName + '.');
+        event.preventDefault();
+      }
+    }
+
+    function onlyValidNumbers(inputnum) {
+      const validNumbers = /^[0-9\s-]+$/;
+
+      if(inputnum.match(validNumbers)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function validateStreet(street) {
+
+      const validChars = /^[0-9a-zA-ZäöåÄÖÅ\s-é.]+$/;
+
+      if(!street.match(validChars) && street.length > 2) {
+        alert('You have unvalid chars in your street address');
+        event.preventDefault();
+      }
+
+      if (!validLength(street, 50)) {
+        alert('Your street address has to be between 2 and 50 letters.');
+        event.preventDefault();
+      }
+    }
+
+      const modal = document.getElementById("checkoutErrorModal");
+      const span = document.getElementsByClassName("close")[0];
+      //const deleteIcon = document.getElementById("delete-product");
+      if(modal !== null) {
+        modal.style.display = "block";
+        //close the modal
+       span.onclick = function() {
+         modal.style.display = "none";
+       };
+         // clicks anywhere outside of the modal, close it
+         window.onclick = function(event) {
+           if (event.target == modal) {
+             modal.style.display = "none";
+           }
+         };
+         document.addEventListener("click", e => {
+           if (e.target.className == "cancel-btn") {
+             modal.style.display = "none";
+           }
+         });
+      }
+
     </script>
 
     <script>

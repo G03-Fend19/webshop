@@ -2,10 +2,13 @@
 <html lang="en">
 
 <head>
-  <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="./media/images/logo.png" rel="icon" type="image/x-icon"/>
+  <link rel="apple-touch-icon" sizes="152x152" href="./media/images/logo.png">
   <title>Clothera - Startpage</title>
 </head>
 
@@ -80,6 +83,21 @@
           </div>
         </div>
 
+      </div>
+
+      <div id="noMoreInStockModal" class="modal">
+        <div class="modal__content">
+          <div class="modal__content__header">
+            <span class="cancel-btn  close">&times;</span>
+            <h2>Alert</h2>
+          </div>
+          <div class="modal__content__body">
+            <p>No more in stock</p>
+          </div>
+          <div class="modal__content__footer">
+            <button class="cancel-btn">Cancel</button>
+          </div>
+        </div>
       </div>
 
     </section>

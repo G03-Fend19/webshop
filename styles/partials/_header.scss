@@ -3,13 +3,15 @@
   justify-content: space-around;
   align-items: center;
   grid-template: auto 1fr / 1fr;
-  width: 100vw;
+  /*   width: 100vw; */
   nav {
     position: fixed;
     top: 0;
     z-index: 10;
     display: flex;
-    width: 100vw;
+    /* width: 100vw; */
+    left: 0;
+    right: 0;
     height: 70px;
     align-items: center;
     background-color: #54626a;
@@ -30,6 +32,8 @@
     margin-right: 20px;
     display: flex;
     @media (min-width: 800px) {
+      display: flex;
+      align-items: center;
     }
     &__container {
       display: flex;
@@ -50,29 +54,34 @@
         font-weight: 900;
         @media (min-width: 800px) {
           display: inline;
-          
+
           &:hover {
             @keyframes changeColor {
               0% {
                 color: #d9d7d1;
               }
-  
+
               100% {
                 color: #353535;
                 text-shadow: 1px 1px 2px rgb(206, 206, 206);
               }
             }
-  
+
             animation: changeColor 500ms;
             animation-fill-mode: forwards;
           }
         }
-
       }
 
       &__cart {
         margin-right: 1.5em;
         cursor: pointer;
+
+        i {
+          @media (min-width: 1000px) {
+            font-size: 25px;
+          }
+        }
       }
     }
   }
@@ -142,7 +151,7 @@
         }
       }
 
-      @media (max-width: 750px){
+      @media (max-width: 750px) {
         font-size: 10vw;
         text-align: center;
         align-items: center;
@@ -162,7 +171,7 @@
       font-size: 1vw;
       text-align: center;
 
-      @media (max-width: 750px){
+      @media (max-width: 750px) {
         font-size: 3vw;
         text-align: left;
       }
@@ -212,6 +221,7 @@
   }
 
   &__searchBtn {
+    touch-action: manipulation;
     width: 40px;
     padding: 8.3px;
     margin: 0;
@@ -284,16 +294,16 @@
 .header__nav__item__cart {
   .cart_qty_show {
     position: absolute;
-    top: 10px;
-    right: 57px;
+    top: 14px;
+    right: 52px;
     display: flex;
     align-items: center;
-    justify-self: center;
-    padding: 6px 6px;
+    justify-content: center;
+    // padding: 6px 6px;
     border-radius: 50%;
     background: #ff4343;
     line-height: 10px;
-    font-size: 14px;
+    font-size: 9px;
     vertical-align: middle;
     white-space: nowrap;
     z-index: 2;
@@ -301,7 +311,10 @@
     height: 20px;
 
     @media (min-width: 800px) {
-      right: 15px;
+      right: 10px;
+      width: 25px;
+      height: 25px;
+      font-size: 12px;
     }
   }
 

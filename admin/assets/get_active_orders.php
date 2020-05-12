@@ -15,8 +15,10 @@
             ws_products.name            AS ProductName,
             ws_products.price           AS ProductPrice,
             ws_products.description      AS ProductDesc,
-            ws_products.id              AS ProductId
-
+            ws_products.id              AS ProductId,
+            ws_products.stock_qty       AS Stock, 
+            ws_products.added_date      AS ProductDate
+ 
            
           FROM 
             ws_active_orders
@@ -41,7 +43,7 @@
           ON 
             ws_products.id = ws_orders_products.product_id  
           WHERE
-            ws_orders_products.product_qty > 0
+            ws_orders_products.product_qty >= 0
           ";
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -57,34 +59,38 @@
     $currentOrderNumber = $row['OrderNumber'];
     if(isset($activeOrdersGrouped[$currentOrderNumber])) {
       $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
-        "ProductName" => $row["ProductName"],
-        "ProductPrice" => $row["ProductPrice"],
-        "ProductDesc" => $row["ProductDesc"],
-        "ProductId" => $row["ProductId"],
-        "ProductQty" => $row["OrderProductQty"],
+        "ProductName" => htmlspecialchars($row["ProductName"]),
+        "ProductPrice" => htmlspecialchars($row["ProductPrice"]),
+        "ProductDesc" => htmlspecialchars($row["ProductDesc"]),
+        "ProductId" => htmlspecialchars($row["ProductId"]),
+        "ProductQty" => htmlspecialchars($row["OrderProductQty"]),
+        "ProductDate" => htmlspecialchars($row["ProductDate"]),
+        "Stock" => htmlspecialchars($row["Stock"]),
       ];
     } else {
       $activeOrdersGrouped[$currentOrderNumber] = [
         "Products" => [],
-        "OrderType" => $orderType,
-        "OrderNumber" => $row['OrderNumber'],
-        "OrderDate" => $row['OrderDate'],
-        "OrderCost" => $row["OrderCost"],
-        "CustomerFirstName" => $row["CustomerFirstName"],
-        "CustomerLastName" => $row["CustomerLastName"],
-        "DeliveryCity" => $row["DeliveryCity"],
-        "DeliveryStreet" => $row["DeliveryStreet"],
-        "DeliveryPostal" => $row["DeliveryPostal"],
-        "OrderStatus" => $row["OrderStatus"],
-        "OrderStatusId" => $row["OrderStatusId"],
+        "OrderType" => htmlspecialchars($orderType),
+        "OrderNumber" => htmlspecialchars($row['OrderNumber']),
+        "OrderDate" => htmlspecialchars($row['OrderDate']),
+        "OrderCost" => htmlspecialchars($row["OrderCost"]),
+        "CustomerFirstName" => htmlspecialchars($row["CustomerFirstName"]),
+        "CustomerLastName" => htmlspecialchars($row["CustomerLastName"]),
+        "DeliveryCity" => htmlspecialchars($row["DeliveryCity"]),
+        "DeliveryStreet" => htmlspecialchars($row["DeliveryStreet"]),
+        "DeliveryPostal" => htmlspecialchars($row["DeliveryPostal"]),
+        "OrderStatus" => htmlspecialchars($row["OrderStatus"]),
+        "OrderStatusId" => htmlspecialchars($row["OrderStatusId"]),
       ];
       if ($row['OrderProductId']) {
         $activeOrdersGrouped[$currentOrderNumber]["Products"][] =  [
-          "ProductName" => $row["ProductName"],
-          "ProductPrice" => $row["ProductPrice"],
-          "ProductDesc" => $row["ProductDesc"],
-          "ProductId" => $row["ProductId"],
-          "ProductQty" => $row["OrderProductQty"],
+          "ProductName" => htmlspecialchars($row["ProductName"]),
+          "ProductPrice" => htmlspecialchars($row["ProductPrice"]),
+          "ProductDesc" => htmlspecialchars($row["ProductDesc"]),
+          "ProductId" => htmlspecialchars($row["ProductId"]),
+          "ProductQty" => htmlspecialchars($row["OrderProductQty"]),
+          "ProductDate" => htmlspecialchars($row["ProductDate"]),
+          "Stock" => htmlspecialchars($row["Stock"]),
         ];
       }
     }
@@ -93,6 +99,7 @@
   // echo "<pre>";
   // print_r($activeOrdersGrouped);
   // echo "</pre>";
+  // echo "Halloj";
 
 echo "<section class='active-orders'>";
 if (empty($activeOrdersResults)) {
@@ -109,15 +116,15 @@ echo "<div class='active-orders__filter'>
         </select>
         <input type='text' id='activeTextFilter' oninput='filterOrders(activeOrdersFromPHP)' placeholder='Filter by city'>
       </div>
-      <table id='activetable'>
+      <table id='activetable' class='ordertable'>
         <thead>
           <tr>
             <th>Order number </th>
             <th>Customer</th>
             <th>City</th>
-            <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></th>
-            <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
-            <th onclick='sortTableStatus(5)'>Status <i class='fas fa-sort'></th>
+            <th class='sort-th' onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></th>
+            <th class='sort-th' onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
+            <th class='sort-th' onclick='sortTableStatus(5)'>Status <i class='fas fa-sort'></th>
             <th> </th>
           </tr>
         </thead>
@@ -136,6 +143,7 @@ foreach($activeOrdersGrouped as $key => $order):
   $orderStatus = htmlspecialchars($order['OrderStatus']);
   $orderStatusId = htmlspecialchars($order['OrderStatusId']);
   $productsArr = $order['Products'];
+  $returnUrl = $_SERVER['REQUEST_URI'];
   $productsTr = "";
   foreach ($productsArr as $key => $product) {
     $productName = htmlspecialchars($product['ProductName']);
@@ -144,17 +152,26 @@ foreach($activeOrdersGrouped as $key => $order):
   }
     $productPrice = htmlspecialchars($product['ProductPrice']);
     $productDesc = htmlspecialchars($product['ProductDesc']);
+    $stock = htmlspecialchars($product['Stock']);
+    $ProductDate = htmlspecialchars($product['ProductDate']);
     if (strlen($productDesc) > 20) {
       $productDesc = substr($productDesc, 0, 20) . "...";
   }
     $productId = htmlspecialchars($product['ProductId']);
     $productQty = htmlspecialchars($product['ProductQty']);
+    if(strtotime($ProductDate)<strtotime('-1 year') and $stock<10){
+    
+     $sale = "yes";
+     }else{
+     $sale = "no";
+     };            
 
     $productsTr .= "<tr>
                     <td>$productName</td>
                     <td>$productDesc</td>
                     <td>$productPrice</td>
                     <td>$productQty</td>
+                    <td>$sale</td>
                   </tr>
                     ";
     
@@ -184,31 +201,36 @@ foreach($activeOrdersGrouped as $key => $order):
             </option>
            </select>
            <input type='hidden' name='o_id' value='$orderNumber'>
+           <input type='hidden' name='returnUrl' value='$returnUrl'>
            </form>
           </td>
           <td>
             <button id='openModal' class='open-modal'><i class='far fa-eye'></i></button>
 
-            <div id='myModal' data-id='$id' class='modal'>
-            <div class='modal__content'>
-              <div class='modal__content__header'>
+            <div id='activeOrdersModal' data-id='$id' class='order_overview'>
+            <div class='order_overview__content'>
+              <div class='order_overview__content__header'>
                 <span class='close'>&times;</span>
                 <h2>Order overview</h2> 
               </div>
-              <div class='modal__content__body'>
+              <div class='order_overview__content__body'>
               <p>#$orderNumber</p>
               <p>$fullName</p>
               <p>$street</p>
               <p>$postal</p>
               <p>$city</>
-              <p>$orderDate</p>
-              <table>
+              
+            
+              
+              <table class='overview-table'>
                 <thead>
                   <tr>
                     <td>Product</td>
                     <td>Description</td>
                     <td>Price</td>
                     <td>Quantity</td>
+                    <td>On Sale</td>
+           
                   </tr>
                 </thead>
                 <tbody>
@@ -219,8 +241,8 @@ foreach($activeOrdersGrouped as $key => $order):
               <p>$totalSum SEK</p>
 
               </div>
-              <div class='modal__content__footer'>
-              <button id='cancel' class='cancel-btn'>Cancel</button>  
+              <div class='order_overview__content__footer'>
+              <button id='cancel' class='cancel-btn'>Close</button>  
              
               </div>
             </div>
@@ -236,26 +258,30 @@ echo '</tbody></table></section>';
 let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
 </script>
  <script> 
-  const modal = document.getElementById("myModal");
-  const span = document.getElementsByClassName("close")[0];
+
+
+  const activeOrdersModal = document.getElementById("activeOrdersModal");
+  //const span = document.getElementsByClassName("close")[0];
   const cancelBtn = document.getElementById("cancel");
 
   document.querySelectorAll('.open-modal').forEach(item => {
   item.addEventListener('click', event => {
     let currentModal = event.currentTarget.nextElementSibling;
-    let currentSpan = event.currentTarget.nextElementSibling;
 
     currentModal.style.display = "block";
-        //close the modal
-        currentSpan.onclick = function() {
-          currentModal.style.display = "none";
-        };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
+
+    window.onclick = function(event) {
+          if (event.target == currentModal) {
             currentModal.style.display = "none";
           }
         };
+
+    document.addEventListener("click", e => {
+          if (e.target.className == "close") {
+            currentModal.style.display = "none";
+          }
+        });
+    
         document.addEventListener("click", e => {
           if (e.target.className == "cancel-btn") {
             currentModal.style.display = "none";
@@ -263,4 +289,5 @@ let activeOrdersFromPHP = <?php echo json_encode($activeOrdersGrouped);?> ;
         });
   });
 });
+
   </script>
