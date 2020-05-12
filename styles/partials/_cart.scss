@@ -1,7 +1,7 @@
 .cart {
-  max-height: calc(100vh - 70px);
-  height: 100%;
-  overflow-y: scroll;
+  height: calc(100vh - 70px);
+  height: calc(var(--vh, 1vh) * 100 - 70px);
+  overflow: hidden;
   width: 100vw;
   position: fixed;
   display: flex;
@@ -10,19 +10,26 @@
   background-color: rgb(247, 247, 247);
   top: 70px;
   right: 0;
+  left: 0;
+  bottom: 0;
   z-index: 3;
   padding: 10px;
   padding-bottom: 0;
   box-shadow: 1px 1px 2px rgb(184, 184, 184);
   border-radius: 0 0 0 10px;
-  min-height: calc(100vh - 70px);
+  // min-height: calc(100vh - 70px);
 
   @media (min-width: 420px) {
     min-height: unset;
+    overflow-y: scroll;
     overflow-x: hidden;
     width: 350px;
     max-height: calc(100vh - 70px);
     height: fit-content;
+    top: 70px;
+    right: 0;
+    bottom: unset;
+    left: unset;
     // padding-bottom: 2em;
   }
 
@@ -31,12 +38,12 @@
     flex-direction: column;
     padding-top: 1em;
     margin-bottom: 2em;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100vh;
     -webkit-overflow-scrolling: touch;
 
     @media (min-width: 450px) {
-      overflow-y: unset;
+      overflow-y: scroll;
       height: unset;
       -webkit-overflow-scrolling: unset;
       padding-bottom: 8em;
@@ -50,7 +57,7 @@
     height: auto;
     background: #54626a;
     // padding: 2em 1em;
-    padding: 0.5em 1em 6em 1em;
+    padding: 0.5em 1em 4em 1em;
     margin: -10px;
     // margin-top: 1em;
     border-top: 0.5px solid rgb(191, 191, 191);
@@ -74,12 +81,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
+    height: 80px;
     position: sticky;
     top: 0;
+    padding: 0.3em;
 
     @media (min-width: 420px) {
       justify-content: flex-end;
+      padding: unset;
     }
 
     button {
@@ -87,7 +96,7 @@
       border: none;
       border-radius: 5px;
       background-color: #54626a;
-      font-size: 9px;
+      font-size: 10px;
       padding: 0.5em 1em;
       margin-left: 10px;
       margin-right: 10px;
@@ -244,12 +253,15 @@
 
 .noScroll {
   @media (max-width: 450px) {
-    // position: fixed;
-    overflow-y: hidden;
-    height: 100vh;
-    // width: 100%;
-    padding-right: 15px;
+    overflow: hidden;
   }
+}
+
+[aria-hidden="true"] {
+  display: none;
+}
+[aria-hidden="false"] {
+  display: block;
 }
 
 button > * {

@@ -1630,9 +1630,9 @@ footer {
 }
 
 .cart {
-  max-height: calc(100vh - 70px);
-  height: 100%;
-  overflow-y: scroll;
+  height: calc(100vh - 70px);
+  height: calc(var(--vh, 1vh) * 100 - 70px);
+  overflow: hidden;
   width: 100vw;
   position: fixed;
   display: -webkit-box;
@@ -1648,24 +1648,30 @@ footer {
   background-color: #f7f7f7;
   top: 70px;
   right: 0;
+  left: 0;
+  bottom: 0;
   z-index: 3;
   padding: 10px;
   padding-bottom: 0;
   -webkit-box-shadow: 1px 1px 2px #b8b8b8;
           box-shadow: 1px 1px 2px #b8b8b8;
   border-radius: 0 0 0 10px;
-  min-height: calc(100vh - 70px);
 }
 
 @media (min-width: 420px) {
   .cart {
     min-height: unset;
+    overflow-y: scroll;
     overflow-x: hidden;
     width: 350px;
     max-height: calc(100vh - 70px);
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
+    top: 70px;
+    right: 0;
+    bottom: unset;
+    left: unset;
   }
 }
 
@@ -1679,14 +1685,14 @@ footer {
           flex-direction: column;
   padding-top: 1em;
   margin-bottom: 2em;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100vh;
   -webkit-overflow-scrolling: touch;
 }
 
 @media (min-width: 450px) {
   .cart__product-wrapper {
-    overflow-y: unset;
+    overflow-y: scroll;
     height: unset;
     -webkit-overflow-scrolling: unset;
     padding-bottom: 8em;
@@ -1701,7 +1707,7 @@ footer {
   width: auto;
   height: auto;
   background: #54626a;
-  padding: 0.5em 1em 6em 1em;
+  padding: 0.5em 1em 4em 1em;
   margin: -10px;
   border-top: 0.5px solid #bfbfbf;
 }
@@ -1732,10 +1738,11 @@ footer {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  height: 50px;
+  height: 80px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  padding: 0.3em;
 }
 
 @media (min-width: 420px) {
@@ -1743,6 +1750,7 @@ footer {
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;
+    padding: unset;
   }
 }
 
@@ -1752,7 +1760,7 @@ footer {
   border: none;
   border-radius: 5px;
   background-color: #54626a;
-  font-size: 9px;
+  font-size: 10px;
   padding: 0.5em 1em;
   margin-left: 10px;
   margin-right: 10px;
@@ -1939,10 +1947,16 @@ footer {
 
 @media (max-width: 450px) {
   .noScroll {
-    overflow-y: hidden;
-    height: 100vh;
-    padding-right: 15px;
+    overflow: hidden;
   }
+}
+
+[aria-hidden="true"] {
+  display: none;
+}
+
+[aria-hidden="false"] {
+  display: block;
 }
 
 button > * {
@@ -3942,8 +3956,13 @@ button > * {
           flex-direction: column;
 }
 
+.modal__content__body .error-msg_header {
+  font-weight: bold;
+}
+
 .modal__content__body ul {
   margin: 1em 0;
+  list-style-type: disc;
 }
 
 .modal__content__footer {
