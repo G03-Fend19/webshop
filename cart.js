@@ -236,10 +236,7 @@
     hideAndShowCartBtns();
     setQuantityInputs();
 
-    if (
-      window.location.href ==
-      "http://localhost:8888/checkout_page.php#main-checkout"
-    ) {
+    if (window.location.href.indexOf("checkout") !== -1) {
       calcTotalWithShipping();
       renderOrderSummary();
     }
@@ -391,7 +388,7 @@
     });
   };
   const removeSoldOutProducts = () => {
-    if (typeof soldOutProductsFromPHP !== 'undefined') {
+    if (typeof soldOutProductsFromPHP !== "undefined") {
       Object.keys(soldOutProductsFromPHP).forEach((key) => {
         delete cart[key];
       });
@@ -399,14 +396,14 @@
       renderCart();
       renderOrderSummary();
       calcTotalWithShipping();
-    };
+    }
   };
   const changeProductQtyToMatchDB = () => {
-    if (typeof productsToReduceFromPHP !== 'undefined') {
+    if (typeof productsToReduceFromPHP !== "undefined") {
       Object.keys(productsToReduceFromPHP).forEach((key) => {
         let qtyInStock = parseInt(productsToReduceFromPHP[key].ProductsLeft);
-        cart[key].quantity = qtyInStock
-      })
+        cart[key].quantity = qtyInStock;
+      });
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
       renderOrderSummary();
