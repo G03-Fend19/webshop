@@ -1584,6 +1584,7 @@ footer {
   .display-products .image-wrapper {
     width: 200px;
     height: 250px;
+    margin: auto;
   }
 }
 
@@ -2659,9 +2660,8 @@ button > * {
   .product-section {
     margin: 5em;
     max-width: 60vw;
-    -ms-grid-rows: 70% 30%;
-        grid-template-rows: 70% 30%;
-    max-height: 1000px;
+    -ms-grid-rows: 1fr auto;
+        grid-template-rows: 1fr auto;
   }
 }
 
