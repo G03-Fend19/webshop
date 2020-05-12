@@ -218,3 +218,9 @@ select {
   max-height: 35px;
   align-self: flex-end;
 }
+
+.errormsg {
+  color: red;
+  font-size: 20px;
+  padding-top: 1em;
+}
