@@ -369,6 +369,14 @@ a {
   border-bottom: 1px solid #ddd;
 }
 
+.admin__tables table .sort-th {
+  cursor: pointer;
+}
+
+.admin__tables table .sort-th i {
+  pointer-events: none;
+}
+
 .admin__tables table button {
   border: none;
   background: none;

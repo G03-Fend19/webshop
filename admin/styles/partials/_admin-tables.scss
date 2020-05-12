@@ -63,6 +63,13 @@
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
+    .sort-th {
+      cursor: pointer;
+
+      i {
+        pointer-events: none;
+      }
+    }
 
     button {
       border: none;

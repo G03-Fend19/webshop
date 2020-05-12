@@ -15,7 +15,7 @@ if (position) {
 // }
 function filterOrders(orders) {
   let orderType;
-  Object.keys(orders).forEach(function (order) {
+  Object.keys(orders).forEach(function(order) {
     orderType = orders[order].OrderType;
   });
   //Active orders filter select/input element
@@ -44,7 +44,7 @@ function filterOrders(orders) {
   //If input in any text filter
   if (filterText) {
     //filter ordersToDraw if input matches orders.city
-    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
       return order["DeliveryCity"]
         .toLowerCase()
         .includes(filterText.toLowerCase());
@@ -53,11 +53,11 @@ function filterOrders(orders) {
   //If filterStatus is not 'all'
   if (filterStatus && filterStatus !== "all") {
     //filter ordersToDraw if chosen status matches order['OrderStatusId']
-    ordersToDraw = Object.values(ordersToDraw).filter(function (order) {
+    ordersToDraw = Object.values(ordersToDraw).filter(function(order) {
       return order["OrderStatusId"].includes(filterStatus);
     });
   }
-  Object.values(ordersToDraw).forEach(function (order, i) {
+  Object.values(ordersToDraw).forEach(function(order, i) {
     const tr = document.createElement("tr");
     const tdId = document.createElement("td");
     tdId.innerHTML = "#" + order["OrderNumber"];
@@ -241,21 +241,21 @@ function filterOrders(orders) {
   });
   if (typeof openOrderBtn != "undefined") {
   }
-  document.querySelectorAll(".open-modal").forEach((item) => {
-    item.addEventListener("click", (event) => {
+  document.querySelectorAll(".open-modal").forEach(item => {
+    item.addEventListener("click", event => {
       let currentModal = event.currentTarget.nextElementSibling;
       currentModal.style.display = "block";
-      window.onclick = function (event) {
+      window.onclick = function(event) {
         if (event.target == currentModal) {
           currentModal.style.display = "none";
         }
       };
-      document.addEventListener("click", (e) => {
+      document.addEventListener("click", e => {
         if (e.target.className == "close") {
           currentModal.style.display = "none";
         }
       });
-      document.addEventListener("click", (e) => {
+      document.addEventListener("click", e => {
         if (e.target.className == "cancel-btn") {
           currentModal.style.display = "none";
         }
@@ -277,23 +277,23 @@ function updateStatus(orderToUpdate) {
   if (newStatusId == "3") {
     changeStatusModal.style.display = "block";
     //close the changeStatusModal
-    span.onclick = function () {
+    span.onclick = function() {
       changeStatusModal.style.display = "none";
       filterOrders(activeOrdersFromPHP);
     };
     //clicks anywhere outside of the changeStatusModal, close it
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (event.target == changeStatusModal) {
         changeStatusModal.style.display = "none";
         filterOrders(activeOrdersFromPHP);
       }
     };
-    cancelBtn.addEventListener("click", (e) => {
+    cancelBtn.addEventListener("click", e => {
       changeStatusModal.style.display = "none";
       shouldUpdate == false;
       filterOrders(activeOrdersFromPHP);
     });
-    changeStatusBtn.addEventListener("click", (e) => {
+    changeStatusBtn.addEventListener("click", e => {
       let pagePosition = window.pageYOffset;
       localStorage.setItem("page_position", pagePosition);
       changeStatusModal.style.display = "none";

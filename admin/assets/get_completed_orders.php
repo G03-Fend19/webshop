@@ -113,9 +113,9 @@ echo "<div class='completed-orders__filter'>
       <th>Order number</th>
       <th>Customer</th>
       <th>City</th>
-      <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></i></th>
-      <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
-      <th>Status <i class='fas fa-sort'></th>
+      <th class='sort-th' onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></i></th>
+      <th class='sort-th' onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
+      <th>Status</th>
       <th> </th>
       </tr>
       </thead>
