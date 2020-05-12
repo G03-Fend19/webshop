@@ -96,35 +96,38 @@ require_once './assets/aside-navigation.php';
       const renderImages = () => {
          let imagesToDisplay = JSON.parse(localStorage.getItem("images"))
 
-         // remove feature i
-             if(imagesToDisplay.length===0){
-             
-                feature.value = ""
-             }
+        if(imagesToDisplay!==null){
+          // remove feature i
+              if(imagesToDisplay.length===0){
+              
+                 feature.value = ""
+              }
+ 
+         // show max image msg
+           showMaxImgMessage(imagesToDisplay)
+        ////////////
+ 
+ 
+           imageSection.innerHTML = ""
+           let counter = 1
+ 
+         if (imagesToDisplay) {
+   
+             imagesToDisplay.map(imgObj => {
+               imageSection.innerHTML += `
+           <label class='form__image-section__selection' for='image${counter}'>
+           <div class="product-img">
+           <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${imgObj['img']}' >
+           <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}' data-imgname='${imgObj['img']}'class='thumbnails'>
+           
+           </label>      
+           <button data-name='${imgObj['img']}' "type="button" class="remove-image">x</button>
+           </div>
+           `
+               counter++
+             })
+         }
 
-        // show max image msg
-          showMaxImgMessage(imagesToDisplay)
-       ////////////
-
-
-          imageSection.innerHTML = ""
-          let counter = 1
-
-        if (imagesToDisplay) {
-  
-            imagesToDisplay.map(imgObj => {
-              imageSection.innerHTML += `
-          <label class='form__image-section__selection' for='image${counter}'>
-          <div class="product-img">
-          <input id='image${counter}' class='form__image-section__selection__radio' type='checkbox' name='image${counter}' checked value='${imgObj['img']}' >
-          <img class='form__image-section__selection__image thumbnails' src='../media/product_images/${imgObj['img']}' data-imgname='${imgObj['img']}'class='thumbnails'>
-          
-          </label>      
-          <button data-name='${imgObj['img']}' "type="button" class="remove-image">x</button>
-          </div>
-          `
-              counter++
-            })
         }
 
 
