@@ -947,7 +947,7 @@ select {
 footer {
   bottom: 0;
   width: 100vw;
-  background: white;
+  background: #dbdbdb;
   padding: 0.5em;
   -webkit-box-shadow: 1px 1px 3px #f3f3f3;
           box-shadow: 1px 1px 3px #f3f3f3;
@@ -956,14 +956,14 @@ footer {
 
 footer h4 {
   text-align: center;
-  color: #adadad;
+  color: #9f9c9c;
   font-weight: 300;
 }
 
 footer p {
   font-size: 0.5em;
   text-align: center;
-  color: #adadad;
+  color: #9f9c9c;
 }
 
 .modal {

@@ -150,11 +150,15 @@ function filterOrders(orders) {
     let productTable = "";
 
     for (let i = 0; i < order["Products"].length; i++) {
+      productDescription = order["Products"][i].ProductDesc;
+      if (productDescription.length > 20) {
+        productDescription = productDescription.substr(0, 20) + "...";
+      }
       productTable +=
         `<tr><td> ` +
         order["Products"][i].ProductName +
         `</td><td> ` +
-        order["Products"][i].ProductDesc +
+        productDescription +
         `</td><td> ` +
         order["Products"][i].ProductPrice +
         `</td><td> ` +
@@ -192,7 +196,7 @@ function filterOrders(orders) {
         <p>` +
       order["OrderDate"] +
       `</p>
-        <table>
+        <table class='overview-table'>
           <thead>
             <tr>
               <td>Product</td>
