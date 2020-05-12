@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <script src="https://kit.fontawesome.com/10d18f6c7b.js" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/style.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link href="./media/images/logo.png" rel="icon" type="image/x-icon"/>
   <link rel="apple-touch-icon" sizes="152x152" href="./media/images/logo.png">
   <title>Clothera - Contact</title>
@@ -63,7 +63,7 @@
       </section>
       <div class="header__hero__text">
         <h1>Meet the team</h1>
-        <p class="desc__hero__text">How can we help you?</p>
+        <p class="desc__hero__text">What can we do for you?</p>
       </div>
 
       <div id="myModal" class="modal">
@@ -87,7 +87,7 @@
       <div id="noMoreInStockModal" class="modal">
         <div class="modal__content">
           <div class="modal__content__header">
-            <span class="close">&times;</span>
+            <span class="cancel-btn  close">&times;</span>
             <h2>Alert</h2>
           </div>
           <div class="modal__content__body">
