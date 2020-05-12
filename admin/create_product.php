@@ -255,6 +255,7 @@ window.onbeforeunload = function(event){
  event.preventDefault = true; 
   
   if (document.activeElement.id != "addBtn" && document.activeElement.id != "upload-btn") {
+    
      localStorage.removeItem('images');
       localStorage.removeItem('deleted');
   }
