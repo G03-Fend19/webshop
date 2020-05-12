@@ -654,6 +654,12 @@ select {
       align-self: flex-end;
 }
 
+.errormsg {
+  color: red;
+  font-size: 20px;
+  padding-top: 1em;
+}
+
 .main__admin__dashboard {
   margin: 80px 2em 2em 2em;
   padding: 2em;
