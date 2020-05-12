@@ -33,7 +33,7 @@ require_once './assets/aside-navigation.php';
     </div>
     <input type="file" name="file[]" id="file" multiple>
     <input type="hidden" name="p_id" value="<?=$productId?>">
-    <input class="upload-btn" type='submit' name='submit' value='Upload'>
+    <input class="upload-btn" type='submit' name='submit' value='Upload' id="upload-btn">
   </form>
 
 
@@ -254,7 +254,8 @@ if (JSON.parse(localStorage.getItem('product_form'))) {
 window.onbeforeunload = function(event){
  event.preventDefault = true; 
   
-  if (document.activeElement.id != "addBtn") {
+  if (document.activeElement.id != "addBtn" && document.activeElement.id != "upload-btn") {
+    
      localStorage.removeItem('images');
       localStorage.removeItem('deleted');
   }
