@@ -113,9 +113,9 @@ echo "<div class='completed-orders__filter'>
       <th>Order number</th>
       <th>Customer</th>
       <th>City</th>
-      <th onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></i></th>
-      <th onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
-      <th>Status <i class='fas fa-sort'></th>
+      <th class='sort-th' onclick='sortTableDate(3)'>Order date <i class='fas fa-sort'></i></th>
+      <th class='sort-th' onclick='sortTable(4)'>Total Amount <i class='fas fa-sort'></th>
+      <th>Status</th>
       <th> </th>
       </tr>
       </thead>
@@ -163,7 +163,7 @@ foreach($completedOrdersGrouped as $key => $order):
                     <td>$productDesc</td>
                     <td>$productPrice</td>
                     <td>$productQty</td>
-                    <td>$sale<td/>
+                    <td>$sale</td>
                   </tr>
                     ";
     
@@ -193,7 +193,7 @@ foreach($completedOrdersGrouped as $key => $order):
               <p>$postal</p>
               <p>$city</>
               <p>$orderDate</p>
-              <table>
+              <table class='overview-table'>
                 <thead>
                   <tr>
                     <td>Product</td>

@@ -49,7 +49,9 @@ if (isset($_GET['product_id'])) {
           ON
             ws_products_categories.category_id = ws_categories.id
           WHERE
-            ws_products.id = :products_id";
+            ws_products.id = :products_id
+          AND
+            ws_products.active = 1";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":products_id", $productId);
     $stmt->execute();

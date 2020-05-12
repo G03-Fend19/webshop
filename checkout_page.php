@@ -5,99 +5,99 @@ $modalModel = "<div id='checkoutErrorModal' class='modal'>
                 <div class='modal__content'>
                 <div class='modal__content__header'>
                 <span class='close'>&times</span>
-                <h2>Error</h2> 
+                <h2>Error</h2>
                 </div>
                 <div class='modal__content__body'>";
 $errorMsg = "";
 ?>
 <?php
-if(isset($_GET['error'])) {
+if (isset($_GET['error'])) {
 
     if ($_GET['error'] == "mail" && isset($_SESSION['mail_error'])) {
-      $errorModal .= $modalModel;
-      $mailErrorMsg = $_SESSION['mail_error'];
-      $errorMsg .= "<p class='error-msg__header'>$mailErrorMsg</p>";
-      unset($_SESSION['mail_error']);
-      $errorModal .= $errorMsg;
-      $errorModal .= "</div>
+        $errorModal .= $modalModel;
+        $mailErrorMsg = $_SESSION['mail_error'];
+        $errorMsg .= "<p class='error-msg__header'>$mailErrorMsg</p>";
+        unset($_SESSION['mail_error']);
+        $errorModal .= $errorMsg;
+        $errorModal .= "</div>
         <div class='modal__content__footer'>
-        <button id='cancel' class='cancel-btn'>Close</button>  
-        
+        <button id='cancel' class='cancel-btn'>Close</button>
+
         </div>
         </div>
-        
+
         </div>";
     }
     if ($_GET['error'] == "empty" && isset($_SESSION['cart_empty'])) {
-      $errorModal .= $modalModel;
-      $cartEmptyMsg = $_SESSION['cart_empty'];
-      $errorMsg .= "<p class='error-msg__header'>$cartEmptyMsg</p>";
-      unset($_SESSION['cart_empty']);
-      $errorModal .= $errorMsg;
-      $errorModal .= "</div>
+        $errorModal .= $modalModel;
+        $cartEmptyMsg = $_SESSION['cart_empty'];
+        $errorMsg .= "<p class='error-msg__header'>$cartEmptyMsg</p>";
+        unset($_SESSION['cart_empty']);
+        $errorModal .= $errorMsg;
+        $errorModal .= "</div>
         <div class='modal__content__footer'>
-        <button id='cancel' class='cancel-btn'>Close</button>  
-        
+        <button id='cancel' class='cancel-btn'>Close</button>
+
         </div>
         </div>
-        
+
         </div>";
     }
     if ($_GET['error'] == "products") {
-      if (isset($_SESSION['sold_out_products']) || isset($_SESSION['products_to_reduce'])) {
-        $errorModal .= $modalModel;
-        if (isset($_SESSION['sold_out_products'])) {
-          $soldOutProducts = $_SESSION['sold_out_products'];
-          ?>
-          <script>let soldOutProductsFromPHP = <?php echo json_encode($soldOutProducts);?>;</script>
+        if (isset($_SESSION['sold_out_products']) || isset($_SESSION['products_to_reduce'])) {
+            $errorModal .= $modalModel;
+            if (isset($_SESSION['sold_out_products'])) {
+                $soldOutProducts = $_SESSION['sold_out_products'];
+                ?>
+          <script>let soldOutProductsFromPHP = <?php echo json_encode($soldOutProducts); ?>;</script>
           <?php
-        $errorMsg .="<p class='error-msg__header'>Unfortunately these products sold out before you completed your order and will be removed:</p><ul class='error-msg__list'>";
-        foreach ($soldOutProducts as $key => $product) {
-          $productName = $product['SoldOutProductName'];
-          $productId = $product['SoldOutProductId'];
-      
-          $errorMsg .= "<li>$productName</li>";
-        }
-      $errorMsg .= "</ul>";
-      }
-      if (isset($_SESSION['products_to_reduce'])) {
-        $productsToReduce = $_SESSION['products_to_reduce'];
-        ?>
-        <script>let productsToReduceFromPHP = <?php echo json_encode($productsToReduce);?>;</script>
+$errorMsg .= "<p class='error-msg__header'>Unfortunately these products sold out before you completed your order and will be removed:</p><ul class='error-msg__list'>";
+                foreach ($soldOutProducts as $key => $product) {
+                    $productName = $product['SoldOutProductName'];
+                    $productId = $product['SoldOutProductId'];
+
+                    $errorMsg .= "<li>$productName</li>";
+                }
+                $errorMsg .= "</ul>";
+            }
+            if (isset($_SESSION['products_to_reduce'])) {
+                $productsToReduce = $_SESSION['products_to_reduce'];
+                ?>
+        <script>let productsToReduceFromPHP = <?php echo json_encode($productsToReduce); ?>;</script>
         <?php
-        $errorMsg .="<p class='error-msg__header'>Unfortunately our stock changed before you completed your order witch affected these products:</p><ul class='error-msg__list'>";
-        foreach ($productsToReduce as $key => $product) {
-          $productName = $product['ProductsToReduceProductName'];
-          $productId = $product['ProductsToReduceProductId'];
-        
-          $errorMsg .= "<li>$productName</li>";
-        }
-        $errorMsg .= "</ul>";
-      }
-      $errorModal .= $errorMsg;
-        $errorModal .= "</div>
+$errorMsg .= "<p class='error-msg__header'>Unfortunately our stock changed before you completed your order witch affected these products:</p><ul class='error-msg__list'>";
+                foreach ($productsToReduce as $key => $product) {
+                    $productName = $product['ProductsToReduceProductName'];
+                    $productId = $product['ProductsToReduceProductId'];
+
+                    $errorMsg .= "<li>$productName</li>";
+                }
+                $errorMsg .= "</ul>";
+            }
+            $errorModal .= $errorMsg;
+            $errorModal .= "</div>
           <div class='modal__content__footer'>
-          <button id='cancel' class='cancel-btn'>Close</button>  
-          
+          <button id='cancel' class='cancel-btn'>Close</button>
+
           </div>
           </div>
-          
+
           </div>";
+        }
+        // print_r($soldOutProducts);
+        // print_r($productsToReduce);
+        unset($_SESSION['sold_out_products']);
+        unset($_SESSION['products_to_reduce']);
     }
-    // print_r($soldOutProducts);
-    // print_r($productsToReduce);
-    unset($_SESSION['sold_out_products']);
-    unset($_SESSION['products_to_reduce']);
-  }
-  // $errorModal .= $errorMsg;
-  // $errorModal .= "</div>
-  // <div class='modal__content__footer'>
-  // <button id='cancel' class='cancel-btn'>Close</button>  
-  
-  // </div>
-  // </div>
-  
-  // </div>";
+    // $errorModal .= $errorMsg;
+    // $errorModal .= "</div>
+    // <div class='modal__content__footer'>
+    // <button id='cancel' class='cancel-btn'>Close</button>
+
+    // </div>
+    // </div>
+
+    // </div>";
 }
 ?>
 <!DOCTYPE html>
@@ -187,7 +187,7 @@ if(isset($_GET['error'])) {
         </div>
 
       </div>
-      <?php echo $errorModal?>
+      <?php echo $errorModal ?>
 
     </section>
 
@@ -354,29 +354,29 @@ if(isset($_GET['error'])) {
       const postal = document.getElementById('postal').value;
       const city = document.getElementById('city').value;
 
-      validateField(firstname, 'firstname', e, 50);
-      validateField(lastname, 'lastname', e, 100);
-      validateField(city, 'city', e, 50);
+      validateField(firstname, 'first name', e, 50);
+      validateField(lastname, 'last name', e, 100);
+      validateField(city, 'city name', e, 50);
 
       validateEmail(email);
 
-      validatePostalMobile(mobile, 'mobile', event);
+      validatePostalMobile(mobile, 'mobile number', event);
       validatePostalMobile(postal, 'postal', event);
 
       validateStreet(street);
 
       if (!validLength(mobile, 30)) {
-        alert('Your number has to be between 2 and 30 numbers.');
+        alert('Your mobile number has to be between 2 and 30 numbers.');
         event.preventDefault();
       };
 
       if (!validLength(postal, 5)) {
-        alert('Your number has to be between 2 and 5 numbers.');
+        alert('Your postal number has to be between 2 and 5 numbers.');
         event.preventDefault();
       };
 
 // To send the latest from localStorage to confirm-page
-      document.getElementById('cart-input').value = localStorage.getItem('cart');
+    document.getElementById('cart-input').value = localStorage.getItem('cart');
     document.getElementById('total-input').value = localStorage.getItem('total');
 
     })
@@ -392,13 +392,13 @@ if(isset($_GET['error'])) {
     }
 
     function validateField(value, fieldName, event, maxLength) {
-      if (!onlyValidCharacters(value)) {
+      if (!onlyValidCharacters(value) && value.length > 2) {
         alert('You have unvalid chars in your ' + fieldName + '.');
         event.preventDefault();
       }
 
       if (!validLength(value, maxLength)) {
-        alert('The ' + fieldName + 'field has to be between 2 and ' + maxLength + ' characters.');
+        alert('The ' + fieldName + ' field has to be between 2 and ' + maxLength + ' characters.');
         event.preventDefault();
       };
     }
@@ -418,7 +418,7 @@ if(isset($_GET['error'])) {
     function validateEmail(email) {
       const validFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      if(!email.match(validFormat)) {
+      if(!email.match(validFormat) && email.length > 2) {
         alert('This is not a valid email-address.');
         event.preventDefault();
       }
@@ -430,7 +430,7 @@ if(isset($_GET['error'])) {
     }
 
     function validatePostalMobile(value, fieldName, event) {
-      if (!onlyValidNumbers(value)) {
+      if (!onlyValidNumbers(value) && value.length > 2) {
         alert('You have unvalid characters in your ' + fieldName + '.');
         event.preventDefault();
       }
@@ -450,8 +450,8 @@ if(isset($_GET['error'])) {
 
       const validChars = /^[0-9a-zA-ZäöåÄÖÅ\s-é.]+$/;
 
-      if(!street.match(validChars)) {
-        alert('This is not a valid street name.');
+      if(!street.match(validChars) && street.length > 2) {
+        alert('You have unvalid chars in your street address');
         event.preventDefault();
       }
 
