@@ -103,8 +103,6 @@
     let [product] = allProductsFromPHP.filter((product) => {
       return product.ProductId === id;
     });
-    console.log(product);
-    console.log(id);
 
     stock = product.ProductQty;
     return stock;
@@ -191,7 +189,6 @@
           !cart[product].img
             ? (image = "placeholder.jpg")
             : (image = cart[product].img);
-          console.log(image);
           priceDisplay = "";
           if (cart[product].discount === 1) {
             priceDisplay = `<p class='price'> ${Math.ceil(
@@ -394,9 +391,21 @@
     });
   };
   const removeSoldOutProducts = () => {
-    if (soldOutProductsFromPHP) {
+    if (typeof soldOutProductsFromPHP !== 'undefined') {
       Object.keys(soldOutProductsFromPHP).forEach((key) => {
         delete cart[key]
+      })
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+      renderOrderSummary();
+      calcTotalWithShipping();
+    };
+  };
+  const changeProductQtyToMatchDB = () => {
+    if (typeof productsToReduceFromPHP !== 'undefined') {
+      Object.keys(productsToReduceFromPHP).forEach((key) => {
+        let qtyInStock = parseInt(productsToReduceFromPHP[key].ProductsLeft);
+        cart[key].quantity = qtyInStock
       })
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
@@ -409,4 +418,5 @@
   clearCart();
   closeCart();
   removeSoldOutProducts();
+  changeProductQtyToMatchDB();
 })();

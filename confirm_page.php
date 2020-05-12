@@ -7,35 +7,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $decodedCartJSON = json_decode($cartJSON, true);
   
   $soldOutProducts = [];
+  $productsToReduce = [];
   foreach ($decodedCartJSON as $key => $product) {
     $productId = $product['id'];
+    $currentProductQtyInCart = $product['quantity'];
     $getCurrentStockSQL = "SELECT ws_products.stock_qty AS CurrentProductQty,
                                   ws_products.name AS ProductName
                             FROM ws_products
                             WHERE ws_products.id = :product_id";
-      $getCurrentStockStmt = $db->prepare($getCurrentStockSQL);
-      $getCurrentStockStmt->bindParam(":product_id", $productId);
-      $getCurrentStockStmt->execute();
+    $getCurrentStockStmt = $db->prepare($getCurrentStockSQL);
+    $getCurrentStockStmt->bindParam(":product_id", $productId);
+    $getCurrentStockStmt->execute();
 
-      $currentStockResults = $getCurrentStockStmt->fetch(PDO::FETCH_ASSOC);
-      $currentStock = $currentStockResults['CurrentProductQty'];
-      $currentProduct = $currentStockResults['ProductName'];
+    $currentStockResults = $getCurrentStockStmt->fetch(PDO::FETCH_ASSOC);
+    $currentStock = $currentStockResults['CurrentProductQty'];
+    $currentProduct = $currentStockResults['ProductName'];
 
-      if($currentStock <= 0) {
+    
+    if($currentStock < $currentProductQtyInCart) {
+      if($currentStock == 0) {
         $soldOutProducts[$key]= [
           "SoldOutProductName" => $currentProduct,
           "SoldOutProductId" => $productId,
         ];
+      } else {
+        $productLeft = $currentStock;
+        $productsToReduce[$key]= [
+          "ProductsToReduceProductName" => $currentProduct,
+          "ProductsToReduceProductId" => $productId,
+          "ProductsLeft" => $productLeft,
+        ];
       }
+    }
+
   }
   // echo "<pre>";
   // print_r($soldOutProducts);
   // echo "</pre>";
-  if(!empty($soldOutProducts)) {
-    
-    $_SESSION['sold_out_products'] = $soldOutProducts;
-    header("Location: ./checkout_page.php?error=out_of_stock");
+  if(!empty($soldOutProducts) || !empty($productsToReduce)) {
+    if(!empty($soldOutProducts)) {
+      $_SESSION['sold_out_products'] = $soldOutProducts;
+    }
+    if(!empty($productsToReduce)) {
+      $_SESSION['products_to_reduce'] = $productsToReduce;
+    }
+    header("Location: ./checkout_page.php?error=products");
   } elseif ($decodedCartJSON == null) {
+    $_SESSION['cart_empty'] = "No products in cart";
     header("Location: ./checkout_page.php?error=empty");
   } else {
   
@@ -110,6 +128,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       // echo "<br>";
     } else {
       // If email matched but not the rest, display error
+      $_SESSION['mail_error'] = "Email was already registered on a different customer. Please check spelling or use a different emailaddress";
       header("Location: ./checkout_page.php?error=mail");
     }
 

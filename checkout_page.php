@@ -1,52 +1,103 @@
 <?php
 session_start();
 $errorModal = "";
+$modalModel = "<div id='checkoutErrorModal' class='modal'>
+                <div class='modal__content'>
+                <div class='modal__content__header'>
+                <span class='close'>&times</span>
+                <h2>Error</h2> 
+                </div>
+                <div class='modal__content__body'>";
 $errorMsg = "";
 ?>
-<script>let error = false;</script>
 <?php
 if(isset($_GET['error'])) {
-  $errorModal .= "<div id='checkoutErrorModal' class='modal'>
-  <div class='modal__content'>
-    <div class='modal__content__header'>
-      <span class='close'>&times;</span>
-      <h2>Error</h2> 
-    </div>
-    <div class='modal__content__body'>";
 
-    if ($_GET['error'] == "mail") {
-      ?><script>error = true</script><?php
-      $errorMsg .= "<p>Email already registered on a different name. Please check spelling or use different mail</p>";
+    if ($_GET['error'] == "mail" && isset($_SESSION['mail_error'])) {
+      $errorModal .= $modalModel;
+      $mailErrorMsg = $_SESSION['mail_error'];
+      $errorMsg .= "<p class='error-msg__header'>$mailErrorMsg</p>";
+      unset($_SESSION['mail_error']);
+      $errorModal .= $errorMsg;
+      $errorModal .= "</div>
+        <div class='modal__content__footer'>
+        <button id='cancel' class='cancel-btn'>Close</button>  
+        
+        </div>
+        </div>
+        
+        </div>";
     }
-    if ($_GET['error'] == "empty") {
-      ?><script>error = true</script><?php
-      $errorMsg .= "<p>No products in cart</p>";
+    if ($_GET['error'] == "empty" && isset($_SESSION['cart_empty'])) {
+      $errorModal .= $modalModel;
+      $cartEmptyMsg = $_SESSION['cart_empty'];
+      $errorMsg .= "<p class='error-msg__header'>$cartEmptyMsg</p>";
+      unset($_SESSION['cart_empty']);
+      $errorModal .= $errorMsg;
+      $errorModal .= "</div>
+        <div class='modal__content__footer'>
+        <button id='cancel' class='cancel-btn'>Close</button>  
+        
+        </div>
+        </div>
+        
+        </div>";
     }
-    if ($_GET['error'] == "out_of_stock") {
-      ?><script>error = true</script><?php
-    $soldOutProducts = $_SESSION['sold_out_products'];
-    ?>
-    <script>let soldOutProductsFromPHP = <?php echo json_encode($soldOutProducts);?>;</script>
-    <?php
-    $errorMsg .="<p>Unfortunately these products sold out before you completed your order and will be removed:</p><ul>";
-    foreach ($soldOutProducts as $key => $product) {
-      $productName = $product['SoldOutProductName'];
-      $productId = $product['SoldOutProductId'];
-    
-      $errorMsg .= "<li>$productName</li>";
+    if ($_GET['error'] == "products") {
+      if (isset($_SESSION['sold_out_products']) || isset($_SESSION['products_to_reduce'])) {
+        $errorModal .= $modalModel;
+        if (isset($_SESSION['sold_out_products'])) {
+          $soldOutProducts = $_SESSION['sold_out_products'];
+          ?>
+          <script>let soldOutProductsFromPHP = <?php echo json_encode($soldOutProducts);?>;</script>
+          <?php
+        $errorMsg .="<p class='error-msg__header'>Unfortunately these products sold out before you completed your order and will be removed:</p><ul class='error-msg__list'>";
+        foreach ($soldOutProducts as $key => $product) {
+          $productName = $product['SoldOutProductName'];
+          $productId = $product['SoldOutProductId'];
+      
+          $errorMsg .= "<li>$productName</li>";
+        }
+      $errorMsg .= "</ul>";
+      }
+      if (isset($_SESSION['products_to_reduce'])) {
+        $productsToReduce = $_SESSION['products_to_reduce'];
+        ?>
+        <script>let productsToReduceFromPHP = <?php echo json_encode($productsToReduce);?>;</script>
+        <?php
+        $errorMsg .="<p class='error-msg__header'>Unfortunately our stock changed before you completed your order witch affected these products:</p><ul class='error-msg__list'>";
+        foreach ($productsToReduce as $key => $product) {
+          $productName = $product['ProductsToReduceProductName'];
+          $productId = $product['ProductsToReduceProductId'];
+        
+          $errorMsg .= "<li>$productName</li>";
+        }
+        $errorMsg .= "</ul>";
+      }
+      $errorModal .= $errorMsg;
+        $errorModal .= "</div>
+          <div class='modal__content__footer'>
+          <button id='cancel' class='cancel-btn'>Close</button>  
+          
+          </div>
+          </div>
+          
+          </div>";
     }
-    $errorMsg .= "</ul>";
+    // print_r($soldOutProducts);
+    // print_r($productsToReduce);
     unset($_SESSION['sold_out_products']);
+    unset($_SESSION['products_to_reduce']);
   }
-  $errorModal .= $errorMsg;
-  $errorModal .= "</div>
-  <div class='modal__content__footer'>
-  <button id='cancel' class='cancel-btn'>Close</button>  
+  // $errorModal .= $errorMsg;
+  // $errorModal .= "</div>
+  // <div class='modal__content__footer'>
+  // <button id='cancel' class='cancel-btn'>Close</button>  
   
-  </div>
-  </div>
+  // </div>
+  // </div>
   
-  </div>";
+  // </div>";
 }
 ?>
 <!DOCTYPE html>
@@ -64,6 +115,7 @@ if(isset($_GET['error'])) {
 </head>
 
 <body>
+
   <header class="header">
     <nav class="fixed">
       <div class="header__logo"><a href="index.php"> <img src="./media/images/logo_white.png" width="40" height="40" />
@@ -408,26 +460,27 @@ if(isset($_GET['error'])) {
         event.preventDefault();
       }
     }
-    if (error == true) {
+
       const modal = document.getElementById("checkoutErrorModal");
       const span = document.getElementsByClassName("close")[0];
       //const deleteIcon = document.getElementById("delete-product");
-       modal.style.display = "block";
-       //close the modal
-      span.onclick = function() {
-        modal.style.display = "none";
-      };
-        // clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        };
-        document.addEventListener("click", e => {
-          if (e.target.className == "cancel-btn") {
-            modal.style.display = "none";
-          }
-        });
+      if(modal !== null) {
+        modal.style.display = "block";
+        //close the modal
+       span.onclick = function() {
+         modal.style.display = "none";
+       };
+         // clicks anywhere outside of the modal, close it
+         window.onclick = function(event) {
+           if (event.target == modal) {
+             modal.style.display = "none";
+           }
+         };
+         document.addEventListener("click", e => {
+           if (e.target.className == "cancel-btn") {
+             modal.style.display = "none";
+           }
+         });
       }
 
     </script>
