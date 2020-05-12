@@ -226,7 +226,7 @@ foreach($activeOrdersGrouped as $key => $order):
                 <p>$postal</p>
                 <p>$city</>
                 <p>$orderDate</p>
-                <table>
+                <table class='overview-table'>
                   <thead>
                     <tr>
                       <td>Product</td>
