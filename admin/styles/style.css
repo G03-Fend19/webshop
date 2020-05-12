@@ -655,22 +655,30 @@ label.form__image-section__selection > div > button {
 }
 
 .featured-image {
+<<<<<<< Updated upstream
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   -webkit-box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
           box-shadow: 1px 1px 1px 1px rgba(36, 109, 131, 0.714);
+=======
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+>>>>>>> Stashed changes
 }
 
 select {
   max-height: 35px;
   -ms-flex-item-align: end;
       align-self: flex-end;
+<<<<<<< Updated upstream
 }
 
 .errormsg {
   color: red;
   font-size: 20px;
   padding-top: 1em;
+=======
+>>>>>>> Stashed changes
 }
 
 .main__admin__dashboard {
