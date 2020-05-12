@@ -148,7 +148,7 @@ $productCards .= "<article class='product-card'>
       </button>
       <div class='amount hidden' id='productQty-$productId' data-id='$productId'>
     
-      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input' value>
+      <input type='number' min='1' data-productId=$productId class='cart__product__info__btns__qty qty-input amount__input' value>
 <div class='amount__btns' data-id=$productId data-name='$productName' data-price=$productPrice data-img='$productImg' data-stock=$productQty
   data-discount=$discount>
 

@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
                     });            
                }
                else {
-                   console.log('to many')
+                //    console.log('to many')
                }
              });
              localStorage.setItem("images", JSON.stringify(imagesFromLocalStorage));

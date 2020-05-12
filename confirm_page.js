@@ -9,9 +9,9 @@ function setUp() {
     let shippingfee = shippingFeeCheck(totalPrice, customerInfo);
     let productsTable = showConfirmationTable(productsObj);
 
-    console.log(customerInfo);
+    // console.log(customerInfo);
 
-    console.log(customerInfo.emailInvoice);
+    // console.log(customerInfo.emailInvoice);
 
     // Fill elements (Price info)
     tbodyEl.innerHTML = productsTable;
@@ -80,7 +80,7 @@ function showConfirmationTable(productsObj) {
 
 function shippingFeeCheck(totalPrice, customerInfo) {
   let cityInfo = customerInfo.city.toLowerCase();
-  console.log(cityInfo);
+  // console.log(cityInfo);
 
   let shippingFee = totalPrice > 500 || cityInfo == "stockholm" ? 0 : 29;
 

@@ -199,6 +199,17 @@ a {
   display: flex;
 }
 
+@media (min-width: 800px) {
+  .header__nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
 .header__nav__container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -259,6 +270,12 @@ a {
 .header__nav__item__cart {
   margin-right: 1.5em;
   cursor: pointer;
+}
+
+@media (min-width: 1000px) {
+  .header__nav__item__cart i {
+    font-size: 25px;
+  }
 }
 
 .header__burger {
@@ -1684,7 +1701,7 @@ footer {
   width: auto;
   height: auto;
   background: #54626a;
-  padding: 0.5em 1em 4em 1em;
+  padding: 0.5em 1em 6em 1em;
   margin: -10px;
   border-top: 0.5px solid #bfbfbf;
 }
@@ -2419,7 +2436,7 @@ button > * {
 
 .confirmpage__shipping__payment {
   text-align: left;
-  margin-right: 2em;
+  margin: 0 2em;
 }
 
 @media (max-width: 500px) {
@@ -3919,6 +3936,14 @@ button > * {
   display: -ms-flexbox;
   display: flex;
   font-size: 1em;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.modal__content__body ul {
+  margin: 1em 0;
 }
 
 .modal__content__footer {

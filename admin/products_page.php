@@ -268,7 +268,7 @@ echo '</main>';
     let currentModal = event.currentTarget.nextElementSibling;
    /* let currentSpan = event.currentTarget.nextElementSibling;
  */
-console.log(span);
+// console.log(span);
 
     currentModal.style.display = "block";
 
