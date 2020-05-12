@@ -374,7 +374,7 @@
       }
     });
   };
-  const cartBtn = document.querySelector(".fa-shopping-cart");
+  const cartBtn = document.querySelector(".header__nav__item__cart");
   cartBtn.addEventListener("click", () => {
     cartDisplay.classList.toggle("hidden");
     body.classList.toggle("noScroll");
